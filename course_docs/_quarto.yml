@@ -3,7 +3,7 @@
 # To regenerate: Use GUI 'Regenerate Quarto Configs' button (WARNING: overwrites!)
 
 project:
-  output-dir: ../rendered/course_docs
+  output-dir: ../docs/course_docs
 
 format:
   html:
@@ -14,3 +14,5 @@ format:
     code-tools: false
     embed-resources: true
     highlight-style: github
+  docx:
+    toc: false

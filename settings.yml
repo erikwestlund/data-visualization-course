@@ -13,10 +13,10 @@ default:
     readings: readings
   extra_directories: ~
   render_dirs:
-    slides: rendered/slides
-    assignments: rendered/assignments
-    course_docs: rendered/course_docs
-    modules: rendered/modules
+    slides: docs/slides
+    assignments: docs/assignments
+    course_docs: docs/course_docs
+    modules: docs/modules
   quarto:
     html:
       format: html
@@ -38,7 +38,7 @@ default:
       progress: yes
       center: yes
       highlight_style: github
-    render_dir: rendered/slides
+    render_dir: docs
   packages:
     use_renv: no
     default_packages:
