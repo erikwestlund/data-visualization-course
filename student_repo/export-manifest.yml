@@ -32,22 +32,22 @@ student_work:
 must_exist_after_export:
   - modules/00_preclass-tech-check/01_pre-class-directions.qmd
   - modules/00_preclass-tech-check/02_setup-check.qmd
-  - practice/templates/01-workflow-and-basics/01_open-render-check.qmd
+  - practice/templates/01-workflow-and-basics/01_explore-and-visualize.qmd
   - updater.R
   - data-visualization-course.Rproj
   - data-visualization-course.code-workspace
   - data/data.html
   - modules/rendered/index.html
-  - modules/rendered/01-workflow-and-basics/01_get-course-materials.html
+  - modules/rendered/01-workflow-and-basics/01_course-materials.html
 
 must_not_exist_after_export:
   - docs/modules/00_preclass-tech-check/01_pre-class-directions.html
   - docs/modules/00_preclass-tech-check/02_setup-check.html
   - modules/00_preclass-tech-check/01_pre-class-directions.html
   - modules/00_preclass-tech-check/02_setup-check.html
-  - modules/01-workflow-and-basics/01_get-course-materials.html
+  - modules/01-workflow-and-basics/01_course-materials.html
   - rendered/index.html
-  - rendered/modules/01-workflow-and-basics/01_get-course-materials.html
+  - rendered/modules/01-workflow-and-basics/01_course-materials.html
   - assignments/problem-set-1.qmd
   - slides/day-01-intro-and-workflow.qmd
   - data/codebooks/prams_2011_selected.md

@@ -129,7 +129,7 @@ These packages are enough for the first course notebooks.
 In the Files pane, open:
 
 ```text
-practice/01-workflow-and-basics/01_open-render-check.qmd
+practice/01-workflow-and-basics/01_explore-and-visualize.qmd
 ```
 
 Run the code chunks in the notebook.
@@ -143,7 +143,7 @@ RStudio should create an HTML file with the same base name as the notebook.
 For example:
 
 ```text
-01_open-render-check.html
+01_explore-and-visualize.html
 ```
 
 Open the HTML file and confirm that the code output and plots appear.

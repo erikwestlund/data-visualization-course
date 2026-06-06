@@ -1,5 +1,5 @@
 ---
-title: "First Visualization"
+title: "First Visualization And ggplot Basics"
 format:
   html:
     embed-resources: true
@@ -15,27 +15,37 @@ library(readr)
 
 # Goal
 
-This notebook demonstrates the basic Day 1 visualization workflow.
+This notebook introduces the basic Day 1 visualization workflow.
 
-We will build every plot piece by piece:
+We will build plots piece by piece:
 
-1. create a plot object
-2. print it so we can see what it does
-3. add one layer or change
-4. print it again
-5. repeat
+1. load data
+2. inspect the data
+3. start a plot object
+4. add one layer or change
+5. print the plot after each step
+6. interpret what the plot shows
 
-This is the workflow we will use throughout the course.
+This is the pattern we will use throughout the course.
 
-# Analytic Questions
+# The Grammar Of Graphics
 
-We will use a cleaned public PRAMS dataset to ask three basic questions:
+A visualization combines:
 
-- What is the distribution of reported binge drinking before pregnancy?
-- Which subgroup categories appear most often in the selected PRAMS data?
-- How are reported alcohol use and binge drinking related across state/subgroup rows?
+- data
+- aesthetic mappings
+- geometric objects
+- statistical transformations
+- scales
+- coordinates
+- facets
+- labels and themes
+
+`ggplot2` gives us a language for building those pieces in layers.
 
 # Load Data
+
+We will use a cleaned public PRAMS dataset.
 
 ```{r}
 prams_path <- "data/real/prams_2011_selected.csv"
@@ -65,30 +75,38 @@ prams_binge |>
   head()
 ```
 
-Start with data and an aesthetic mapping.
+Start with data only.
 
 ```{r}
-p1 <- ggplot(
-  prams_binge,
-  aes(x = binge_drinking_within_3_months_birth)
-)
+p1 <- ggplot(data = prams_binge)
 
 p1
+```
+
+Add an aesthetic mapping.
+
+```{r}
+p2 <- ggplot(
+  data = prams_binge,
+  mapping = aes(x = binge_drinking_within_3_months_birth)
+)
+
+p2
 ```
 
 Add a geom.
 
 ```{r}
-p2 <- p1 +
+p3 <- p2 +
   geom_histogram(binwidth = 5)
 
-p2
+p3
 ```
 
 Add labels.
 
 ```{r}
-p3 <- p2 +
+p4 <- p3 +
   labs(
     title = "Distribution of Reported Binge Drinking Before Pregnancy",
     subtitle = "Rows are PRAMS state/subgroup estimates",
@@ -96,16 +114,16 @@ p3 <- p2 +
     y = "Number of state/subgroup rows"
   )
 
-p3
+p4
 ```
 
 Add a theme.
 
 ```{r}
-p4 <- p3 +
+p5 <- p4 +
   theme_minimal()
 
-p4
+p5
 ```
 
 Interpretation: most observed subgroup estimates are below 30 percent, but the distribution has a long right tail with some much higher estimates.
@@ -114,7 +132,24 @@ Interpretation: most observed subgroup estimates are below 30 percent, but the d
 
 Question: which subgroup categories appear most often?
 
-Start by counting rows by subgroup category.
+`geom_bar()` counts rows inside `ggplot2`.
+
+```{r}
+p1 <- ggplot(prams, aes(x = subgroup_cat))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_bar()
+
+p2
+```
+
+That works, but the category names are hard to read.
+
+Often it is clearer to count first, then plot the summary.
 
 ```{r}
 subgroup_counts <- prams |>
@@ -123,7 +158,7 @@ subgroup_counts <- prams |>
 subgroup_counts
 ```
 
-Start the plot with data and mappings.
+Now one row is one subgroup category.
 
 ```{r}
 p1 <- ggplot(
@@ -134,7 +169,7 @@ p1 <- ggplot(
 p1
 ```
 
-Add columns.
+Use `geom_col()` because the bar height is already in the data.
 
 ```{r}
 p2 <- p1 +
@@ -143,7 +178,7 @@ p2 <- p1 +
 p2
 ```
 
-This works, but the category names are hard to read. Reorder the categories before plotting.
+Reorder the categories before plotting.
 
 ```{r}
 subgroup_counts_ordered <- subgroup_counts |>
@@ -239,19 +274,37 @@ p3 <- p1 +
 p3
 ```
 
-Add a trend line.
+Map another variable to color.
 
 ```{r}
-p4 <- p3 +
-  geom_smooth(method = "lm", se = FALSE)
+p4 <- ggplot(
+  prams_alcohol,
+  aes(
+    x = alcohol_use_within_3_months_birth,
+    y = binge_drinking_within_3_months_birth,
+    color = subgroup_cat
+  )
+) +
+  geom_point(alpha = 0.6)
 
 p4
+```
+
+This adds information, but it may be too much information for this plot. That is a design judgment.
+
+Return to the simpler plot and add a trend line.
+
+```{r}
+p5 <- p3 +
+  geom_smooth(method = "lm", se = FALSE)
+
+p5
 ```
 
 Add labels and a theme.
 
 ```{r}
-p5 <- p4 +
+p6 <- p5 +
   labs(
     title = "Alcohol Use And Binge Drinking Before Pregnancy",
     subtitle = "Each point is a PRAMS state/subgroup estimate",
@@ -260,10 +313,60 @@ p5 <- p4 +
   ) +
   theme_minimal()
 
-p5
+p6
 ```
 
 Interpretation: rows with higher reported alcohol use tend to have higher reported binge drinking. This is an association across pre-aggregated state/subgroup estimates, not a person-level causal claim.
+
+# Transform Before Plotting
+
+Sometimes the variable we want to plot is not already in the data.
+
+```{r}
+prams_difference <- prams_alcohol |>
+  mutate(
+    alcohol_minus_binge = alcohol_use_within_3_months_birth -
+      binge_drinking_within_3_months_birth
+  )
+
+prams_difference |>
+  select(
+    location_abbr,
+    subgroup_cat,
+    alcohol_use_within_3_months_birth,
+    binge_drinking_within_3_months_birth,
+    alcohol_minus_binge
+  ) |>
+  head()
+```
+
+Build a plot of the transformed variable.
+
+```{r}
+p1 <- ggplot(prams_difference, aes(x = alcohol_minus_binge))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_histogram(binwidth = 5)
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Difference Between Any Alcohol Use And Binge Drinking",
+    subtitle = "Rows are PRAMS state/subgroup estimates",
+    x = "Alcohol use percentage minus binge drinking percentage",
+    y = "Number of rows"
+  ) +
+  theme_minimal()
+
+p3
+```
 
 # Day 1 Pattern
 

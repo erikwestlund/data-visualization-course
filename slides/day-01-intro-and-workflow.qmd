@@ -660,9 +660,9 @@ Every example figure has its own Quarto notebook in `modules/`.
 
 These are complete instructor/reference examples, such as:
 
-- `modules/00-preclass_tech-check/02_setup-check.qmd`
+- `modules/00_preclass-tech-check/02_setup-check.qmd`
+- `modules/01-workflow-and-basics/01_course-materials.qmd`
 - `modules/01-workflow-and-basics/02_first-visualization.qmd`
-- `modules/01-workflow-and-basics/03_ggplot-basics.qmd`
 
 Use module notebooks when you want to see a complete version of the idea.
 
@@ -672,9 +672,7 @@ You will also have in-class and homework practice notebooks.
 
 These follow the same basic format as the module notebooks, but they leave more for you to complete:
 
-- `practice/templates/01-workflow-and-basics/02_first-visualization-practice.qmd`
-- `practice/templates/01-workflow-and-basics/03_ggplot-basics-practice.qmd`
-- `practice/templates/01-workflow-and-basics/04_submission-check.qmd`
+- `practice/templates/01-workflow-and-basics/01_explore-and-visualize.qmd`
 
 Use `source("updater.R")` to copy templates into `practice/work/`.
 

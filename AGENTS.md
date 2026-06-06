@@ -14,3 +14,10 @@
 - Modules should be written so the instructor can make the notebook large in RStudio/Positron, talk through the text, run chunks live, and show rendered output when useful.
 - The first workflow module should support a live RStudio walkthrough of getting the course materials, opening the project, running `source("updater.R")`, copying practice templates into `practice/work/`, and rendering a notebook.
 - When adding screenshots to workflow modules, store them beside the relevant module under a local `images/` directory and keep filenames descriptive.
+
+## Practice Notebooks
+
+- Practice notebooks should be templates for students to complete, not worked solutions.
+- Prefer instructions, prompts, and empty code blocks over filled-in analysis code.
+- It is acceptable in early workflow practice to provide the data-ingest code so students can focus on setup and first exploration.
+- After the earliest workflow practice, expect students to write their own data-ingest code using direct project-root paths.

@@ -1,0 +1,128 @@
+---
+title: "Explore And Visualize"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Choose one course dataset, inspect it, tabulate a few variables, and create one visualization.
+
+This practice is intentionally open-ended. The goal is to get comfortable opening a dataset, asking what is in it, and making a first plot.
+
+# Choose A Dataset
+
+Uncomment one dataset path below, or replace it with another path from `data/data.html`.
+
+```{r}
+# dataset_path <- "data/real/prams_2011_selected.csv"
+# dataset_path <- "data/real/census_state_race_ethnicity_long.csv"
+# dataset_path <- "data/real/flu_vaccination_age_time_clean.csv"
+# dataset_path <- "data/real/nhanes_2021_2023_analysis.csv"
+# dataset_path <- "data/real/places_county_core_measures_long.csv"
+
+dataset_path <- "data/real/prams_2011_selected.csv"
+```
+
+# Load And Inspect
+
+```{r}
+dat <- read_csv(dataset_path, show_col_types = FALSE)
+
+dat |>
+  glimpse()
+```
+
+# Tabulate A Few Things
+
+Pick one or two categorical variables and count the rows in each category.
+
+Use the `glimpse()` output above to choose variables that look categorical.
+
+```{r}
+# Count one categorical variable here.
+```
+
+```{r}
+# Count another categorical variable here.
+```
+
+Write one sentence about what you notice in the counts.
+
+# Make One Visualization
+
+Start with one simple question.
+
+Examples:
+
+- How are rows distributed across one categorical variable?
+- What is the shape of one numeric variable?
+- How are two numeric variables related?
+
+Prepare the data you want to plot.
+
+```{r}
+# Prepare your plot data here, if needed.
+```
+
+Start a plot object.
+
+```{r}
+# p1 <- ggplot(...)
+
+# p1
+```
+
+Add a geom.
+
+```{r}
+# p2 <- p1 +
+#   geom_...()
+
+# p2
+```
+
+Add labels and a theme.
+
+```{r}
+# p3 <- p2 +
+#   labs(
+#     title = "...",
+#     x = "...",
+#     y = "..."
+#   ) +
+#   theme_minimal()
+
+# p3
+```
+
+Write two or three sentences interpreting your plot.
+
+# Your Turn
+
+If you have time, revise your plot or try a second plot.
+
+Try one of these:
+
+- choose a different dataset path
+- count a different categorical variable
+- make a histogram of a numeric variable
+- make a scatterplot with two numeric variables
+- improve the title and axis labels
+
+```{r}
+# Your code here
+```
+
+# Render Check
+
+Render this notebook. Confirm that the rendered HTML includes your table output and your visualization.
