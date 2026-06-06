@@ -1,0 +1,1314 @@
+passenger_name,survived,age_years,passenger_class,sex,survived_logical,missing_age
+"Allen, Miss Elisabeth Walton",yes,29,1st,female,TRUE,FALSE
+"Allison, Miss Helen Loraine",no,2,1st,female,FALSE,FALSE
+"Allison, Mrs Hudson J.C. (Bessie Waldo Daniels)",no,25,1st,female,FALSE,FALSE
+"Andrews, Miss Kornelia Theodosia",yes,63,1st,female,TRUE,FALSE
+"Appleton, Mrs Edward Dale (Charlotte Lamson)",yes,58,1st,female,TRUE,FALSE
+"Astor, Mrs John Jacob (Madeleine Talmadge Force)",yes,19,1st,female,TRUE,FALSE
+"Aubert, Mrs Leontine Pauline",yes,,1st,female,TRUE,TRUE
+"Barber, Ms ",yes,,1st,female,TRUE,TRUE
+"Baxter, Mrs James (Helene DeLaudeniere Chaput)",yes,50,1st,female,TRUE,FALSE
+"Bazzani, Ms Albina",yes,,1st,female,TRUE,TRUE
+"Beckwith, Mrs Richard Leonard (Sallie Monypeny)",yes,47,1st,female,TRUE,FALSE
+"Bidois, Miss Rosalie",yes,,1st,female,TRUE,TRUE
+"Bird, Ms Ellen",yes,,1st,female,TRUE,TRUE
+"Bishop, Mrs Dickinson H. (Helen Walton)",yes,19,1st,female,TRUE,FALSE
+"Bissetti, Ms Amelia",yes,,1st,female,TRUE,TRUE
+"Bonnell, Miss Caroline",yes,30,1st,female,TRUE,FALSE
+"Bonnell, Miss Elizabeth",yes,58,1st,female,TRUE,FALSE
+"Bowen, Miss Grace Scott",yes,45,1st,female,TRUE,FALSE
+"Bowerman, Miss Elsie Edith",yes,22,1st,female,TRUE,FALSE
+"Brown, Mrs James Joseph (Margaret Molly Tobin)",yes,44,1st,female,TRUE,FALSE
+"Brown, Mrs John Murray (Caroline Lane Lamson)",yes,59,1st,female,TRUE,FALSE
+"Bucknell, Mrs William Robert (Emma Eliza Ward)",yes,60,1st,female,TRUE,FALSE
+"Burns, Ms Elizabeth Margaret",yes,,1st,female,TRUE,TRUE
+"Candee, Mrs Edward (Helen Churchill Hungerford)",yes,53,1st,female,TRUE,FALSE
+"Cardeza, Mrs James Warburton Martinez (Charlotte Wardle Drake)",yes,58,1st,female,TRUE,FALSE
+"Carter, Miss Lucile Polk",yes,14,1st,female,TRUE,FALSE
+"Carter, Mrs William Ernest (Lucile Polk)",yes,36,1st,female,TRUE,FALSE
+"Cassebeer, Mrs Henry Arthur jr (Genevieve Fosdick)",yes,,1st,female,TRUE,TRUE
+"Cavendish, Mrs Tyrell William Julia Florence Siegel",yes,,1st,female,TRUE,TRUE
+"Chaffee, Mrs Herbert Fuller (Carrie Constance Toogood)",yes,47,1st,female,TRUE,FALSE
+"Chambers, Mrs Norman Campbell (Bertha Griggs)",yes,31,1st,female,TRUE,FALSE
+"Chaudanson, Ms 	Victorine",yes,,1st,female,TRUE,TRUE
+"Cherry, Miss Gladys",yes,,1st,female,TRUE,TRUE
+"Chibnall (Bowerman), Mrs Edith Martha",yes,,1st,female,TRUE,TRUE
+"Clark, Mrs Walter Miller (Virginia McDowell)",yes,26,1st,female,TRUE,FALSE
+"Cleaver, Ms Alice",yes,,1st,female,TRUE,TRUE
+"Compton, Miss Sara Rebecca",yes,39,1st,female,TRUE,FALSE
+"Compton, Mrs Alexander Taylor (Mary Eliza Ingersoll)",yes,64,1st,female,TRUE,FALSE
+"Cornell, Mrs Robert Clifford (Malvina Helen Lamson)",yes,55,1st,female,TRUE,FALSE
+"Crosby, Miss Harriet R.",yes,36,1st,female,TRUE,FALSE
+"Crosby, Mrs Edward Gifford (Catherine Elizabeth Halstead)",yes,69,1st,female,TRUE,FALSE
+"Cumings, Mrs John Bradley (Florence Briggs Thayer)",yes,38,1st,female,TRUE,FALSE
+"Daniels, Ms Sarah",yes,,1st,female,TRUE,TRUE
+"Davidson, Mrs Thornton (Orian Hays)",yes,27,1st,female,TRUE,FALSE
+"Dick, Mrs Albert Adrian Vera Gillespie",yes,17,1st,female,TRUE,FALSE
+"Dodge, Mrs Washington (Ruth Vidaver)",yes,,1st,female,TRUE,TRUE
+"Douglas, Mrs Frederick Charles (Suzette Baxter)",yes,27,1st,female,TRUE,FALSE
+"Douglas, Mrs Walter Donald (Mahala Dutton)",yes,48,1st,female,TRUE,FALSE
+"Duff Gordon, Lady (Lucille Wallace Sutherland)",yes,48,1st,female,TRUE,FALSE
+"Earnshaw, Mrs Boulton (Olive Potter)",yes,23,1st,female,TRUE,FALSE
+"Endres, Miss Caroline Louise",yes,,1st,female,TRUE,TRUE
+"Eustis, Miss Elizabeth Mussey",yes,53,1st,female,TRUE,FALSE
+"Evans, Miss Edith Corse",no,36,1st,female,FALSE,FALSE
+"Flegenheim, Mrs Alfred (Antoinette)",yes,,1st,female,TRUE,TRUE
+"Fleming, Ms Margaret",no,,1st,female,FALSE,TRUE
+"Fortune, Miss Alice Elizabeth",yes,24,1st,female,TRUE,FALSE
+"Fortune, Miss Ethel Flora",yes,28,1st,female,TRUE,FALSE
+"Fortune, Miss Mabel",yes,23,1st,female,TRUE,FALSE
+"Fortune, Mrs Mark (Mary McDougald)",yes,60,1st,female,TRUE,FALSE
+"Francatelli, Ms Laura Mabel",yes,,1st,female,TRUE,TRUE
+"Frauenthal, Mrs Henry William (Clara Heinsheimer)",yes,,1st,female,TRUE,TRUE
+"Frolicher, Miss Marguerite",yes,22,1st,female,TRUE,FALSE
+"Frolicher-Stehli, Mrs Maxmillian (Margaretha Emerentia Stehli)",yes,48,1st,female,TRUE,FALSE
+"Futrelle, Mrs Jacques (May Peel)",yes,35,1st,female,TRUE,FALSE
+"Geiger, Miss Emily ",yes,,1st,female,TRUE,TRUE
+"Gibson, Miss Dorothy",yes,22,1st,female,TRUE,FALSE
+"Gibson, Mrs Leonard (Pauline C. Boeson)",yes,45,1st,female,TRUE,FALSE
+"Goldenberg, Mrs Samuel L. (Edwiga Grabowsko)",yes,,1st,female,TRUE,TRUE
+"Graham, Miss Margaret Edith",yes,19,1st,female,TRUE,FALSE
+"Graham, Mrs William Thompson (Edith Junkins)",yes,58,1st,female,TRUE,FALSE
+"Greenfield, Mrs Leo David (Blanche Strouse)",yes,45,1st,female,TRUE,FALSE
+"Harder, Mrs George Achilles (Dorothy Annan)",yes,21,1st,female,TRUE,FALSE
+"Harper, Mrs Henry Sleeper (Myna Haxtun)",yes,49,1st,female,TRUE,FALSE
+"Harris, Mrs Henry Birkhardt (Irene Wallach)",yes,36,1st,female,TRUE,FALSE
+"Hays, Miss Margaret Bechstein",yes,24,1st,female,TRUE,FALSE
+"Hays, Mrs Charles Melville (Clara Jennings Gregg)",yes,52,1st,female,TRUE,FALSE
+"Hippach, Miss Jean Gertrude",yes,16,1st,female,TRUE,FALSE
+"Hippach, Mrs Louis Albert (Ida Sophia Fischer)",yes,44,1st,female,TRUE,FALSE
+"Hogeboom, Mrs John C. (Anna Andrews)",yes,51,1st,female,TRUE,FALSE
+"Holverson, Mrs Alexander Oskar (Mary Aline Towner)",yes,35,1st,female,TRUE,FALSE
+"Hoyt, Mrs Frederick Maxfield (Jane Anne Forby)",yes,35,1st,female,TRUE,FALSE
+"Icabad (Icabod), Ms",yes,,1st,female,TRUE,TRUE
+"Isham, Miss Anne Elizabeth",no,50,1st,female,FALSE,FALSE
+"Kenchen, Ms Amelia",yes,,1st,female,TRUE,TRUE
+"Kenyon, Mrs Frederick R. (Marion)",yes,,1st,female,TRUE,TRUE
+"Kimball, Mrs Edwin Nelson Jr. (Gertrude Parsons)",yes,40,1st,female,TRUE,FALSE
+"LeRoy, Miss Berthe",yes,,1st,female,TRUE,TRUE
+"Leader, Dr Alice Farnham",yes,,1st,female,TRUE,TRUE
+"Lindstrom, Mrs Carl Johan (Sigrid Posse)",yes,55,1st,female,TRUE,FALSE
+"Lines, Miss Mary Conover",yes,16,1st,female,TRUE,FALSE
+"Lines, Mrs Ernest H. (Elizabeth Lindsey James)",yes,50,1st,female,TRUE,FALSE
+"Longley, Miss Gretchen Fiske",yes,21,1st,female,TRUE,FALSE
+"Madill, Miss Georgette Alexandra",yes,15,1st,female,TRUE,FALSE
+"Maloney, Ms",yes,,1st,female,TRUE,TRUE
+"Marvin, Mrs Daniel Warner (Mary Graham Carmichael Farquarson)",yes,,1st,female,TRUE,TRUE
+"Meyer, Mrs Edgar Joseph (Leila Saks)",yes,,1st,female,TRUE,TRUE
+"Minahan, Miss Daisy E.",yes,33,1st,female,TRUE,FALSE
+"Minahan, Mrs William Edward (Lillian E. Thorpe)",yes,37,1st,female,TRUE,FALSE
+"Newell, Miss Madeleine",yes,31,1st,female,TRUE,FALSE
+"Newell, Miss Marjorie",yes,23,1st,female,TRUE,FALSE
+"Newsom, Miss Helen Monypeny",yes,19,1st,female,TRUE,FALSE
+"Oliva, Mlle",no,,1st,female,FALSE,TRUE
+"Ostby, Miss Helen Raghnild",yes,22,1st,female,TRUE,FALSE
+"Pears, Mrs Thomas (Edith)",yes,,1st,female,TRUE,TRUE
+"Penasco, Mrs Victor de Satode (Josefa de Soto)",yes,17,1st,female,TRUE,FALSE
+"Pericault, Ms",yes,,1st,female,TRUE,TRUE
+"Potter, Mrs Thomas, Jr. (Lily Alexenia Wilson)",yes,56,1st,female,TRUE,FALSE
+"Robert, Mrs Edward Scott (Elisabeth Walton McMillan)",yes,43,1st,female,TRUE,FALSE
+"Rosenbaum (Russell), Miss Edith Louise",yes,33,1st,female,TRUE,FALSE
+"Rothes, the Countess of (Noel Lucy Martha Dyer-Edwardes)",yes,27,1st,female,TRUE,FALSE
+"Rothschild, Mrs Martin (Elizabeth L. Barrett)",yes,54,1st,female,TRUE,FALSE
+"Ryerson, Miss Emily Borie",yes,18,1st,female,TRUE,FALSE
+"Ryerson, Miss Susan (Suzette) Parker",yes,21,1st,female,TRUE,FALSE
+"Ryerson, Mrs Arthur Larned (Emily Maria Borie)",yes,48,1st,female,TRUE,FALSE
+"Schabert, Mrs Paul (Emma Mock)",yes,,1st,female,TRUE,TRUE
+"Segesser, Mlle. Emma",yes,,1st,female,TRUE,TRUE
+"Seredeca, Ms",no,,1st,female,FALSE,TRUE
+"Shutes, Miss Elizabeth W.",yes,40,1st,female,TRUE,FALSE
+"Silvey, Mrs William Baird (Alice Munger)",yes,39,1st,female,TRUE,FALSE
+"Smith, Mrs Lucien Philip (Mary Eloise Hughes",yes,18,1st,female,TRUE,FALSE
+"Snyder, Mrs John Pillsbury (Nelle Stevenson)",yes,23,1st,female,TRUE,FALSE
+"Spedden, Mrs Frederick Oakley (Margaretta Corning Stone)",yes,40,1st,female,TRUE,FALSE
+"Spencer, Mrs William Augustus (Marie Eugenie)",yes,,1st,female,TRUE,TRUE
+"Stengel, Mrs Charles Emil Henry (Annie May Morris)",yes,43,1st,female,TRUE,FALSE
+"Stephenson, Mrs Walter Bertram (Martha Eustis)",yes,52,1st,female,TRUE,FALSE
+"Stone, Mrs George Nelson (Martha E.)",yes,62,1st,female,TRUE,FALSE
+"Straus, Mrs Isidor (Ida Blun)",no,63,1st,female,FALSE,FALSE
+"Swift, Mrs Frederick Joel (Margaret Welles Barron)",yes,46,1st,female,TRUE,FALSE
+"Taussig, Miss Ruth",yes,18,1st,female,TRUE,FALSE
+"Taussig, Mrs Emil (Tillie Mandelbaum)",yes,39,1st,female,TRUE,FALSE
+"Taylor, Mrs Elmer Zebley (Juliet Cummins Wright)",yes,,1st,female,TRUE,TRUE
+"Thayer, Mrs John Borland (Marian Longstreth Morris)",yes,39,1st,female,TRUE,FALSE
+"Thorne, Mrs Gertrude Maybelle",yes,,1st,female,TRUE,TRUE
+"Ward, Ms Anna",no,,1st,female,FALSE,TRUE
+"Warren, Mrs Frank Manley (Anna S. Atkinson)",yes,60,1st,female,TRUE,FALSE
+"White, Mrs J. Stuart (Ella Holmes)",yes,55,1st,female,TRUE,FALSE
+"Wick, Miss Mary Natalie",yes,31,1st,female,TRUE,FALSE
+"Wick, Mrs George Dennick (Martha Hitchcock)",yes,45,1st,female,TRUE,FALSE
+"Widener, Mrs George Dunton (Eleanor Elkins)",yes,50,1st,female,TRUE,FALSE
+"Willard, Miss Constance",yes,20,1st,female,TRUE,FALSE
+"Wilson, Ms Helen",yes,,1st,female,TRUE,TRUE
+"Young, Miss Marie Grice",yes,36,1st,female,TRUE,FALSE
+"de Villiers, Madame Berthe",yes,,1st,female,TRUE,TRUE
+"Allison, Master Hudson Trevor",yes,0.9167,1st,male,TRUE,FALSE
+"Allison, Mr Hudson Joshua Creighton",no,30,1st,male,FALSE,FALSE
+"Anderson, Mr Harry",yes,47,1st,male,TRUE,FALSE
+"Andrews, Mr Thomas, jr",no,39,1st,male,FALSE,FALSE
+"Artagaveytia, Mr Ramon",no,71,1st,male,FALSE,FALSE
+"Astor, Colonel John Jacob",no,47,1st,male,FALSE,FALSE
+"Barkworth, Mr Algernon H.",yes,,1st,male,TRUE,TRUE
+"Baumann, Mr John D.",no,,1st,male,FALSE,TRUE
+"Baxter, Mr Quigg Edmond",no,24,1st,male,FALSE,FALSE
+"Beattie, Mr Thomson",no,36,1st,male,FALSE,FALSE
+"Beckwith, Mr Richard Leonard",yes,37,1st,male,TRUE,FALSE
+"Behr, Mr Karl Howell",yes,26,1st,male,TRUE,FALSE
+"Birnbaum, Mr Jakob",no,25,1st,male,FALSE,FALSE
+"Bishop, Mr Dickinson H.",yes,25,1st,male,TRUE,FALSE
+"Bjornstrm-Steffansson, Mr Mauritz Hakan",yes,28,1st,male,TRUE,FALSE
+"Blackwell, Mr Stephen Weart",no,45,1st,male,FALSE,FALSE
+"Blank, Mr Henry",yes,39,1st,male,TRUE,FALSE
+"Borebank, Mr John James",no,,1st,male,FALSE,TRUE
+"Bradley, Mr George",yes,,1st,male,TRUE,TRUE
+"Brady, Mr John Bertram",no,41,1st,male,FALSE,FALSE
+"Brandeis, Mr Emil",no,48,1st,male,FALSE,FALSE
+"Brewe, Dr Arthur Jackson",no,,1st,male,FALSE,TRUE
+"Butt, Major Archibald Willingham",no,45,1st,male,FALSE,FALSE
+"Calderhead, Mr Edward P.",yes,,1st,male,TRUE,TRUE
+"Cardeza, Mr Thomas Drake Martinez",yes,36,1st,male,TRUE,FALSE
+"Carlsson, Mr Frans Olof",no,33,1st,male,FALSE,FALSE
+"Carrau, Mr Francisco M.",no,,1st,male,FALSE,TRUE
+"Carrau, Mr Jose Pedro",no,,1st,male,FALSE,TRUE
+"Carter, Master William T. II",yes,11,1st,male,TRUE,FALSE
+"Carter, Mr William Ernest",yes,36,1st,male,TRUE,FALSE
+"Case, Mr Howard Brown",no,49,1st,male,FALSE,FALSE
+"Cavendish, Mr Tyrell William",no,36,1st,male,FALSE,FALSE
+"Chaffee, Mr Herbert Fuller",no,46,1st,male,FALSE,FALSE
+"Chambers, Mr Norman Campbell",yes,27,1st,male,TRUE,FALSE
+"Chevre, Mr Paul",yes,,1st,male,TRUE,TRUE
+"Chisholm, Mr Roderick Robert",no,,1st,male,FALSE,TRUE
+"Clark, Mr Walter Miller",no,27,1st,male,FALSE,FALSE
+"Clifford, Mr George Quincy",no,,1st,male,FALSE,TRUE
+"Colley, Mr Edward Pomeroy",no,,1st,male,FALSE,TRUE
+"Compton, Mr Alexander Taylor, Jr",no,37,1st,male,FALSE,FALSE
+"Crafton, Mr John Bertram",no,,1st,male,FALSE,TRUE
+"Crosby, Captain Edward Gifford",no,70,1st,male,FALSE,FALSE
+"Cumings, Mr John Bradley",no,39,1st,male,FALSE,FALSE
+"Daly, Mr Peter Denis ",yes,,1st,male,TRUE,TRUE
+"Daniel, Mr Robert Williams",yes,27,1st,male,TRUE,FALSE
+"Davidson, Mr Thornton",no,31,1st,male,FALSE,FALSE
+"Dick, Mr Albert Adrian",yes,31,1st,male,TRUE,FALSE
+"Dodge, Dr. Washington",yes,,1st,male,TRUE,TRUE
+"Dodge, Master Washington",yes,4,1st,male,TRUE,FALSE
+"Douglas, Mr Walter Donald",no,50,1st,male,FALSE,FALSE
+"Duff Gordon, Sir Cosmo Edmund",yes,49,1st,male,TRUE,FALSE
+"Dulles, Mr William Crothers",no,39,1st,male,FALSE,FALSE
+"Farthing, Mr John",no,,1st,male,FALSE,TRUE
+"Flynn, Mr John Irving",yes,,1st,male,TRUE,TRUE
+"Foreman, Mr Benjamin Laventall",no,30,1st,male,FALSE,FALSE
+"Fortune, Mr Charles Alexander",no,19,1st,male,FALSE,FALSE
+"Fortune, Mr Mark",no,64,1st,male,FALSE,FALSE
+"Franklin, Mr Thomas Parham",no,,1st,male,FALSE,TRUE
+"Frauenthal, Dr Henry William",yes,49,1st,male,TRUE,FALSE
+"Frauenthal, Mr Isaac Gerald",yes,44,1st,male,TRUE,FALSE
+"Frolicher-Stehli, Mr Maxmillian",yes,60,1st,male,TRUE,FALSE
+"Fry, Mr Richard",no,,1st,male,FALSE,TRUE
+"Futrelle, Mr Jacques",no,37,1st,male,FALSE,FALSE
+"Gee, Mr Arthur H.",no,47,1st,male,FALSE,FALSE
+"Giglio, Mr Victor",no,,1st,male,FALSE,TRUE
+"Goldenberg, Mr Samuel L.",yes,49,1st,male,TRUE,FALSE
+"Goldschmidt, Mr George B.",no,71,1st,male,FALSE,FALSE
+"Gracie, Colonel Archibald IV",yes,54,1st,male,TRUE,FALSE
+"Graham, Mr George Edward",no,38,1st,male,FALSE,FALSE
+"Greenfield, Mr William Bertram",yes,23,1st,male,TRUE,FALSE
+"Guggenheim, Mr Benjamin",no,46,1st,male,FALSE,FALSE
+"Harder, Mr George Achilles",yes,25,1st,male,TRUE,FALSE
+"Harper, Mr Henry Sleeper",yes,48,1st,male,TRUE,FALSE
+"Harrington, Mr Charles",no,,1st,male,FALSE,TRUE
+"Harris, Mr Henry Birkhardt",no,45,1st,male,FALSE,FALSE
+"Harrison, Mr William 	Henry",no,40,1st,male,FALSE,FALSE
+"Hassah, Mr Hamad",no,,1st,male,FALSE,TRUE
+"Hawksford, Mr Walter James",yes,,1st,male,TRUE,TRUE
+"Hays, Mr Charles Melville",no,55,1st,male,FALSE,FALSE
+"Head, Mr Christopher",no,,1st,male,FALSE,TRUE
+"Hilliard, Mr Herbert Henry",no,,1st,male,FALSE,TRUE
+"Hipkins, Mr William Edward",no,,1st,male,FALSE,TRUE
+"Holverson, Mr Alexander Oskar",no,42,1st,male,FALSE,FALSE
+"Homer, Mr Harry",yes,35,1st,male,TRUE,FALSE
+"Hoyt, Mr Frederick Maxfield",yes,38,1st,male,TRUE,FALSE
+"Hoyt, Mr William F.",no,,1st,male,FALSE,TRUE
+"Ismay, Mr Joseph Bruce",yes,49,1st,male,TRUE,FALSE
+"Jones, Mr Charles Cresson",no,46,1st,male,FALSE,FALSE
+"Julian, Mr Henry Forbes",no,,1st,male,FALSE,TRUE
+"Keeping, Mr Edwin",no,32,1st,male,FALSE,FALSE
+"Kent, Mr Edward Austin",no,58,1st,male,FALSE,FALSE
+"Kenyon, Mr Frederick R.",no,41,1st,male,FALSE,FALSE
+"Kimball, Mr Edwin Nelson Jr.",yes,42,1st,male,TRUE,FALSE
+"Klaber, Mr Herman",no,,1st,male,FALSE,TRUE
+"Lesneur, Mr Gustave",no,,1st,male,FALSE,TRUE
+"Lewy, Mr Ervin G.",no,,1st,male,FALSE,TRUE
+"Lindeberg-Lind, Mr Erik Gustaf",no,42,1st,male,FALSE,FALSE
+"Lingrey, Mr Edward",no,,1st,male,FALSE,TRUE
+"Long, Mr Milton Clyde",no,29,1st,male,FALSE,FALSE
+"Loring, Mr Joseph Holland",no,30,1st,male,FALSE,FALSE
+"Maguire, Mr John Edward",no,30,1st,male,FALSE,FALSE
+"Marechal, Mr Pierre",yes,,1st,male,TRUE,TRUE
+"Marvin, Mr Daniel Warner",no,,1st,male,FALSE,TRUE
+"McCaffry, Mr Thomas Francis",no,46,1st,male,FALSE,FALSE
+"McCarthy, Mr Timothy J.",no,54,1st,male,FALSE,FALSE
+"McGough, Mr James R.",yes,36,1st,male,TRUE,FALSE
+"Meyer, Mr Edgar Joseph",no,28,1st,male,FALSE,FALSE
+"Millet, Mr Francis Davis",no,65,1st,male,FALSE,FALSE
+"Minahan, Dr William Edward",no,44,1st,male,FALSE,FALSE
+"Mock, Mr Philip E.",yes,,1st,male,TRUE,TRUE
+"Molson, Mr Harry Markland",no,55,1st,male,FALSE,FALSE
+"Moore, Mr Clarence Bloomfield",no,47,1st,male,FALSE,FALSE
+"Natsch, Mr Charles H.",no,36,1st,male,FALSE,FALSE
+"Newell, Mr Arthur Webster",no,58,1st,male,FALSE,FALSE
+"Nicholson, Mr Arthur Ernest",no,64,1st,male,FALSE,FALSE
+"Omont, Mr A. Fernand",yes,,1st,male,TRUE,TRUE
+"Ostby, Mr Engelhart Cornelius",no,64,1st,male,FALSE,FALSE
+"Ovies y Rodriguez, Mr Servando",no,28,1st,male,FALSE,FALSE
+"Parr, Mr William Henry Marsh",no,,1st,male,FALSE,TRUE
+"Partner, Mr Austin",no,,1st,male,FALSE,TRUE
+"Payne, Mr Vivian Ponsonby",no,22,1st,male,FALSE,FALSE
+"Pears, Mr Thomas",no,,1st,male,FALSE,TRUE
+"Penasco, Mr Victor de Satode",no,18,1st,male,FALSE,FALSE
+"Peuchen, Major Arthur Godfrey",yes,52,1st,male,TRUE,FALSE
+"Porter, Mr Walter Chamberlain",no,46,1st,male,FALSE,FALSE
+"Reuchlin, Jonkheer John George",no,,1st,male,FALSE,TRUE
+"Rheims, Mr George Lucien",yes,,1st,male,TRUE,TRUE
+"Ringhini, Mr Sante",no,33,1st,male,FALSE,FALSE
+"Robbins, Mr Victor",no,,1st,male,FALSE,TRUE
+"Roebling, Mr Washington Augustus 2nd",no,31,1st,male,FALSE,FALSE
+"Romaine, Mr Charles Hallace",yes,,1st,male,TRUE,TRUE
+"Rood, Mr Hugh R.",no,,1st,male,FALSE,TRUE
+"Ross, Mr John Hugo",no,,1st,male,FALSE,TRUE
+"Rothschild, Mr Martin",no,55,1st,male,FALSE,FALSE
+"Rowe, Mr Alfred G.",no,,1st,male,FALSE,TRUE
+"Ryerson, Master John Borie",yes,13,1st,male,TRUE,FALSE
+"Ryerson, Mr Arthur Larned",no,61,1st,male,FALSE,FALSE
+"Saalfeld, Mr Adolphe",yes,,1st,male,TRUE,TRUE
+"Salomon, Mr Abraham L.",yes,,1st,male,TRUE,TRUE
+"Seward, Mr Frederic Kimber",yes,34,1st,male,TRUE,FALSE
+"Silverthorne, Mr Spencer Victor",yes,36,1st,male,TRUE,FALSE
+"Silvey, Mr William Baird",no,50,1st,male,FALSE,FALSE
+"Simonius-Blumer, Col Alfons",yes,56,1st,male,TRUE,FALSE
+"Sloper, Mr William Thompson",yes,28,1st,male,TRUE,FALSE
+"Smart, Mr John Montgomery",no,56,1st,male,FALSE,FALSE
+"Smith, Mr James Clinch",no,56,1st,male,FALSE,FALSE
+"Smith, Mr Lucien Philip",no,24,1st,male,FALSE,FALSE
+"Smith, Mr Richard William",no,,1st,male,FALSE,TRUE
+"Snyder, Mr John Pillsbury",yes,24,1st,male,TRUE,FALSE
+"Spedden, Master Robert Douglas",yes,6,1st,male,TRUE,FALSE
+"Spedden, Mr Frederick Oakley",yes,45,1st,male,TRUE,FALSE
+"Spencer, Mr William Augustus",no,57,1st,male,FALSE,FALSE
+"Staehlin, Dr Max",yes,32,1st,male,TRUE,FALSE
+"Stead, Mr William Thomas",no,62,1st,male,FALSE,FALSE
+"Stengel, Mr Charles Emil Henry",yes,54,1st,male,TRUE,FALSE
+"Stewart, Mr Albert A.",no,,1st,male,FALSE,TRUE
+"Straus, Mr Isidor",no,67,1st,male,FALSE,FALSE
+"Sutton, Mr Frederick",no,61,1st,male,FALSE,FALSE
+"Taussig, Mr Emil",no,52,1st,male,FALSE,FALSE
+"Taylor, Mr Elmer Zebley",yes,48,1st,male,TRUE,FALSE
+"Thayer, Mr John Borland",no,49,1st,male,FALSE,FALSE
+"Thayer, Mr John Borland, jr.",yes,17,1st,male,TRUE,FALSE
+"Thorne, Mr George (alias of: Mr George Rosenshine)",no,46,1st,male,FALSE,FALSE
+"Tucker, Mr Gilbert Milligan, jr",yes,31,1st,male,TRUE,FALSE
+"Uruchurtu, Mr Manuel E.",no,,1st,male,FALSE,TRUE
+"Van Derhoef, Mr Wyckoff",no,61,1st,male,FALSE,FALSE
+"Walker, Mr William Anderson",no,47,1st,male,FALSE,FALSE
+"Warren, Mr Frank Manley",no,64,1st,male,FALSE,FALSE
+"Weir, Col John",no,60,1st,male,FALSE,FALSE
+"White, Mr Percival Wayland",no,54,1st,male,FALSE,FALSE
+"White, Mr Richard Frasar",no,21,1st,male,FALSE,FALSE
+"Wick, Mr George Dennick",no,57,1st,male,FALSE,FALSE
+"Widener, Mr George Dunton",no,50,1st,male,FALSE,FALSE
+"Widener, Mr Harry Elkins",no,27,1st,male,FALSE,FALSE
+"Williams, Mr Charles Duane",no,51,1st,male,FALSE,FALSE
+"Williams, Mr Fletcher Lambert",no,,1st,male,FALSE,TRUE
+"Williams, Mr Richard Norris II",yes,21,1st,male,TRUE,FALSE
+"Woolner, Mr Hugh",yes,,1st,male,TRUE,TRUE
+"Wright, Mr George",no,,1st,male,FALSE,TRUE
+"Abelson, Mrs Samuel (Anna)",yes,28,2nd,female,TRUE,FALSE
+"Angle, Mrs William A. (Florence)",yes,32,2nd,female,TRUE,FALSE
+"Balls, Mrs Ada E. Hall",yes,36,2nd,female,TRUE,FALSE
+"Beane, Mrs Edward (Ethel Clarke)",yes,19,2nd,female,TRUE,FALSE
+"Becker, Miss Marion Louise",yes,4,2nd,female,TRUE,FALSE
+"Becker, Miss Ruth Elizabeth",yes,12,2nd,female,TRUE,FALSE
+"Becker, Mrs Allen Oliver (Nellie E. Baumgardner)",yes,36,2nd,female,TRUE,FALSE
+"Bentham, Miss Lilian W.",yes,19,2nd,female,TRUE,FALSE
+"Brown, Miss Edith E.",yes,15,2nd,female,TRUE,FALSE
+"Brown, Miss Mildred",yes,24,2nd,female,TRUE,FALSE
+"Brown, Mrs Thomas William Solomon (Elizabeth C.)",yes,40,2nd,female,TRUE,FALSE
+"Bryhl, Miss Dagmar",yes,20,2nd,female,TRUE,FALSE
+"Buss, Miss Kate",yes,36,2nd,female,TRUE,FALSE
+"Bystrom, Mrs Carolina",yes,42,2nd,female,TRUE,FALSE
+"Caldwell, Mrs Albert Francis (Sylvia Mae Harbaugh)",yes,26,2nd,female,TRUE,FALSE
+"Cameron, Miss Clear",yes,31,2nd,female,TRUE,FALSE
+"Carter, Mrs Ernest Courtenay (Lillian Hughes)",no,44,2nd,female,FALSE,FALSE
+"Chapman, Mrs John Henry (Elizabeth Lawry)",no,30,2nd,female,FALSE,FALSE
+"Christy, Miss Julie",yes,,2nd,female,TRUE,TRUE
+"Christy, Mrs Alice Frances",yes,,2nd,female,TRUE,TRUE
+"Clarke, Mrs Charles V. (Ada Maria)",yes,,2nd,female,TRUE,TRUE
+"Collyer, Miss Marjorie",yes,8,2nd,female,TRUE,FALSE
+"Collyer, Mrs Harvey (Charlotte Tate)",yes,31,2nd,female,TRUE,FALSE
+"Cook, Mrs Selena Rogers",no,22,2nd,female,FALSE,FALSE
+"Corbett, Mrs Walter H. (Irene Colvin)",no,30,2nd,female,FALSE,FALSE
+"Corey, Mrs Percy C. (Mary Phyllis Elizabeth Miller)",no,,2nd,female,FALSE,TRUE
+"Davis, Miss Mary",yes,28,2nd,female,TRUE,FALSE
+"Davis, Mrs Agnes",yes,49,2nd,female,TRUE,FALSE
+"Doling, Miss Elsie",yes,18,2nd,female,TRUE,FALSE
+"Doling, Mrs Ada",yes,32,2nd,female,TRUE,FALSE
+"Drew, Mrs James Vivian (Lulu Thorne Christian)",yes,34,2nd,female,TRUE,FALSE
+"Duran y More, Miss Asuncion",yes,,2nd,female,TRUE,TRUE
+"Duran y More, Miss Florentina",yes,,2nd,female,TRUE,TRUE
+"Faunthorpe, Mrs Lizzie (see Wilkinson, E.)",yes,,2nd,female,TRUE,TRUE
+"Funk, Miss Annie C.",no,38,2nd,female,FALSE,FALSE
+"Garside, Miss Ethel",yes,24,2nd,female,TRUE,FALSE
+"Hamalainen, Mrs William (Anna)",yes,23,2nd,female,TRUE,FALSE
+"Harper, Miss Nina",yes,6,2nd,female,TRUE,FALSE
+"Hart, Miss Eva Miriam",yes,7,2nd,female,TRUE,FALSE
+"Hart, Mrs Benjamin (Esther)",yes,45,2nd,female,TRUE,FALSE
+"Herman, Miss Alice",yes,24,2nd,female,TRUE,FALSE
+"Herman, Miss Kate",yes,24,2nd,female,TRUE,FALSE
+"Herman, Mrs Samuel (Jane Laver)",yes,48,2nd,female,TRUE,FALSE
+"Hewlett, Mrs Mary D.",yes,,2nd,female,TRUE,TRUE
+"Hiltunen, Miss Marta",no,18,2nd,female,FALSE,FALSE
+"Hocking, Miss Ellen (Nellie)",yes,21,2nd,female,TRUE,FALSE
+"Hocking, Mrs Elizabeth",yes,53,2nd,female,TRUE,FALSE
+"Hold, Mrs Stephen (Annie Margaret)",yes,36,2nd,female,TRUE,FALSE
+"Howard, Mrs Benjamin (Ellen Truelove)",no,,2nd,female,FALSE,TRUE
+"Ilett, Miss Bertha",yes,17,2nd,female,TRUE,FALSE
+"Jacobsohn, Mrs Sidney Samuel (Amy Frances Christy)",yes,,2nd,female,TRUE,TRUE
+"Jerwan, Mrs Amin S. (Marie Thuillard)",yes,23,2nd,female,TRUE,FALSE
+"Kantor, Mrs Sinai (Miriam Sternim)",yes,,2nd,female,TRUE,TRUE
+"Karnes, Mrs J. Frank (Claire Bennett)",no,22,2nd,female,FALSE,FALSE
+"Keane, Miss Nora A.",yes,,2nd,female,TRUE,TRUE
+"Kelly, Mrs Florence (Fannie)",yes,45,2nd,female,TRUE,FALSE
+"LaRoche, Miss Louise",yes,1,2nd,female,TRUE,FALSE
+"LaRoche, Miss Simonne",yes,3,2nd,female,TRUE,FALSE
+"LaRoche, Mrs Joseph (Juliet)",yes,22,2nd,female,TRUE,FALSE
+"Lahtinen, Mrs William (Anna Sylvan)",no,26,2nd,female,FALSE,FALSE
+"Lehmann, Miss Bertha",yes,,2nd,female,TRUE,TRUE
+"Leitch, Miss Jessie",yes,,2nd,female,TRUE,TRUE
+"Lemore, Mrs Amelia",yes,34,2nd,female,TRUE,FALSE
+"Louch, Mrs Charles Alexander (Alice Adelaide)",yes,,2nd,female,TRUE,TRUE
+"Mack, Mrs Mary",no,57,2nd,female,FALSE,FALSE
+"Mallet, Mrs Albert (Antoinette)",yes,,2nd,female,TRUE,TRUE
+"Marshall, Mrs Kate Louise Phillips",yes,19,2nd,female,TRUE,FALSE
+"Mellenger, Miss Madeleine Violet",yes,13,2nd,female,TRUE,FALSE
+"Mellenger, Mrs Elizabeth Anne",yes,41,2nd,female,TRUE,FALSE
+"Nasser (Nasrallah), Mrs Nicholas",yes,18,2nd,female,TRUE,FALSE
+"Nye, Mrs Elizabeth Ramell",yes,29,2nd,female,TRUE,FALSE
+"Parrish, Mrs Lutie Davis",yes,50,2nd,female,TRUE,FALSE
+"Phillips, Miss Alice",yes,42,2nd,female,TRUE,FALSE
+"Pinsky, Miss Rosa",yes,32,2nd,female,TRUE,FALSE
+"Quick, Miss Phyllis May",yes,2,2nd,female,TRUE,FALSE
+"Quick, Miss Winifred Vera",yes,8,2nd,female,TRUE,FALSE
+"Quick, Mrs Frederick C. (Jane Richards)",yes,33,2nd,female,TRUE,FALSE
+"Renouf, Mrs Peter Henry (Lillian Jefferys)",yes,30,2nd,female,TRUE,FALSE
+"Reynaldo, Mrs Encarnacion",yes,28,2nd,female,TRUE,FALSE
+"Richards, Mrs Sidney (Emily Hocking)",yes,25,2nd,female,TRUE,FALSE
+"Ridsdale, Miss Lucy",yes,50,2nd,female,TRUE,FALSE
+"Rugg, Miss Emily",yes,21,2nd,female,TRUE,FALSE
+"Shelley, Mrs William (Imanita)",yes,25,2nd,female,TRUE,FALSE
+"Silven, Miss Lyyli",yes,18,2nd,female,TRUE,FALSE
+"Sincock, Miss Maude",yes,20,2nd,female,TRUE,FALSE
+"Siukonnen, Miss Anna",yes,30,2nd,female,TRUE,FALSE
+"Slayter, Miss Hilda Mary",yes,30,2nd,female,TRUE,FALSE
+"Smith, Miss Marion",yes,,2nd,female,TRUE,TRUE
+"Toomey, Miss Ellen",yes,50,2nd,female,TRUE,FALSE
+"Trout, Mrs William H. (Jessie L.)",yes,,2nd,female,TRUE,TRUE
+"Troutt, Miss Edwina Celia",yes,27,2nd,female,TRUE,FALSE
+"Turpin, Mrs William John (Dorothy Anne Wonnacott)",no,27,2nd,female,FALSE,FALSE
+"Walcroft, Miss Nellie",yes,35,2nd,female,TRUE,FALSE
+"Ware, Mrs John James (Florence Louise Long)",yes,28,2nd,female,TRUE,FALSE
+"Watt, Miss Bertha",yes,12,2nd,female,TRUE,FALSE
+"Watt, Mrs James (Bessie Inglis Milne)",yes,40,2nd,female,TRUE,FALSE
+"Webber, Miss Susan",yes,36,2nd,female,TRUE,FALSE
+"Weisz, Mrs Leopold (Mathilde)",yes,32,2nd,female,TRUE,FALSE
+"Wells, Miss Joan",yes,4,2nd,female,TRUE,FALSE
+"Wells, Mrs Arthur H. (Addie Trevaskis)",yes,29,2nd,female,TRUE,FALSE
+"West, Miss Barbara J.",yes,,2nd,female,TRUE,TRUE
+"West, Miss Constance Mirium",yes,,2nd,female,TRUE,TRUE
+"West, Mrs Edwy Arthur (Ada Mary)",yes,33,2nd,female,TRUE,FALSE
+"Wilkinson, Mrs Elizabeth Anne",yes,,2nd,female,TRUE,TRUE
+"Wright, Miss Marion",yes,26,2nd,female,TRUE,FALSE
+"Yrois, Miss Henriette",no,,2nd,female,FALSE,TRUE
+"del Carlo, Mrs Sebastiano (Argenia Genovese)",yes,22,2nd,female,TRUE,FALSE
+"Abelson, Mr Samuel",no,30,2nd,male,FALSE,FALSE
+"Aldworth, Mr Charles Augustus",no,30,2nd,male,FALSE,FALSE
+"Andrew, Mr Edgar Samuel",no,18,2nd,male,FALSE,FALSE
+"Andrew, Mr Frank",no,,2nd,male,FALSE,TRUE
+"Angle, Mr William A.",no,34,2nd,male,FALSE,FALSE
+"Ashby, Mr John",no,57,2nd,male,FALSE,FALSE
+"Bailey, Mr Percy Andrew",no,18,2nd,male,FALSE,FALSE
+"Baimbrigge, Mr Charles R.",no,23,2nd,male,FALSE,FALSE
+"Banfield, Mr Frederick J.",no,28,2nd,male,FALSE,FALSE
+"Bateman, Rev Robert James",no,51,2nd,male,FALSE,FALSE
+"Beane, Mr Edward",yes,32,2nd,male,TRUE,FALSE
+"Beauchamp, Mr Henry James",no,28,2nd,male,FALSE,FALSE
+"Becker, Master Richard F.",yes,1,2nd,male,TRUE,FALSE
+"Beesley, Mr Lawrence",yes,34,2nd,male,TRUE,FALSE
+"Berriman, Mr William S.",no,23,2nd,male,FALSE,FALSE
+"Botsford, Mr William Hull",no,26,2nd,male,FALSE,FALSE
+"Bowenur, Mr Solomon",no,,2nd,male,FALSE,TRUE
+"Bracken, Mr James H.",no,27,2nd,male,FALSE,FALSE
+"Brown, Mr Thomas William Solomon",no,45,2nd,male,FALSE,FALSE
+"Bryhl, Mr Kurt Arnold Gottfrid",no,25,2nd,male,FALSE,FALSE
+"Butler, Mr Reginald Fenton",no,25,2nd,male,FALSE,FALSE
+"Byles, Rev. Thomas Roussel D.",no,,2nd,male,FALSE,TRUE
+"Caldwell, Master Alden Gates",yes,0.8333,2nd,male,TRUE,FALSE
+"Caldwell, Mr Albert Francis",yes,26,2nd,male,TRUE,FALSE
+"Campbell, Mr William",no,,2nd,male,FALSE,TRUE
+"Carbines, Mr William",no,19,2nd,male,FALSE,FALSE
+"Carter, Rev Ernest Courtenay",no,54,2nd,male,FALSE,FALSE
+"Chapman, Mr Charles Henry",no,52,2nd,male,FALSE,FALSE
+"Chapman, Mr John Henry",no,30,2nd,male,FALSE,FALSE
+"Clarke, Mr Charles V.",no,29,2nd,male,FALSE,FALSE
+"Coleridge, Mr Reginald Charles",no,29,2nd,male,FALSE,FALSE
+"Collander, Mr Erik",no,27,2nd,male,FALSE,FALSE
+"Collett, Mr Sidney C. Stuart",yes,24,2nd,male,TRUE,FALSE
+"Collyer, Mr Harvey",no,35,2nd,male,FALSE,FALSE
+"Cotterill, Mr Harry",no,20,2nd,male,FALSE,FALSE
+"Cunningham, Mr Alfred Fleming",no,,2nd,male,FALSE,TRUE
+"Davies, Mr Charles Henry",no,21,2nd,male,FALSE,FALSE
+"Davis, Master John Morgan",yes,8,2nd,male,TRUE,FALSE
+"Deacon, Mr Percy",no,18,2nd,male,FALSE,FALSE
+"Denbury, Mr Herbert",no,25,2nd,male,FALSE,FALSE
+"Dibden, Mr William",no,18,2nd,male,FALSE,FALSE
+"Downton (?Douton), Mr William James",no,,2nd,male,FALSE,TRUE
+"Drew, Master Marshall Brines",yes,8,2nd,male,TRUE,FALSE
+"Drew, Mr James Vivian",no,42,2nd,male,FALSE,FALSE
+"Eitemiller, Mr George Floyd",no,23,2nd,male,FALSE,FALSE
+"Enander, Mr Ingvar",no,21,2nd,male,FALSE,FALSE
+"Fahlstrom, Mr Arne Jonas",no,19,2nd,male,FALSE,FALSE
+"Faunthorpe, Mr Harry",no,,2nd,male,FALSE,TRUE
+"Fillbrook, Mr Charles",no,,2nd,male,FALSE,TRUE
+"Fox, Mr Stanley H.",no,38,2nd,male,FALSE,FALSE
+"Frost, Mr Anthony (Archie) W.",no,,2nd,male,FALSE,TRUE
+"Fynney, Mr Joseph J.",no,35,2nd,male,FALSE,FALSE
+"Gale, Mr Harry",no,35,2nd,male,FALSE,FALSE
+"Gale, Mr Shadrach",no,38,2nd,male,FALSE,FALSE
+"Gaskell, Mr Alfred",no,16,2nd,male,FALSE,FALSE
+"Gavey, Mr Lawrence",no,26,2nd,male,FALSE,FALSE
+"Gilbert, Mr William",no,45,2nd,male,FALSE,FALSE
+"Giles, Mr Edgar",no,24,2nd,male,FALSE,FALSE
+"Giles, Mr Frederick",no,21,2nd,male,FALSE,FALSE
+"Giles, Mr Ralph",no,22,2nd,male,FALSE,FALSE
+"Gill, Mr John W.",no,,2nd,male,FALSE,TRUE
+"Gillespie, Mr William",no,34,2nd,male,FALSE,FALSE
+"Givard, Mr Hans Christensen",no,30,2nd,male,FALSE,FALSE
+"Greenberg, Mr Samuel",no,50,2nd,male,FALSE,FALSE
+"Hale, Mr Reginald",no,30,2nd,male,FALSE,FALSE
+"Hamalainen, Master Viljo",yes,1,2nd,male,TRUE,FALSE
+"Harbeck, Mr William H.",no,44,2nd,male,FALSE,FALSE
+"Harper, Rev John",no,28,2nd,male,FALSE,FALSE
+"Harris, Mr George",yes,30,2nd,male,TRUE,FALSE
+"Harris, Mr Walter",no,,2nd,male,FALSE,TRUE
+"Hart, Mr Benjamin",no,43,2nd,male,FALSE,FALSE
+"Herman, Mr Samuel",no,49,2nd,male,FALSE,FALSE
+"Hickman, Mr Leonard Mark",no,34,2nd,male,FALSE,FALSE
+"Hickman, Mr Lewis",no,32,2nd,male,FALSE,FALSE
+"Hickman, Mr Stanley George",no,21,2nd,male,FALSE,FALSE
+"Hocking, Mr George",no,23,2nd,male,FALSE,FALSE
+"Hocking, Mr Samuel James",no,,2nd,male,FALSE,TRUE
+"Hodges, Mr Henry Price",no,52,2nd,male,FALSE,FALSE
+"Hold, Mr Stephen",no,42,2nd,male,FALSE,FALSE
+"Hood, Mr Ambrose, Jr",no,21,2nd,male,FALSE,FALSE
+"Hosono, Mr Masafumi",yes,41,2nd,male,TRUE,FALSE
+"Howard, Mr Benjamin",no,,2nd,male,FALSE,TRUE
+"Hunt, Mr George Henry",no,33,2nd,male,FALSE,FALSE
+Jacobsohn Mr Sidney Samuel,no,,2nd,male,FALSE,TRUE
+"Jarvis, Mr John Denzil",no,,2nd,male,FALSE,TRUE
+"Jefferys, Mr Clifford",no,,2nd,male,FALSE,TRUE
+"Jefferys, Mr Ernest",no,,2nd,male,FALSE,TRUE
+"Jenkin, Mr Stephen Curnow",no,,2nd,male,FALSE,TRUE
+"Kantor, Mr Sinai",no,34,2nd,male,FALSE,FALSE
+"Keane, Mr Daniel",no,,2nd,male,FALSE,TRUE
+"Kirkland, Rev Charles Leonard",no,,2nd,male,FALSE,TRUE
+"Knight, Mr Robert",no,,2nd,male,FALSE,TRUE
+"Kvillner, Mr Johan Henrik Johannesson",no,31,2nd,male,FALSE,FALSE
+"LaRoche, Mr Joseph",no,26,2nd,male,FALSE,FALSE
+"Lahtinen, Rev William",no,30,2nd,male,FALSE,FALSE
+"Lamb, Mr John James",no,,2nd,male,FALSE,TRUE
+"Levy, Mr Rene Jacques",no,,2nd,male,FALSE,TRUE
+"Leyson, Mr Robert William Norman",no,25,2nd,male,FALSE,FALSE
+"Lingan, Mr John",no,,2nd,male,FALSE,TRUE
+"Louch, Mr Charles Alexander",no,48,2nd,male,FALSE,FALSE
+"Malachard, Mr Noel",no,,2nd,male,FALSE,TRUE
+"Mallet, Master Andre",yes,2,2nd,male,TRUE,FALSE
+"Mallet, Mr Albert",no,,2nd,male,FALSE,TRUE
+"Mangiavacchi, Mr Serafino Emilio",no,,2nd,male,FALSE,TRUE
+"Mantvila, Rev Joseph",no,27,2nd,male,FALSE,FALSE
+"Matthews, Mr William John",no,30,2nd,male,FALSE,FALSE
+"Maybery, Mr Frank H.",no,20,2nd,male,FALSE,FALSE
+"McCrae, Mr Arthur Gordon",no,45,2nd,male,FALSE,FALSE
+"McCrie, Mr James Matthew",no,,2nd,male,FALSE,TRUE
+"McKane, Mr Peter D.",no,46,2nd,male,FALSE,FALSE
+"Mellor, Mr William John",yes,19,2nd,male,TRUE,FALSE
+"Meyer, Mr August",no,30,2nd,male,FALSE,FALSE
+"Milling, Mr Jacob Christian",no,48,2nd,male,FALSE,FALSE
+"Mitchell, Mr Henry Michael",no,71,2nd,male,FALSE,FALSE
+"Moraweck, Dr Ernest",no,54,2nd,male,FALSE,FALSE
+"Morley, Mr William",no,,2nd,male,FALSE,TRUE
+"Mudd, Mr Thomas C.",no,,2nd,male,FALSE,TRUE
+"Myles, Mr Thomas Francis",no,64,2nd,male,FALSE,FALSE
+"Nasser (Nasrallah), Mr Nicholas",no,32,2nd,male,FALSE,FALSE
+"Navratil, Master Edmond Roger",yes,2,2nd,male,TRUE,FALSE
+"Navratil, Master Michel M.",yes,3,2nd,male,TRUE,FALSE
+"Navratil, Mr Michel",no,32,2nd,male,FALSE,FALSE
+"Nesson, Mr Israel",no,26,2nd,male,FALSE,FALSE
+"Nicholls, Mr Joseph Charles",no,19,2nd,male,FALSE,FALSE
+"Norman, Mr Robert Douglas",no,,2nd,male,FALSE,TRUE
+"Nourney, Mr Alfred (aka Baron von Drachstedt)",yes,20,2nd,male,TRUE,FALSE
+"Otter, Mr Richard",no,39,2nd,male,FALSE,FALSE
+"Oxenham, Mr Percy Thomas",yes,22,2nd,male,TRUE,FALSE
+"Padro y Manent, Mr Julian",yes,,2nd,male,TRUE,TRUE
+"Pain, Dr Alfred",no,24,2nd,male,FALSE,FALSE
+"Pallas y Castello, Mr Emilio",yes,,2nd,male,TRUE,TRUE
+"Parker, Mr Clifford R.",no,28,2nd,male,FALSE,FALSE
+"Parkes, Mr Francis (Frank)",no,,2nd,male,FALSE,TRUE
+"Pengelly, Mr Frederick",no,20,2nd,male,FALSE,FALSE
+"Pernot, Mr Rene",no,,2nd,male,FALSE,TRUE
+"Peruschitz, Rev. Joseph M.",no,40,2nd,male,FALSE,FALSE
+"Phillips, Mr Robert",no,21,2nd,male,FALSE,FALSE
+"Ponesell, Mr Martin",no,34,2nd,male,FALSE,FALSE
+"Portaluppi, Mr Emilio",yes,,2nd,male,TRUE,TRUE
+"Pulbaum, Mr Frank",no,,2nd,male,FALSE,TRUE
+"Reeves, Mr David",no,36,2nd,male,FALSE,FALSE
+"Renouf, Mr Peter Henry",no,34,2nd,male,FALSE,FALSE
+"Richard, Mr Emil",no,23,2nd,male,FALSE,FALSE
+"Richards, Master George Sidney",yes,0.8333,2nd,male,TRUE,FALSE
+"Richards, Master William Rowe",yes,3,2nd,male,TRUE,FALSE
+"Rogers, Mr Harry",no,,2nd,male,FALSE,TRUE
+"Sedgwick, Mr Charles Frederick Waddington",no,,2nd,male,FALSE,TRUE
+"Sharp, Mr Percival",no,,2nd,male,FALSE,TRUE
+"Sjostedt, Mr Ernst Adolf",no,59,2nd,male,FALSE,FALSE
+"Slemen, Mr Richard James",no,35,2nd,male,FALSE,FALSE
+"Smith (Schmidt), Mr Augustus",no,22,2nd,male,FALSE,FALSE
+"Sobey, Mr Hayden",no,25,2nd,male,FALSE,FALSE
+"Stanton, Mr Samuel Ward",no,41,2nd,male,FALSE,FALSE
+"Stokes, Mr Philip Joseph",no,25,2nd,male,FALSE,FALSE
+"Swane, Mr George",no,18,2nd,male,FALSE,FALSE
+"Sweet, Mr George",no,14,2nd,male,FALSE,FALSE
+"Troupiansky, Mr Moses Aaron",no,22,2nd,male,FALSE,FALSE
+"Turpin, Mr William John",no,29,2nd,male,FALSE,FALSE
+"Veale, Mr James",no,30,2nd,male,FALSE,FALSE
+"Waelens, Mr Achille",no,22,2nd,male,FALSE,FALSE
+"Ware, Mr John James",no,30,2nd,male,FALSE,FALSE
+"Ware, Mr William J.",no,23,2nd,male,FALSE,FALSE
+"Watson, Mr Ennis Hastings",no,,2nd,male,FALSE,TRUE
+"Weisz, Mr Leopold",no,28,2nd,male,FALSE,FALSE
+"Wells, Master Ralph Lester",yes,2,2nd,male,TRUE,FALSE
+"West, Mr Edwy Arthur",no,36,2nd,male,FALSE,FALSE
+"Wheadon, Mr Edward",no,,2nd,male,FALSE,TRUE
+"Wheeler, Mr Edwin",no,,2nd,male,FALSE,TRUE
+"Wheeler, Mr Frederick",no,,2nd,male,FALSE,TRUE
+"Wilhelms, Mr Charles",yes,32,2nd,male,TRUE,FALSE
+"Williams, Mr Charles Eugene",yes,,2nd,male,TRUE,TRUE
+"de Brito, Mr Jose Joaquim",no,,2nd,male,FALSE,TRUE
+"del Carlo, Mr Sebastiano",no,28,2nd,male,FALSE,FALSE
+"Abbott, Mrs Stanton (Rosa)",yes,35,3rd,female,TRUE,FALSE
+"Abelseth, Miss Anna Karen",yes,16,3rd,female,TRUE,FALSE
+"Abraham, Mrs Joseph (Sophie Easu)",yes,18,3rd,female,TRUE,FALSE
+"Ahlin, Mrs Johanna Persdotter",no,40,3rd,female,FALSE,FALSE
+"Aks, Mrs Sam (Leah Rosen)",yes,18,3rd,female,TRUE,FALSE
+"Andersson, Miss Ebba Iris",no,6,3rd,female,FALSE,FALSE
+"Andersson, Miss Ellis Anna Maria",no,2,3rd,female,FALSE,FALSE
+"Andersson, Miss Erna",yes,17,3rd,female,TRUE,FALSE
+"Andersson, Miss Ida Augusta Margareta",no,38,3rd,female,FALSE,FALSE
+"Andersson, Miss Ingeborg Constancia",no,9,3rd,female,FALSE,FALSE
+"Andersson, Miss Sigrid Elizabeth",no,11,3rd,female,FALSE,FALSE
+"Andersson, Mrs Anders Johan (Alfrida K. Brogren)",no,39,3rd,female,FALSE,FALSE
+"Arnold, Mrs Josef (Josephine Frank)",no,18,3rd,female,FALSE,FALSE
+"Asplund, Miss Lillian Gertrud",yes,5,3rd,female,TRUE,FALSE
+"Asplund, Mrs Carl Oscar (Selma Augusta Johansson)",yes,38,3rd,female,TRUE,FALSE
+"Assaf, Mrs Mariana",yes,45,3rd,female,TRUE,FALSE
+"Attalah, Miss Malaka",no,17,3rd,female,FALSE,FALSE
+"Backstrom, Mrs Karl Alfred (Maria Mathilda Gustafsson)",yes,33,3rd,female,TRUE,FALSE
+"Baclini, Miss Eugenie",yes,3,3rd,female,TRUE,FALSE
+"Baclini, Miss Helene",yes,,3rd,female,TRUE,TRUE
+"Baclini, Miss Maria",yes,,3rd,female,TRUE,TRUE
+"Baclini, Mrs Solomon (Latifa)",yes,,3rd,female,TRUE,TRUE
+"Badman, Miss Emily Louisa",yes,18,3rd,female,TRUE,FALSE
+"Banoura, Miss Ayout",yes,15,3rd,female,TRUE,FALSE
+"Barbara, Miss Saude",no,18,3rd,female,FALSE,FALSE
+"Barbara, Mrs Catherine",no,45,3rd,female,FALSE,FALSE
+"Barry, Miss Julia",no,27,3rd,female,FALSE,FALSE
+"Boulos, Miss Laura",no,9,3rd,female,FALSE,FALSE
+"Boulos, Mrs Joseph (Sultana)",no,,3rd,female,FALSE,TRUE
+"Bourke, Miss Mary",no,,3rd,female,FALSE,TRUE
+"Bourke, Mrs John (Catherine)",no,32,3rd,female,FALSE,FALSE
+"Bradley, Miss Bridget Delia",yes,18,3rd,female,TRUE,FALSE
+"Braf, Miss Elin Ester Maria",no,20,3rd,female,FALSE,FALSE
+"Buckley, Miss Katherine",no,20,3rd,female,FALSE,FALSE
+"Burns, Miss Mary Delia",no,18,3rd,female,FALSE,FALSE
+"Canavan, Miss Mary",no,21,3rd,female,FALSE,FALSE
+"Caram (Kareem), Mrs Joseph (Maria Elias)",no,,3rd,female,FALSE,TRUE
+"Carr, Miss Helen",yes,16,3rd,female,TRUE,FALSE
+"Carr, Miss Jeannie",no,37,3rd,female,FALSE,FALSE
+"Connolly, Miss Kate",yes,22,3rd,female,TRUE,FALSE
+"Connolly, Miss Kate (1)",no,30,3rd,female,FALSE,FALSE
+"Cribb, Miss Laura Alice",yes,17,3rd,female,TRUE,FALSE
+"Dahlberg, Miss Gerda Ulrika",no,22,3rd,female,FALSE,FALSE
+"Daly, Miss Marcella",yes,30,3rd,female,TRUE,FALSE
+"Danbom, Mrs Ernst Gilbert (Anna Sigrid Maria Brogren)",no,28,3rd,female,FALSE,FALSE
+"Davison, Mrs Thomas Henry (Mary Finck)",yes,,3rd,female,TRUE,TRUE
+"De Messemaeker, Mrs William Joseph (Anna)",yes,36,3rd,female,TRUE,FALSE
+"Dean, Miss Elizabeth Gladys (Millvena)",yes,0.1667,3rd,female,TRUE,FALSE
+"Dean, Mrs Bertram (Eva)",yes,33,3rd,female,TRUE,FALSE
+"Devaney, Miss Margaret",yes,19,3rd,female,TRUE,FALSE
+"Dowdell, Miss Elizabeth",yes,30,3rd,female,TRUE,FALSE
+"Doyle, Miss Elizabeth",no,24,3rd,female,FALSE,FALSE
+"Drapkin, Miss Jennie",yes,23,3rd,female,TRUE,FALSE
+"Driscoll, Miss Bridget",yes,24,3rd,female,TRUE,FALSE
+"Dyker, Mrs Adolf Fredrik (Anna Elizabeth Judith Andersson)",yes,22,3rd,female,TRUE,FALSE
+"Emanuel, Miss Virginia Ethel",yes,5,3rd,female,TRUE,FALSE
+"Ford, Miss Doolina Margaret",no,21,3rd,female,FALSE,FALSE
+"Ford, Miss Maggie",no,9,3rd,female,FALSE,FALSE
+"Ford, Mrs Edward (Margaret Ann)",no,48,3rd,female,FALSE,FALSE
+"Georges, Mrs Shahini Weappi",yes,,3rd,female,TRUE,TRUE
+"Gilnagh, Miss Katie",yes,16,3rd,female,TRUE,FALSE
+"Glynn, Miss Mary Agatha",yes,,3rd,female,TRUE,TRUE
+"Goldsmith, Mrs Frank John (Emily A. Brown)",yes,,3rd,female,TRUE,TRUE
+"Goodwin, Miss Jessie A.",no,10,3rd,female,FALSE,FALSE
+"Goodwin, Miss Lillian A.",no,16,3rd,female,FALSE,FALSE
+"Goodwin, Mrs Frederick (Augusta)",no,43,3rd,female,FALSE,FALSE
+"Haas, Miss Aloisia",no,,3rd,female,FALSE,TRUE
+"Hagardon, Miss Kate",no,,3rd,female,FALSE,TRUE
+"Hakkarainen, Mrs Pekko Pietari",yes,,3rd,female,TRUE,TRUE
+"Hansen, Mrs Claus Peter",yes,,3rd,female,TRUE,TRUE
+"Harknett, Miss Alice",no,,3rd,female,FALSE,TRUE
+"Healy, Miss Nora",no,,3rd,female,FALSE,TRUE
+"Hegarty, Miss Nora",no,,3rd,female,FALSE,TRUE
+"Heikkinen, Miss Laina",yes,,3rd,female,TRUE,TRUE
+"Heininen, Miss Wendla Maria",no,,3rd,female,FALSE,TRUE
+"Hellstrom, Hilda Maria",yes,,3rd,female,TRUE,TRUE
+"Hemming, Miss Nora",no,,3rd,female,FALSE,TRUE
+"Henery, Delia",no,,3rd,female,FALSE,TRUE
+"Henriksson, Jenny Lovisa",no,,3rd,female,FALSE,TRUE
+"Hirvonen, Miss Hildur E.",no,,3rd,female,FALSE,TRUE
+"Hirvonen, Mrs Alexander",yes,,3rd,female,TRUE,TRUE
+"Honkanen, Miss Eluna",yes,,3rd,female,TRUE,TRUE
+"Howard, Miss May",yes,,3rd,female,TRUE,TRUE
+"Ilmakangas, Miss Ida Livija",no,,3rd,female,FALSE,TRUE
+"Ilmakangas, Miss Pieta Sofia",no,,3rd,female,FALSE,TRUE
+"Jensen, Miss Carla Christine",yes,,3rd,female,TRUE,TRUE
+"Jermyn, Miss Annie",yes,,3rd,female,TRUE,TRUE
+"Johnson, Miss Eleanor Ileen",yes,,3rd,female,TRUE,TRUE
+"Johnson, Mrs Oscar W.",no,,3rd,female,FALSE,TRUE
+"Johnston, Miss Catherine H.",no,,3rd,female,FALSE,TRUE
+"Johnston, Mrs Andrew G.",no,,3rd,female,FALSE,TRUE
+"Jussila, Miss Aina Maria",no,,3rd,female,FALSE,TRUE
+"Jussila, Miss Katriina",no,,3rd,female,FALSE,TRUE
+"Karun, Miss Anna Mary",yes,,3rd,female,TRUE,TRUE
+"Kelly, Miss Anna Kate",yes,,3rd,female,TRUE,TRUE
+"Kelly, Miss Mary",yes,,3rd,female,TRUE,TRUE
+"Kelly, Mr James (2)",yes,36,3rd,female,TRUE,FALSE
+"Khalil, Mrs Betros",no,,3rd,female,FALSE,TRUE
+"Kink, Miss Louise Gretchen",yes,,3rd,female,TRUE,TRUE
+"Kink, Miss Maria",no,,3rd,female,FALSE,TRUE
+"Kink, Mrs Anton (Louise Heilmann)",no,,3rd,female,FALSE,TRUE
+"Klasen, Miss Gertrud Emilia",no,,3rd,female,FALSE,TRUE
+"Klasen, Mrs Hulda Kristina",no,,3rd,female,FALSE,TRUE
+"Laitinen, Miss Kritina Sofia",no,,3rd,female,FALSE,TRUE
+"Landegren, Miss Aurora Adelia",yes,,3rd,female,TRUE,TRUE
+"Lefebre, Miss Ida",no,,3rd,female,FALSE,TRUE
+"Lefebre, Miss Jeannie",no,,3rd,female,FALSE,TRUE
+"Lefebre, Miss Mathilde",no,,3rd,female,FALSE,TRUE
+"Lefebre, Mrs Frank",no,,3rd,female,FALSE,TRUE
+"Lemon, Miss Mary",no,,3rd,female,FALSE,TRUE
+"Lindahl, Miss Agda V.",no,,3rd,female,FALSE,TRUE
+"Lindblom, Miss Augusta Charlotta",no,,3rd,female,FALSE,TRUE
+"Lindell, Mrs Edvard Bengtsson",no,,3rd,female,FALSE,TRUE
+"Lobb, Mrs William Arthur",no,,3rd,female,FALSE,TRUE
+"Lundin, Miss Olga Elida",yes,,3rd,female,TRUE,TRUE
+"Madigan, Miss Margaret",yes,,3rd,female,TRUE,TRUE
+"Mahon, Miss Delia",no,,3rd,female,FALSE,TRUE
+"Mangan, Miss Mary",no,,3rd,female,FALSE,TRUE
+"Mannion, Miss Margareth",yes,,3rd,female,TRUE,TRUE
+"Masselmany, Mrs Fatima",yes,,3rd,female,TRUE,TRUE
+"McCarthy, Miss Katie",yes,,3rd,female,TRUE,TRUE
+"McCoy, Miss Agnes",no,,3rd,female,FALSE,TRUE
+"McCoy, Miss Alice",no,,3rd,female,FALSE,TRUE
+"McDermott, Miss Delia",no,,3rd,female,FALSE,TRUE
+"McGovern, Mrs Hugh",yes,,3rd,female,TRUE,TRUE
+"McGowan, Miss Anna",no,,3rd,female,FALSE,TRUE
+"McGowan, Miss Katherine",no,,3rd,female,FALSE,TRUE
+"McNamee, Mrs Neal",no,,3rd,female,FALSE,TRUE
+"Meanwell, Miss Marion Ogden",no,,3rd,female,FALSE,TRUE
+"Meek, Mrs Thomas",no,,3rd,female,FALSE,TRUE
+"Melkebuk, Mrs Philemon",no,,3rd,female,FALSE,TRUE
+"Mocklare, Miss Helen Mary",yes,,3rd,female,TRUE,TRUE
+"Moor, Mrs Beila",yes,,3rd,female,TRUE,TRUE
+"Moran, Miss Bertha",yes,,3rd,female,TRUE,TRUE
+"Moubarek, Mrs George",no,,3rd,female,FALSE,TRUE
+"Moussa, Mrs Mantoura Baloics",no,,3rd,female,FALSE,TRUE
+"Mullins, Miss Katie",yes,,3rd,female,TRUE,TRUE
+"Mulvihill, Miss Bertha E.",no,,3rd,female,FALSE,TRUE
+"Murphy, Miss Katherine",no,,3rd,female,FALSE,TRUE
+"Murphy, Miss Margaret",no,,3rd,female,FALSE,TRUE
+"Murphy, Miss Nora",no,,3rd,female,FALSE,TRUE
+"Nackid, Miss Maria",yes,,3rd,female,TRUE,TRUE
+"Nackid, Mrs Said",no,,3rd,female,FALSE,TRUE
+"Najib, Miss Adele Kiamie",yes,,3rd,female,TRUE,TRUE
+"Naughton, Miss Hannah",no,,3rd,female,FALSE,TRUE
+"Nicola-Yarred, Miss Jamila",yes,,3rd,female,TRUE,TRUE
+"Nieminen, Miss Manta Josefina",no,,3rd,female,FALSE,TRUE
+"Nilsson, Miss Berta Olivia",yes,,3rd,female,TRUE,TRUE
+"Nilsson, Miss Helmina Josefina",no,,3rd,female,FALSE,TRUE
+"Nysten, Miss Anna",no,,3rd,female,FALSE,TRUE
+"O'Brien, Mrs Thomas",yes,,3rd,female,TRUE,TRUE
+"O'Dwyer, Miss Nellie",no,,3rd,female,FALSE,TRUE
+"O'Neill, Miss Bridget",no,,3rd,female,FALSE,TRUE
+"O'Sullivan, Miss Bridget",no,,3rd,female,FALSE,TRUE
+"OLeary, Miss Norah",no,,3rd,female,FALSE,TRUE
+"Ohman, Miss Velin",no,,3rd,female,FALSE,TRUE
+"Olsson, Miss Elida",no,,3rd,female,FALSE,TRUE
+"Osman, Miss Maria",yes,,3rd,female,TRUE,TRUE
+"Panula, Mrs John",no,,3rd,female,FALSE,TRUE
+"Paulsson, Miss Stina Viola",no,,3rd,female,FALSE,TRUE
+"Paulsson, Miss Torborg Danira",no,,3rd,female,FALSE,TRUE
+"Paulsson, Mrs Nils",no,,3rd,female,FALSE,TRUE
+"Peacock, Miss Treasteall",no,,3rd,female,FALSE,TRUE
+"Peacock, Mrs Benjamin",no,,3rd,female,FALSE,TRUE
+"Peter (Joseph), Miss Mary",no,,3rd,female,FALSE,TRUE
+"Peter (Joseph), Mrs Catherine",no,,3rd,female,FALSE,TRUE
+"Peters, Miss Katie",no,,3rd,female,FALSE,TRUE
+"Petranec, Miss Matilda",no,,3rd,female,FALSE,TRUE
+"Pettersson, Miss Ellen Natalia",no,,3rd,female,FALSE,TRUE
+"Rice, Mrs William",no,,3rd,female,FALSE,TRUE
+"Riihiivouri, Miss Sanni",no,,3rd,female,FALSE,TRUE
+"Riordan, Miss Hannah",yes,,3rd,female,TRUE,TRUE
+"Risien, Mrs Samuel",no,,3rd,female,FALSE,TRUE
+"Robins, Mrs Alexander A.",no,,3rd,female,FALSE,TRUE
+"Rosblom, Miss Salli Helena",no,,3rd,female,FALSE,TRUE
+"Rosblom, Mrs Viktor",no,,3rd,female,FALSE,TRUE
+"Roth, Miss Sarah",yes,,3rd,female,TRUE,TRUE
+"Sage, Miss Ada",no,,3rd,female,FALSE,TRUE
+"Sage, Miss Constance",no,,3rd,female,FALSE,TRUE
+"Sage, Miss Dorothy",no,,3rd,female,FALSE,TRUE
+"Sage, Miss Stella",no,,3rd,female,FALSE,TRUE
+"Sage, Mrs John",no,,3rd,female,FALSE,TRUE
+"Salkjelsvik, Miss Anna",yes,,3rd,female,TRUE,TRUE
+"Sandstrom, Miss Beatrice Irene",no,,3rd,female,FALSE,TRUE
+"Sandstrom, Miss Hjalmar",yes,,3rd,female,TRUE,TRUE
+"Sandstrom, Miss Marguerite Rut",no,,3rd,female,FALSE,TRUE
+"Shine, Miss Ellen",yes,,3rd,female,TRUE,TRUE
+"Sjoblom, Miss Anna Sofia",yes,,3rd,female,TRUE,TRUE
+"Skoog, Miss Mabel",no,,3rd,female,FALSE,TRUE
+"Skoog, Miss Margit",no,,3rd,female,FALSE,TRUE
+"Skoog, Mrs William",no,,3rd,female,FALSE,TRUE
+"Smyth, Miss Julia",yes,,3rd,female,TRUE,TRUE
+"Solvang, Mrs Lena Jacobsen",no,,3rd,female,FALSE,TRUE
+"Stanley, Miss Amy Zilla Elsie",yes,,3rd,female,TRUE,TRUE
+"Strandberg, Miss Ida Sofia",no,,3rd,female,FALSE,TRUE
+"Strom, Miss Telma (Selma) Matilda",no,,3rd,female,FALSE,TRUE
+"Strom, Mrs Wilhelm",no,,3rd,female,FALSE,TRUE
+"Thomas, Mrs Alexander",yes,,3rd,female,TRUE,TRUE
+"Thorneycroft, Mrs Percival",yes,,3rd,female,TRUE,TRUE
+"Touma (Thomas), Miss Hannah",no,,3rd,female,FALSE,TRUE
+"Touma (Thomas), Mrs Darwin",no,,3rd,female,FALSE,TRUE
+"Turja, Miss Anna Sofia",yes,,3rd,female,TRUE,TRUE
+"Turkula, Mrs Hedvig",no,,3rd,female,FALSE,TRUE
+"Van Impe, Miss Catharine",no,,3rd,female,FALSE,TRUE
+"Van Impe, Mrs Jean Baptiste",no,,3rd,female,FALSE,TRUE
+"Van der Planke, Miss Augusta",no,,3rd,female,FALSE,TRUE
+"Van der Planke, Mrs Jules",no,,3rd,female,FALSE,TRUE
+"Vestrom, Miss Hulda Amanda Adolfina",no,,3rd,female,FALSE,TRUE
+"Wilkes, Mrs Ellen",yes,,3rd,female,TRUE,TRUE
+"Yasbeck, Mrs Antoni",yes,,3rd,female,TRUE,TRUE
+"Zabour, Miss Hileni",no,,3rd,female,FALSE,TRUE
+"Zabour, Miss Tamini",no,,3rd,female,FALSE,TRUE
+"Zievens, Rene",no,,3rd,female,FALSE,TRUE
+"Abbing, Mr Anthony",no,42,3rd,male,FALSE,FALSE
+"Abbott, Master Eugene Joseph",no,13,3rd,male,FALSE,FALSE
+"Abbott, Mr Rossmore Edward",no,16,3rd,male,FALSE,FALSE
+"Abelseth, Mr Olaus",yes,25,3rd,male,TRUE,FALSE
+"Abrahamsson, Mr August",yes,20,3rd,male,TRUE,FALSE
+"Adahl, Mr Mauritz Nils Martin",no,30,3rd,male,FALSE,FALSE
+"Adams, Mr John",no,26,3rd,male,FALSE,FALSE
+"Ahmed, Mr Ali",no,24,3rd,male,FALSE,FALSE
+"Aijo-Nirva, Mr Isak",no,41,3rd,male,FALSE,FALSE
+"Aks, Master Philip",yes,0.8333,3rd,male,TRUE,FALSE
+"Alexander, Mr William",no,23,3rd,male,FALSE,FALSE
+"Alhomaki, Mr Ilmari Rudolf",no,20,3rd,male,FALSE,FALSE
+"Ali, Mr William",no,25,3rd,male,FALSE,FALSE
+"Allen, Mr William Henry",no,35,3rd,male,FALSE,FALSE
+"Allum, Mr Owen George",no,17,3rd,male,FALSE,FALSE
+"Andersen, Mr Albert Karvin",no,32,3rd,male,FALSE,FALSE
+"Andersen, Mr Thor Olsvigen",no,20,3rd,male,FALSE,FALSE
+"Andersson, Master Sigvard Harald Elias",no,4,3rd,male,FALSE,FALSE
+"Andersson, Mr Anders Johan",no,39,3rd,male,FALSE,FALSE
+"Andersson, Mr Johan Samuel",no,26,3rd,male,FALSE,FALSE
+"Andreasson, Mr Paul Edvin",no,20,3rd,male,FALSE,FALSE
+"Angheloff, Mr Minko",no,26,3rd,male,FALSE,FALSE
+"Arnold, Mr Josef",no,25,3rd,male,FALSE,FALSE
+"Aronsson, Mr Ernst Axel Algot",no,24,3rd,male,FALSE,FALSE
+"Asim, Mr Adola",no,35,3rd,male,FALSE,FALSE
+"Aspland, Master Edvin Rojj Felix",yes,3,3rd,male,TRUE,FALSE
+"Asplund, Master Carl Edgar",no,5,3rd,male,FALSE,FALSE
+"Asplund, Master Clarence Gustaf Hugo",no,9,3rd,male,FALSE,FALSE
+"Asplund, Master Filip Oscar",no,13,3rd,male,FALSE,FALSE
+"Asplund, Mr Carl Oscar Vilhelm Gustafsson",no,40,3rd,male,FALSE,FALSE
+"Asplund, Mr John Charles",yes,23,3rd,male,TRUE,FALSE
+"Assaf, Mr Gerios",no,,3rd,male,FALSE,TRUE
+"Assam, Mr Ali",no,23,3rd,male,FALSE,FALSE
+"Attala (Kalil), Mr Solomon",no,27,3rd,male,FALSE,FALSE
+"Augustsson, Mr Albert",no,23,3rd,male,FALSE,FALSE
+"Baccos, Mr Rafoul",no,20,3rd,male,FALSE,FALSE
+"Backstrom, Mr Karl Alfred",no,32,3rd,male,FALSE,FALSE
+"Badt, Mr Mohamed",no,40,3rd,male,FALSE,FALSE
+"Balkic, Mr Cerin",no,26,3rd,male,FALSE,FALSE
+Barton Mr David,no,22,3rd,male,FALSE,FALSE
+"Beavan, Mr William Thomas",no,19,3rd,male,FALSE,FALSE
+"Bengtsson, Mr John Viktor",no,26,3rd,male,FALSE,FALSE
+Berglund. Mr Karl Ivar Sven,no,22,3rd,male,FALSE,FALSE
+"Betros, Mr Tannous",no,20,3rd,male,FALSE,FALSE
+"Bing, Mr Lee",yes,32,3rd,male,TRUE,FALSE
+"Birkeland, Mr Hans",no,21,3rd,male,FALSE,FALSE
+"Bjorklund, Ernst Herbert",no,18,3rd,male,FALSE,FALSE
+"Bostandyeff, Mr Guentcho",no,26,3rd,male,FALSE,FALSE
+"Boulos, Master Akar",no,6,3rd,male,FALSE,FALSE
+"Boulos, Mr Hanna",no,,3rd,male,FALSE,TRUE
+"Bourke, Mr John",no,40,3rd,male,FALSE,FALSE
+"Bowen, Mr David",no,26,3rd,male,FALSE,FALSE
+"Brahim, Mr Youssef",no,,3rd,male,FALSE,TRUE
+"Braund, Mr Lewis Richard",no,29,3rd,male,FALSE,FALSE
+"Braund, Mr Owen Harris",no,22,3rd,male,FALSE,FALSE
+"Brobek, Mr Karl Rudolf",no,22,3rd,male,FALSE,FALSE
+"Brocklebank, Mr William Alfred",no,35,3rd,male,FALSE,FALSE
+"Buckley, Mr Daniel",yes,21,3rd,male,TRUE,FALSE
+"Burke, Mr Jeremiah",no,19,3rd,male,FALSE,FALSE
+"Cacic, Mr Grego",no,18,3rd,male,FALSE,FALSE
+"Cacic, Mr Luka",no,38,3rd,male,FALSE,FALSE
+"Cacic, Mr Manda",no,,3rd,male,FALSE,TRUE
+"Calic, Mr Peter",no,17,3rd,male,FALSE,FALSE
+"Cann, Mr Ernest",no,21,3rd,male,FALSE,FALSE
+"Caram (Kareem), Mr Joseph",no,,3rd,male,FALSE,TRUE
+"Carlsson, Mr August Sigfrid",no,28,3rd,male,FALSE,FALSE
+"Carlsson, Mr Carl Robert",no,24,3rd,male,FALSE,FALSE
+"Carlsson, Mr Frans Olof (1)",no,21,3rd,male,FALSE,FALSE
+"Carlsson, Mr Frans Olof (2)",no,33,3rd,male,FALSE,FALSE
+"Carlsson, Mr Julius",no,33,3rd,male,FALSE,FALSE
+"Carver, Mr Alfred John",no,28,3rd,male,FALSE,FALSE
+"Cassem, Mr Nassef Belmenly",yes,,3rd,male,TRUE,TRUE
+"Celotti, Mr Francesco",no,24,3rd,male,FALSE,FALSE
+"Chartens, Mr David",no,21,3rd,male,FALSE,FALSE
+"Chebab, Mr Emir Farres",no,,3rd,male,FALSE,TRUE
+"Chip, Mr Chang",no,32,3rd,male,FALSE,FALSE
+"Christmann, Mr Emil",no,29,3rd,male,FALSE,FALSE
+"Chronopoulos, Mr Apostolos",no,26,3rd,male,FALSE,FALSE
+"Chronopoulos, Mr Demetrios",no,18,3rd,male,FALSE,FALSE
+"Coelho, Mr Domingos Fernandes",no,20,3rd,male,FALSE,FALSE
+"Cohen, Mr Gurshon (Gus)",yes,19,3rd,male,TRUE,FALSE
+"Colbert, Mr Patrick",no,24,3rd,male,FALSE,FALSE
+"Coleff, Mr Fotio",no,24,3rd,male,FALSE,FALSE
+"Coleff, Mr Peyo",no,36,3rd,male,FALSE,FALSE
+"Conlin, Mr Thomas Henry",no,31,3rd,male,FALSE,FALSE
+"Connaghton, Mr Michael",no,31,3rd,male,FALSE,FALSE
+"Connolly, Miss Kate (2)",no,30,3rd,male,FALSE,FALSE
+"Connors, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"Cook, Mr Jacob",no,43,3rd,male,FALSE,FALSE
+"Cor, Mr Bartol",no,35,3rd,male,FALSE,FALSE
+"Cor, Mr Ivan",no,27,3rd,male,FALSE,FALSE
+"Cor, Mr Ludovik",no,19,3rd,male,FALSE,FALSE
+"Corn, Mr Harry",no,30,3rd,male,FALSE,FALSE
+"Coutts, Master Neville",yes,3,3rd,male,TRUE,FALSE
+"Coutts, Master William Leslie",yes,9,3rd,male,TRUE,FALSE
+"Coxon, Mr Daniel",no,59,3rd,male,FALSE,FALSE
+"Crease, Mr Ernest James",no,19,3rd,male,FALSE,FALSE
+"Cribb, Mr John Hatfield",no,44,3rd,male,FALSE,FALSE
+"Daher, Mr Tannous",no,,3rd,male,FALSE,TRUE
+"Dahl, Mr Charles Edward",yes,45,3rd,male,TRUE,FALSE
+"Dakic, Mr Branko",no,19,3rd,male,FALSE,FALSE
+"Daly, Mr Eugene",yes,29,3rd,male,TRUE,FALSE
+"Danbom, Master Gilbert Sigvard Emanuel",no,0.3333,3rd,male,FALSE,FALSE
+"Danbom, Mr Ernst Gilbert",no,34,3rd,male,FALSE,FALSE
+"Danoff, Mr Yoto",no,27,3rd,male,FALSE,FALSE
+"Dantchoff, Mr Khristo",no,25,3rd,male,FALSE,FALSE
+"Davies, Mr Alfred",no,24,3rd,male,FALSE,FALSE
+"Davies, Mr Evan",no,22,3rd,male,FALSE,FALSE
+"Davies, Mr John",no,21,3rd,male,FALSE,FALSE
+"Davies, Mr Joseph",no,17,3rd,male,FALSE,FALSE
+"Davison, Mr Thomas Henry",no,,3rd,male,FALSE,TRUE
+"De Messemaeker, Mr William Joseph",yes,36,3rd,male,TRUE,FALSE
+"De Mulder, Mr Theo",yes,30,3rd,male,TRUE,FALSE
+"Dean, Master Bertram Vere",yes,1,3rd,male,TRUE,FALSE
+"Dean, Mr Bertram",no,26,3rd,male,FALSE,FALSE
+"Delalic, Mr Regyo",no,25,3rd,male,FALSE,FALSE
+"Denkoff, Mr Mito",no,,3rd,male,FALSE,TRUE
+"Dennis, Mr Samuel",no,23,3rd,male,FALSE,FALSE
+"Dennis, Mr William",no,26,3rd,male,FALSE,FALSE
+"Dewan, Mr Frank",no,65,3rd,male,FALSE,FALSE
+"Dibo, Mr Elias",no,,3rd,male,FALSE,TRUE
+"Dimic, Mr Jovan",no,42,3rd,male,FALSE,FALSE
+"Dintcheff, Mr Valtcho",no,43,3rd,male,FALSE,FALSE
+"Dooley, Mr Patrick",no,32,3rd,male,FALSE,FALSE
+"Dorkings, Mr Edward Arthur",yes,19,3rd,male,TRUE,FALSE
+"Drazonovic, Mr Josef",no,,3rd,male,FALSE,TRUE
+"Duquemin, Mr Joseph",yes,24,3rd,male,TRUE,FALSE
+"Dyker, Mr Adolf Fredrik",no,23,3rd,male,FALSE,FALSE
+"Econovic, Mr Joso",no,,3rd,male,FALSE,TRUE
+"Edvardsson, Mr Gustaf Hjalmar",no,18,3rd,male,FALSE,FALSE
+"Eklund, Mr Hans Linus",no,16,3rd,male,FALSE,FALSE
+"Ekstrom, Mr Johan",no,45,3rd,male,FALSE,FALSE
+"Elias, Mr Elias",no,,3rd,male,FALSE,TRUE
+"Elias, Mr John",no,,3rd,male,FALSE,TRUE
+"Elias, Mr Joseph",no,,3rd,male,FALSE,TRUE
+"Elsbury, Mr James",no,47,3rd,male,FALSE,FALSE
+"Emmeth, Mr Thomas",no,,3rd,male,FALSE,TRUE
+"Everett, Thomas James",no,,3rd,male,FALSE,TRUE
+"Farrell, Mr James",no,,3rd,male,FALSE,TRUE
+"Finoli, Mr Luigi",yes,,3rd,male,TRUE,TRUE
+"Fischer, Mr Eberhard Telander",no,,3rd,male,FALSE,TRUE
+"Flynn, Mr James",no,,3rd,male,FALSE,TRUE
+"Flynn, Mr John",no,,3rd,male,FALSE,TRUE
+"Foley, Mr Joseph",no,,3rd,male,FALSE,TRUE
+"Foley, Mr William",no,,3rd,male,FALSE,TRUE
+"Foo, Mr Choong",yes,,3rd,male,TRUE,TRUE
+"Ford, Mr Arthur",no,,3rd,male,FALSE,TRUE
+"Ford, Mr Edward Watson",no,18,3rd,male,FALSE,FALSE
+"Ford, Mr Neil Watson",no,16,3rd,male,FALSE,FALSE
+"Fox, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"Franklin, Mr Charles",no,,3rd,male,FALSE,TRUE
+"Gallagher, Mr Martin",no,25,3rd,male,FALSE,FALSE
+"Garfirth, Mr John",no,,3rd,male,FALSE,TRUE
+"Gilinski, Mr Leslie",no,22,3rd,male,FALSE,FALSE
+"Goldsmith, Master Frank John William",yes,9,3rd,male,TRUE,FALSE
+"Goldsmith, Mr Frank John",no,33,3rd,male,FALSE,FALSE
+"Goldsmith, Mr Nathan",no,41,3rd,male,FALSE,FALSE
+"Goncalves, Mr Manuel Estanslas",no,38,3rd,male,FALSE,FALSE
+"Goodwin, Master Harold V.",no,9,3rd,male,FALSE,FALSE
+"Goodwin, Master Sidney L.",no,6,3rd,male,FALSE,FALSE
+"Goodwin, Master William F.",no,11,3rd,male,FALSE,FALSE
+"Goodwin, Mr Charles E.",no,14,3rd,male,FALSE,FALSE
+"Goodwin, Mr Frederick",no,40,3rd,male,FALSE,FALSE
+"Green, Mr George",no,40,3rd,male,FALSE,FALSE
+"Gronnestad, Mr Daniel Danielsen",no,32,3rd,male,FALSE,FALSE
+"Guest, Mr Robert",no,,3rd,male,FALSE,TRUE
+"Gustafsson, Mr Alfred Ossian",no,20,3rd,male,FALSE,FALSE
+"Gustafsson, Mr Anders Vilhelm",no,37,3rd,male,FALSE,FALSE
+"Gustafsson, Mr Johan Birger",no,28,3rd,male,FALSE,FALSE
+"Gustafsson, Mr Karl Gideon",no,19,3rd,male,FALSE,FALSE
+"Hagland, Mr Ingvald Olsen",no,,3rd,male,FALSE,TRUE
+"Hagland, Mr Konrad Mathias Reiersen",no,,3rd,male,FALSE,TRUE
+"Hakkarainen, Mr Pekko Pietari",no,,3rd,male,FALSE,TRUE
+"Hampe, Mr Leon",no,,3rd,male,FALSE,TRUE
+"Hansen, Mr Claus Peter",no,,3rd,male,FALSE,TRUE
+"Hansen, Mr Henrik Juul",no,,3rd,male,FALSE,TRUE
+"Hansen, Mr Henry Damsgaard",no,,3rd,male,FALSE,TRUE
+"Harmer, Mr Abraham",no,,3rd,male,FALSE,TRUE
+"Hart, Mr Henry",no,,3rd,male,FALSE,TRUE
+"Hassan, Mr M. Houssein",no,,3rd,male,FALSE,TRUE
+"Hedman, Mr Oscar",yes,,3rd,male,TRUE,TRUE
+"Hee, Mr Ling",no,,3rd,male,FALSE,TRUE
+"Hendekovic, Mr Ignaz",no,,3rd,male,FALSE,TRUE
+"Holm, Mr John Frederik Alexander",no,,3rd,male,FALSE,TRUE
+"Holthen, Mr Johan Martin",no,,3rd,male,FALSE,TRUE
+"Horgan, Mr John",no,,3rd,male,FALSE,TRUE
+"Humblin, Mr Adolf Mathias Nicolai Olsen",no,,3rd,male,FALSE,TRUE
+"Hyman, Mr Abraham",yes,,3rd,male,TRUE,TRUE
+"Ilieff, Mr Ylio",no,,3rd,male,FALSE,TRUE
+"Ivanoff, Mr Konio",no,,3rd,male,FALSE,TRUE
+"Jansen, Mr Carl Olof",yes,,3rd,male,TRUE,TRUE
+"Jardin, Mr Jose Netto",no,,3rd,male,FALSE,TRUE
+"Jensen, Mr Hans Peder",no,,3rd,male,FALSE,TRUE
+"Jensen, Mr Niels Peder",no,,3rd,male,FALSE,TRUE
+"Jensen, Mr Svend Lauritz",no,,3rd,male,FALSE,TRUE
+"Johannesen-Bratthammer, Mr Bernt",no,,3rd,male,FALSE,TRUE
+"Johanson, Mr Jakob Alfred",no,,3rd,male,FALSE,TRUE
+"Johansson, Mr Erik",no,,3rd,male,FALSE,TRUE
+"Johansson, Mr Gustaff Joel",no,,3rd,male,FALSE,TRUE
+"Johansson, Mr Karl Johan",yes,,3rd,male,TRUE,TRUE
+"Johansson, Mr Nils",no,,3rd,male,FALSE,TRUE
+"Johansson, Oscar L.",yes,,3rd,male,TRUE,TRUE
+"Johnson, Master Harold Theodor",yes,,3rd,male,TRUE,TRUE
+"Johnson, Mr Alfred",no,,3rd,male,FALSE,TRUE
+"Johnson, Mr Malkolm Joackim",no,,3rd,male,FALSE,TRUE
+"Johnson, Mr William Cahoone Jr.",no,,3rd,male,FALSE,TRUE
+"Johnston, Master William A.",no,,3rd,male,FALSE,TRUE
+"Johnston, Mr Andrew G.",no,,3rd,male,FALSE,TRUE
+"Jonkoff, Mr Lazor",no,,3rd,male,FALSE,TRUE
+"Jonsson, Mr Carl",yes,,3rd,male,TRUE,TRUE
+"Jonsson, Nils Hilding",no,,3rd,male,FALSE,TRUE
+"Jussila, Mr Erik",yes,,3rd,male,TRUE,TRUE
+"Kallio, Mr Nikolai Erland",no,,3rd,male,FALSE,TRUE
+"Kalvig, Mr Johannes K. Halverson",no,,3rd,male,FALSE,TRUE
+"Karajic, Mr Milan",no,,3rd,male,FALSE,TRUE
+"Karlsson, Mr Einar Gervasius",yes,,3rd,male,TRUE,TRUE
+"Karlsson, Mr Julius Konrad Eugen",no,,3rd,male,FALSE,TRUE
+"Karlsson, Mr Nils August",no,,3rd,male,FALSE,TRUE
+"Karun, Mr Franz",no,,3rd,male,FALSE,TRUE
+"Kassem, Mr Fared",no,,3rd,male,FALSE,TRUE
+"Keane, Mr Andrew",no,,3rd,male,FALSE,TRUE
+"Keefe, Mr Arthur",no,,3rd,male,FALSE,TRUE
+"Kekic, Mr Tido",no,,3rd,male,FALSE,TRUE
+"Kelly, Mr James",no,,3rd,male,FALSE,TRUE
+"Kelly, Mr James (1)",no,,3rd,male,FALSE,TRUE
+"Kennedy, Mr John",no,,3rd,male,FALSE,TRUE
+"Khalil, Mr Betros",no,,3rd,male,FALSE,TRUE
+"Khalil, Mr Saad",no,,3rd,male,FALSE,TRUE
+"Kiernan, Mr John",no,,3rd,male,FALSE,TRUE
+"Kiernan, Mr Philip",no,,3rd,male,FALSE,TRUE
+"Kilgannon, Mr Thomas",no,,3rd,male,FALSE,TRUE
+"Kink, Mr Anton",yes,,3rd,male,TRUE,TRUE
+"Kink, Mr Vincenz",no,,3rd,male,FALSE,TRUE
+"Klasen, Mr Klas Albin",no,,3rd,male,FALSE,TRUE
+"Kraeff, Mr Theodor",no,,3rd,male,FALSE,TRUE
+"Krekorian, Mr Neshan",yes,,3rd,male,TRUE,TRUE
+"Lahowd, Mr Sarkis",no,,3rd,male,FALSE,TRUE
+"Laleff, Mr Kristo",no,,3rd,male,FALSE,TRUE
+"Lam, Mr Ali",yes,,3rd,male,TRUE,TRUE
+"Lam, Mr Len",no,,3rd,male,FALSE,TRUE
+"Lane, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"Lang, Mr Fang",yes,,3rd,male,TRUE,TRUE
+"Larsson, Mr August Viktor",no,,3rd,male,FALSE,TRUE
+"Larsson, Mr Bengt Edvin",no,,3rd,male,FALSE,TRUE
+"Larsson-Rondberg, Mr Edvard",no,,3rd,male,FALSE,TRUE
+"Leeni, Mr Fahim",yes,,3rd,male,TRUE,TRUE
+"Lefebre, Master Henry",no,,3rd,male,FALSE,TRUE
+"Leinonen, Mr Antti Gustaf",no,,3rd,male,FALSE,TRUE
+"Lemberopolous, Mr Peter L.",no,,3rd,male,FALSE,TRUE
+"Lemom, Mr Denis",no,,3rd,male,FALSE,TRUE
+"Leonard, Mr Lionel",no,,3rd,male,FALSE,TRUE
+"Lester, Mr James",no,,3rd,male,FALSE,TRUE
+"Lindell, Mr Edvard Bengtsson",no,,3rd,male,FALSE,TRUE
+"Lindqvist, Eino William",yes,,3rd,male,TRUE,TRUE
+"Linehan, Mr Michael",no,,3rd,male,FALSE,TRUE
+"Ling, Mr Lee",no,,3rd,male,FALSE,TRUE
+"Lithman, Mr Simon",no,,3rd,male,FALSE,TRUE
+"Lobb, Mr William Arthur",no,,3rd,male,FALSE,TRUE
+"Lockyer, Mr Edward",no,,3rd,male,FALSE,TRUE
+"Lovell, Mr John",no,,3rd,male,FALSE,TRUE
+"Lulich, Mr Nicola",yes,,3rd,male,TRUE,TRUE
+"Lundahl, Mr Johan",no,,3rd,male,FALSE,TRUE
+"Lundstrom, Mr Thure Edvin",no,,3rd,male,FALSE,TRUE
+"Lyntakoff, Mr Stanko",no,,3rd,male,FALSE,TRUE
+"MacKay, Mr George William",no,,3rd,male,FALSE,TRUE
+"Madsen, Mr Frithiof",no,,3rd,male,FALSE,TRUE
+"Maenpaa, Mr Matti Alexanteri",no,,3rd,male,FALSE,TRUE
+"Maisner, Mr Simon",no,,3rd,male,FALSE,TRUE
+"Makinen, Mr Kalle Edvard",no,,3rd,male,FALSE,TRUE
+"Mamee, Mr Hanna",yes,,3rd,male,TRUE,TRUE
+"Mansour, Mr Hanna",no,,3rd,male,FALSE,TRUE
+"Mardirosian, Mr Sarkis",no,,3rd,male,FALSE,TRUE
+"Marinko, Mr Dmitri",no,,3rd,male,FALSE,TRUE
+"Markim, Mr Johann",no,,3rd,male,FALSE,TRUE
+"Markoff, Mr Marin",no,,3rd,male,FALSE,TRUE
+"Matinoff, Mr Nicola",no,,3rd,male,FALSE,TRUE
+"McCormack, Mr Thomas J.",no,,3rd,male,FALSE,TRUE
+"McCoy, Mr Bernard",no,,3rd,male,FALSE,TRUE
+"McElroy, Mr Michael",no,,3rd,male,FALSE,TRUE
+"McMahon, Mr Martin",no,,3rd,male,FALSE,TRUE
+"McNamee, Mr Neal",no,,3rd,male,FALSE,TRUE
+"Mechen, Mr John",no,,3rd,male,FALSE,TRUE
+"Meo, Mr Alfonso",no,,3rd,male,FALSE,TRUE
+"Midtsjo, Mr Karl Albert",yes,,3rd,male,TRUE,TRUE
+"Mihoff, Mr Stoytcho",no,,3rd,male,FALSE,TRUE
+"Miles, Mr Frank",no,,3rd,male,FALSE,TRUE
+"Mineff, Mr Ivan",no,,3rd,male,FALSE,TRUE
+"Minkoff, Mr Lazar",no,,3rd,male,FALSE,TRUE
+"Mirko, Mr Dika",no,,3rd,male,FALSE,TRUE
+"Mitkoff, Mr Mito",no,,3rd,male,FALSE,TRUE
+"Moen, Mr Sigurd H.",no,,3rd,male,FALSE,TRUE
+"Moor, Master Meier",no,,3rd,male,FALSE,TRUE
+"Moore, Mr Leonard Charles",no,,3rd,male,FALSE,TRUE
+"Moran, Mr Daniel J.",no,,3rd,male,FALSE,TRUE
+"Moran, Mr James",no,,3rd,male,FALSE,TRUE
+"Morley, Mr Henry Samuel",no,,3rd,male,FALSE,TRUE
+"Morrow, Mr Thomas Rowan",no,,3rd,male,FALSE,TRUE
+"Moss, Albert Johan",no,,3rd,male,FALSE,TRUE
+"Moubarek (Borak), Mr Hanna (John)",yes,,3rd,male,TRUE,TRUE
+"Moubarek, Master George",no,,3rd,male,FALSE,TRUE
+"Moubarek, Master William George",no,,3rd,male,FALSE,TRUE
+"Moutal, Mr Rahamin",no,,3rd,male,FALSE,TRUE
+"Murdlin, Mr Joseph",no,,3rd,male,FALSE,TRUE
+"Myhrman, Mr Pehr Fabian Oliver Malkolm",no,,3rd,male,FALSE,TRUE
+"Nackid, Mr Said",no,,3rd,male,FALSE,TRUE
+"Nahill, Mr Toufik",no,,3rd,male,FALSE,TRUE
+"Naidenoff, Mr Penko",no,,3rd,male,FALSE,TRUE
+"Nancarrow, Mr William Henry",no,,3rd,male,FALSE,TRUE
+"Nancarrow, W. H.",no,,3rd,male,FALSE,TRUE
+"Nankoff, Mr Minko",no,,3rd,male,FALSE,TRUE
+"Nasr, Mr Mustafa",no,,3rd,male,FALSE,TRUE
+"Nassr, Mr Saade Jean",no,,3rd,male,FALSE,TRUE
+"Nemaugh, Mr Robert",no,,3rd,male,FALSE,TRUE
+"Nenkoff, Mr Christo",no,,3rd,male,FALSE,TRUE
+"Nicola-Yarred, Master Elias",no,,3rd,male,FALSE,TRUE
+"Niklasen, Sander",no,,3rd,male,FALSE,TRUE
+"Niklasson, Mr Samuel",no,,3rd,male,FALSE,TRUE
+"Nilsson, Mr August Ferdinand",no,,3rd,male,FALSE,TRUE
+"Niskanen, Mr Johan",no,,3rd,male,FALSE,TRUE
+"Nosworthy, Mr Richard Cater",no,,3rd,male,FALSE,TRUE
+"Nosworthy, Richard C.",no,,3rd,male,FALSE,TRUE
+"Novel, Mansouer",yes,,3rd,male,TRUE,TRUE
+"Nysveen, Mr Johan H.",no,,3rd,male,FALSE,TRUE
+"O'Brien, Mr Denis",no,,3rd,male,FALSE,TRUE
+"O'Brien, Mr Thomas",no,,3rd,male,FALSE,TRUE
+"O'Connell, Mr Patrick D.",no,,3rd,male,FALSE,TRUE
+"O'Connor, Mr Maurice",no,,3rd,male,FALSE,TRUE
+"O'Connor, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"O'Keefe, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"Odahl, Mr Nils Martin",yes,,3rd,male,TRUE,TRUE
+"Olsen, Master Arthur",no,,3rd,male,FALSE,TRUE
+"Olsen, Mr Charlie (Carl)",no,,3rd,male,FALSE,TRUE
+"Olsen, Mr Henry Margido",no,,3rd,male,FALSE,TRUE
+"Olsen, Mr Ole M.",no,,3rd,male,FALSE,TRUE
+"Olsson, Mr Nils Johan",no,,3rd,male,FALSE,TRUE
+"Olsson, Mr Oscar Johansson",yes,,3rd,male,TRUE,TRUE
+"Oreskovic, Mr Jeko",no,,3rd,male,FALSE,TRUE
+"Oreskovic, Mr Luka",no,,3rd,male,FALSE,TRUE
+"Oreskovic, Mr Maria",no,,3rd,male,FALSE,TRUE
+"Osen, Mr Olof Elon",no,,3rd,male,FALSE,TRUE
+"Panula, Master Juha Niilo",no,,3rd,male,FALSE,TRUE
+"Panula, Master Urho Abraham",no,,3rd,male,FALSE,TRUE
+"Panula, Master William",no,,3rd,male,FALSE,TRUE
+"Panula, Mr Ernesti Arvid",no,,3rd,male,FALSE,TRUE
+"Panula, Mr Jaako Arnold",no,,3rd,male,FALSE,TRUE
+"Pasic, Mr Jakob",no,,3rd,male,FALSE,TRUE
+"Paulner, Mr Uscher",no,,3rd,male,FALSE,TRUE
+"Paulsson, Master Gosta Leonard",no,,3rd,male,FALSE,TRUE
+"Paulsson, Master Paul Folke",no,,3rd,male,FALSE,TRUE
+"Pavlovic, Mr Stefo",no,,3rd,male,FALSE,TRUE
+"Peacock, Master Alfred Edward",no,,3rd,male,FALSE,TRUE
+"Pearce, Mr Ernest",no,,3rd,male,FALSE,TRUE
+"Pecruic, Mr Mate",no,,3rd,male,FALSE,TRUE
+"Pecruic, Mr Tome",no,,3rd,male,FALSE,TRUE
+"Pedersen, Mr Olaf",no,,3rd,male,FALSE,TRUE
+"Peduzzi, Mr Joseph",no,,3rd,male,FALSE,TRUE
+"Pekoniemi, Mr Edvard",yes,,3rd,male,TRUE,TRUE
+"Peltomaki, Nikolai Johannes",no,,3rd,male,FALSE,TRUE
+"Perkin, Mr John Henry",no,,3rd,male,FALSE,TRUE
+"Persson, Mr Ernst Ulrik",yes,,3rd,male,TRUE,TRUE
+"Peter (Joseph), Master Michael J.",no,,3rd,male,FALSE,TRUE
+"Petersen, Mr Marius",no,,3rd,male,FALSE,TRUE
+"Peterson, Mr Johan Emil",no,,3rd,male,FALSE,TRUE
+"Petroff, Mr Nedeca",no,,3rd,male,FALSE,TRUE
+"Petroff, Mr Pentcho",no,,3rd,male,FALSE,TRUE
+"Pickard (Trembisky), Mr Berk",yes,,3rd,male,TRUE,TRUE
+"Plotcharsky, Mr Vasil",no,,3rd,male,FALSE,TRUE
+"Potchett, Mr George",no,,3rd,male,FALSE,TRUE
+"Radeff, Mr Alexander",no,,3rd,male,FALSE,TRUE
+"Raibid, Mr Razi",no,,3rd,male,FALSE,TRUE
+"Reed, Mr James George",no,,3rd,male,FALSE,TRUE
+"Reynolds, Mr Harold",no,,3rd,male,FALSE,TRUE
+"Rice, Master Albert",no,,3rd,male,FALSE,TRUE
+"Rice, Master Arthur",no,,3rd,male,FALSE,TRUE
+"Rice, Master Eric",no,,3rd,male,FALSE,TRUE
+"Rice, Master Eugene",no,,3rd,male,FALSE,TRUE
+"Rice, Master George",no,,3rd,male,FALSE,TRUE
+"Rintamaki, Mr Matti",no,,3rd,male,FALSE,TRUE
+"Risien, Mr Samuel",no,,3rd,male,FALSE,TRUE
+"Robins, Mr Alexander A.",no,,3rd,male,FALSE,TRUE
+"Rogers, Mr William John",no,,3rd,male,FALSE,TRUE
+"Rommetvedt, Mr Karl Kristian Knut",no,,3rd,male,FALSE,TRUE
+"Rosblom, Mr Viktor Rickard",no,,3rd,male,FALSE,TRUE
+"Rouse, Mr Richard Henry",no,,3rd,male,FALSE,TRUE
+"Rush, Mr Alfred George John",no,,3rd,male,FALSE,TRUE
+"Ryan, Mr Edward Ryan",yes,,3rd,male,TRUE,TRUE
+"Ryan, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"Saad, Khalil",yes,,3rd,male,TRUE,TRUE
+"Saad, Mr Amin",no,,3rd,male,FALSE,TRUE
+"Sadlier, Mr Matthew",no,,3rd,male,FALSE,TRUE
+"Sadowitz, Mr Harry",no,,3rd,male,FALSE,TRUE
+"Sage, Master William",no,,3rd,male,FALSE,TRUE
+"Sage, Mr Douglas",no,,3rd,male,FALSE,TRUE
+"Sage, Mr Frederick",no,,3rd,male,FALSE,TRUE
+"Sage, Mr George",no,,3rd,male,FALSE,TRUE
+"Sage, Mr John",no,,3rd,male,FALSE,TRUE
+"Sage, Thomas (child)",no,,3rd,male,FALSE,TRUE
+"Salander, Mr Karl Johan",no,,3rd,male,FALSE,TRUE
+"Salonen, Mr Johan Werner",no,,3rd,male,FALSE,TRUE
+"Samaan, Mr Elias",no,,3rd,male,FALSE,TRUE
+"Samaan, Mr Hanna",no,,3rd,male,FALSE,TRUE
+"Samaan, Mr Youssef",no,,3rd,male,FALSE,TRUE
+"Sather, Simon Sivertsen",no,,3rd,male,FALSE,TRUE
+"Saundercock, William Henry",no,,3rd,male,FALSE,TRUE
+"Sawyer, Mr Frederick",no,,3rd,male,FALSE,TRUE
+"Scanlan, Mr James",no,,3rd,male,FALSE,TRUE
+"Sdycoff, Mr Todor",no,,3rd,male,FALSE,TRUE
+Seman Master Betros,no,,3rd,male,FALSE,TRUE
+"Serota, Mr Maurice",no,,3rd,male,FALSE,TRUE
+"Shaughnesay, Mr Patrick",no,,3rd,male,FALSE,TRUE
+"Shedid (Sitik), Mr Daher (Docart)",no,,3rd,male,FALSE,TRUE
+"Sheerlinck, Mr Jean",yes,,3rd,male,TRUE,TRUE
+"Shellard, Mr Frederick B.",no,,3rd,male,FALSE,TRUE
+"Sholt, Mr Peter Andreas Lauritz Andersen",no,,3rd,male,FALSE,TRUE
+"Shorney, Mr Charles",no,,3rd,male,FALSE,TRUE
+"Simmons, Mr John",no,,3rd,male,FALSE,TRUE
+"Sirayanian, Mr Arsun",no,,3rd,male,FALSE,TRUE
+"Sivic, Mr Husen",no,,3rd,male,FALSE,TRUE
+"Sivola, Mr Antti",no,,3rd,male,FALSE,TRUE
+"Skinner, Mr Henry John",no,,3rd,male,FALSE,TRUE
+"Skoog, Master Harald",no,,3rd,male,FALSE,TRUE
+"Skoog, Master Karl",no,,3rd,male,FALSE,TRUE
+"Skoog, Mr William",no,,3rd,male,FALSE,TRUE
+"Slabenoff, Mr Petco",no,,3rd,male,FALSE,TRUE
+"Slocovski, Mr Selman",no,,3rd,male,FALSE,TRUE
+"Smiljanovic, Mr Mile",no,,3rd,male,FALSE,TRUE
+"Somerton, Mr Francis William",no,,3rd,male,FALSE,TRUE
+"Sop, Mr Jules",yes,,3rd,male,TRUE,TRUE
+"Spector, Mr Woolf",no,,3rd,male,FALSE,TRUE
+"Staneff, Mr Ivan",no,,3rd,male,FALSE,TRUE
+"Stankovic, Mr Jovan",no,,3rd,male,FALSE,TRUE
+"Stanley, Mr Edward Roland",no,,3rd,male,FALSE,TRUE
+"Storey, Mr Thomas",no,,3rd,male,FALSE,TRUE
+"Stoyehoff, Mr Ilia",no,,3rd,male,FALSE,TRUE
+"Stranden, Mr Juho",yes,,3rd,male,TRUE,TRUE
+"Strilic, Mr Ivan",no,,3rd,male,FALSE,TRUE
+"Sunderland, Mr Victor Francis",yes,,3rd,male,TRUE,TRUE
+"Sundman, Mr Johan Julian",no,,3rd,male,FALSE,TRUE
+"Sutehall, Mr Henry, Jr",no,,3rd,male,FALSE,TRUE
+"Svensson, Mr Johan",no,,3rd,male,FALSE,TRUE
+"Svensson, Mr Johan Cervin",yes,,3rd,male,TRUE,TRUE
+"Svensson, Mr Olof",no,,3rd,male,FALSE,TRUE
+"Tannous, Mr Thomas",no,,3rd,male,FALSE,TRUE
+"Tenglin, Mr Gunnar Isidor",yes,,3rd,male,TRUE,TRUE
+"Theobald, Mr Thomas Leonard",no,,3rd,male,FALSE,TRUE
+"Thomas, Master Assad Alexander",no,,3rd,male,FALSE,TRUE
+"Thomas, Mr Charles",no,,3rd,male,FALSE,TRUE
+"Thomas, Mr John (? 1st/2nd class)",no,,3rd,male,FALSE,TRUE
+"Thomas, Mr John, Jr",no,,3rd,male,FALSE,TRUE
+"Thomson, Mr Alexander",no,,3rd,male,FALSE,TRUE
+"Thorneycroft, Mr Percival",no,,3rd,male,FALSE,TRUE
+"Tikkanen, Mr Juho",no,,3rd,male,FALSE,TRUE
+"Tobin, Mr Roger",no,,3rd,male,FALSE,TRUE
+"Todoroff, Mr Lalio",no,,3rd,male,FALSE,TRUE
+"Toerber, Mr Ernest William",no,,3rd,male,FALSE,TRUE
+"Tomlin, Mr Ernest Portage",no,,3rd,male,FALSE,TRUE
+"Torfa, Mr Assad",no,,3rd,male,FALSE,TRUE
+"Tornquist, Mr William Henry",yes,,3rd,male,TRUE,TRUE
+"Touma (Thomas), Master George",no,,3rd,male,FALSE,TRUE
+"Turcin, Mr Stefan",no,,3rd,male,FALSE,TRUE
+"Uzelas, Mr Joso",no,,3rd,male,FALSE,TRUE
+"Van Billiard, Master James William",no,,3rd,male,FALSE,TRUE
+"Van Billiard, Master Walter John",no,,3rd,male,FALSE,TRUE
+"Van Billiard, Mr Austin Blyler",no,,3rd,male,FALSE,TRUE
+"Van Impe, Mr Jean Baptiste",no,,3rd,male,FALSE,TRUE
+"Van de Velde, Mr John Joseph",no,,3rd,male,FALSE,TRUE
+"Van der Planke, Mr Jules",no,,3rd,male,FALSE,TRUE
+"Van der Planke, Mr Leon",no,,3rd,male,FALSE,TRUE
+"Van der Steen, Mr Leo Peter",no,,3rd,male,FALSE,TRUE
+"Vandewalle, Mr Nestor Cyriel",no,,3rd,male,FALSE,TRUE
+"Vartunian, Mr David",yes,,3rd,male,TRUE,TRUE
+"Vassilios, Mr Catavelas",no,,3rd,male,FALSE,TRUE
+"Vendel, Mr Olof Wdvin",no,,3rd,male,FALSE,TRUE
+"Vereruysse, Mr Victor",no,,3rd,male,FALSE,TRUE
+"Vonk, Mr Jenko",no,,3rd,male,FALSE,TRUE
+"Ware, Mr Frederick",no,,3rd,male,FALSE,TRUE
+"Warren, Mr Charles William",no,,3rd,male,FALSE,TRUE
+"Wazli, Mr Yousif",no,,3rd,male,FALSE,TRUE
+"Webber, Mr James",no,,3rd,male,FALSE,TRUE
+"Wennerstrom, Mr August Edvard",yes,,3rd,male,TRUE,TRUE
+"Wenzel, Mr Linhart",no,,3rd,male,FALSE,TRUE
+"Widegren, Mr Charles Peter",no,,3rd,male,FALSE,TRUE
+"Wiklund, Mr Jacob Alfred",no,,3rd,male,FALSE,TRUE
+"Willer, Mr Aaron",no,,3rd,male,FALSE,TRUE
+"Willey, Mr Edward",no,,3rd,male,FALSE,TRUE
+"Williams, Mr Howard Hugh",no,,3rd,male,FALSE,TRUE
+"Williams, Mr Leslie",no,,3rd,male,FALSE,TRUE
+"Windelov, Mr Einar",no,,3rd,male,FALSE,TRUE
+"Wirz, Mr Albert",no,,3rd,male,FALSE,TRUE
+"Wiseman, Mr Phillippe",no,,3rd,male,FALSE,TRUE
+"Wittevrongel, Mr Camiel",no,,3rd,male,FALSE,TRUE
+"Yalsevac, Mr Ivan",yes,,3rd,male,TRUE,TRUE
+"Yasbeck, Mr Antoni",no,,3rd,male,FALSE,TRUE
+"Youssef, Mr Gerios",no,,3rd,male,FALSE,TRUE
+"Zakarian, Mr Artun",no,,3rd,male,FALSE,TRUE
+"Zakarian, Mr Maprieder",no,,3rd,male,FALSE,TRUE
+"Zenn, Mr Philip",no,,3rd,male,FALSE,TRUE
+"Zimmerman, Leo",no,,3rd,male,FALSE,TRUE

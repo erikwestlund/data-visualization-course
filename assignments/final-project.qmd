@@ -1,0 +1,99 @@
+---
+title: "Final Project"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+# Due Date
+
+Due Friday, July 3, 2026, at 11:59 pm.
+
+# Overview
+
+The final project asks you to use visualization as an iterative workflow: explore a dataset, identify useful patterns or questions, and then build a focused set of final figures.
+
+You may use one dataset for the full project. This is the default expectation. You may use more than one dataset if your question requires it, but you do not need to switch datasets between the exploratory and final sections.
+
+In total, this project accounts for 50% of your final grade
+ 
+- Part 1 counts for 20 percentage points of the course grade. 
+- Part 2 counts for 30 percentage points of the course grade.
+
+# Part 1: Exploratory Data Analysis (EDA)
+
+Complete an exploratory data analysis using a course dataset or a dataset relevant to your own work.
+
+Course datasets are listed on the course web site.
+
+Your EDA should include:
+
+- a brief description of the dataset and main variables
+- exploratory questions that can be investigated visually
+- at least four exploratory visualizations that examine distributions, missingness if relevant, grouping, association, change, or other patterns appropriate to the data
+- short written interpretations of what the visualizations show, especially with potential scientific insights you may have uncovered
+- code from data loading through visualization
+
+The goal is not to make every possible plot. The goal is to use visualization to learn what is in the data and to identify patterns, limitations, and follow-up questions.
+
+# Part 2: Focused Visualization Report
+
+Create a focused visualization report based on something you learned from the exploratory analysis.
+
+The final report may use the same dataset as Part 1. The final figures should build on the EDA, but should not simply duplicate the exploratory plots. They should be revised, narrowed, combined, reframed, or polished for communication.
+
+Your report should include:
+
+- a clear research, public health, scientific, policy, or applied question
+- a short explanation of how the EDA informed the final focus
+- a statement of the visualization tasks involved, such as grouping, association, composition, rank, change, space, flow, distribution, outlier detection, or comparison
+- at least three high-quality visualizations
+- an explanation of why the final visualizations are appropriate for the question, data, and audience
+- the workflow from data loading through cleaning or transformation, exploratory plots, revision, and final presentation
+- written interpretation of each visualization, including limitations or cautions
+
+Examples of acceptable relationships between EDA and final figures:
+
+- EDA: a rough histogram; final report: a grouped distribution plot with clearer labels and interpretation
+- EDA: a broad scatterplot; final report: a focused association plot using a subset, grouping variable, or annotation
+- EDA: a many-category bar chart; final report: a ranked comparison focused on the most relevant categories
+- EDA: several exploratory panels; final report: a smaller set of panels chosen for a specific audience
+
+# What Counts As High Quality
+
+High-quality visualizations should be:
+
+- accurate and relevant to the stated problem
+- readable
+- well-labeled
+- appropriately scaled
+- visually accessible
+
+# Submission
+
+Submit a rendered HTML notebook or report on CoursePlus or through email to ewestlund@jhu.edu.
+
+Your submission should include all code needed to reproduce the work. If you are working in a Quarto-only workflow, the rendered notebook should include everything you need. You do not need to include the data sets. If you use your own data sets, describe how the data were prepared.
+
+# Rubric
+
+The final project is worth 50 percentage points of the course grade.
+
+| Category | Points | Observable Criteria |
+|---|---:|---|
+| Dataset And Question Framing | 10 | Describes the dataset/unit of observation, identifies the main variables, states a focused question or applied problem, and explains the data context. |
+| Exploratory Visualization | 10 | Includes at least 4 exploratory visualizations that examine useful patterns in the data and include short interpretations. |
+| Final Visualization Choices | 10 | Explains how the EDA informed the final focus, names the visualization tasks involved, and justifies the final figure choices. |
+| Final Visualizations | 10 | Includes at least 3 high-quality final figures that are accurate, readable, labeled, appropriately scaled, and connected to the question. |
+| Workflow, Interpretation, And Limitations | 10 | Shows the workflow from data loading to final figures, renders successfully, interprets findings accurately, and notes relevant cautions. |
+
+These criteria will be applied to each 10-point category:
+
+| Score | Meaning |
+|---:|---|
+| 9-10 | Complete, clear, strong. |
+| 7-8 | Mostly complete, with minor issues. |
+| 5-6 | Partially complete, with important gaps. |
+| 3-4 | Minimal attempt, with major issues. |
+| 0-2 | Missing or not assessable. |

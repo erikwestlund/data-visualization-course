@@ -1,0 +1,193 @@
+---
+title: "Counts And Ordering"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+This notebook shows how to visualize categorical counts and order categories so the plot answers a clearer question.
+
+# Analytic Questions
+
+We will use a cleaned Census race/ethnicity dataset to ask:
+
+- How many state rows appear for each race/ethnicity category?
+- Which race/ethnicity categories account for the largest total population in this file?
+- How does ordering change what the reader can see?
+
+# Load Data
+
+```{r}
+census_path <- "data/real/census_state_race_ethnicity_long.csv"
+
+census <- read_csv(census_path, show_col_types = FALSE)
+
+census |>
+  glimpse()
+```
+
+Each row is one race/ethnicity category within one state.
+
+# Count Rows
+
+First, count how many rows appear for each race/ethnicity category.
+
+```{r}
+category_counts <- census |>
+  count(race_ethnicity, sort = TRUE)
+
+category_counts
+```
+
+Start with data and mappings.
+
+```{r}
+p1 <- ggplot(
+  category_counts,
+  aes(x = race_ethnicity, y = n)
+)
+
+p1
+```
+
+Add columns.
+
+```{r}
+p2 <- p1 +
+  geom_col()
+
+p2
+```
+
+This plot is not very informative because every category appears once per state.
+
+It is still useful as a reminder: before plotting counts, ask what the rows mean.
+
+# Summarize Population By Category
+
+A more meaningful categorical summary is total included population by race/ethnicity category.
+
+```{r}
+category_population <- census |>
+  group_by(race_ethnicity) |>
+  summarise(
+    total_population = sum(race_ethnicity_population),
+    .groups = "drop"
+  ) |>
+  arrange(desc(total_population))
+
+category_population
+```
+
+Now each row is one race/ethnicity category.
+
+```{r}
+p1 <- ggplot(
+  category_population,
+  aes(x = race_ethnicity, y = total_population)
+)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_col()
+
+p2
+```
+
+# Order The Categories
+
+The labels are hard to read, and alphabetical order does not help answer the ranking question.
+
+Reorder by total population.
+
+```{r}
+category_population_ordered <- category_population |>
+  mutate(race_ethnicity = reorder(race_ethnicity, total_population))
+
+p3 <- ggplot(
+  category_population_ordered,
+  aes(x = race_ethnicity, y = total_population)
+) +
+  geom_col()
+
+p3
+```
+
+Flip the coordinates so the category labels are readable.
+
+```{r}
+p4 <- p3 +
+  coord_flip()
+
+p4
+```
+
+Add labels and a theme.
+
+```{r}
+p5 <- p4 +
+  labs(
+    title = "Included Population By Race/Ethnicity Category",
+    subtitle = "Census 2020 state race/ethnicity counts in the course data",
+    x = NULL,
+    y = "Population count"
+  ) +
+  theme_minimal()
+
+p5
+```
+
+Interpretation: the largest category in this file is White, followed by Hispanic or Latino and Black. The plot is a count of people in the included categories, not a count of states.
+
+# Add A Design Choice
+
+Columns are common for counts, but a dot plot can make rank comparisons feel lighter.
+
+```{r}
+p1 <- ggplot(
+  category_population_ordered,
+  aes(x = total_population, y = race_ethnicity)
+)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_point(size = 3)
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Included Population By Race/Ethnicity Category",
+    x = "Population count",
+    y = NULL
+  ) +
+  theme_minimal()
+
+p3
+```
+
+# Takeaways
+
+- Categorical plots depend on what one row represents.
+- `geom_bar()` counts rows inside `ggplot2`.
+- `geom_col()` uses heights already calculated in the data.
+- Ordering categories often makes the plot easier to interpret.
+- A count of rows is not the same thing as a count of people, events, or cases.

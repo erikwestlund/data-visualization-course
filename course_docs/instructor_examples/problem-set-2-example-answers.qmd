@@ -1,0 +1,149 @@
+---
+title: "Problem Set 2 Example Answers"
+subtitle: "Instructor data suitability check"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+
+flu <- read_csv("data/real/flu_vaccination_age_time_clean.csv")
+```
+
+# Task 1: Dataset Orientation
+
+One row represents one flu vaccination estimate for a specific season, month, geography, and age group. The main time variables are `season`, `season_start_year`, and `month`. Useful grouping variables include `age_group`, `geography_type`, and `geography`.
+
+A key caution is that estimates have confidence intervals and sample sizes. Comparisons should account for uncertainty and should not treat all estimates as equally precise.
+
+```{r}
+flu |>
+  select(season, season_start_year, month, geography, age_group, estimate, ci_lower, ci_upper, sample_size) |>
+  head(10)
+```
+
+# Task 2: Change Over Time
+
+This plot uses national estimates for month 5 and compares three age groups over flu seasons.
+
+```{r}
+us_month_5_selected <- flu |>
+  filter(
+    geography == "United States",
+    month == 5,
+    age_group %in% c("6 Months - 4 Years", "18-49 Years", ">=65 Years")
+  )
+
+p1 <- ggplot(
+  us_month_5_selected,
+  aes(x = season_start_year, y = estimate, color = age_group)
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Flu Vaccination Estimates Over Time",
+    subtitle = "United States, month 5, selected age groups",
+    x = "Season start year",
+    y = "Vaccination estimate (%)",
+    color = "Age group"
+  ) +
+  theme_minimal()
+
+p1
+```
+
+A line plot is appropriate because the main task is change over ordered seasons. The plot also shows that age-group differences are large relative to most year-to-year changes.
+
+# Task 3: Grouping Or Small Multiples
+
+This plot compares the regional time pattern for adults ages 50-64 years.
+
+```{r}
+regions_50_64 <- flu |>
+  filter(
+    geography != "United States",
+    month == 5,
+    age_group == "50-64 Years"
+  )
+
+p2 <- ggplot(regions_50_64, aes(x = season_start_year, y = estimate)) +
+  geom_line(color = "steelblue", linewidth = 0.8) +
+  geom_point(color = "steelblue", size = 1.4) +
+  facet_wrap(vars(geography)) +
+  labs(
+    title = "Regional Time Patterns For Ages 50-64",
+    subtitle = "Month 5 estimates by HHS region",
+    x = "Season start year",
+    y = "Vaccination estimate (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+Faceting helps compare regional patterns without putting ten colored lines in one panel. The same axes and repeated layout make the regional differences easier to scan.
+
+# Task 4: Uncertainty Or Data Quality
+
+This plot uses the confidence interval columns for the national estimate among adults ages 65 and older.
+
+```{r}
+us_65_uncertainty <- flu |>
+  filter(
+    geography == "United States",
+    month == 5,
+    age_group == ">=65 Years"
+  )
+
+p3 <- ggplot(us_65_uncertainty, aes(x = season_start_year, y = estimate)) +
+  geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), fill = "gray70", alpha = 0.4) +
+  geom_line(color = "gray20", linewidth = 1) +
+  geom_point(color = "gray20", size = 2) +
+  labs(
+    title = "National Estimates Include Sampling Uncertainty",
+    subtitle = "United States, month 5, ages 65 and older",
+    x = "Season start year",
+    y = "Vaccination estimate (%)"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+The intervals are narrow enough that broad changes over time remain visible, but they still show that each estimate has uncertainty.
+
+# Task 5: Rough Plot To Final Plot
+
+Here is a rough first version of the change-over-time plot.
+
+```{r}
+rough_plot <- ggplot(us_month_5_selected, aes(x = season_start_year, y = estimate, color = age_group)) +
+  geom_line() +
+  geom_point()
+
+rough_plot
+```
+
+Here is the revised version.
+
+```{r}
+p1
+```
+
+The revised version adds a title, subtitle, axis labels, legend title, stronger line weight, and a cleaner theme. Those changes make the time variable, geography, month, and compared age groups clearer.
+
+# Data Suitability Notes
+
+- `flu_vaccination_age_time_clean.csv` supports all required tasks.
+- `season_start_year` works well for change over time.
+- `age_group` and `geography` work well for grouping and faceting.
+- `ci_lower`, `ci_upper`, and `sample_size` support uncertainty and data-quality checks.
+- The dataset has enough seasons and groups to make students choose rather than plot everything at once.

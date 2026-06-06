@@ -1,0 +1,159 @@
+---
+title: "Practice: Counts And Ordering"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice making categorical count plots and ordering categories deliberately.
+
+# Load Data
+
+```{r}
+census_path <- "data/real/census_state_race_ethnicity_long.csv"
+
+census <- read_csv(census_path, show_col_types = FALSE)
+
+census |>
+  glimpse()
+```
+
+What does one row represent?
+
+> TODO: Replace this with your answer.
+
+# Part 1: Count Rows
+
+```{r}
+category_counts <- census |>
+  count(race_ethnicity, sort = TRUE)
+
+category_counts
+```
+
+```{r}
+p1 <- ggplot(category_counts, aes(x = race_ethnicity, y = n))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_col()
+
+p2
+```
+
+What is this plot counting?
+
+> TODO: Replace this with your answer.
+
+# Part 2: Summarize Population
+
+Calculate total included population by race/ethnicity category.
+
+```{r}
+category_population <- census |>
+  group_by(race_ethnicity) |>
+  summarise(
+    total_population = sum(race_ethnicity_population),
+    .groups = "drop"
+  ) |>
+  arrange(desc(total_population))
+
+category_population
+```
+
+Build a plot.
+
+```{r}
+p1 <- ggplot(category_population, aes(x = race_ethnicity, y = total_population))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_col()
+
+p2
+```
+
+# Part 3: Reorder And Flip
+
+```{r}
+category_population_ordered <- category_population |>
+  mutate(race_ethnicity = reorder(race_ethnicity, total_population))
+
+p3 <- ggplot(
+  category_population_ordered,
+  aes(x = race_ethnicity, y = total_population)
+) +
+  geom_col()
+
+p3
+```
+
+```{r}
+p4 <- p3 +
+  coord_flip()
+
+p4
+```
+
+# Part 4: Labels And Theme
+
+```{r}
+p5 <- p4 +
+  labs(
+    title = "Included Population By Race/Ethnicity Category",
+    x = NULL,
+    y = "Population count"
+  ) +
+  theme_minimal()
+
+p5
+```
+
+Write a two-sentence interpretation.
+
+> TODO: Replace this with your interpretation.
+
+# Part 5: Try A Dot Plot
+
+```{r}
+p1 <- ggplot(
+  category_population_ordered,
+  aes(x = total_population, y = race_ethnicity)
+)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_point(size = 3)
+
+p2
+```
+
+Which version do you prefer for this question: columns or dots? Why?
+
+> TODO: Replace this with your answer.
+
+# Checklist
+
+- What is the unit of observation?
+- What did you count or summarize?
+- Are categories ordered for the question?
+- Does the plot show row counts, population counts, or proportions?

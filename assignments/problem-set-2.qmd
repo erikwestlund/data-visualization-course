@@ -1,0 +1,130 @@
+---
+title: "Problem Set 2: Change, Communication, And Visualization Choice"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+# Due Date
+
+Due Tuesday, June 16, 2026, at 11:59 pm.
+
+# Purpose
+
+This problem set asks you to make and justify visualizations for change over time and communication.
+
+The focus is on the second half of the course:
+
+- change over time
+- grouping and small multiples
+- uncertainty or intervals when available
+- choosing a visualization from the analytic task
+- improving a rough plot into a clearer final figure
+- written explanation of design choices
+
+# Dataset
+
+Use the cleaned CDC flu vaccination dataset:
+
+```text
+data/real/flu_vaccination_age_time_clean.csv
+```
+
+Relevant codebook:
+
+```text
+data/codebooks/flu_vaccination_age_time_clean.md
+```
+
+# Submission
+
+Submit a rendered HTML notebook.
+
+Your notebook should include code, output, visualizations, and written interpretation.
+
+# Required Tasks
+
+## Task 1: Dataset Orientation
+
+Describe:
+
+- what one row represents
+- the time variable or variables
+- the grouping variable or variables you plan to use
+- one limitation or caution about the data
+
+## Task 2: Change Over Time
+
+Create one visualization that shows change over time.
+
+Possible directions:
+
+- vaccination estimate over season start year
+- trends by age group
+- trends for selected months
+- changes in national or regional estimates over time
+
+Explain why the visualization form is appropriate for change.
+
+## Task 3: Grouping Or Small Multiples
+
+Create one visualization that shows how the time pattern differs across groups.
+
+Possible directions:
+
+- facet by age group
+- color by age group
+- compare selected seasons
+- compare selected months
+
+Explain what grouping adds to the analysis.
+
+## Task 4: Uncertainty Or Data Quality
+
+Use the confidence interval columns or sample size column in one visualization or written diagnostic.
+
+You do not need a complicated uncertainty plot. The goal is to show that you noticed the uncertainty or data-quality information and used it responsibly.
+
+## Task 5: Rough Plot To Final Plot
+
+Choose one plot from this problem set and show how you improved it.
+
+Include:
+
+- a rough first version
+- a revised final version
+- a short explanation of what changed and why
+
+# Expectations
+
+Your submission should include at least three visualizations.
+
+At least one visualization should show change over time.
+
+At least one visualization should compare groups.
+
+At least one visualization should include either confidence interval information, sample size information, or a written caution based on those fields.
+
+# Rubric
+
+Problem Set 2 is worth 30 points.
+
+| Section | Points |
+|---|---:|
+| Task 1: Dataset Orientation | 5 |
+| Task 2: Change Over Time | 5 |
+| Task 3: Grouping Or Small Multiples | 5 |
+| Task 4: Uncertainty Or Data Quality | 5 |
+| Task 5: Rough Plot To Final Plot | 5 |
+| Presentation And Clarity | 5 |
+
+The same criteria will be applied to each 5-point section:
+
+| Score | Meaning |
+|---:|---|
+| 5 | Complete, thorough, and correct. |
+| 4 | Complete and mostly correct, with minor gaps in explanation, polish, or interpretation. |
+| 3 | Partially complete, with important gaps in completeness, thoroughness, or correctness. |
+| 2 | Minimal attempt, with major issues in completeness or correctness. |
+| 0-1 | Missing, not assessable, or not responsive to the task. |

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1283" height="930" viewBox="0 0 1283 930">
+  <rect width="1283" height="930" fill="#ffffff"/>
+  <rect x="67" y="40" width="1175" height="845" rx="9" fill="#f1f1f1" stroke="#9a9a9a" stroke-width="2"/>
+  <rect x="68" y="41" width="1173" height="54" rx="8" fill="#d9d9dc"/>
+  <text x="88" y="79" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#000000">New Project Wizard</text>
+  <text x="110" y="169" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700" fill="#000000">Create Project</text>
+  <rect x="67" y="220" width="1170" height="174" fill="#ffffff" stroke="#83a9ff" stroke-width="2"/>
+  <rect x="68" y="395" width="1170" height="176" fill="#ffffff" stroke="#dddddd"/>
+  <rect x="68" y="572" width="1170" height="176" fill="#ffffff" stroke="#dddddd"/>
+  <g transform="translate(109 244)">
+    <polygon points="67,0 132,19 132,104 67,128 0,104 0,19" fill="#eaf9ff" stroke="#b7dfeb" stroke-width="2"/>
+    <polygon points="67,0 132,19 67,41 0,19" fill="#dff4ff" opacity="0.8"/>
+    <text x="42" y="82" font-family="Georgia, serif" font-size="77" fill="#1597d3">R</text>
+  </g>
+  <text x="290" y="291" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700" fill="#000000">New Directory</text>
+  <text x="290" y="330" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#6f6f6f">Start a project in a brand new working directory</text>
+  <text x="1176" y="322" font-family="Arial, Helvetica, sans-serif" font-size="56" fill="#777777">›</text>
+  <g transform="translate(103 412)">
+    <path d="M0 25 Q0 15 12 15 L45 15 Q51 0 65 0 L125 0 Q136 0 141 12 L128 117 L8 117 Z" fill="#f3c852" stroke="#d39d27" stroke-width="2"/>
+    <rect x="0" y="28" width="128" height="80" rx="5" fill="#f0b83c" stroke="#d39d27"/>
+    <polygon points="96,33 146,50 146,107 96,126 46,107 46,50" fill="#ccecf8" stroke="#9ed3e4" opacity="0.75"/>
+    <text x="76" y="94" font-family="Georgia, serif" font-size="59" fill="#3b97c4" opacity="0.85">R</text>
+  </g>
+  <text x="290" y="468" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700" fill="#000000">Existing Directory</text>
+  <text x="290" y="507" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#6f6f6f">Associate a project with an existing working directory</text>
+  <text x="1176" y="497" font-family="Arial, Helvetica, sans-serif" font-size="56" fill="#777777">›</text>
+  <g transform="translate(100 588)">
+    <polygon points="68,0 124,18 124,68 68,86 12,68 12,18" fill="#dff6ff" stroke="#b8ddea" opacity="0.8"/>
+    <path d="M0 58 L70 28 L139 58 L126 111 L67 135 L12 111 Z" fill="#be7d34"/>
+    <path d="M0 58 L68 88 L68 135 L12 111 Z" fill="#a76321"/>
+    <path d="M139 58 L68 88 L68 135 L126 111 Z" fill="#8d551c"/>
+    <text x="53" y="55" font-family="Georgia, serif" font-size="53" fill="#1597d3">R</text>
+  </g>
+  <text x="290" y="643" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700" fill="#000000">Version Control</text>
+  <text x="290" y="682" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#6f6f6f">Checkout a project from a version control repository</text>
+  <text x="1176" y="674" font-family="Arial, Helvetica, sans-serif" font-size="56" fill="#777777">›</text>
+  <rect x="1046" y="805" width="169" height="55" rx="13" fill="#f7f7f7" stroke="#bdbdbd" stroke-width="2"/>
+  <text x="1088" y="843" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#000000">Cancel</text>
+</svg>

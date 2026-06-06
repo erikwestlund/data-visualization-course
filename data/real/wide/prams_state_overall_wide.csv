@@ -1,0 +1,27 @@
+state,state_name,depression_percent,anxiety_percent,binge_drinking_percent,alcohol_use_percent
+AR,Arkansas,,,23.9,49.6
+CO,Colorado,,,26.7,59.9
+DE,Delaware,11.5,14.3,23.2,54.9
+GA,Georgia,,,12.6,34.1
+HI,Hawaii,4.2,5.6,24,53.1
+MA,Massachusetts,,,24.5,62.2
+MD,Maryland,11.4,11.6,22.1,56.5
+ME,Maine,,,26.8,65.2
+MI,Michigan,14.3,15.2,29,64.1
+MN,Minnesota,10.5,12,33.1,68.2
+MO,Missouri,12,14.1,27.6,60.4
+NE,Nebraska,,,33.4,64.7
+NJ,New Jersey,,,19.8,52.3
+NM,New Mexico,,,20.7,49.6
+NY,New York (excluding NYC),,,22.5,55.8
+OK,Oklahoma,,,17.9,48.5
+OR,Oregon,,,20.5,54.5
+PA,Pennsylvania,,,27.5,60.8
+RI,Rhode Island,,,25.7,61.4
+UT,Utah,12.5,12.2,12.4,23.5
+VT,Vermont,,,29.7,67.4
+WA,Washington,,,23,57.2
+WI,Wisconsin,13.3,16.2,35.4,66.9
+WV,West Virginia,15.5,16.6,17.1,42.1
+WY,Wyoming,12.6,10.9,28.2,58.6
+YC,New York City,,,14.9,42.3

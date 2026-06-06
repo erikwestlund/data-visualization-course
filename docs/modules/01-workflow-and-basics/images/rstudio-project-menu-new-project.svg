@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="668" height="646" viewBox="0 0 668 646">
+  <rect width="668" height="646" fill="#ffffff"/>
+  <rect x="0" y="47" width="668" height="53" fill="#eef3f5" stroke="#d6dde0"/>
+  <rect x="148" y="100" width="520" height="468" fill="#ffffff" stroke="#9aa3aa" stroke-width="2"/>
+  <text x="454" y="86" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#4a4a4a">Project: (None)</text>
+  <text x="638" y="86" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#111111">▼</text>
+  <g transform="translate(410 61)">
+    <polygon points="18,0 36,8 36,32 18,40 0,32 0,8" fill="#d7eef8" stroke="#74bdd3"/>
+    <text x="12" y="28" font-family="Georgia, serif" font-size="24" fill="#3d84bb">R</text>
+  </g>
+  <g transform="translate(166 119)">
+    <circle cx="12" cy="12" r="10" fill="#26b46b"/>
+    <rect x="6" y="10" width="12" height="4" fill="#ffffff"/>
+    <rect x="10" y="6" width="4" height="12" fill="#ffffff"/>
+    <polygon points="30,0 48,8 48,32 30,40 12,32 12,8" fill="#d7eef8" stroke="#74bdd3"/>
+    <text x="24" y="28" font-family="Georgia, serif" font-size="22" fill="#3d84bb">R</text>
+  </g>
+  <text x="224" y="146" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#000000">New Project...</text>
+  <line x1="161" y1="165" x2="656" y2="165" stroke="#b7b7b7" stroke-width="2"/>
+  <g transform="translate(166 184)">
+    <path d="M2 9 L19 9 L24 3 L42 3 L42 14 L2 14 Z" fill="#66b8da" stroke="#4b9fc1"/>
+    <path d="M4 14 L44 14 L36 28 L0 28 Z" fill="#85cdea" stroke="#4b9fc1"/>
+    <path d="M30 6 L44 -3 L44 13 Z" fill="#30b17b"/>
+  </g>
+  <text x="224" y="209" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#000000">Open Project...</text>
+  <text x="224" y="258" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#000000">Open Project in New Session...</text>
+  <text x="224" y="307" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#8b8b8b">Close Project</text>
+  <line x1="161" y1="326" x2="656" y2="326" stroke="#b7b7b7" stroke-width="2"/>
+  <text x="224" y="369" font-family="Menlo, Consolas, monospace" font-size="28" fill="#000000">betz-khears-rct</text>
+  <text x="224" y="419" font-family="Menlo, Consolas, monospace" font-size="28" fill="#000000">teaching-scratch</text>
+  <g fill="#d9e8f0" stroke="#9db9c8" transform="translate(610 347)">
+    <rect x="8" y="0" width="23" height="23" rx="4"/>
+    <path d="M0 8 L13 8 L13 21 L20 14" fill="none" stroke="#9aa3aa" stroke-width="3"/>
+  </g>
+  <g fill="#d9e8f0" stroke="#9db9c8" transform="translate(610 397)">
+    <rect x="8" y="0" width="23" height="23" rx="4"/>
+    <path d="M0 8 L13 8 L13 21 L20 14" fill="none" stroke="#9aa3aa" stroke-width="3"/>
+  </g>
+  <line x1="161" y1="439" x2="656" y2="439" stroke="#b7b7b7" stroke-width="2"/>
+  <text x="224" y="481" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#000000">Clear Project List</text>
+  <line x1="161" y1="502" x2="656" y2="502" stroke="#b7b7b7" stroke-width="2"/>
+  <text x="224" y="544" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#8b8b8b">Project Options...</text>
+  <text x="591" y="544" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#8b8b8b">⇧⌘,</text>
+</svg>

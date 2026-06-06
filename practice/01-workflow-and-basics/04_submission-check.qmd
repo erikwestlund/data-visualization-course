@@ -1,0 +1,68 @@
+---
+title: "Practice: Submission Check"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Use this notebook as a checklist before submitting or sharing a rendered Quarto file.
+
+# Render Check
+
+Before submitting, confirm:
+
+- The notebook renders without errors.
+- The rendered HTML file opens.
+- All plots appear in the rendered HTML file.
+- Your written interpretations appear in the rendered HTML file.
+- The file name is clear enough for someone else to understand.
+
+# File Check
+
+Write the name of the notebook you rendered:
+
+> TODO: Replace this with the `.qmd` file name.
+
+Write the name of the rendered HTML file:
+
+> TODO: Replace this with the `.html` file name.
+
+Where did the HTML file appear on your computer?
+
+> TODO: Replace this with the folder path or description.
+
+# Content Check
+
+How many plots are in your rendered notebook?
+
+> TODO: Replace this with your answer.
+
+Which plot do you think is most successful, and why?
+
+> TODO: Replace this with two or three sentences.
+
+What is one thing you would improve if you had more time?
+
+> TODO: Replace this with one or two sentences.
+
+# Tiny Code Check
+
+This small chunk exists so we can confirm this checklist notebook also renders correctly.
+
+```{r}
+today <- Sys.Date()
+today
+```
+
+# Final Note
+
+For this course, the rendered HTML notebook is the main artifact. It should show both your code and your thinking.

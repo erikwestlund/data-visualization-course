@@ -1,0 +1,136 @@
+---
+title: "Difference Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+This notebook shows how to compare groups by plotting differences directly.
+
+It adapts the clinical-course habit of moving from many separate bars to a focused difference plot.
+
+# Analytic Questions
+
+We will ask:
+
+- How do PRAMS alcohol-use estimates differ from binge-drinking estimates?
+- Which states have the largest gaps between the two estimates?
+- Why might a difference plot be clearer than two bars per state?
+
+# Load Data
+
+```{r}
+prams_path <- "data/real/prams_2011_selected.csv"
+
+prams <- read_csv(prams_path, show_col_types = FALSE)
+```
+
+# Prepare Data
+
+PRAMS values are already aggregated percentages for state/subgroup rows.
+
+```{r}
+state_overall <- prams |>
+  filter(
+    subgroup_cat == "None",
+    !is.na(alcohol_use_within_3_months_birth),
+    !is.na(binge_drinking_within_3_months_birth)
+  ) |>
+  transmute(
+    location,
+    alcohol_use = alcohol_use_within_3_months_birth,
+    binge_drinking = binge_drinking_within_3_months_birth,
+    difference = alcohol_use - binge_drinking
+  ) |>
+  arrange(difference)
+
+state_overall
+```
+
+# Two Bars Per State
+
+First, compare the two estimates using paired bars.
+
+```{r}
+paired_estimates <- state_overall |>
+  select(location, alcohol_use, binge_drinking) |>
+  tidyr::pivot_longer(
+    cols = c(alcohol_use, binge_drinking),
+    names_to = "measure",
+    values_to = "estimate"
+  ) |>
+  mutate(
+    measure = recode(
+      measure,
+      alcohol_use = "Alcohol use",
+      binge_drinking = "Binge drinking"
+    ),
+    location = reorder(location, estimate)
+  )
+
+p1 <- ggplot(paired_estimates, aes(x = location, y = estimate, fill = measure)) +
+  geom_col(position = "dodge")
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Two Related PRAMS Estimates By State",
+    x = NULL,
+    y = "Estimate (%)",
+    fill = NULL
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Plot The Difference Directly
+
+If the question is about the gap, calculate and plot the gap.
+
+```{r}
+difference_data <- state_overall |>
+  mutate(location = reorder(location, difference))
+
+p1 <- ggplot(difference_data, aes(x = location, y = difference)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_col(fill = "steelblue")
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Gap Between Alcohol Use And Binge Drinking Estimates",
+    subtitle = "PRAMS state overall rows; values are percentage-point differences",
+    x = NULL,
+    y = "Alcohol use minus binge drinking"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+Interpretation: the difference plot makes the size of the gap easier to compare across states than the paired bar plot. The values are state-level PRAMS percentages, not individual-level outcomes.
+
+# Takeaways
+
+- If the question is about a difference, plot the difference.
+- Difference plots reduce visual clutter when paired comparisons are the focus.
+- Always label whether differences are percentage points, raw units, ratios, or percent changes.

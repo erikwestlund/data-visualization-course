@@ -1,0 +1,108 @@
+---
+title: "2. Setup Check"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+Use this notebook to confirm that R, `ggplot2`, and Quarto rendering work on your computer.
+
+After opening this file:
+
+- In RStudio, click `Render` in the area on top of the file text.
+- In Positron, click `Preview` in the area on top of the file text.
+
+If rendering works, the checks below should run automatically and produce an HTML file with a table and plot.
+
+# Check 1: R Works
+
+This calculation should run during rendering.
+
+```{r}
+2 + 2
+```
+
+You should see `4` in the output.
+
+# Check 2: Data Works
+
+R includes a small built-in dataset called `mtcars`. We can use it to test data work without downloading anything else.
+
+```{r}
+mtcars |>
+  head()
+```
+
+# Check 3: Summaries Work
+
+This summary should run during rendering.
+
+```{r}
+mtcars |>
+  summarise(
+    rows = n(),
+    average_mpg = mean(mpg),
+    minimum_mpg = min(mpg),
+    maximum_mpg = max(mpg)
+  )
+```
+
+# Check 4: ggplot2 Works
+
+This plot should run during rendering.
+
+```{r}
+p1 <- ggplot(mtcars, aes(x = mpg))
+
+p1
+```
+
+The blank plot is expected. We have provided data and an x-axis mapping, but no geometric object yet.
+
+Add a histogram.
+
+```{r}
+p2 <- p1 +
+  geom_histogram(binwidth = 5)
+
+p2
+```
+
+Add labels.
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Distribution Of Fuel Efficiency",
+    subtitle = "Built-in mtcars dataset",
+    x = "Miles per gallon",
+    y = "Number of cars"
+  )
+
+p3
+```
+
+Add a theme.
+
+```{r}
+p4 <- p3 +
+  theme_minimal()
+
+p4
+```
+
+# Check 5: Render Works
+
+After rendering or previewing, confirm that:
+
+- an HTML file was created or previewed
+- the table appears
+- the plot appears
+- there are no error messages

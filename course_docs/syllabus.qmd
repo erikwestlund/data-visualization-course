@@ -1,0 +1,188 @@
+---
+title: "Data Visualization"
+subtitle: "140.610.79, Summer Institute Term, 2 Credits"
+date: "June 5, 2026"
+published-title: "Last updated"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+# Instructor
+
+Erik Westlund, PhD  
+Department of Biostatistics  
+Johns Hopkins Bloomberg School of Public Health  
+<ewestlund@jhu.edu>
+
+# Meeting Time
+
+This course meets Monday, June 8 through Friday, June 12, 2026, from 9:00 am-12:00 pm each day.
+
+# Meeting Location
+
+We will meet on Zoom. The Zoom link is available on [CoursePlus](https://courseplus.jhu.edu/).
+
+# Course Websites
+
+- [CoursePlus](https://courseplus.jhu.edu/): available through the Johns Hopkins [CoursePlus site](https://courseplus.jhu.edu/).
+- Course materials: links will be provided through [CoursePlus](https://courseplus.jhu.edu/).
+
+# Course Description
+
+This course introduces students to the foundational principles and practical skills of data visualization, with a focus on exploratory data analysis, statistical reasoning, and clear scientific communication.
+
+The course treats visualization as both an analytic tool and a communication tool. Students will learn to design, critique, and revise visualizations that are accurate, clear, audience-appropriate, and tied to a real question. Topics include choosing visualizations from analytic tasks, avoiding misleading graphics, using visualizations to explore data, and turning exploratory work into polished figures.
+
+Hands-on exercises will focus on R, Quarto, `ggplot2`, and tidy data workflows. Students will work in reproducible notebooks and submit rendered documents that include code, visualizations, and written interpretation.
+
+# Course Learning Objectives
+
+By the end of the course, students should be able to:
+
+- Conceptualize and implement effective data visualizations using R and `ggplot2`.
+- Select appropriate visualization techniques based on data type, analytic goal, visualization task, and audience.
+- Use visualization for exploratory data analysis, including questions about center, spread, shape, outliers, grouping, association, composition, rank, change, space, and flow.
+- Critically evaluate visualizations for accuracy, clarity, accessibility, and potential to mislead.
+- Communicate complex data insights through clear visual storytelling.
+- Incorporate reproducibility and transparency into the visualization process using Quarto notebooks and modern coding practices.
+- Explain why a visualization is appropriate for a research or public health problem.
+
+# Intended Audience
+
+Students in public health, biostatistics, data science, epidemiology, policy, medicine, or related fields.
+
+# Prerequisites
+
+- Experience with elementary statistics and basic data analysis.
+- Basic familiarity with R or willingness to learn quickly through hands-on exercises.
+
+# Course Book
+
+We will use Kieran Healy's *Data Visualization* as a course text. It is available for free online: <https://socviz.co/>. You may purchase a physical copy if you wish.
+
+Readings are recommended rather than a substitute for the in-class exercises. Please try to complete assigned readings before class, but you can still participate productively if you are still working through them.
+
+# Methods Of Assessment
+
+This course is evaluated as follows:
+
+| Component | Weight |
+|---|---:|
+| Participation | 20% |
+| Problem sets | 30% |
+| Final project | 50% |
+
+## Participation: 20%
+
+Students are expected to attend all sessions and engage actively by asking questions, participating in discussions, completing in-class exercises, and contributing to peer feedback.
+
+Because this is a short, intensive course, attendance and active participation are important. If you must miss part of a session, contact the instructor as soon as possible.
+
+## Problem Sets: 30%
+
+There will be two major problem sets designed to reinforce key concepts and techniques. Problem sets will focus on reproducible notebook workflows, `ggplot2`, data summaries, exploratory interpretation, visualization critique, and clear written justification.
+
+Each problem set should be submitted as a rendered document, unless different instructions are provided in CoursePlus.
+
+Each problem set counts for 15 percentage points of the overall course grade.
+
+## Final Project: 50%
+
+The final project has two parts. Together, the two parts should show that you can use visualization both to explore data and to address a real research or applied data problem.
+
+Within the overall course grade, Part 1 counts for 20 percentage points and Part 2 counts for 30 percentage points.
+
+### Part 1: Exploratory Data Analysis
+
+You will complete an exploratory data analysis using a dataset provided by the course. You may also use your own dataset with instructor approval.
+
+This part should include:
+
+- A brief description of the dataset and the main variables.
+- Exploratory questions that can be investigated visually.
+- Visualizations that examine distributions, missingness if relevant, grouping, association, change, or other patterns appropriate to the data.
+- Short written interpretations of what the visualizations show.
+- Reproducible code from data loading through visualization.
+
+The goal is not to make every possible plot. The goal is to use visualization to learn what is in the data and to identify patterns, limitations, and follow-up questions.
+
+### Part 2: Research Visualization Report
+
+You will describe a real research, public health, scientific, policy, or applied data problem and create a focused visualization report for that problem.
+
+You may use your own data. If necessary, you may use datasets from the course, but the question should not substantially overlap with your Part 1 exploratory analysis.
+
+This part should include:
+
+- A clear description of the research or applied problem.
+- A description of the data needed to address the problem.
+- A statement of the visualization tasks involved, such as grouping, association, composition, rank, change, space, flow, distribution, outlier detection, or comparison.
+- An explanation of why the chosen visualizations are appropriate for the problem, data, and audience.
+- At least three high-quality visualizations.
+- The complete workflow from start to finish, including data loading, cleaning or transformation, visualization code, revision, and final presentation.
+- Written interpretation of each visualization, including limitations or cautions.
+
+High-quality visualizations should be accurate, readable, well-labeled, appropriately scaled, visually accessible, and directly connected to the stated problem.
+
+# Generative AI And Code Assistants
+
+Using AI tools for visualization is common and will be a topic in this course. Use of these tools is permitted and, in some circumstances, encouraged.
+
+It is nevertheless the student's responsibility to understand the output of these tools and ensure its correctness. Students are strongly encouraged to approach these tools as learning aids and not as substitutes for understanding, judgment, or verification.
+
+Do not submit sensitive, private, or regulated data to an AI tool unless you have explicit permission and the tool is approved for that use.
+
+# Course Evaluation
+
+Course evaluations help improve the quality of this course as it develops over time. The School of Public Health aims for a 100% course evaluation rate. Information on how to complete the evaluation will be provided in class.
+
+# Academic Ethics And Student Conduct Code
+
+Students enrolled in the Bloomberg School of Public Health of The Johns Hopkins University assume an obligation to conduct themselves in a manner appropriate to the University's mission as an institution of higher education. A student is obligated to refrain from acts which he, she, or they know, or under the circumstances has reason to know, impair the academic integrity of the University. Violations of academic integrity include, but are not limited to: cheating; plagiarism; knowingly furnishing false information to any agent of the University for inclusion in the academic record; violation of the rights and welfare of animal or human subjects in research; and misconduct as a member of either School or University committees or recognized groups or organizations.
+
+Students should be familiar with the policies and procedures specified under Policy and Procedure Manual Student-01 (Academic Ethics), available at this web site, under the fourth heading: <https://my.publichealth.jhu.edu/Resources/PoliciesProcedures/ppm/Pages/default.aspx>.
+
+The faculty, staff, and students of the Bloomberg School of Public Health and the Johns Hopkins University have the shared responsibility to conduct themselves in a manner that upholds the law and respects the rights of others. Students enrolled in the School are subject to the Student Conduct Code, detailed in Policy and Procedure Manual Student-06, and assume an obligation to conduct themselves in a manner which upholds the law and respects the rights of others. They are responsible for maintaining the academic integrity of the institution and for preserving an environment conducive to the safe pursuit of the School's educational, research, and professional practice missions.
+
+# Student Health And Well-being
+
+The Bloomberg School of Public Health is committed to the holistic well-being of its students and offers a wide spectrum of support as they progress toward becoming confident, capable, and fulfilled leaders in public health.
+
+If you are struggling with anxiety, stress, depression, or other mental health related concerns, please consider contacting Mental Health Services.
+
+- Student support: <https://bit.ly/bsphstudentsupport>
+- Mental Health Services: <https://wellbeing.jhu.edu/MentalHealthServices/>
+
+If you need more immediate support, or if you are concerned about a friend who might be in crisis, please contact the Behavioral Health Crisis Support Team (BHCST) at 410-516-9355, 24 hours a day, 7 days a week. The BHCST provides mobile crisis response to Baltimore campuses within the Charles Village, Mt. Vernon, and East Baltimore Public Safety footprints, and consultation for Washington, DC.
+
+# Students With Disabilities: Accommodations And Accessibility
+
+Student Disability Services (SDS) provides accessible and inclusive educational experiences for students with disabilities by collaborating with campus partners to proactively remove barriers, raise awareness of equitable practices, and foster an appreciation of disability as an area of diversity while utilizing a wide range of collaborative approaches from individualized accommodations to universal design.
+
+To request disability-related accommodations or services at Bloomberg School of Public Health:
+
+1. Complete the SDS online application via AIM.
+2. Submit documentation using the provided link after application submission.
+3. Schedule a meeting with Audrey Ndaba to discuss your needs and accommodations.
+
+Resources:
+
+- SDS: <https://publichealth.jhu.edu/about/inclusion-diversity-anti-racism-and-equity-idare/student-disability-services>
+- AIM: <https://hunter.accessiblelearning.com/JHU/ApplicationStudent.aspx>
+- Audrey Ndaba: <https://outlook.office365.com/book/SDSBSPH@live.johnshopkins.edu/>
+
+# Schedule
+
+Please see CoursePlus for the authoritative list of due dates and submission instructions. The schedule below summarizes the planned class flow.
+
+| Date/Time/Topic | Due/Readings | Notes And Exercises |
+|---|---|---|
+| Monday, June 8, 9:00 am-12:00 pm: Workflow, setup, first visualization, and `ggplot2` basics | Recommended: Healy, chs. 1-3 | Course orientation; visualization as analytic and communication tool; RStudio or Positron setup; Quarto notebooks; project structure; first plots; `ggplot2` layers; transformations and aggregation. Problem Set 1 assigned. |
+| Tuesday, June 9, 9:00 am-12:00 pm: One variable, distributions, and grouping | Recommended: Healy, chs. 4-5 | Histograms, density plots, dot plots, box plots, and violin plots; center, spread, shape, outliers, rank, and grouped distributions; manual summaries with counts, means, medians, and proportions. |
+| Wednesday, June 10, 9:00 am-12:00 pm: Association, interaction, and composition | Recommended: Healy, ch. 6 | Scatterplots, smoothing, faceting, color and group aesthetics; association versus causation; interaction as grouped association; composition and part-to-whole questions; lab on multivariable visualization. |
+| Thursday, June 11, 9:00 am-12:00 pm: Change, space, flow, and choosing the right form | Problem Set 1 due; recommended: Healy, chs. 7-8 | Time series, before/after plots, slope charts, spatial displays and non-map alternatives, process and flow diagrams, choosing plots from analytic tasks rather than chart menus. Problem Set 2 assigned. |
+| Friday, June 12, 9:00 am-12:00 pm: Communication, critique, polish, and project studio |  | Critique and redesign; labels, legends, captions, color, scales, accessibility, and export choices; responsible AI use; final project studio; peer feedback; course wrap-up. |
+| Tuesday, June 16, 11:59 pm | Problem Set 2 due | Submit according to the instructions posted in CoursePlus. |
+| Friday, July 3, 11:59 pm | Final project due | Submit both parts of the final project according to the instructions posted in CoursePlus. |

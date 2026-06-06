@@ -1,0 +1,168 @@
+---
+title: "Histograms And Density Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+This notebook shows how to visualize the distribution of one continuous variable.
+
+We focus on center, spread, shape, and unusual values.
+
+# Analytic Questions
+
+We will use a simplified NHANES teaching file to ask:
+
+- What does the distribution of adult systolic blood pressure look like?
+- How does the bin width change a histogram?
+- What does a density plot emphasize differently from a histogram?
+
+# Load Data
+
+```{r}
+nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+
+nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+
+nhanes |>
+  glimpse()
+```
+
+Each row is one NHANES participant from the demographics file.
+
+NHANES is a complex survey. In this course, these are exploratory sample visualizations, not national estimates.
+
+# Prepare Adult Blood Pressure Data
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(systolic_mean)
+  )
+
+adult_bp |>
+  select(respondent_id, age_years, gender, age_group, systolic_mean) |>
+  head()
+```
+
+# First Histogram
+
+Start with the data and x-axis mapping.
+
+```{r}
+p1 <- ggplot(
+  adult_bp,
+  aes(x = systolic_mean)
+)
+
+p1
+```
+
+Add a histogram.
+
+```{r}
+p2 <- p1 +
+  geom_histogram(binwidth = 5)
+
+p2
+```
+
+Add labels and a theme.
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Distribution Of Adult Mean Systolic Blood Pressure",
+    subtitle = "NHANES 2021-2023 teaching file, adults with BP readings",
+    x = "Mean systolic blood pressure",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+Interpretation: the distribution is centered a little above 120 mmHg and has a right tail with some higher readings.
+
+# Bin Width
+
+Bin width changes the level of detail in the histogram.
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = systolic_mean)) +
+  geom_histogram(binwidth = 2)
+
+p1
+```
+
+```{r}
+p2 <- ggplot(adult_bp, aes(x = systolic_mean)) +
+  geom_histogram(binwidth = 10)
+
+p2
+```
+
+The smaller bin width shows more detail. The larger bin width smooths over more of the small variation.
+
+# Density Plot
+
+A density plot shows a smoothed distribution.
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = systolic_mean))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_density(fill = "steelblue", alpha = 0.3)
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Density Of Adult Mean Systolic Blood Pressure",
+    x = "Mean systolic blood pressure",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+# Summary Statistics
+
+Use summaries to support what the plot suggests.
+
+```{r}
+adult_bp |>
+  summarise(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    min_systolic = min(systolic_mean),
+    max_systolic = max(systolic_mean),
+    iqr_systolic = IQR(systolic_mean)
+  )
+```
+
+# Takeaways
+
+- Histograms are good for count-based distribution questions.
+- Bin width is a choice that affects what patterns are visible.
+- Density plots emphasize smoothed shape rather than counts.
+- Always connect distribution shape to the unit of observation and the analytic question.

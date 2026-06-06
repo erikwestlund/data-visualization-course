@@ -1,0 +1,204 @@
+---
+title: "Getting Positron Working"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+# Deprecated
+
+Use `practice/00-pre-class/pre-class-setup.qmd` as the primary pre-class setup guide. This older Positron-only guide is kept for reference.
+
+# Goal
+
+This guide helps you get Positron ready for the course.
+
+By the end, you should be able to:
+
+- open Positron
+- open the course folder
+- select an R interpreter
+- open a Quarto notebook
+- run R code
+- render a notebook to HTML
+
+# What To Install
+
+You need three things:
+
+- R
+- Positron
+- Quarto
+
+R is the programming language. Positron is the application we use to write and run code. Quarto renders notebooks into HTML documents.
+
+# Step 1: Install R
+
+Download and install R from CRAN:
+
+<https://cran.r-project.org/>
+
+Choose the installer for your operating system.
+
+After installing R, continue to Positron.
+
+# Step 2: Install Positron
+
+Download Positron here:
+
+<https://positron.posit.co/download.html>
+
+Accept the license agreement on the download page. The installer links are disabled until you check the license agreement box.
+
+Choose the installer for your operating system:
+
+- Windows: download the Windows installer and run it.
+- macOS: download the macOS `.dmg`, open it, and move Positron into Applications.
+- Linux: download the `.deb` or `.rpm` installer for your Linux distribution.
+
+Open Positron after installation.
+
+# Step 3: Install Quarto
+
+Positron includes Quarto support, but you should still make sure Quarto is installed.
+
+Download Quarto here:
+
+<https://quarto.org/docs/get-started/>
+
+After installing Quarto, restart Positron.
+
+# Step 4: Open The Course Folder
+
+In Positron:
+
+1. Go to `File > Open Folder...`.
+2. Navigate to the course folder.
+3. Open the full course folder, not an individual notebook.
+
+You should see folders such as:
+
+- `course_docs`
+- `data`
+- `modules`
+- `practice`
+- `slides`
+
+Opening the full folder matters. It tells Positron where the project root is. We want you working from the project root, not from a random folder on your computer.
+
+# Optional: Create A Fresh Practice Project
+
+Most of the time, you should open the course folder instead of creating a new project.
+
+If you want a separate practice project in Positron:
+
+1. Click `New` in the upper-left corner.
+2. Choose `New Folder from Template...`.
+3. Choose `R Project`.
+4. Type a folder name, such as `my-r-project`.
+5. Choose where the folder should live.
+6. Leave `Initialize Git repository` checked if you want Git practice, or uncheck it if you do not.
+7. Choose the R version Positron should use.
+8. Click `Create`.
+
+Use this only for extra practice, not for submitting the course notebooks.
+
+# Step 5: Select R
+
+If Positron asks for an interpreter or runtime, choose R.
+
+If you do not see R as an option, confirm that R is installed and restart Positron.
+
+You can also open a terminal or console in Positron and run:
+
+```r
+R.version.string
+```
+
+This should print the R version installed on your computer.
+
+# Step 6: Install Course Packages
+
+In the R Console, run:
+
+```r
+install.packages(c("dplyr", "ggplot2", "readr", "stringr"))
+```
+
+These packages are enough for the first course notebooks.
+
+# Step 7: Open A Quarto Notebook
+
+In the file explorer, open:
+
+```text
+practice/01-workflow-and-basics/01_open-render-check.qmd
+```
+
+Run the code chunks in the notebook.
+
+# Step 8: Render To HTML
+
+Use the notebook toolbar or command palette to render the Quarto notebook.
+
+The rendered HTML file should have the same base name as the notebook.
+
+For example:
+
+```text
+01_open-render-check.html
+```
+
+Open the HTML file and confirm that the code output and plots appear.
+
+# Troubleshooting
+
+## Positron Cannot Find R
+
+Install R from CRAN:
+
+<https://cran.r-project.org/>
+
+Then restart Positron.
+
+## The Notebook Does Not Run
+
+Make sure the active runtime/interpreter is R.
+
+If needed, use Positron's interpreter or runtime selector and choose R.
+
+## Quarto Rendering Fails
+
+Install or update Quarto:
+
+<https://quarto.org/docs/get-started/>
+
+Restart Positron and render again.
+
+## A Package Is Missing
+
+Install the missing package with:
+
+```r
+install.packages("package_name")
+```
+
+Replace `package_name` with the package named in the error message.
+
+## Paths Are Confusing
+
+Open the full course folder before working.
+
+Do not solve path problems by adding `../` or `../../` to file paths. Work from the project root or use the `here` package when a notebook needs an explicit path.
+
+# Success Check
+
+You are ready for class if you can:
+
+- open Positron
+- open the full course folder
+- select R as the interpreter/runtime
+- open a `.qmd` notebook
+- run a code chunk
+- render the notebook to HTML

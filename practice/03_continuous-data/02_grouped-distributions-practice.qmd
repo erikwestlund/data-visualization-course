@@ -1,0 +1,144 @@
+---
+title: "Practice: Grouped Distributions"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice comparing continuous distributions across groups.
+
+# Load Data
+
+```{r}
+nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+
+nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+
+nhanes |>
+  glimpse()
+```
+
+# Part 1: Prepare Data
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(systolic_mean),
+    !is.na(age_group)
+  )
+
+adult_bp |>
+  count(age_group)
+```
+
+Why is it useful to count rows by group before comparing distributions?
+
+> TODO: Replace this with your answer.
+
+# Part 2: Box Plot
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_boxplot()
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Adult Systolic Blood Pressure By Age Group",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+What differs across age groups: center, spread, shape, outliers, or overlap?
+
+> TODO: Replace this with your answer.
+
+# Part 3: Add Points
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean)) +
+  geom_boxplot(outlier.shape = NA)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_jitter(width = 0.15, alpha = 0.15, size = 0.8)
+
+p2
+```
+
+What did the points add? Did they also add clutter?
+
+> TODO: Replace this with your answer.
+
+# Part 4: Violin Plot
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_violin(fill = "gray85")
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  geom_boxplot(width = 0.12, outlier.shape = NA)
+
+p3
+```
+
+Which plot works better for this question: box plot, points, or violin? Why?
+
+> TODO: Replace this with your answer.
+
+# Part 5: Group Summaries
+
+```{r}
+age_group_summary <- adult_bp |>
+  group_by(age_group) |>
+  summarise(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    iqr_systolic = IQR(systolic_mean),
+    .groups = "drop"
+  )
+
+age_group_summary
+```
+
+Write a short interpretation using both the plot and the summary table.
+
+> TODO: Replace this with your interpretation.

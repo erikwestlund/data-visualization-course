@@ -1,0 +1,189 @@
+---
+title: "Practice: Ranked Comparisons"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice making ranked categorical comparisons.
+
+# Load Data
+
+```{r}
+population_path <- "data/real/state_population_ranks.csv"
+
+state_population <- read_csv(population_path, show_col_types = FALSE)
+
+state_population |>
+  glimpse()
+```
+
+What does one row represent?
+
+> TODO: Replace this with your answer.
+
+# Part 1: First Plot
+
+```{r}
+p1 <- ggplot(state_population, aes(x = state_name, y = population))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_col()
+
+p2
+```
+
+What makes this first plot hard to read?
+
+> TODO: Replace this with your answer.
+
+# Part 2: Top 15 States
+
+```{r}
+top_states <- state_population |>
+  arrange(desc(population)) |>
+  slice_head(n = 15) |>
+  mutate(
+    state_name = reorder(state_name, population),
+    population_millions = population / 1000000
+  )
+
+top_states
+```
+
+What did `slice_head(n = 15)` do here?
+
+> TODO: Replace this with your answer.
+
+# Part 3: Ranked Bar Chart
+
+```{r}
+p1 <- ggplot(top_states, aes(x = state_name, y = population_millions))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_col(fill = "gray60")
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  coord_flip()
+
+p3
+```
+
+```{r}
+p4 <- p3 +
+  labs(
+    title = "Largest States By 2020 Population",
+    subtitle = "Top 15 states and DC in the course population file",
+    x = NULL,
+    y = "Population, in millions"
+  ) +
+  theme_minimal()
+
+p4
+```
+
+Write a short interpretation.
+
+> TODO: Replace this with your interpretation.
+
+# Part 4: Dot Plot
+
+```{r}
+p1 <- ggplot(top_states, aes(x = population_millions, y = state_name))
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_point(size = 3)
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Largest States By 2020 Population",
+    x = "Population, in millions",
+    y = NULL
+  ) +
+  theme_minimal()
+
+p3
+```
+
+Which version do you prefer: bars or dots? Why?
+
+> TODO: Replace this with your answer.
+
+# Part 5: Highlight One State
+
+Choose a state to highlight. The example highlights California.
+
+```{r}
+top_states <- top_states |>
+  mutate(is_selected_state = state == "CA")
+
+p1 <- ggplot(
+  top_states,
+  aes(
+    x = population_millions,
+    y = state_name,
+    color = is_selected_state
+  )
+) +
+  geom_point(size = 3)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  scale_color_manual(
+    values = c("TRUE" = "steelblue", "FALSE" = "gray65"),
+    labels = c("FALSE" = "Other top-15 state", "TRUE" = "Selected state"),
+    name = NULL
+  ) +
+  labs(
+    title = "Selected State Compared With Other Large States",
+    x = "Population, in millions",
+    y = NULL
+  ) +
+  theme_minimal()
+
+p2
+```
+
+What does highlighting add? What could it overemphasize?
+
+> TODO: Replace this with your answer.
+
+# Checklist
+
+- Did you sort by the variable that matches the question?
+- Did you say if the plot shows only a subset?
+- Are labels readable?
+- Does highlighting help the reader, or distract them?

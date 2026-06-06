@@ -1,0 +1,27 @@
+state,state_name,depression_within_3_months_birth_no_previous_live_births,depression_within_3_months_birth_one_or_more_previous_live_births,anxiety_within_3_months_birth_no_previous_live_births,anxiety_within_3_months_birth_one_or_more_previous_live_births,binge_drinking_within_3_months_birth_no_previous_live_births,binge_drinking_within_3_months_birth_one_or_more_previous_live_births,alcohol_use_within_3_months_birth_no_previous_live_births,alcohol_use_within_3_months_birth_one_or_more_previous_live_births,depression_difference_one_or_more_minus_none,binge_difference_one_or_more_minus_none
+AR,Arkansas,,,,,27.6,21.4,51.7,48.4,,-6.200000000000003
+CO,Colorado,,,,,37.1,19.4,68.9,53.6,,-17.700000000000003
+DE,Delaware,9.5,12.9,13.7,14.7,29.5,18.9,60.2,51.4,3.4000000000000004,-10.600000000000001
+GA,Georgia,,,,,17.2,9.4,36.2,32.2,,-7.799999999999999
+HI,Hawaii,3.7,4.5,5.3,5.9,30.8,19.5,62.2,47.1,0.7999999999999998,-11.3
+MA,Massachusetts,,,,,30.3,20.2,67.5,57.8,,-10.100000000000001
+MD,Maryland,10.9,11.6,12.5,10.9,32.3,15.3,63.7,52,0.6999999999999993,-16.999999999999996
+ME,Maine,,,,,32.6,21.9,67,63.7,,-10.700000000000003
+MI,Michigan,15.4,13.5,16.2,14.5,33.6,25.3,67.2,61.8,-1.9000000000000004,-8.3
+MN,Minnesota,10.3,11,12.6,11.8,41.9,26.5,74.2,63.4,0.6999999999999993,-15.399999999999999
+MO,Missouri,11.3,12.5,12.7,15,33.5,22.9,64.7,57.3,1.1999999999999993,-10.600000000000001
+NE,Nebraska,,,,,45.5,26.6,70.2,61.5,,-18.9
+NJ,New Jersey,,,,,24.4,16.6,60.1,46.9,,-7.799999999999997
+NM,New Mexico,,,,,23.1,18.9,53.6,46.9,,-4.200000000000003
+NY,New York (excluding NYC),,,,,32,15.9,62.9,51,,-16.1
+OK,Oklahoma,,,,,24.6,13.7,52.1,46.3,,-10.900000000000002
+OR,Oregon,,,,,25.6,16.8,64.1,47.7,,-8.8
+PA,Pennsylvania,,,,,34.5,22.9,66.7,57,,-11.600000000000001
+RI,Rhode Island,,,,,32.4,20.5,68,56.4,,-11.899999999999999
+UT,Utah,8.6,14.2,11.1,12.6,17.8,10,30.9,20.1,5.6,-7.800000000000001
+VT,Vermont,,,,,36.6,23.6,74,61.6,,-13
+WA,Washington,,,,,31.1,17.1,67.7,49.5,,-14
+WI,Wisconsin,13.8,13,17.8,15.3,44.3,29.7,71.5,64,-0.8000000000000007,-14.599999999999998
+WV,West Virginia,14.8,16.1,17.5,15.9,23.9,11.9,46.4,38.8,1.3000000000000007,-11.999999999999998
+WY,Wyoming,12.9,12.3,12.5,9.8,33.7,24.6,66.6,53.4,-0.5999999999999996,-9.100000000000001
+YC,New York City,,,,,19.8,10.4,51.5,33.7,,-9.4

@@ -1,0 +1,132 @@
+---
+title: "Problem Set 1 Example Answers"
+subtitle: "Instructor data suitability check"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+
+prams <- read_csv("data/real/prams_2011_selected.csv")
+census_long <- read_csv("data/real/census_state_race_ethnicity_long.csv")
+state_ranks <- read_csv("data/real/state_population_ranks.csv")
+race_summary <- read_csv("data/real/state_race_population_summary.csv")
+```
+
+# Task 1: Dataset Orientation
+
+For the Census race/ethnicity dataset, one row represents one race/ethnicity category within one state. The main variables used below are `state_name`, `race_ethnicity`, `race_ethnicity_population`, `total_population`, and `share`.
+
+A key caution is that the plotted shares are state-level summaries. They describe population composition by state, not individual people.
+
+```{r}
+census_long |>
+  select(state_name, race_ethnicity, race_ethnicity_population, total_population, share) |>
+  head(10)
+```
+
+# Task 2: Counts, Composition, Or Rank
+
+This plot uses `state_population_ranks.csv` to show the twelve largest states in this dataset.
+
+```{r}
+top_states <- state_ranks |>
+  slice_max(population, n = 12) |>
+  mutate(state_name = reorder(state_name, population))
+
+p1 <- ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Largest States In The Population Rank Dataset",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal()
+
+p1
+```
+
+The plot makes the rank comparison easy: the largest states are clearly separated from the smaller states in the top twelve. This is a suitable categorical/rank task because each bar represents one state and the bar length represents population.
+
+# Task 3: Distribution Or Grouped Summary
+
+This plot uses the PRAMS dataset to compare distributions of alcohol-use estimates across several subgroup categories.
+
+```{r}
+selected_prams_groups <- prams |>
+  filter(
+    subgroup_cat %in% c(
+      "Maternal Race/Ethnicity",
+      "Maternal Education",
+      "Marital Status",
+      "Number of Previous Live Births"
+    ),
+    !is.na(alcohol_use_within_3_months_birth)
+  ) |>
+  mutate(subgroup_cat = reorder(subgroup_cat, alcohol_use_within_3_months_birth, median))
+
+p2 <- ggplot(
+  selected_prams_groups,
+  aes(x = subgroup_cat, y = alcohol_use_within_3_months_birth)
+) +
+  geom_boxplot(fill = "gray85", color = "gray30") +
+  coord_flip() +
+  labs(
+    title = "Alcohol Use Estimates Vary Across PRAMS Subgroup Categories",
+    x = NULL,
+    y = "Alcohol use within 3 months before birth (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+Each plotted value is a PRAMS state/subgroup percentage, not a person-level observation. The plot is useful for checking center, spread, and possible outlying estimates across subgroup categories.
+
+# Task 4: Association Or Comparison Across Groups
+
+This plot uses `state_race_population_summary.csv` to examine whether larger states in this dataset tend to have different Hispanic/Latino population shares.
+
+```{r}
+race_association <- race_summary |>
+  mutate(hispanic_or_latino_share_percent = share_hispanic_or_latino * 100)
+
+p3 <- ggplot(
+  race_association,
+  aes(x = total_population, y = hispanic_or_latino_share_percent)
+) +
+  geom_point(alpha = 0.75, color = "darkorange3") +
+  geom_smooth(method = "lm", se = FALSE, color = "gray30") +
+  scale_x_log10() +
+  labs(
+    title = "State Population Size And Hispanic/Latino Population Share",
+    x = "Total population, log scale",
+    y = "Hispanic or Latino population share (%)"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+This plot suggests whether population size and Hispanic/Latino population share move together in these state-level summaries. It should not be read as an individual-level relationship or a causal claim.
+
+# Task 5: Reflection
+
+The PRAMS boxplot was the most useful exploratory figure in this example because it showed that the spread of estimates differs across subgroup categories. The next question would be whether particular subgroup values drive that spread within specific states.
+
+# Data Suitability Notes
+
+- The assigned datasets support the required tasks.
+- `state_population_ranks.csv` works well for rank and ordered categorical plots.
+- `prams_2011_selected.csv` works well for distribution and grouped-summary plots, as long as students state that values are pre-aggregated percentages.
+- `state_race_population_summary.csv` works well for association plots across state-level summaries.
+- `census_state_race_ethnicity_long.csv` works well for orientation and composition tasks.

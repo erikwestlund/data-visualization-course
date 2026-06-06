@@ -1,0 +1,30 @@
+real_file,simulated_file,analog_topic
+data/real/davis_height_weight.csv,data/simulated/measured_vs_self_reported_exercise_minutes.csv,measured vs self-reported exercise minutes
+data/real/migraine_headache_diary.csv,data/simulated/toothache_diary.csv,toothache diary
+data/real/titanic_passengers.csv,data/simulated/boaty_mcboatface_passengers.csv,fictional boat passenger survival
+data/real/infant_mortality_countries.csv,data/simulated/rural_health_indicators.csv,rural health indicators
+data/real/ginzberg_depression.csv,data/simulated/stress_beliefs_survey.csv,stress beliefs survey
+data/real/exercise_eating_disorders.csv,data/simulated/physical_therapy_activity.csv,physical therapy activity
+data/real/post_coma_recovery.csv,data/simulated/injury_recovery_followup.csv,injury recovery follow-up
+data/real/nhanes_2021_2023_demographics.csv,data/simulated/neighborhood_health_survey_demographics.csv,neighborhood health survey demographics
+data/real/nhanes_2021_2023_blood_pressure.csv,data/simulated/neighborhood_health_survey_blood_pressure_screening.csv,neighborhood blood pressure screening
+data/real/nhanes_2021_2023_hepatitis_a.csv,data/simulated/neighborhood_health_survey_hepatitis_a.csv,neighborhood hepatitis A antibody status
+data/real/nhanes_2021_2023_dietary_foods.csv,data/simulated/neighborhood_health_survey_dietary_foods.csv,neighborhood dietary food records
+data/real/nhanes_2021_2023_dietary_daily_summary.csv,data/simulated/neighborhood_health_survey_dietary_daily_summary.csv,neighborhood dietary daily summary
+data/real/nhanes_2021_2023_dietary_person_summary.csv,data/simulated/neighborhood_health_survey_dietary_person_summary.csv,neighborhood dietary person summary
+data/real/nhanes_2021_2023_analysis.csv,data/simulated/neighborhood_health_survey_analysis.csv,joined neighborhood health survey
+data/real/prams_2011_selected.csv,data/simulated/new_parent_wellness_survey.csv,new-parent wellness subgroup estimates
+data/real/wide/prams_state_overall_wide.csv,data/simulated/new_parent_wellness_state_overall_wide.csv,new-parent wellness state overall wide
+data/real/wide/prams_previous_live_births_wide.csv,data/simulated/new_parent_previous_births_wide.csv,new-parent wellness previous births wide
+data/real/flu_vaccination_age_time_clean.csv,data/simulated/respiratory_booster_coverage.csv,respiratory booster coverage
+data/real/wide/flu_vaccination_age_month_wide.csv,data/simulated/respiratory_booster_age_month_wide.csv,respiratory booster age-month wide
+data/real/wide/flu_vaccination_us_age_season_wide.csv,data/simulated/respiratory_booster_us_age_season_wide.csv,respiratory booster national age-season wide
+data/real/census_state_race_ethnicity_long.csv,data/simulated/state_school_enrollment_groups_long.csv,state school enrollment groups long
+data/real/wide/census_state_race_ethnicity_wide.csv,data/simulated/state_school_enrollment_groups_wide.csv,state school enrollment groups wide
+data/real/state_population_ranks.csv,data/simulated/state_enrollment_ranks.csv,state enrollment ranks
+data/real/state_race_population_summary.csv,data/simulated/state_enrollment_group_summary.csv,state enrollment group summary
+data/real/places_county_core_measures_long.csv,data/simulated/county_wellness_indicators_long.csv,county wellness indicators long
+data/real/places_county_core_measures_wide.csv,data/simulated/county_wellness_indicators_wide.csv,county wellness indicators wide
+data/real/places_tract_dc_md_va_core_measures_long.csv,data/simulated/metro_neighborhood_wellness_indicators_long.csv,metro neighborhood wellness indicators long
+data/real/epa_air_quality_county_2025_long.csv,data/simulated/county_noise_exposure_2025_long.csv,county noise exposure long
+data/real/epa_air_quality_county_2025_wide.csv,data/simulated/county_noise_exposure_2025_wide.csv,county noise exposure wide

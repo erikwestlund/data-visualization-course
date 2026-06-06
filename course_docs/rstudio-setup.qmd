@@ -1,0 +1,197 @@
+---
+title: "Getting RStudio Desktop Working"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+# Deprecated
+
+Use `practice/00-pre-class/pre-class-setup.qmd` as the primary pre-class setup guide. This older RStudio-only guide is kept for reference.
+
+# Goal
+
+This guide helps you get RStudio Desktop ready for the course.
+
+By the end, you should be able to:
+
+- open RStudio Desktop
+- open the course project
+- open a Quarto notebook
+- run R code
+- render a notebook to HTML
+
+# What To Install
+
+You need three things:
+
+- R
+- RStudio Desktop
+- Quarto
+
+R is the programming language. RStudio is the application we use to write and run R code. Quarto renders notebooks into HTML documents.
+
+# Step 1: Install R
+
+Download and install R from CRAN:
+
+<https://cran.r-project.org/>
+
+Choose the installer for your operating system.
+
+After installing R, continue to RStudio Desktop.
+
+# Step 2: Install RStudio Desktop
+
+Download RStudio Desktop here:
+
+<https://posit.co/download/rstudio-desktop>
+
+Choose the installer for your operating system:
+
+- Windows: download the Windows installer and run it.
+- macOS: download the macOS installer, open it, and move RStudio into Applications.
+- Linux: download the installer for your Linux distribution.
+
+Open RStudio after installation.
+
+# Step 3: Install Quarto
+
+RStudio often includes Quarto support, but you should still make sure Quarto is installed.
+
+Download Quarto here:
+
+<https://quarto.org/docs/get-started/>
+
+After installing Quarto, restart RStudio.
+
+# Step 4: Open The Course Project
+
+In RStudio:
+
+1. Go to `File > Open Project...`.
+2. Navigate to the course folder.
+3. Open the `.Rproj` file for the course.
+
+The project menu is in the upper-right corner of RStudio. Choose `Open Project...` from that menu.
+
+For this course, the project file is named:
+
+```text
+data-visualization-course.Rproj
+```
+
+Opening the `.Rproj` file matters. It tells RStudio where the project root is. We want you working from the project root, not from a random folder on your computer.
+
+# Optional: Create A Fresh Practice Project
+
+Most of the time, you should open the course project instead of creating a new one.
+
+If you want a separate practice project, use RStudio's project menu:
+
+1. Click the project menu in the upper-right corner of RStudio.
+2. Choose `New Project...`.
+3. Choose `New Directory`.
+4. Choose `New Project`.
+5. Type a directory name, such as `new-project`.
+6. Choose where the project should live.
+7. Click `Create Project`.
+
+This creates a new folder and a new `.Rproj` file. Use this only for extra practice, not for submitting the course notebooks.
+
+# Step 5: Check That R Works
+
+In the R Console, run:
+
+```r
+2 + 2
+```
+
+You should see:
+
+```text
+[1] 4
+```
+
+# Step 6: Install Course Packages
+
+In the R Console, run:
+
+```r
+install.packages(c("dplyr", "ggplot2", "readr", "stringr"))
+```
+
+These packages are enough for the first course notebooks.
+
+# Step 7: Open A Quarto Notebook
+
+In the Files pane, open:
+
+```text
+practice/01-workflow-and-basics/01_open-render-check.qmd
+```
+
+Run the code chunks in the notebook.
+
+# Step 8: Render To HTML
+
+Click the `Render` button at the top of the notebook.
+
+RStudio should create an HTML file with the same base name as the notebook.
+
+For example:
+
+```text
+01_open-render-check.html
+```
+
+Open the HTML file and confirm that the code output and plots appear.
+
+# Troubleshooting
+
+## I Cannot Find The Course Files
+
+Make sure you downloaded or copied the full course folder, not just one notebook.
+
+You should see folders such as:
+
+- `course_docs`
+- `data`
+- `modules`
+- `practice`
+- `slides`
+
+## The Render Button Is Missing
+
+Make sure the file you opened ends in `.qmd`.
+
+If the button is still missing, install Quarto and restart RStudio:
+
+<https://quarto.org/docs/get-started/>
+
+## A Package Is Missing
+
+Install the missing package with:
+
+```r
+install.packages("package_name")
+```
+
+Replace `package_name` with the package named in the error message.
+
+## Paths Are Confusing
+
+Open the course `.Rproj` file before working.
+
+Do not solve path problems by adding `../` or `../../` to file paths. Work from the project root or use the `here` package when a notebook needs an explicit path.
+
+# Success Check
+
+You are ready for class if you can:
+
+- open RStudio Desktop
+- open `data-visualization-course.Rproj`
+- open a `.qmd` notebook
+- run a code chunk
+- render the notebook to HTML

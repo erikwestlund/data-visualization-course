@@ -15,4 +15,5 @@ format:
     controls: true
     progress: true
     center: true
+    embed-resources: true
     highlight-style: github

@@ -1,0 +1,104 @@
+---
+title: "Practice: Open And Render Check"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Use this notebook to confirm that your course workflow is working.
+
+You should be able to run the code chunks, render the notebook, and find the rendered HTML file.
+
+# Step 1: Check The Project
+
+Run this chunk.
+
+```{r}
+getwd()
+```
+
+Question: does the output look like the course project folder?
+
+Write a short note here:
+
+> TODO: Replace this with your answer.
+
+# Step 2: Check R Code
+
+Run this simple calculation.
+
+```{r}
+2 + 2
+```
+
+Now change the calculation below to something else.
+
+```{r}
+10 * 5
+```
+
+# Step 3: Check Data
+
+We will use `mtcars`, a small built-in dataset.
+
+```{r}
+mtcars |>
+  head()
+```
+
+Run a simple summary.
+
+```{r}
+mtcars |>
+  summarise(
+    rows = n(),
+    average_mpg = mean(mpg),
+    minimum_mpg = min(mpg),
+    maximum_mpg = max(mpg)
+  )
+```
+
+Question: how many rows are in the dataset?
+
+> TODO: Replace this with your answer.
+
+# Step 4: Check Plotting
+
+Run this plot.
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_histogram(binwidth = 5) +
+  labs(
+    title = "Distribution of Fuel Efficiency",
+    x = "Miles per gallon",
+    y = "Number of cars"
+  )
+```
+
+Question: what does the plot show?
+
+> TODO: Replace this with one or two sentences.
+
+# Step 5: Render
+
+Render this notebook.
+
+After rendering, answer these questions:
+
+- Did the notebook render successfully?
+- Where did the HTML file appear?
+- Did the plot appear in the rendered HTML file?
+
+Notes:
+
+> TODO: Replace this with your notes.

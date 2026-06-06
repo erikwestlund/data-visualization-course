@@ -1,0 +1,143 @@
+---
+title: "Flow And Attrition"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+This notebook shows how to visualize movement through stages or narrowing through filters.
+
+It adapts the clinical-course flow examples without adding interactive Sankey dependencies.
+
+# Analytic Questions
+
+We will ask:
+
+- How many NHANES respondents remain after common analytic restrictions?
+- Where do observations leave the analysis dataset?
+- How can a simple attrition plot communicate workflow decisions?
+
+# Load Data
+
+```{r}
+nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+
+nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+```
+
+# Build Attrition Counts
+
+Each row below is a stage in a simple analysis workflow.
+
+```{r}
+attrition <- tibble::tibble(
+  stage = c(
+    "All rows",
+    "Adults age 18+",
+    "Has systolic BP",
+    "Has diet summary",
+    "Has income-to-poverty"
+  ),
+  n = c(
+    nrow(nhanes),
+    nhanes |> filter(age_years >= 18) |> nrow(),
+    nhanes |> filter(age_years >= 18, !is.na(systolic_mean)) |> nrow(),
+    nhanes |> filter(age_years >= 18, !is.na(systolic_mean), !is.na(mean_daily_energy_kcal)) |> nrow(),
+    nhanes |> filter(age_years >= 18, !is.na(systolic_mean), !is.na(mean_daily_energy_kcal), !is.na(family_income_to_poverty)) |> nrow()
+  )
+) |>
+  mutate(
+    stage = factor(stage, levels = stage),
+    retained_percent = n / first(n) * 100
+  )
+
+attrition
+```
+
+# Attrition Bars
+
+```{r}
+p1 <- ggplot(attrition, aes(x = stage, y = n)) +
+  geom_col(fill = "steelblue")
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Rows Retained Through An Analysis Workflow",
+    x = NULL,
+    y = "Number of rows"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Add Retention Labels
+
+```{r}
+p1 <- ggplot(attrition, aes(x = stage, y = n)) +
+  geom_col(fill = "gray75") +
+  geom_text(
+    aes(label = paste0(round(retained_percent), "% retained")),
+    hjust = -0.05,
+    size = 3.5
+  )
+
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Analytic Restrictions Change The Available Sample",
+    x = NULL,
+    y = "Number of rows"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank())
+
+p2
+```
+
+# Stage-To-Stage Loss
+
+```{r}
+stage_loss <- attrition |>
+  mutate(
+    previous_n = lag(n),
+    lost = previous_n - n
+  ) |>
+  filter(!is.na(lost))
+
+p1 <- ggplot(stage_loss, aes(x = stage, y = lost)) +
+  geom_col(fill = "darkorange3")
+
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Rows Lost At Each Step",
+    x = NULL,
+    y = "Rows lost from previous step"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Takeaways
+
+- Flow is about movement through stages, not only Sankey diagrams.
+- Attrition plots make analytic restrictions visible.
+- Counts and percentages answer different questions and often belong together.
+- Simple static plots are often enough for analysis workflow communication.

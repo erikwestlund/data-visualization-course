@@ -1,0 +1,142 @@
+---
+title: "Grouped Summaries"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+This notebook shows how to compare groups after deciding what summary each group should receive.
+
+It adapts the aggregation and iteration ideas from the clinical PRAMS examples.
+
+# Analytic Questions
+
+We will ask:
+
+- How does mean systolic blood pressure differ by adult age group?
+- How do we separate the statistical summary from the visual display?
+- How does a dot plot compare with a bar chart for group means?
+
+# Load Data
+
+```{r}
+nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+
+nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+```
+
+# Prepare Data
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(age_group),
+    !is.na(systolic_mean)
+  )
+
+bp_by_age <- adult_bp |>
+  group_by(age_group) |>
+  summarise(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    sd_systolic = sd(systolic_mean),
+    se_systolic = sd_systolic / sqrt(n),
+    lower = mean_systolic - 1.96 * se_systolic,
+    upper = mean_systolic + 1.96 * se_systolic,
+    .groups = "drop"
+  ) |>
+  mutate(age_group = reorder(age_group, mean_systolic))
+
+bp_by_age
+```
+
+# First Plot: Bars
+
+Bars can show group means, but they can make a mean look like an amount that starts at zero.
+
+```{r}
+p1 <- ggplot(bp_by_age, aes(x = age_group, y = mean_systolic)) +
+  geom_col(fill = "gray75")
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Mean Systolic Blood Pressure By Age Group",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Dot Plot With Intervals
+
+For group means, points and intervals often focus attention on comparisons between groups.
+
+```{r}
+p1 <- ggplot(bp_by_age, aes(x = age_group, y = mean_systolic)) +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15, color = "gray50") +
+  geom_point(size = 3, color = "steelblue")
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Mean Systolic Blood Pressure Increases Across Adult Age Groups",
+    subtitle = "Points show means; intervals show approximate 95% intervals around the mean",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+Interpretation: older age groups have higher mean systolic blood pressure in this sample. The intervals summarize uncertainty around each group mean, not the full spread of individual blood pressure values.
+
+# Check The Distribution Behind The Summary
+
+Group means should not replace a distribution check.
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean)) +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.3)
+
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "The Individual Values Still Vary Within Each Age Group",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Takeaways
+
+- Decide what one plotted row should represent before plotting.
+- Manual summaries make the statistical step visible.
+- Dot-and-interval plots are often clearer than bars for comparing group means.
+- Summary plots should be checked against the distributions behind them.

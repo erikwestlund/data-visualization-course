@@ -1,0 +1,52 @@
+state,state_name,population,rank
+TX,Texas,32058625,1
+MN,Minnesota,24912946,2
+MT,Montana,20972023,3
+WV,West Virginia,18507780,4
+ND,North Dakota,13355412,5
+OK,Oklahoma,10934458,6
+MO,Missouri,10466059,7
+VT,Vermont,10251077,8
+IN,Indiana,9785631,9
+NJ,New Jersey,9359827,10
+ME,Maine,8972999,11
+ID,Idaho,8909229,12
+DE,Delaware,8863258,13
+WA,Washington,8795960,14
+OR,Oregon,8622440,15
+WY,Wyoming,8512535,16
+FL,Florida,8317811,17
+CO,Colorado,8205124,18
+CT,Connecticut,8013908,19
+MD,Maryland,7872509,20
+AZ,Arizona,6978705,21
+TN,Tennessee,6521537,22
+SC,South Carolina,5528406,23
+IL,Illinois,5410053,24
+NY,New York,4876580,25
+PA,Pennsylvania,4699544,26
+MA,Massachusetts,3960551,27
+NE,Nebraska,3939868,28
+OH,Ohio,3931230,29
+MI,Michigan,3884106,30
+HI,Hawaii,3802907,31
+NM,New Mexico,3734374,32
+VA,Virginia,3548227,33
+NC,North Carolina,3391578,34
+DC,District of Columbia,3035597,35
+AL,Alabama,2812204,36
+RI,Rhode Island,2599767,37
+MS,Mississippi,2437134,38
+KS,Kansas,2436398,39
+UT,Utah,2395733,40
+AK,Alaska,2318908,41
+NH,New Hampshire,2301558,42
+SD,South Dakota,2276870,43
+IA,Iowa,2127163,44
+KY,Kentucky,1827728,45
+WI,Wisconsin,1690219,46
+AR,Arkansas,1685158,47
+CA,California,1496628,48
+NV,Nevada,1322142,49
+GA,Georgia,1305288,50
+LA,Louisiana,1238135,51

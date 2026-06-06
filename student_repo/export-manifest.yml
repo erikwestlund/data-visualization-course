@@ -1,0 +1,53 @@
+# Student repository export manifest.
+#
+# This file documents the intended student-facing export rules. The build script
+# also reads `target_root_default`, `must_exist_after_export`, and
+# `must_not_exist_after_export` from this file.
+
+target_root_default: ~/Code/Courses/data-visualization-2026
+
+# Editable/source materials students may open and run.
+source_exports:
+  - modules/**/*.qmd
+  - practice/templates/**/*.qmd
+  - updater.R
+  - README.md
+
+# Rendered instructor-owned artifacts.
+rendered_exports:
+  - modules/rendered/index.html
+  - modules/rendered/**/*.html
+  - syllabus.html
+  - slides/*.html
+  - assignments/*.html
+  - data/data.html
+  - data/codebooks/*.html
+
+# Student-owned files are ignored by Git and should not be overwritten.
+student_work:
+  - practice/work/
+  - docs/
+
+# Explicit checks for exceptions/default breaks.
+must_exist_after_export:
+  - modules/00_preclass-tech-check/01_pre-class-directions.qmd
+  - modules/00_preclass-tech-check/02_setup-check.qmd
+  - practice/templates/01-workflow-and-basics/01_open-render-check.qmd
+  - updater.R
+  - data-visualization-course.Rproj
+  - data-visualization-course.code-workspace
+  - data/data.html
+  - modules/rendered/index.html
+  - modules/rendered/01-workflow-and-basics/01_get-course-materials.html
+
+must_not_exist_after_export:
+  - docs/modules/00_preclass-tech-check/01_pre-class-directions.html
+  - docs/modules/00_preclass-tech-check/02_setup-check.html
+  - modules/00_preclass-tech-check/01_pre-class-directions.html
+  - modules/00_preclass-tech-check/02_setup-check.html
+  - modules/01-workflow-and-basics/01_get-course-materials.html
+  - rendered/index.html
+  - rendered/modules/01-workflow-and-basics/01_get-course-materials.html
+  - assignments/problem-set-1.qmd
+  - slides/day-01-intro-and-workflow.qmd
+  - data/codebooks/prams_2011_selected.md

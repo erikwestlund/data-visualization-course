@@ -1,0 +1,52 @@
+state,state_name,depression_percent,anxiety_percent,binge_drinking_percent,alcohol_use_percent
+AK,Alaska,19.6,20.8,5.3,12
+AL,Alabama,18.1,20.6,4.6,12.5
+AR,Arkansas,15.3,22.1,5.1,9.9
+AZ,Arizona,14.8,21.4,4,10
+CA,California,16.8,21.8,5.2,11.5
+CO,Colorado,12,18.9,2.7,9.5
+CT,Connecticut,16.6,22.1,4.6,9.8
+DC,District of Columbia,15.4,22.3,4.3,10.1
+DE,Delaware,15.9,19.8,4,10.8
+FL,Florida,18.6,25.4,5.9,11.7
+GA,Georgia,17.7,22.4,7,12.2
+HI,Hawaii,16.1,19.8,4.9,11.9
+IA,Iowa,16.7,23.4,5.2,10.2
+ID,Idaho,16.4,22.1,4.2,9.7
+IL,Illinois,12.7,18.8,3.4,10.1
+IN,Indiana,18.6,21.7,5.4,8.8
+KS,Kansas,19.1,22.4,7,12.2
+KY,Kentucky,14.9,19.7,5.3,10.5
+LA,Louisiana,16.7,19.2,5.2,10.4
+MA,Massachusetts,14.4,20,2.9,10.4
+MD,Maryland,17.2,21,4.8,10.7
+ME,Maine,16.3,20.3,4.3,10.4
+MI,Michigan,15.6,20.2,4.2,11.2
+MN,Minnesota,17.7,23.7,4,10.3
+MO,Missouri,17.5,22.7,4.5,11.9
+MS,Mississippi,14.8,15.3,3.6,9.2
+MT,Montana,15.7,19.8,5.5,10.1
+NC,North Carolina,17.6,23.1,3.7,8.3
+ND,North Dakota,16.4,20.4,4.2,12
+NE,Nebraska,16.2,21.7,4.7,11.6
+NH,New Hampshire,18,22.9,5.8,10.6
+NJ,New Jersey,18.9,22.3,5.3,11.9
+NM,New Mexico,16.9,20.3,4.9,11.1
+NV,Nevada,18.8,23.4,5.8,9.9
+NY,New York,15.7,19.2,3.5,9.6
+OH,Ohio,16.4,19.2,5,10.3
+OK,Oklahoma,15.3,21.2,3.1,8.7
+OR,Oregon,13.5,18.6,3.3,8.6
+PA,Pennsylvania,16.7,20.7,6,11.9
+RI,Rhode Island,15.8,20.1,4.2,9.6
+SC,South Carolina,16.7,21.1,4.2,10
+SD,South Dakota,18,25,5.4,12
+TN,Tennessee,15.2,20,4.9,11.7
+TX,Texas,20.5,28.5,6.2,11.9
+UT,Utah,17.8,20.7,4.9,11.7
+VA,Virginia,17.4,27.1,5.8,11.4
+VT,Vermont,16,20.4,5,9.8
+WA,Washington,15.3,18,3.4,10.3
+WI,Wisconsin,19,23.9,6.4,13
+WV,West Virginia,12.4,16.9,2.7,8
+WY,Wyoming,13.1,19.9,3,7.8

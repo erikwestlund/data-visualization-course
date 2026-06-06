@@ -1,0 +1,135 @@
+---
+title: "Problem Set 1: Foundations Of Exploratory Visualization"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+# Due Date
+
+Due Thursday, June 11, 2026, at 11:59 pm.
+
+# Purpose
+
+This problem set checks that you can move from a real dataset to exploratory visualizations and written interpretation.
+
+The focus is on the first half of the course:
+
+- rendering a reproducible notebook
+- understanding what one row represents
+- creating categorical summaries
+- visualizing distributions or pre-aggregated percentages
+- comparing groups
+- making a first association or grouped comparison plot
+- explaining what the plot shows and what it does not show
+
+# Datasets
+
+Use the course datasets below.
+
+```text
+data/real/prams_2011_selected.csv
+data/real/census_state_race_ethnicity_long.csv
+data/real/state_population_ranks.csv
+data/real/state_race_population_summary.csv
+```
+
+Relevant codebooks are in:
+
+```text
+data/codebooks/
+```
+
+# Submission
+
+Submit a rendered HTML notebook.
+
+Your notebook should include code, output, visualizations, and written interpretation.
+
+# Required Tasks
+
+## Task 1: Dataset Orientation
+
+Choose either the PRAMS dataset or the Census race/ethnicity dataset.
+
+Describe:
+
+- what one row represents
+- the main variables you will use
+- one limitation or caution about the dataset
+
+## Task 2: Counts, Composition, Or Rank
+
+Create one plot that answers a categorical question.
+
+Examples:
+
+- Which race/ethnicity categories make up the largest population share in selected states?
+- How do states rank by total population?
+- Which PRAMS subgroup categories appear most often?
+
+Your plot should use clear labels and a short interpretation.
+
+## Task 3: Distribution Or Grouped Summary
+
+Create one plot that examines center, spread, shape, outliers, or grouped differences.
+
+Examples:
+
+- What is the distribution of PRAMS binge drinking estimates across state/subgroup rows?
+- How do PRAMS estimates differ by subgroup category?
+- How do race/ethnicity population shares vary across states?
+
+Your plot should include a written interpretation that mentions what the plotted values represent.
+
+## Task 4: Association Or Comparison Across Groups
+
+Create one plot that compares two variables or compares a pattern across groups.
+
+Examples:
+
+- How are PRAMS alcohol use and binge drinking estimates related?
+- How do state population rank and one race/ethnicity population share relate?
+- How does a pattern differ across a small number of selected groups?
+
+Your plot should avoid overclaiming. If the data are pre-aggregated, say so.
+
+## Task 5: Reflection
+
+Write a short paragraph answering:
+
+- Which visualization was most useful for exploratory analysis?
+- What did it help you notice?
+- What question would you ask next?
+
+# Expectations
+
+Your submission should include at least three visualizations.
+
+At least one visualization should use a manual data transformation or aggregation before plotting.
+
+At least one visualization should be revised beyond the first rough version using labels, ordering, scales, facets, or theme changes.
+
+# Rubric
+
+Problem Set 1 is worth 30 points.
+
+| Section | Points |
+|---|---:|
+| Task 1: Dataset Orientation | 5 |
+| Task 2: Counts, Composition, Or Rank | 5 |
+| Task 3: Distribution Or Grouped Summary | 5 |
+| Task 4: Association Or Comparison Across Groups | 5 |
+| Task 5: Reflection | 5 |
+| Presentation And Clarity | 5 |
+
+The same criteria will be applied to each 5-point section:
+
+| Score | Meaning |
+|---:|---|
+| 5 | Complete, thorough, and correct. |
+| 4 | Complete and mostly correct, with minor gaps in explanation, polish, or interpretation. |
+| 3 | Partially complete, with important gaps in completeness, thoroughness, or correctness. |
+| 2 | Minimal attempt, with major issues in completeness or correctness. |
+| 0-1 | Missing, not assessable, or not responsive to the task. |

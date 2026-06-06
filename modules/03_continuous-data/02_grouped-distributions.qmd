@@ -1,0 +1,191 @@
+---
+title: "Grouped Distributions"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+This notebook shows how to compare continuous distributions across groups.
+
+The goal is not only to compare averages. We also care about spread, shape, and overlap.
+
+# Analytic Questions
+
+We will ask:
+
+- How does adult systolic blood pressure vary by age group?
+- What do box plots show well?
+- What do violin plots show differently?
+
+# Load Data
+
+```{r}
+nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+
+nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+
+nhanes |>
+  glimpse()
+```
+
+# Prepare Data
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(systolic_mean),
+    !is.na(age_group)
+  )
+
+adult_bp |>
+  count(age_group)
+```
+
+# Box Plot
+
+Start with a grouped mapping.
+
+```{r}
+p1 <- ggplot(
+  adult_bp,
+  aes(x = age_group, y = systolic_mean)
+)
+
+p1
+```
+
+Add a box plot.
+
+```{r}
+p2 <- p1 +
+  geom_boxplot()
+
+p2
+```
+
+Add labels and a theme.
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Adult Systolic Blood Pressure By Age Group",
+    subtitle = "Box plots show median, middle 50%, and potential outliers",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+Interpretation: older age groups tend to have higher median systolic blood pressure, but there is still substantial overlap across groups.
+
+# Add Points Carefully
+
+Points can show the observations, but they need transparency when there are many rows.
+
+```{r}
+p1 <- ggplot(
+  adult_bp,
+  aes(x = age_group, y = systolic_mean)
+) +
+  geom_boxplot(outlier.shape = NA)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_jitter(width = 0.15, alpha = 0.15, size = 0.8)
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Adult Systolic Blood Pressure By Age Group",
+    subtitle = "Jittered points show the individual readings behind the boxes",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+# Violin Plot
+
+Violin plots emphasize distribution shape within each group.
+
+```{r}
+p1 <- ggplot(
+  adult_bp,
+  aes(x = age_group, y = systolic_mean)
+)
+
+p1
+```
+
+```{r}
+p2 <- p1 +
+  geom_violin(fill = "gray85")
+
+p2
+```
+
+```{r}
+p3 <- p2 +
+  geom_boxplot(width = 0.12, outlier.shape = NA)
+
+p3
+```
+
+```{r}
+p4 <- p3 +
+  labs(
+    title = "Distribution Shape By Age Group",
+    subtitle = "Violins show shape; box plots show median and middle spread",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p4
+```
+
+# Group Summaries
+
+Summaries help check what the plot suggests.
+
+```{r}
+age_group_summary <- adult_bp |>
+  group_by(age_group) |>
+  summarise(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    iqr_systolic = IQR(systolic_mean),
+    .groups = "drop"
+  )
+
+age_group_summary
+```
+
+# Takeaways
+
+- Grouped distribution plots compare more than group averages.
+- Box plots are compact and good for median/spread comparisons.
+- Violin plots show more shape, but can be harder for new readers.
+- Add points only when they improve the plot rather than clutter it.
