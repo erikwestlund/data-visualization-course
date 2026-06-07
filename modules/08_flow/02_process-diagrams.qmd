@@ -16,8 +16,6 @@ library(ggplot2)
 
 This notebook shows how diagrams can clarify analytic structure before plotting data.
 
-It adapts the clinical-course DAG and process-diagram examples while avoiding specialized packages.
-
 # Why Diagrams?
 
 Some visualization work is about explaining a process, not plotting a measured variable.
@@ -31,7 +29,7 @@ Diagrams can help show:
 
 # Mermaid Flow Diagram
 
-Quarto can render Mermaid diagrams directly.
+Mermaid is a text-based syntax for drawing diagrams. Quarto can render Mermaid diagrams directly.
 
 ```{mermaid}
 flowchart LR
@@ -44,7 +42,7 @@ flowchart LR
 
 # Simple Causal Structure
 
-This is not a formal causal analysis. It is a way to write down assumptions before choosing plots.
+This is not a formal causal analysis. The arrows show assumptions we would need to defend; they do not prove that one variable causes another.
 
 ```{mermaid}
 flowchart LR
@@ -58,6 +56,8 @@ flowchart LR
 # Build A Static Process Plot
 
 When a diagram needs custom labels or counts, `ggplot2` can draw boxes and arrows.
+
+Do not memorize the coordinate numbers here; the main idea is that boxes and arrows can be stored as small data frames and adjusted by previewing.
 
 ```{r}
 process_steps <- tibble::tibble(

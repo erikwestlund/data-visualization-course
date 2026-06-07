@@ -58,19 +58,20 @@ Before choosing a plot, ask:
 
 ## Two Big Variable Types Today
 
-Categorical variables answer questions like:
+Categorical variables name groups or labels:
 
 - Which category?
 - Which group?
-- Which place?
 - Which label?
 
-Continuous variables answer questions like:
+Numeric variables measure amounts on a scale:
 
 - How much?
 - How high?
 - How long?
 - How many units?
+
+Counts are numeric summaries, but they are often created from categorical rows.
 
 ## The Plot Is A Statistical Claim
 
@@ -123,13 +124,15 @@ Sometimes we summarize values by category.
 Those are different operations:
 
 ```r
-count(category)
+data |>
+  count(category)
 ```
 
 versus
 
 ```r
-group_by(category) |>
+data |>
+  group_by(category) |>
   summarise(total = sum(value))
 ```
 
@@ -141,7 +144,7 @@ Useful orders include:
 
 - largest to smallest
 - smallest to largest
-- meaningful sequence
+- natural sequence
 - reference category first
 - grouped by concept
 
@@ -194,7 +197,7 @@ Raw counts mix two ideas:
 
 If the question is composition, proportions are often clearer.
 
-## Stacked Bars Are Not Magic
+## Stacked Bars Have Tradeoffs
 
 Stacked bars can show composition.
 
@@ -204,7 +207,7 @@ But they make some comparisons hard:
 - small differences can be hard to see
 - too many categories create clutter
 
-Sometimes filtering to one category is clearer.
+If the main question is one category's share across groups, plot that category directly.
 
 ## Transition To Module
 
@@ -466,8 +469,8 @@ Watch for:
 
 Use one or more practice notebooks from:
 
-- `practice/templates/02_categorical-data/`
-- `practice/templates/03_continuous-data/`
+- `practice/02_categorical-data/`
+- `practice/03_continuous-data/`
 
 Work in:
 

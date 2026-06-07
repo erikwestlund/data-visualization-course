@@ -17,8 +17,6 @@ library(readr)
 
 This notebook shows how to visualize movement through stages or narrowing through filters.
 
-It adapts the clinical-course flow examples without adding interactive Sankey dependencies.
-
 # Analytic Questions
 
 We will ask:
@@ -37,7 +35,7 @@ nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
 
 # Build Attrition Counts
 
-Each row below is a stage in a simple analysis workflow.
+Each row below is cumulative: every stage keeps the previous restrictions and adds one more.
 
 ```{r}
 attrition <- tibble::tibble(
@@ -126,7 +124,7 @@ p1 <- ggplot(stage_loss, aes(x = stage, y = lost)) +
 p2 <- p1 +
   coord_flip() +
   labs(
-    title = "Rows Lost At Each Step",
+    title = "Rows Removed When Each New Restriction Is Added",
     x = NULL,
     y = "Rows lost from previous step"
   ) +

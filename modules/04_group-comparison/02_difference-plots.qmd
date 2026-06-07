@@ -15,9 +15,7 @@ library(readr)
 
 # Goal
 
-This notebook shows how to compare groups by plotting differences directly.
-
-It adapts the clinical-course habit of moving from many separate bars to a focused difference plot.
+This notebook compares paired estimates first, then plots the calculated gap directly.
 
 # Analytic Questions
 
@@ -38,6 +36,8 @@ prams <- read_csv(prams_path, show_col_types = FALSE)
 # Prepare Data
 
 PRAMS values are already aggregated percentages for state/subgroup rows.
+
+In this dataset, `subgroup_cat == "None"` marks the overall state row.
 
 ```{r}
 state_overall <- prams |>
@@ -75,7 +75,7 @@ paired_estimates <- state_overall |>
       alcohol_use = "Alcohol use",
       binge_drinking = "Binge drinking"
     ),
-    location = reorder(location, estimate)
+    location = factor(location, levels = state_overall$location)
   )
 
 p1 <- ggplot(paired_estimates, aes(x = location, y = estimate, fill = measure)) +

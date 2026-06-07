@@ -99,6 +99,8 @@ Interpretation: California and Texas have larger bars partly because they have l
 
 The `share` variable gives each category's share within the included race/ethnicity categories for that state.
 
+In this file, the denominator is the sum of the race/ethnicity categories included in the teaching dataset for that state.
+
 ```{r}
 p1 <- ggplot(
   selected_states,

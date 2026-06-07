@@ -17,15 +17,13 @@ library(readr)
 
 This notebook shows how to move from a basic scatterplot to grouped and smoothed association plots.
 
-It adapts the clinical-course association examples while using a small course dataset.
-
 # Analytic Questions
 
 We will ask:
 
 - How closely do self-reported and measured weight agree?
 - Does reporting error differ by measured weight?
-- How does grouping change what we notice?
+- Do reporting-error patterns look different by sex, and where is the evidence sparse?
 
 # Load Data
 
@@ -101,6 +99,8 @@ The smoother is a summary. The points still matter because they show spread arou
 
 Sometimes the more useful association uses a derived variable.
 
+Here, reported minus measured weight puts the reporting error on the y-axis. Values below zero mean under-reporting.
+
 ```{r}
 p1 <- ggplot(weight_data, aes(x = weight_kg, y = weight_reporting_error_kg)) +
   geom_hline(yintercept = 0, color = "gray60") +
@@ -142,7 +142,7 @@ p2 <- p1 +
 p2
 ```
 
-Interpretation: grouping helps check whether the association looks similar across groups. The plot is exploratory and should not be read as a causal explanation for reporting error.
+Interpretation: grouping helps check whether reporting error patterns look similar across groups. Compare where each smoother sits relative to zero, especially at the tails where there may be fewer observations. The plot is exploratory and should not be read as a causal explanation for reporting error.
 
 # Takeaways
 

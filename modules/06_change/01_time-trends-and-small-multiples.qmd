@@ -17,8 +17,6 @@ library(readr)
 
 This notebook shows how to visualize change over time and compare time patterns across groups.
 
-It adapts the clinical-course time-trend examples to the course flu vaccination dataset.
-
 # Analytic Questions
 
 We will ask:
@@ -37,7 +35,7 @@ flu <- read_csv(flu_path, show_col_types = FALSE)
 
 # Prepare Data
 
-Use national estimates from the same month in each season.
+Use national estimates from May (`month == 5`) so each season is compared at the same point in the vaccination cycle.
 
 ```{r}
 us_may <- flu |>
@@ -68,7 +66,7 @@ p1
 p2 <- p1 +
   labs(
     title = "Flu Vaccination Estimates Over Time",
-    subtitle = "United States, month 5, ages 65 and older",
+    subtitle = "United States, May (month 5), ages 65 and older",
     x = "Season start year",
     y = "Vaccination estimate (%)"
   ) +
@@ -93,7 +91,7 @@ p1 <- ggplot(
 p2 <- p1 +
   labs(
     title = "Flu Vaccination Time Trends Differ By Age Group",
-    subtitle = "United States, month 5",
+    subtitle = "United States, May (month 5)",
     x = "Season start year",
     y = "Vaccination estimate (%)",
     color = "Age group"
@@ -116,7 +114,7 @@ p1 <- ggplot(selected_age_groups, aes(x = season_start_year, y = estimate)) +
 p2 <- p1 +
   labs(
     title = "Small Multiples Separate The Age-Group Patterns",
-    subtitle = "United States, month 5",
+    subtitle = "United States, May (month 5)",
     x = "Season start year",
     y = "Vaccination estimate (%)"
   ) +
@@ -130,4 +128,4 @@ p2
 - Line plots work well when the x-axis has a meaningful order.
 - Use the same month or comparable time point when comparing seasons.
 - Color works for a few groups; facets often work better for many groups.
-- Interpret time patterns with attention to changing groups, definitions, and uncertainty.
+- These plots show point estimates only; when intervals are available, check whether apparent changes are large relative to uncertainty.

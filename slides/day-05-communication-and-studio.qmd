@@ -95,11 +95,11 @@ Ask:
 
 ## Zero Is Not Always Required
 
-Zero is usually important for bars because bar length implies amount from zero.
+Bars should usually start at zero because bar length encodes amount.
 
-For line plots and point plots, a nonzero axis can be reasonable.
+For line plots and point plots, a nonzero axis can be acceptable.
 
-But it should not exaggerate a small difference into a dramatic story.
+If you use a nonzero axis, label it clearly and do not use it to exaggerate small differences.
 
 ## Transition To Module
 
@@ -149,7 +149,9 @@ Also use:
 - position
 - shape or line type when needed
 - readable contrast
-- meaningful ordering
+- colorblind-safe palettes
+- direct labels when a legend is hard to track
+- ordering that supports the comparison
 
 ## Highlighting
 
@@ -193,7 +195,7 @@ Good workflow:
 final_plot <- ggplot(...) +
   ...
 
-ggsave("figure.png", final_plot, width = 7, height = 5, dpi = 300)
+ggsave("practice/work/figure.png", final_plot, width = 7, height = 5, dpi = 300)
 ```
 
 Build the object.
@@ -253,7 +255,7 @@ The final project has two phases:
 
 The final figures should grow out of the exploration.
 
-They should not be disconnected decorations.
+They should answer questions that emerged from your exploration, not be added only because they look polished.
 
 ## Studio Goals
 
@@ -281,11 +283,11 @@ When looking at a classmate's plot, ask:
 
 Use one or more practice notebooks from:
 
-- `practice/templates/09_communication-polish/`
+- `practice/09_communication-polish/`
 
 Or work directly on your final project.
 
-Work in:
+For today's studio work, use:
 
 `practice/work/`
 

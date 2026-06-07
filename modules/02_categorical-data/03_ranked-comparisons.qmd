@@ -25,7 +25,7 @@ We will ask:
 
 - Which states have the largest populations?
 - How does a ranked plot differ from an alphabetical plot?
-- How can we show a top group without hiding the denominator?
+- How can we show the top 15 while making clear they are a subset of all states/DC?
 
 # Load Data
 
@@ -107,7 +107,7 @@ Add labels and a theme.
 p4 <- p3 +
   labs(
     title = "Largest States By 2020 Population",
-    subtitle = "Top 15 states and DC in the course population file",
+    subtitle = "Top 15 of 51 state/DC rows in the course population file",
     x = NULL,
     y = "Population, in millions"
   ) +
@@ -140,6 +140,7 @@ p2
 p3 <- p2 +
   labs(
     title = "Largest States By 2020 Population",
+    subtitle = "Top 15 of 51 state/DC rows",
     x = "Population, in millions",
     y = NULL
   ) +

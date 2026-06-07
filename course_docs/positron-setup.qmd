@@ -8,7 +8,7 @@ format:
 
 # Deprecated
 
-Use `practice/00-pre-class/pre-class-setup.qmd` as the primary pre-class setup guide. This older Positron-only guide is kept for reference.
+Use `modules/00_preclass-tech-check/01_pre-class-directions.qmd` and `modules/00_preclass-tech-check/02_setup-check.qmd` as the primary pre-class setup guides. This older Positron-only guide is kept for reference.
 
 # Goal
 
@@ -31,7 +31,7 @@ You need three things:
 - Positron
 - Quarto
 
-R is the programming language. Positron is the application we use to write and run code. Quarto renders notebooks into HTML documents.
+R is the programming language. Positron is an application advanced users may use to write and run code. Quarto renders notebooks into HTML documents.
 
 # Step 1: Install R
 
@@ -123,7 +123,7 @@ This should print the R version installed on your computer.
 In the R Console, run:
 
 ```r
-install.packages(c("dplyr", "ggplot2", "readr", "stringr"))
+install.packages(c("dplyr", "ggplot2", "readr", "stringr", "tidyr"))
 ```
 
 These packages are enough for the first course notebooks.
@@ -190,7 +190,7 @@ Replace `package_name` with the package named in the error message.
 
 Open the full course folder before working.
 
-Do not solve path problems by adding `../` or `../../` to file paths. Work from the project root or use the `here` package when a notebook needs an explicit path.
+Do not solve path problems by adding `../` or `../../` to file paths. Open the full course folder and use project-root paths such as `data/real/prams_2011_selected.csv`.
 
 # Success Check
 

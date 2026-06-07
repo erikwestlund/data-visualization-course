@@ -17,8 +17,6 @@ library(readr)
 
 This notebook shows how to visualize simple model output without turning the notebook into a modeling course.
 
-It adapts the clinical-course idea that model results often need plots more than tables.
-
 # Analytic Questions
 
 We will ask:
@@ -75,11 +73,15 @@ p2
 
 # Fit A Simple Model
 
+We are not interpreting every coefficient here. The table is shown only to motivate why prediction plots can be easier to read.
+
 ```{r}
 bp_model <- lm(systolic_mean ~ age_years + gender, data = adult_bp)
 
 summary(bp_model)
 ```
+
+This model assumes the age slope is the same for each gender group. If we wanted different slopes by gender, we would need an interaction: `age_years * gender`.
 
 # Plot Predictions
 

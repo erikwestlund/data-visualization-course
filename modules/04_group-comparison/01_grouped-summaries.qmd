@@ -15,9 +15,7 @@ library(readr)
 
 # Goal
 
-This notebook shows how to compare groups after deciding what summary each group should receive.
-
-It adapts the aggregation and iteration ideas from the clinical PRAMS examples.
+This notebook compares groups by choosing one statistic to represent each group, then plotting those summaries.
 
 # Analytic Questions
 
@@ -62,9 +60,11 @@ bp_by_age <- adult_bp |>
 bp_by_age
 ```
 
+These are simple unweighted mean +/- 1.96 SE intervals for teaching, not NHANES survey-adjusted confidence intervals.
+
 # First Plot: Bars
 
-Bars can show group means, but they can make a mean look like an amount that starts at zero.
+Bars emphasize distance from zero. For group means, the main comparison is often the difference between groups.
 
 ```{r}
 p1 <- ggplot(bp_by_age, aes(x = age_group, y = mean_systolic)) +
@@ -103,7 +103,7 @@ p2 <- p1 +
   coord_flip() +
   labs(
     title = "Mean Systolic Blood Pressure Increases Across Adult Age Groups",
-    subtitle = "Points show means; intervals show approximate 95% intervals around the mean",
+    subtitle = "Points show means; intervals are simple unweighted mean +/- 1.96 SE",
     x = "Age group",
     y = "Mean systolic blood pressure"
   ) +
@@ -112,7 +112,7 @@ p2 <- p1 +
 p2
 ```
 
-Interpretation: older age groups have higher mean systolic blood pressure in this sample. The intervals summarize uncertainty around each group mean, not the full spread of individual blood pressure values.
+Interpretation: older age groups have higher mean systolic blood pressure in this sample. The intervals summarize uncertainty around each unweighted group mean, not the full spread of individual blood pressure values.
 
 # Check The Distribution Behind The Summary
 

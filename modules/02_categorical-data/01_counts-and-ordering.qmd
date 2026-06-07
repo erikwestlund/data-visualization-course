@@ -38,6 +38,8 @@ census |>
 
 Each row is one race/ethnicity category within one state.
 
+Here, "included" means the race/ethnicity categories present in this teaching file. Check the codebook before treating them as every possible category.
+
 # Count Rows
 
 First, count how many rows appear for each race/ethnicity category.
@@ -75,7 +77,7 @@ It is still useful as a reminder: before plotting counts, ask what the rows mean
 
 # Summarize Population By Category
 
-A more meaningful categorical summary is total included population by race/ethnicity category.
+A categorical summary that better matches the question is total included population by race/ethnicity category.
 
 ```{r}
 category_population <- census |>
@@ -154,7 +156,7 @@ Interpretation: the largest category in this file is White, followed by Hispanic
 
 # Add A Design Choice
 
-Columns are common for counts, but a dot plot can make rank comparisons feel lighter.
+Columns are common for counts, but a dot plot uses less ink and can make rank comparisons easier once the categories are summarized.
 
 ```{r}
 p1 <- ggplot(

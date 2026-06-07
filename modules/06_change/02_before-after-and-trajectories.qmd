@@ -15,16 +15,14 @@ library(readr)
 
 # Goal
 
-This notebook shows how to visualize change around a meaningful event or time point.
-
-It adapts the clinical-course examples that mark interventions and show trajectories.
+This notebook shows how to visualize change around a reference event or time point.
 
 # Analytic Questions
 
 We will ask:
 
 - How does headache reporting change across diary days?
-- How can we mark a meaningful reference day?
+- How can we mark a reference day?
 - How do group-level trajectories differ by medication group?
 
 # Load Data
@@ -36,6 +34,8 @@ diary <- read_csv(diary_path, show_col_types = FALSE)
 ```
 
 # Prepare Data
+
+The source data use day 0 as a study reference day. Negative days are before that reference day; positive days are after it.
 
 ```{r}
 daily_summary <- diary |>
@@ -50,6 +50,8 @@ daily_summary <- diary |>
 daily_summary |>
   head(10)
 ```
+
+Check `n` before interpreting bumps or dips; small daily counts can make a percent look noisy.
 
 # Overall Trajectory
 
@@ -75,7 +77,7 @@ p2 <- p1 +
   geom_vline(xintercept = 0, color = "gray50", linetype = "dashed") +
   labs(
     title = "Headache Reporting Across Diary Days",
-    subtitle = "Dashed line marks day 0",
+    subtitle = "Dashed line marks the study reference day, day 0",
     x = "Diary day",
     y = "Headache reported (%)"
   ) +
@@ -94,7 +96,7 @@ p1 <- ggplot(daily_summary, aes(x = day, y = headache_percent, color = medicatio
 
 p2 <- p1 +
   labs(
-    title = "Headache Reporting Trajectories By Medication Group",
+    title = "Group-Level Headache Reporting By Medication Group",
     x = "Diary day",
     y = "Headache reported (%)",
     color = "Medication group"
@@ -115,7 +117,7 @@ p1 <- ggplot(daily_summary, aes(x = day, y = headache_percent)) +
 
 p2 <- p1 +
   labs(
-    title = "Facets Make Group Trajectories Easier To Compare",
+    title = "Facets Make Group-Level Patterns Easier To Compare",
     x = "Diary day",
     y = "Headache reported (%)"
   ) +
@@ -126,7 +128,7 @@ p2
 
 # Takeaways
 
-- Mark meaningful reference points directly on time plots.
+- Mark reference points directly on time plots.
 - Compare groups on the same time scale when the time variable has shared meaning.
 - Facets can make trajectory comparisons easier than many overlapping lines.
-- Aggregated trajectories should be interpreted as group summaries, not individual patient paths.
+- Here, "trajectory" means a group-level time pattern, not one person's path across all days.

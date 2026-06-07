@@ -15,9 +15,9 @@ library(readr)
 
 # Goal
 
-This notebook shows how to think about exporting figures.
+This notebook shows how to save a `ggplot` with a chosen file type, size, and resolution.
 
-It adapts the clinical-course saving-visualizations example, but keeps file-writing code disabled so the module renders without creating extra files.
+The file-writing code is disabled so the module renders without creating extra files.
 
 # Why Saving Choices Matter
 
@@ -57,6 +57,8 @@ p1
 
 The main `ggplot2` function for saving plots is `ggsave()`.
 
+These chunks are not evaluated when rendering. To run them manually, first create a `figures/` folder at the project root, or change the filename to an existing project-root folder.
+
 ```{r}
 #| eval: false
 ggsave(
@@ -90,7 +92,7 @@ ggsave("figures/top-states.svg", p1, width = 7, height = 5)
 
 # Size Is Part Of Design
 
-A plot that works in a notebook may fail on a slide if labels are too small.
+A plot that is readable in a notebook can become unreadable on a slide if the final display size makes labels too small.
 
 ```{r}
 p2 <- p1 +

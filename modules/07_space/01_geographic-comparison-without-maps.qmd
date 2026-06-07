@@ -15,9 +15,7 @@ library(readr)
 
 # Goal
 
-This notebook shows how to compare places without making a map.
-
-The clinical examples did not include a full mapping workflow, so this module uses the same design principle as the scale and ranking examples: choose the comparison first, then choose the form.
+This module starts with the comparison we want to make, then chooses a non-map display that makes that comparison easier.
 
 # Analytic Questions
 
@@ -70,7 +68,7 @@ p2 <- p1 +
   coord_flip() +
   labs(
     title = "Counties With High Current-Smoking Estimates",
-    subtitle = "PLACES county estimates; top 20 in this file",
+    subtitle = "20 highest county estimates in the PLACES teaching file",
     x = NULL,
     y = "Current smoking estimate (%)"
   ) +
@@ -107,6 +105,8 @@ p2
 
 # Small Multiples By Measure
 
+These facets use a shared county order. That makes this a quick scan across measures rather than a precise within-facet ranking.
+
 ```{r}
 selected_measures <- places |>
   filter(
@@ -126,7 +126,7 @@ p1 <- ggplot(selected_measures, aes(x = county_name, y = estimate)) +
 
 p2 <- p1 +
   labs(
-    title = "Top Maryland Counties Differ By Health Measure",
+    title = "High Maryland County Estimates Differ By Health Measure",
     x = NULL,
     y = "Estimate (%)"
   ) +

@@ -38,7 +38,7 @@ nhanes |>
   glimpse()
 ```
 
-Each row is one NHANES participant from the demographics file.
+Each row is one participant in the joined NHANES teaching file.
 
 NHANES is a complex survey. In this course, these are exploratory sample visualizations, not national estimates.
 
@@ -118,6 +118,8 @@ The smaller bin width shows more detail. The larger bin width smooths over more 
 # Density Plot
 
 A density plot shows a smoothed distribution.
+
+The y-axis is density, not number of participants. The total area under the curve is scaled to 1.
 
 ```{r}
 p1 <- ggplot(adult_bp, aes(x = systolic_mean))

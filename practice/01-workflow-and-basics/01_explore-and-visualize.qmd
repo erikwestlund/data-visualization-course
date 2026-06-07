@@ -21,7 +21,7 @@ This practice is intentionally open-ended. The goal is to get comfortable openin
 
 # Choose A Dataset
 
-Uncomment one dataset path below, or replace it with another path from `data/data.html`.
+Uncomment one dataset path below, or replace it with another path listed in the Course Data Summary or `data/manifest.csv`.
 
 ```{r}
 # dataset_path <- "data/real/prams_2011_selected.csv"

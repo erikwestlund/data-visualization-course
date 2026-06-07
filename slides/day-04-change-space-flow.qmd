@@ -50,7 +50,7 @@ The order might be:
 - before and after
 - dose level
 - process stage
-- ranked sequence
+- ordered stages
 
 The plot should preserve that order.
 
@@ -118,7 +118,7 @@ Choose based on the question.
 
 ## Trajectory Plot Checklist
 
-- What is the repeated unit?
+- What is measured more than once: a person, county, school, record, or group?
 - Are all units measured at the same times?
 - Are missing time points meaningful?
 - Should individual lines, group summaries, or both be shown?
@@ -181,7 +181,7 @@ Open:
 
 Watch for:
 
-- PLACES area-level estimates
+- CDC PLACES area-level health estimates
 - ranked county comparisons
 - intervals for estimates
 - non-map alternatives
@@ -204,7 +204,7 @@ Examples:
 
 Attrition plots show how many observations remain after each step.
 
-They are useful because analysis samples rarely appear magically.
+Final analytic samples are created through filters, missing-data decisions, and inclusion criteria.
 
 They should show:
 
@@ -247,6 +247,8 @@ If every arrow needs a long defense, the diagram is too complicated for a slide.
 
 ## Mermaid
 
+Mermaid is a text-based syntax for drawing diagrams.
+
 Quarto can render Mermaid diagrams.
 
 That makes it easy to include process diagrams in notebooks without extra software.
@@ -269,9 +271,9 @@ Watch for:
 
 Use one or more practice notebooks from:
 
-- `practice/templates/06_change/`
-- `practice/templates/07_space/`
-- `practice/templates/08_flow/`
+- `practice/06_change/`
+- `practice/07_space/`
+- `practice/08_flow/`
 
 Work in:
 
@@ -301,7 +303,7 @@ Write a short justification:
 
 After today, you should be able to:
 
-- preserve meaningful order in a plot
+- preserve the relevant order in a plot
 - use small multiples when groups get crowded
 - choose non-map spatial comparisons when appropriate
 - show attrition through an analytic workflow

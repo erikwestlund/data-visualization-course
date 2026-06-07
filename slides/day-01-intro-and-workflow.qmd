@@ -9,8 +9,8 @@ format: revealjs
 
 ## Today's Goals
 
-1. Everyone's computer works
-2. Develop a basic understanding of the grammar of graphics and how `ggplot2` implements the concepts.
+1. Open the course project, run `source("updater.R")`, and render a notebook.
+2. Use grammar-of-graphics vocabulary to build and read a first `ggplot2` plot.
 
 ## What This Course Is About
 
@@ -21,9 +21,7 @@ Data visualization has two primary purposes:
 
 ## Visualization As An Analytic Tool
 
-Visualization is not an add-on after the real analysis is done.
-
-It is a crucial part of understanding data:
+Visualization is not an add-on after the real analysis is done, but a crucial part of understanding data:
 
 - structure
 - variation
@@ -50,7 +48,7 @@ Good visualization usually moves in cycles:
 - make a plot
 - interpret what we see
 - revise the plot
-- shaer the result
+- share or revise the result for an audience
 
 You can see how understanding and communication are built into this cycle.
 
@@ -112,14 +110,14 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 - **Association**: how do variables move together?
 - **Change**: how do patterns move over time or order?
 - **Space**: where do patterns occur?
-- **Flow**: how do things move through a process?
+- **Flow**: how do entities, such as people or decisions, move through stages?
 :::
 
-## Take Notice
+## Take Note
 
-- These were presented as visualization types/aims.
-- However, these really are basic scientific questions commonly asked.
-- Let's look again.
+- These are not just chart types.
+- They are recurring scientific questions.
+- Throughout the course, we will choose plots by naming the question first.
 
 ## Today
 
@@ -163,10 +161,10 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 :::
 
 
-## Work in Progress
+## Course Timing
 
-- This is the first time I've taught an expanded version of this course, so there will likely be adjustments in timing
-- Likewise, I will be adjusting materials up to the class start time. I'll make sure any changes are communicated in class.
+- This is a live short course, so I may adjust timing and examples as we go.
+- I will announce any material changes in class.
 
 # Tools
 
@@ -408,9 +406,9 @@ Do not wait until the end to find out the notebook cannot render.
 ## My Philosophy
 
 - I use LLMs now in many aspects of my work
-- I have found that there is now less learning value in being able to "make computer do things" and more in high level concepts
-- In other words, you can focus on design and concepts and not implementation details
-- To that extent, in this course we will try to focus a little more on concepts and less on `ggplot2` syntax, since LLMs really can mostly solve technical visualization problems
+- LLMs can often help with syntax, but syntax is not the whole task.
+- You still need to define the question, choose an appropriate plot, and check whether the output is honest.
+- In this course, we will use code to learn visualization judgment, not just to make software produce an image.
 
 # Grammar Of Graphics
 
@@ -437,7 +435,7 @@ Do not wait until the end to find out the notebook cannot render.
 ::: {.incremental}
 1. Start with data.
 2. Pick an aesthetic mapping.
-3. Choose a geometric object .
+3. Choose a geometric object.
 4. Add statistical transformations.
 5. Adjust finer details: scales, coordinate systems, faceting, etc.
 :::
@@ -472,14 +470,60 @@ Mappings are claims about what the reader should compare.
 
 ## Geoms (cont.)
 
-| Geom | R Function | Stat/Transform | Use for |
-|------|------------|-------------------|----------|
-| Point | `geom_point()` | Identity | Scatter plots |
-| Bar | `geom_bar()` | Count | Bar plots |
-| AB Line | `geom_abline()` | Slope | Line plots |
-| Horizontal line | `geom_hline()` | Y intercept | Reference lines |
-| Vertical line | `geom_vline()` | X intercept | Reference lines |
-| Smoother | `geom_smooth()` | Smoothing function (GAM, Loess, etc.) | Showing patterns/trends | 
+<table>
+<thead>
+<tr>
+<th>Geom</th>
+<th>R Function</th>
+<th>Stat/Transform</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment">
+<td>Point</td>
+<td><code>geom_point()</code></td>
+<td>Identity</td>
+<td>Scatter plots</td>
+</tr>
+<tr class="fragment">
+<td>Bar</td>
+<td><code>geom_bar()</code></td>
+<td>Count</td>
+<td>Bar plots</td>
+</tr>
+<tr class="fragment">
+<td>Line</td>
+<td><code>geom_line()</code></td>
+<td>Identity</td>
+<td>Line plots</td>
+</tr>
+<tr class="fragment">
+<td>AB Line</td>
+<td><code>geom_abline()</code></td>
+<td>Slope/intercept</td>
+<td>Reference lines</td>
+</tr>
+<tr class="fragment">
+<td>Horizontal line</td>
+<td><code>geom_hline()</code></td>
+<td>Y intercept</td>
+<td>Reference lines</td>
+</tr>
+<tr class="fragment">
+<td>Vertical line</td>
+<td><code>geom_vline()</code></td>
+<td>X intercept</td>
+<td>Reference lines</td>
+</tr>
+<tr class="fragment">
+<td>Smoother</td>
+<td><code>geom_smooth()</code></td>
+<td>Smoothing function (GAM, Loess, etc.)</td>
+<td>Showing patterns/trends</td>
+</tr>
+</tbody>
+</table>
 
 
 ## Position/Fill
@@ -501,8 +545,9 @@ When you reach for fill, always consider faceting in small multiples.
 
 ## Aggregations
 
-- To make a bar chart, one groups data and takes a mean, proportion, or count
-- Software like ggplot will try to do this for you and it works well for simple cases
+- For row counts, `geom_bar()` can count observations inside `ggplot2`.
+- For pre-summarized values, use `geom_col()` or `geom_bar(stat = "identity")`.
+- A good workflow is to summarize first, then plot the summary.
 
 ## Aggregation (example logic)
 
@@ -517,9 +562,9 @@ This example shows the logic of grouping and transforming to get a single value 
 
 ## Aggregation Complexity
 
-- Automatic `ggplot2` aggregations can fail when trying to do more difficult aggregations
-- A powerful and frustration-reducing technique is to do the aggregation yourself (like in the last slide) and then use the `identity` mapping
-- This separates the statistical logic from the visual logic and is often what makes a tricky figure easier to make
+- Automatic `ggplot2` summaries are useful for simple cases.
+- For trickier summaries, calculate the table yourself and plot the result with `geom_col()`, points, or another geom that uses the values already in the data.
+- This separates the statistical logic from the visual logic and often makes a tricky figure easier to make.
 
 ## Scales And Coordinates
 
@@ -638,7 +683,7 @@ This pulls course updates and copies new practice templates into your work folde
 Instructor-owned materials may be updated during the course:
 
 - `modules/`
-- `practice/templates/`
+- `practice/`
 - `slides/`
 - `assignments/`
 - `data/`
@@ -646,7 +691,7 @@ Instructor-owned materials may be updated during the course:
 ## Student Work
 
 - Your work belongs in: `practice/work/`
-- This directory  is ignored by Git.
+- This directory is ignored by Git.
 
 That means:
 
@@ -672,7 +717,7 @@ You will also have in-class and homework practice notebooks.
 
 These follow the same basic format as the module notebooks, but they leave more for you to complete:
 
-- `practice/templates/01-workflow-and-basics/01_explore-and-visualize.qmd`
+- `practice/01-workflow-and-basics/01_explore-and-visualize.qmd`
 
 Use `source("updater.R")` to copy templates into `practice/work/`.
 
@@ -680,9 +725,10 @@ Edit the copies in `practice/work/`, not the templates.
 
 # Practice
 
-## Class Activties
+## Class Activities
 
-- Everyone has Rstudio running
+- Everyone has RStudio running
 - Everyone has the repository cloned
+- Everyone can run `source("updater.R")`
 - Everyone can render a notebook
 - First visualization

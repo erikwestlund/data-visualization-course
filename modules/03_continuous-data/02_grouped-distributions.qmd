@@ -116,7 +116,7 @@ p2
 p3 <- p2 +
   labs(
     title = "Adult Systolic Blood Pressure By Age Group",
-    subtitle = "Jittered points show the individual readings behind the boxes",
+    subtitle = "Jittered points show individual participant mean systolic values",
     x = "Age group",
     y = "Mean systolic blood pressure"
   ) +
@@ -156,7 +156,7 @@ p3
 p4 <- p3 +
   labs(
     title = "Distribution Shape By Age Group",
-    subtitle = "Violins show shape; box plots show median and middle spread",
+    subtitle = "Violins show shape; box plots show median and middle 50%",
     x = "Age group",
     y = "Mean systolic blood pressure"
   ) +

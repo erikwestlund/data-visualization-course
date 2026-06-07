@@ -17,15 +17,13 @@ library(readr)
 
 This notebook shows how color can encode groups, highlight a comparison, or create clutter.
 
-It adapts the clinical-course color and accessibility example using course Census data.
-
 # Analytic Questions
 
 We will ask:
 
 - When should color encode data?
 - When should color highlight one category?
-- How can direct labeling reduce legend work?
+- How can filtering or highlighting reduce legend work?
 
 # Load Data
 
@@ -50,13 +48,13 @@ p1 <- ggplot(
   selected_states,
   aes(x = state_name, y = share_percent, fill = race_ethnicity)
 ) +
-  geom_col(position = "fill")
+  geom_col()
 
 p2 <- p1 +
   labs(
     title = "Population Composition In Selected States",
     x = NULL,
-    y = "Share within displayed race/ethnicity categories",
+    y = "Population share (%)",
     fill = "Race/ethnicity"
   ) +
   theme_minimal()
@@ -74,6 +72,11 @@ When the question is about one category, highlight that category and mute the re
 asian_share <- selected_states |>
   mutate(
     highlight = if_else(race_ethnicity == "Asian", "Asian", "Other categories")
+  ) |>
+  group_by(state_name, highlight) |>
+  summarise(
+    share_percent = sum(share_percent),
+    .groups = "drop"
   )
 
 p1 <- ggplot(asian_share, aes(x = state_name, y = share_percent, fill = highlight)) +
@@ -122,4 +125,5 @@ p2
 - Use color when it carries information or directs attention.
 - Too many colors can make the legend do too much work.
 - Highlighting is useful when one category is central.
+- Do not rely on color alone; use labels, ordering, contrast, or filtering so the figure still works without color.
 - Sometimes the clearest color choice is a single color plus careful filtering.

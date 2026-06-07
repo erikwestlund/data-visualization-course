@@ -99,7 +99,7 @@ energy_cutoffs <- diet |>
 energy_cutoffs
 ```
 
-Flag unusual values.
+We calculate both cutoffs, but today's question focuses on unusually high energy intake, so we flag only values above the upper cutoff.
 
 ```{r}
 diet_flagged <- diet |>
@@ -111,7 +111,7 @@ diet_flagged |>
   count(high_energy_outlier)
 ```
 
-# Visualize The Flag
+# Highlight Flagged High Values
 
 ```{r}
 p1 <- ggplot(

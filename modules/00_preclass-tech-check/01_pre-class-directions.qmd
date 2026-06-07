@@ -6,7 +6,7 @@ format:
     toc: true
 ---
 
-Before class, make sure you have installed R, an R-focused editor, and are able to render a basic Quarto nobook. The below instructions will help you get a headstart on having a working setup.
+Before class, make sure you have installed R, an R-focused editor, and are able to render a basic Quarto notebook. The instructions below will help you get a head start on having a working setup.
 
 # Software Requirements
 
@@ -22,11 +22,11 @@ You also need:
 - [Quarto](https://quarto.org/docs/get-started/) (RStudio & Positron come bundled with Quarto; you'll only need to look here if Quarto is not already working through RStudio or Positron)
 
 
-If you are not sure which IDE to choose, use RStudio. It is the most popular R editor and has the most tutorials, answers, and classroom examples available.
+If you are not sure which IDE to choose, use RStudio. We will use RStudio for the course walkthroughs, and it has the most R tutorials, answers, and classroom examples available.
 
-Positron is a newer, more modern editor from Posit. RStudio is the safer choice if you are unsure which editor to use.
+Positron is a newer editor from Posit. It is a good option if you already prefer VS Code-style editors or are comfortable choosing your own development environment.
 
-Either RStudio or Positron will work; under the hood, it's all R.
+Either RStudio or Positron will work for the course, but the live teaching will assume RStudio.
 
 # Install R
 
@@ -46,9 +46,9 @@ After installing R, restart RStudio or Positron if either one is already open.
 
 # Install an Editor
 
-## Option 1: RStudio (recommended for beginners)
+## Option 1: RStudio (recommended)
 
-RStudio Desktop is the safest choice if you are unsure which editor to use.
+RStudio Desktop is the recommended choice for this course.
 
 Download RStudio Desktop here:
 
@@ -62,9 +62,9 @@ Choose the installer for your operating system.
 
 Open RStudio after installation. You should see an R Console. If RStudio cannot find R, install R first and restart RStudio.
 
-## Option 2: Install Positron
+## Option 2: Positron
 
-Positron is a new editor built upon Microsoft's VS Code, which is very popular with software developers and data scientists. It is more modern and it feels closer to other modern code editors.
+Positron is a new editor built on Microsoft's VS Code. Use it if you already prefer VS Code-style editors or are comfortable adapting course instructions from RStudio.
 
 Download Positron here:
 
@@ -87,7 +87,7 @@ Quarto is what turns `.qmd` scientific notebooks into HTML files you can share w
 
 RStudio and Positron ship with their own version of Quarto bundled. I highly recommend using this version. You only need to install Quarto directly if Quarto is missing, out of date, or not working when you try to render.
 
-Should you not be able to get Quarto working, it may help to download Quarto here:
+If you cannot get Quarto working, it may help to download Quarto here:
 
 <https://quarto.org/docs/get-started/>
 
@@ -99,7 +99,7 @@ Run this once in the R Console if you do not already have these packages install
 
 ```{r}
 #| eval: false
-install.packages(c("dplyr", "ggplot2", "readr", "stringr"))
+install.packages(c("dplyr", "ggplot2", "readr", "stringr", "tidyr"))
 ```
 
 The setup check only uses `dplyr` and `ggplot2`, but installing the full set now will make later work smoother.
@@ -114,7 +114,7 @@ To check your setup, open the setup-check file linked on the course web site. It
 
 Once you have downloaded the file:
 
-1. Open RStudio or Positron.
+1. Open RStudio, or Positron if you have chosen to use it.
 2. Open `02_setup-check.qmd`.
 3. Run the code chunks one at a time.
 4. Click `Render`.

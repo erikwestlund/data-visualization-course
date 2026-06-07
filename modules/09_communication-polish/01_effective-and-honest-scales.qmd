@@ -17,8 +17,6 @@ library(readr)
 
 This notebook shows how scale choices affect interpretation.
 
-It adapts the clinical-course example on effective and honest scales.
-
 # Analytic Questions
 
 We will ask:
@@ -49,6 +47,8 @@ us_may <- flu |>
 
 # A Focused Axis
 
+`coord_cartesian()` zooms the displayed y-axis without removing rows from the data.
+
 ```{r}
 p1 <- ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)) +
   geom_line(linewidth = 1) +
@@ -58,7 +58,7 @@ p1 <- ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)
 p2 <- p1 +
   labs(
     title = "Focused Axis For Comparing Seasonal Changes",
-    subtitle = "United States, month 5",
+    subtitle = "United States, May (month 5)",
     x = "Season start year",
     y = "Vaccination estimate (%)",
     color = "Age group"
@@ -81,7 +81,7 @@ p1 <- ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)
 p2 <- p1 +
   labs(
     title = "Full Percent Scale Shows The Size Of The Estimates",
-    subtitle = "United States, month 5",
+    subtitle = "United States, May (month 5)",
     x = "Season start year",
     y = "Vaccination estimate (%)",
     color = "Age group"
@@ -107,7 +107,7 @@ p1 <- ggplot(latest, aes(x = age_group, y = estimate)) +
 p2 <- p1 +
   labs(
     title = "Bars Encode Length From A Baseline",
-    subtitle = "Latest available season, United States, month 5",
+    subtitle = "Latest available season, United States, May (month 5)",
     x = "Age group",
     y = "Vaccination estimate (%)"
   ) +
@@ -118,7 +118,7 @@ p2
 
 # Takeaways
 
-- Focused axes can help compare change, but the limits should be clear.
+- For line plots, a narrowed y-axis can help compare change, but the title, subtitle, or caption should make the axis range obvious.
 - Percent scales often need context for the full 0-100 range.
 - Bars encode length from a baseline, so zero usually matters.
 - Scale choices should match the comparison the figure asks the reader to make.

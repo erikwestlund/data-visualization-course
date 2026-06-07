@@ -13,7 +13,7 @@ format: revealjs
 2. Plot differences directly when the question is about a gap.
 3. Visualize association between two variables.
 4. Add grouping carefully without overloading the plot.
-5. Read simple model-output plots as visual summaries, not magic answers.
+5. Read simple model-output plots as model-based summaries, not raw data.
 
 ## Where We Are
 
@@ -54,7 +54,9 @@ These are not interchangeable.
 
 ## Summaries Are Choices
 
-A group mean is useful when the question is about a typical value.
+A group mean is useful when the question is about the average or expected value.
+
+If the question is about a typical case, the median or full distribution may be better.
 
 But it can hide:
 
@@ -96,7 +98,7 @@ When comparing groups, ask:
 - How many observations are in each group?
 - Are group sizes similar?
 - Are intervals available or appropriate?
-- Are differences visually large enough to matter?
+- Are differences large enough to matter relative to uncertainty and sample size?
 
 The plot should not make small, unstable differences look definitive.
 
@@ -145,7 +147,7 @@ Before plotting a difference:
 - Are units the same?
 - Is subtraction meaningful?
 - Does positive have a clear interpretation?
-- Should the axis include zero?
+- Include a clear zero reference line unless there is a specific reason not to.
 
 ## Transition To Module
 
@@ -256,7 +258,9 @@ But the plot inherits the model's assumptions.
 
 Raw plots show observed data.
 
-Model-output plots show fitted summaries.
+Model-output plots show summaries produced by a model.
+
+A prediction plot shows the model's expected outcome for chosen input values.
 
 Both are useful.
 
@@ -299,8 +303,8 @@ Watch for:
 
 Use one or more practice notebooks from:
 
-- `practice/templates/04_group-comparison/`
-- `practice/templates/05_association/`
+- `practice/04_group-comparison/`
+- `practice/05_association/`
 
 Work in:
 

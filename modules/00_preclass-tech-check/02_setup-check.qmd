@@ -16,8 +16,8 @@ Use this notebook to confirm that R, `ggplot2`, and Quarto rendering work on you
 
 After opening this file:
 
-- In RStudio, click `Render` in the area on top of the file text.
-- In Positron, click `Preview` in the area on top of the file text.
+- In RStudio, click `Render` in the editor toolbar above the notebook.
+- In Positron, click `Preview` in the editor toolbar above the notebook.
 
 If rendering works, the checks below should run automatically and produce an HTML file with a table and plot.
 

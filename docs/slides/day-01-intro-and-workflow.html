@@ -1073,8 +1073,8 @@ Erik Westlund
 <section id="todays-goals" class="slide level2 center">
 <h2>Today’s Goals</h2>
 <ol type="1">
-<li>Everyone’s computer works</li>
-<li>Develop a basic understanding of the grammar of graphics and how <code>ggplot2</code> implements the concepts.</li>
+<li>Open the course project, run <code>source(&quot;updater.R&quot;)</code>, and render a notebook.</li>
+<li>Use grammar-of-graphics vocabulary to build and read a first <code>ggplot2</code> plot.</li>
 </ol>
 </section>
 <section id="what-this-course-is-about" class="slide level2 center">
@@ -1087,8 +1087,7 @@ Erik Westlund
 </section>
 <section id="visualization-as-an-analytic-tool" class="slide level2 center">
 <h2>Visualization As An Analytic Tool</h2>
-<p>Visualization is not an add-on after the real analysis is done.</p>
-<p>It is a crucial part of understanding data:</p>
+<p>Visualization is not an add-on after the real analysis is done, but a crucial part of understanding data:</p>
 <ul>
 <li>structure</li>
 <li>variation</li>
@@ -1120,7 +1119,7 @@ Erik Westlund
 <li>make a plot</li>
 <li>interpret what we see</li>
 <li>revise the plot</li>
-<li>shaer the result</li>
+<li>share or revise the result for an audience</li>
 </ul>
 <p>You can see how understanding and communication are built into this cycle.</p>
 </section></section>
@@ -1192,15 +1191,15 @@ Erik Westlund
 <li class="fragment"><strong>Association</strong>: how do variables move together?</li>
 <li class="fragment"><strong>Change</strong>: how do patterns move over time or order?</li>
 <li class="fragment"><strong>Space</strong>: where do patterns occur?</li>
-<li class="fragment"><strong>Flow</strong>: how do things move through a process?</li>
+<li class="fragment"><strong>Flow</strong>: how do entities, such as people or decisions, move through stages?</li>
 </ul>
 </section>
-<section id="take-notice" class="slide level2 center">
-<h2>Take Notice</h2>
+<section id="take-note" class="slide level2 center">
+<h2>Take Note</h2>
 <ul>
-<li>These were presented as visualization types/aims.</li>
-<li>However, these really are basic scientific questions commonly asked.</li>
-<li>Let’s look again.</li>
+<li>These are not just chart types.</li>
+<li>They are recurring scientific questions.</li>
+<li>Throughout the course, we will choose plots by naming the question first.</li>
 </ul>
 </section>
 <section id="today" class="slide level2 center">
@@ -1244,11 +1243,11 @@ Erik Westlund
 <li class="fragment">interpretation and final project studio</li>
 </ul>
 </section>
-<section id="work-in-progress" class="slide level2 center">
-<h2>Work in Progress</h2>
+<section id="course-timing" class="slide level2 center">
+<h2>Course Timing</h2>
 <ul>
-<li>This is the first time I’ve taught an expanded version of this course, so there will likely be adjustments in timing</li>
-<li>Likewise, I will be adjusting materials up to the class start time. I’ll make sure any changes are communicated in class.</li>
+<li>This is a live short course, so I may adjust timing and examples as we go.</li>
+<li>I will announce any material changes in class.</li>
 </ul>
 </section></section>
 <section>
@@ -1499,9 +1498,9 @@ Erik Westlund
 <h2>My Philosophy</h2>
 <ul>
 <li>I use LLMs now in many aspects of my work</li>
-<li>I have found that there is now less learning value in being able to “make computer do things” and more in high level concepts</li>
-<li>In other words, you can focus on design and concepts and not implementation details</li>
-<li>To that extent, in this course we will try to focus a little more on concepts and less on <code>ggplot2</code> syntax, since LLMs really can mostly solve technical visualization problems</li>
+<li>LLMs can often help with syntax, but syntax is not the whole task.</li>
+<li>You still need to define the question, choose an appropriate plot, and check whether the output is honest.</li>
+<li>In this course, we will use code to learn visualization judgment, not just to make software produce an image.</li>
 </ul>
 </section></section>
 <section>
@@ -1538,7 +1537,7 @@ Erik Westlund
 <ol type="1">
 <li class="fragment">Start with data.</li>
 <li class="fragment">Pick an aesthetic mapping.</li>
-<li class="fragment">Choose a geometric object .</li>
+<li class="fragment">Choose a geometric object.</li>
 <li class="fragment">Add statistical transformations.</li>
 <li class="fragment">Adjust finer details: scales, coordinate systems, faceting, etc.</li>
 </ol>
@@ -1576,57 +1575,121 @@ Erik Westlund
 </section>
 <section id="geoms-cont." class="slide level2 center">
 <h2>Geoms (cont.)</h2>
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 25%">
-<col style="width: 40%">
-<col style="width: 21%">
-</colgroup>
+<table>
 <thead>
-<tr class="header">
-<th>Geom</th>
-<th>R Function</th>
-<th>Stat/Transform</th>
-<th>Use for</th>
+<tr>
+<th>
+Geom
+</th>
+<th>
+R Function
+</th>
+<th>
+Stat/Transform
+</th>
+<th>
+Use for
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>Point</td>
-<td><code>geom_point()</code></td>
-<td>Identity</td>
-<td>Scatter plots</td>
+<tr class="fragment">
+<td>
+Point
+</td>
+<td>
+<code>geom_point()</code>
+</td>
+<td>
+Identity
+</td>
+<td>
+Scatter plots
+</td>
 </tr>
-<tr class="even">
-<td>Bar</td>
-<td><code>geom_bar()</code></td>
-<td>Count</td>
-<td>Bar plots</td>
+<tr class="fragment">
+<td>
+Bar
+</td>
+<td>
+<code>geom_bar()</code>
+</td>
+<td>
+Count
+</td>
+<td>
+Bar plots
+</td>
 </tr>
-<tr class="odd">
-<td>AB Line</td>
-<td><code>geom_abline()</code></td>
-<td>Slope</td>
-<td>Line plots</td>
+<tr class="fragment">
+<td>
+Line
+</td>
+<td>
+<code>geom_line()</code>
+</td>
+<td>
+Identity
+</td>
+<td>
+Line plots
+</td>
 </tr>
-<tr class="even">
-<td>Horizontal line</td>
-<td><code>geom_hline()</code></td>
-<td>Y intercept</td>
-<td>Reference lines</td>
+<tr class="fragment">
+<td>
+AB Line
+</td>
+<td>
+<code>geom_abline()</code>
+</td>
+<td>
+Slope/intercept
+</td>
+<td>
+Reference lines
+</td>
 </tr>
-<tr class="odd">
-<td>Vertical line</td>
-<td><code>geom_vline()</code></td>
-<td>X intercept</td>
-<td>Reference lines</td>
+<tr class="fragment">
+<td>
+Horizontal line
+</td>
+<td>
+<code>geom_hline()</code>
+</td>
+<td>
+Y intercept
+</td>
+<td>
+Reference lines
+</td>
 </tr>
-<tr class="even">
-<td>Smoother</td>
-<td><code>geom_smooth()</code></td>
-<td>Smoothing function (GAM, Loess, etc.)</td>
-<td>Showing patterns/trends</td>
+<tr class="fragment">
+<td>
+Vertical line
+</td>
+<td>
+<code>geom_vline()</code>
+</td>
+<td>
+X intercept
+</td>
+<td>
+Reference lines
+</td>
+</tr>
+<tr class="fragment">
+<td>
+Smoother
+</td>
+<td>
+<code>geom_smooth()</code>
+</td>
+<td>
+Smoothing function (GAM, Loess, etc.)
+</td>
+<td>
+Showing patterns/trends
+</td>
 </tr>
 </tbody>
 </table>
@@ -1655,8 +1718,9 @@ Erik Westlund
 <section id="aggregations" class="slide level2 center">
 <h2>Aggregations</h2>
 <ul>
-<li>To make a bar chart, one groups data and takes a mean, proportion, or count</li>
-<li>Software like ggplot will try to do this for you and it works well for simple cases</li>
+<li>For row counts, <code>geom_bar()</code> can count observations inside <code>ggplot2</code>.</li>
+<li>For pre-summarized values, use <code>geom_col()</code> or <code>geom_bar(stat = &quot;identity&quot;)</code>.</li>
+<li>A good workflow is to summarize first, then plot the summary.</li>
 </ul>
 </section>
 <section id="aggregation-example-logic" class="slide level2 center">
@@ -1670,9 +1734,9 @@ Erik Westlund
 <section id="aggregation-complexity" class="slide level2 center">
 <h2>Aggregation Complexity</h2>
 <ul>
-<li>Automatic <code>ggplot2</code> aggregations can fail when trying to do more difficult aggregations</li>
-<li>A powerful and frustration-reducing technique is to do the aggregation yourself (like in the last slide) and then use the <code>identity</code> mapping</li>
-<li>This separates the statistical logic from the visual logic and is often what makes a tricky figure easier to make</li>
+<li>Automatic <code>ggplot2</code> summaries are useful for simple cases.</li>
+<li>For trickier summaries, calculate the table yourself and plot the result with <code>geom_col()</code>, points, or another geom that uses the values already in the data.</li>
+<li>This separates the statistical logic from the visual logic and often makes a tricky figure easier to make.</li>
 </ul>
 </section>
 <section id="scales-and-coordinates" class="slide level2 center">
@@ -1775,7 +1839,7 @@ Erik Westlund
 <p>Instructor-owned materials may be updated during the course:</p>
 <ul>
 <li><code>modules/</code></li>
-<li><code>practice/templates/</code></li>
+<li><code>practice/</code></li>
 <li><code>slides/</code></li>
 <li><code>assignments/</code></li>
 <li><code>data/</code></li>
@@ -1810,7 +1874,7 @@ Erik Westlund
 <p>You will also have in-class and homework practice notebooks.</p>
 <p>These follow the same basic format as the module notebooks, but they leave more for you to complete:</p>
 <ul>
-<li><code>practice/templates/01-workflow-and-basics/01_explore-and-visualize.qmd</code></li>
+<li><code>practice/01-workflow-and-basics/01_explore-and-visualize.qmd</code></li>
 </ul>
 <p>Use <code>source(&quot;updater.R&quot;)</code> to copy templates into <code>practice/work/</code>.</p>
 <p>Edit the copies in <code>practice/work/</code>, not the templates.</p>
@@ -1820,11 +1884,12 @@ Erik Westlund
 <h1>Practice</h1>
 
 </section>
-<section id="class-activties" class="slide level2 center">
-<h2>Class Activties</h2>
+<section id="class-activities" class="slide level2 center">
+<h2>Class Activities</h2>
 <ul>
-<li>Everyone has Rstudio running</li>
+<li>Everyone has RStudio running</li>
 <li>Everyone has the repository cloned</li>
+<li>Everyone can run <code>source(&quot;updater.R&quot;)</code></li>
 <li>Everyone can render a notebook</li>
 <li>First visualization</li>
 </ul>
