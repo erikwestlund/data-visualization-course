@@ -1,0 +1,44 @@
+---
+title: "Instructor Only: Difference Plots Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+prams <- read_csv("data/real/prams_2011_selected.csv", show_col_types = FALSE)
+
+state_overall <- prams |>
+  filter(
+    subgroup_cat == "None",
+    !is.na(alcohol_use_within_3_months_birth),
+    !is.na(binge_drinking_within_3_months_birth)
+  ) |>
+  transmute(
+    location,
+    difference = alcohol_use_within_3_months_birth - binge_drinking_within_3_months_birth
+  ) |>
+  mutate(location = reorder(location, difference))
+
+ggplot(state_overall, aes(x = location, y = difference)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Gap Between Alcohol Use And Binge Drinking Estimates",
+    x = NULL,
+    y = "Alcohol use minus binge drinking"
+  ) +
+  theme_minimal()
+```

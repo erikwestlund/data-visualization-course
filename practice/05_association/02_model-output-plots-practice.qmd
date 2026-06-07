@@ -1,0 +1,64 @@
+---
+title: "Practice: Model Output Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice turning simple model output into a plot readers can understand.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/davis_height_weight.csv`
+- `data/simulated/neighborhood_health_survey_analysis.csv`
+
+Helpful module reference: `modules/05_association/02_model-output-plots.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect variables that could go into a simple linear model.
+```
+
+# Fit A Simple Model
+
+Choose one outcome and one or two predictors. Keep the model simple.
+
+```{r}
+# Fit your model here with lm().
+```
+
+# Create Values To Plot
+
+Make a small prediction dataset or coefficient summary.
+
+```{r}
+# Create model output or predictions to plot here.
+```
+
+# Plot
+
+```{r}
+# Plot the model output here.
+```
+
+# Interpret
+
+> TODO: What does the plotted model output show? What does it not show?

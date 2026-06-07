@@ -1,0 +1,318 @@
+---
+title: "Data Visualization: Day 5"
+subtitle: "Communication, Polish, And Project Studio"
+author: "Erik Westlund"
+format: revealjs
+---
+
+# Welcome Back
+
+## Today's Goals
+
+1. Turn exploratory plots into clearer communication figures.
+2. Make honest scale choices.
+3. Use color and highlighting intentionally.
+4. Save figures at useful sizes and formats.
+5. Make progress on final project visualizations.
+
+## Where We Are
+
+This week moved from setup to visual reasoning:
+
+- workflow
+- categorical data
+- continuous data
+- group comparison
+- association
+- change
+- space
+- flow
+
+Today asks: how do we communicate what we found?
+
+# Exploration Versus Communication
+
+## Exploratory Figures
+
+Exploratory figures help you think.
+
+They can be rough:
+
+- quick labels
+- extra variables
+- multiple attempts
+- imperfect formatting
+- code-first workflow
+
+They are for learning from the data.
+
+## Communication Figures
+
+Communication figures help someone else understand.
+
+They need:
+
+- clear question
+- readable labels
+- appropriate scale
+- intentional color
+- caption or interpretation
+- honest limitations
+
+They are for readers.
+
+## The Same Plot Can Move Stages
+
+A plot can start exploratory and become communicative.
+
+Revision questions:
+
+- What should the reader notice first?
+- What comparison matters?
+- What can be removed?
+- What context is missing?
+- What limitation should be visible?
+
+# Scales
+
+## Scales Shape The Argument
+
+Axis choices affect what readers see.
+
+Scales can clarify.
+
+Scales can also exaggerate or hide differences.
+
+## Honest Scale Questions
+
+Ask:
+
+- Should zero be included?
+- Are values percentages, counts, rates, or estimates?
+- Are axes comparable across panels?
+- Are breaks readable?
+- Does the scale match the claim?
+
+## Zero Is Not Always Required
+
+Zero is usually important for bars because bar length implies amount from zero.
+
+For line plots and point plots, a nonzero axis can be reasonable.
+
+But it should not exaggerate a small difference into a dramatic story.
+
+## Transition To Module
+
+Open:
+
+`modules/09_communication-polish/01_effective-and-honest-scales.qmd`
+
+Watch for:
+
+- full versus narrowed scales
+- percentage axes
+- scale choices as interpretation choices
+
+# Color And Highlighting
+
+## Color Has A Job
+
+Color should do something:
+
+- distinguish groups
+- show order
+- highlight a focus
+- encode magnitude
+- support accessibility
+
+If color has no job, use less of it.
+
+## Too Many Colors
+
+Many categorical colors can make a plot harder to read.
+
+Consider:
+
+- filtering
+- faceting
+- direct labels
+- highlighting one group
+- using gray for context
+
+## Accessibility
+
+Do not rely only on color.
+
+Also use:
+
+- labels
+- position
+- shape or line type when needed
+- readable contrast
+- meaningful ordering
+
+## Highlighting
+
+Highlighting is useful when there is a focus.
+
+The goal is not to make everything colorful.
+
+The goal is to guide attention.
+
+## Transition To Module
+
+Open:
+
+`modules/09_communication-polish/02_color-accessibility-and-highlighting.qmd`
+
+Watch for:
+
+- default colors versus purposeful color
+- highlighting one comparison
+- reducing visual noise
+
+# Saving Figures
+
+## Export Is Part Of Design
+
+A figure that works in the RStudio plot pane may fail in:
+
+- slides
+- a report
+- a paper
+- a website
+- an assignment submission
+
+Size and format matter.
+
+## Save The Plot Object
+
+Good workflow:
+
+```r
+final_plot <- ggplot(...) +
+  ...
+
+ggsave("figure.png", final_plot, width = 7, height = 5, dpi = 300)
+```
+
+Build the object.
+
+Then save it intentionally.
+
+## Common Formats
+
+- PNG: slides, websites, most course submissions
+- PDF: vector output, print, manuscripts
+- SVG: scalable web graphics
+- JPEG: usually not ideal for statistical graphics
+
+## Transition To Module
+
+Open:
+
+`modules/09_communication-polish/03_saving-visualizations.qmd`
+
+Watch for:
+
+- plot size
+- file format
+- saving from a named plot object
+
+# Critique
+
+## Critique Questions
+
+When reviewing a figure, ask:
+
+- What is the question?
+- What should I compare?
+- What is one row or unit?
+- Are scales honest?
+- Are labels enough?
+- What uncertainty or limitation is missing?
+
+## Common Fixes
+
+- clearer title
+- better axis labels
+- fewer colors
+- reordered categories
+- direct highlighting
+- appropriate scale
+- caption with interpretation and caution
+
+# Final Project Studio
+
+## Final Project Logic
+
+The final project has two phases:
+
+1. exploratory visualization
+2. focused final visualizations
+
+The final figures should grow out of the exploration.
+
+They should not be disconnected decorations.
+
+## Studio Goals
+
+During project time, aim to identify:
+
+- dataset
+- rough question
+- 2-4 exploratory plots
+- one promising final direction
+- what you need help with
+
+## Peer Feedback Prompts
+
+When looking at a classmate's plot, ask:
+
+- What do you think the plot is trying to show?
+- What is clear?
+- What is confusing?
+- What comparison did your eye make first?
+- What would you revise next?
+
+# Practice
+
+## Today's Practice Options
+
+Use one or more practice notebooks from:
+
+- `practice/templates/09_communication-polish/`
+
+Or work directly on your final project.
+
+Work in:
+
+`practice/work/`
+
+## Minimum Practice Goal
+
+By the end of class, aim to have:
+
+1. one revised/polished figure
+2. one written interpretation
+3. one limitation or caution
+4. one concrete next step for the final project
+
+# Wrap-Up
+
+## What You Should Be Able To Do
+
+After today, you should be able to:
+
+- revise plots for communication
+- justify scale choices
+- use color intentionally
+- save figures deliberately
+- critique a figure constructively
+- connect exploratory plots to final figures
+
+## Final Reminder
+
+A good visualization is not just a pretty chart.
+
+It is a visual answer to a clear question, built from appropriate data, with honest interpretation.

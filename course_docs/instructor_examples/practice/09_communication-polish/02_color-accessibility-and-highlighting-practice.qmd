@@ -1,0 +1,41 @@
+---
+title: "Instructor Only: Color Accessibility And Highlighting Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+census <- read_csv("data/real/census_state_race_ethnicity_long.csv", show_col_types = FALSE)
+
+asian_share <- census |>
+  filter(race_ethnicity == "Asian") |>
+  mutate(
+    highlight = if_else(state %in% c("CA", "NY", "WA"), "Highlighted", "Other"),
+    state_name = reorder(state_name, share)
+  )
+
+ggplot(asian_share, aes(x = state_name, y = share, fill = highlight)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = function(x) paste0(round(x * 100), "%")) +
+  scale_fill_manual(values = c("Highlighted" = "#0072B2", "Other" = "gray80")) +
+  labs(
+    title = "Asian Share Of Included Race/Ethnicity Population",
+    x = NULL,
+    y = "Share",
+    fill = NULL
+  ) +
+  theme_minimal()
+```

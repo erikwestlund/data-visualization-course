@@ -1,0 +1,348 @@
+---
+title: "Data Visualization: Day 3"
+subtitle: "Group Comparison And Association"
+author: "Erik Westlund"
+format: revealjs
+---
+
+# Welcome Back
+
+## Today's Goals
+
+1. Compare groups using summaries and distributions.
+2. Plot differences directly when the question is about a gap.
+3. Visualize association between two variables.
+4. Add grouping carefully without overloading the plot.
+5. Read simple model-output plots as visual summaries, not magic answers.
+
+## Where We Are
+
+Day 1: workflow and first plots.
+
+Day 2: one-variable EDA:
+
+- categorical counts, composition, rank
+- continuous center, spread, shape, outliers
+
+Day 3 moves to comparison and association.
+
+## Today's Core Questions
+
+- How do groups differ?
+- How large is the difference?
+- How do two variables move together?
+- Does that association differ across groups?
+- What can a model plot show that a raw plot cannot?
+
+# Group Comparison
+
+## Comparing Groups
+
+Group comparison starts with a decision:
+
+What is being compared?
+
+- raw observations
+- distributions
+- medians
+- means
+- proportions
+- differences
+- model-adjusted summaries
+
+These are not interchangeable.
+
+## Summaries Are Choices
+
+A group mean is useful when the question is about a typical value.
+
+But it can hide:
+
+- skew
+- outliers
+- different spreads
+- small sample sizes
+- multiple subgroups inside each group
+
+Plot summaries when summaries answer the question.
+
+## Distribution First, Summary Second
+
+When possible, inspect the distribution before reducing each group to one number.
+
+Useful workflow:
+
+1. Plot the grouped distributions.
+2. Calculate summaries.
+3. Plot summaries only if they clarify the question.
+
+## Bars For Means Are Often Weak
+
+Bars can show group means.
+
+But they visually imply an amount starting at zero.
+
+For many group summaries, dot plots are cleaner:
+
+- less visual ink
+- easier ordering
+- easier to add intervals
+- less confusion with counts
+
+## Uncertainty And Sample Size
+
+When comparing groups, ask:
+
+- How many observations are in each group?
+- Are group sizes similar?
+- Are intervals available or appropriate?
+- Are differences visually large enough to matter?
+
+The plot should not make small, unstable differences look definitive.
+
+## Transition To Module
+
+Open:
+
+`modules/04_group-comparison/01_grouped-summaries.qmd`
+
+Watch for:
+
+- distribution versus summary
+- group means
+- intervals
+- dot plots versus bars
+
+# Difference Plots
+
+## When The Question Is The Gap
+
+If the question is about a difference, plot the difference.
+
+Examples:
+
+- measured minus reported value
+- treatment minus comparison
+- before minus after
+- percentage-point gap
+- observed minus expected
+
+## What Zero Means
+
+Difference plots need a clear zero.
+
+Zero means no difference.
+
+Positive and negative values need clear labels.
+
+Never assume readers know which direction is which.
+
+## Difference Plot Checklist
+
+Before plotting a difference:
+
+- Are the two values comparable?
+- Are units the same?
+- Is subtraction meaningful?
+- Does positive have a clear interpretation?
+- Should the axis include zero?
+
+## Transition To Module
+
+Open:
+
+`modules/04_group-comparison/02_difference-plots.qmd`
+
+Watch for:
+
+- paired bars versus direct gaps
+- percentage-point differences
+- labeling direction clearly
+
+# Association
+
+## Association Questions
+
+Association asks how variables move together.
+
+Common forms:
+
+- two continuous variables
+- numeric outcome by numeric predictor
+- relationship with groups
+- relationship with nonlinear pattern
+- relationship after summarizing or modeling
+
+## Association Is Not Causation
+
+A scatterplot can show pattern.
+
+It does not prove cause.
+
+Safer language:
+
+- associated with
+- tends to be higher when
+- varies with
+- pattern differs across groups
+
+Avoid:
+
+- causes
+- leads to
+- increases because of
+
+## Scatterplots
+
+Scatterplots are useful for:
+
+- direction
+- form
+- strength
+- outliers
+- clusters
+- group differences
+
+They can fail with heavy overplotting.
+
+## Common Scatterplot Revisions
+
+- transparency with `alpha`
+- smaller points
+- smoothing lines
+- faceting
+- color by group
+- transformed axes
+- annotations for unusual points
+
+Every revision should serve a question.
+
+## Grouping In Scatterplots
+
+Color can show groups.
+
+But too many groups create noise.
+
+Ask:
+
+- Is group membership central to the question?
+- Would facets be clearer?
+- Is the legend readable?
+- Are group sample sizes adequate?
+
+## Transition To Module
+
+Open:
+
+`modules/05_association/01_scatterplots-smoothing-and-groups.qmd`
+
+Watch for:
+
+- measured versus reported values
+- error as a derived variable
+- color and smoothing choices
+
+# Model Output
+
+## Why Plot Model Output?
+
+Models can summarize patterns after adjustment.
+
+Plots can make model output easier to read.
+
+But the plot inherits the model's assumptions.
+
+## Raw Data And Model Output
+
+Raw plots show observed data.
+
+Model-output plots show fitted summaries.
+
+Both are useful.
+
+They answer different questions.
+
+## Prediction Plots
+
+Prediction plots can show:
+
+- expected outcome over a predictor
+- group differences
+- confidence intervals
+- adjusted patterns
+
+They should be labeled as model-based.
+
+## Model Plot Checklist
+
+- What model was fit?
+- What variables were adjusted for?
+- What values are predictions made at?
+- Are intervals shown?
+- Are raw data also shown somewhere?
+
+## Transition To Module
+
+Open:
+
+`modules/05_association/02_model-output-plots.qmd`
+
+Watch for:
+
+- fitting a simple model
+- creating prediction data
+- plotting fitted values with intervals
+
+# Practice
+
+## Today's Practice Options
+
+Use one or more practice notebooks from:
+
+- `practice/templates/04_group-comparison/`
+- `practice/templates/05_association/`
+
+Work in:
+
+`practice/work/`
+
+## Minimum Practice Goal
+
+By the end of practice time, aim to have:
+
+1. one grouped summary or difference plot
+2. one association plot
+3. short interpretations using cautious language
+
+## If You Finish Early
+
+Revise one plot:
+
+- add intervals
+- reorder groups
+- plot the difference directly
+- add or remove a smooth
+- facet instead of color
+- write clearer labels
+
+# Wrap-Up
+
+## What You Should Be Able To Do
+
+After today, you should be able to:
+
+- compare groups without defaulting to bars
+- decide when to plot a difference directly
+- describe association without causal overclaiming
+- use grouping carefully in association plots
+- read simple prediction plots
+
+## Tomorrow
+
+We move to ordered, spatial, and process data:
+
+- change over time
+- before-after and trajectories
+- geographic comparison
+- flow and attrition
+- process diagrams

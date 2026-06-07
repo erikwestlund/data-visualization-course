@@ -15,130 +15,44 @@ library(readr)
 
 # Goal
 
-Practice comparing continuous distributions across groups.
+Practice comparing the distribution of one numeric variable across groups.
 
-# Load Data
+# Suggested Data
 
-```{r}
-nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+Choose one:
 
-nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/exercise_eating_disorders.csv`
+- `data/simulated/physical_therapy_activity.csv`
 
-nhanes |>
-  glimpse()
-```
+Helpful module reference: `modules/03_continuous-data/02_grouped-distributions.qmd`.
 
-# Part 1: Prepare Data
-
-```{r}
-adult_bp <- nhanes |>
-  filter(
-    age_years >= 18,
-    !is.na(systolic_mean),
-    !is.na(age_group)
-  )
-
-adult_bp |>
-  count(age_group)
-```
-
-Why is it useful to count rows by group before comparing distributions?
-
-> TODO: Replace this with your answer.
-
-# Part 2: Box Plot
+# Load And Inspect
 
 ```{r}
-p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean))
-
-p1
+# Load your dataset here.
 ```
 
 ```{r}
-p2 <- p1 +
-  geom_boxplot()
-
-p2
+# Inspect numeric and grouping variables.
 ```
+
+# Prepare Groups
+
+Choose one numeric variable and one grouping variable. Keep the number of groups manageable.
 
 ```{r}
-p3 <- p2 +
-  labs(
-    title = "Adult Systolic Blood Pressure By Age Group",
-    x = "Age group",
-    y = "Mean systolic blood pressure"
-  ) +
-  theme_minimal()
-
-p3
+# Filter and prepare your grouped data here.
 ```
 
-What differs across age groups: center, spread, shape, outliers, or overlap?
+# Plot
 
-> TODO: Replace this with your answer.
-
-# Part 3: Add Points
+Try a boxplot, violin plot, faceted histogram, or density plot.
 
 ```{r}
-p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean)) +
-  geom_boxplot(outlier.shape = NA)
-
-p1
+# Build your grouped distribution plot here.
 ```
 
-```{r}
-p2 <- p1 +
-  geom_jitter(width = 0.15, alpha = 0.15, size = 0.8)
+# Interpret
 
-p2
-```
-
-What did the points add? Did they also add clutter?
-
-> TODO: Replace this with your answer.
-
-# Part 4: Violin Plot
-
-```{r}
-p1 <- ggplot(adult_bp, aes(x = age_group, y = systolic_mean))
-
-p1
-```
-
-```{r}
-p2 <- p1 +
-  geom_violin(fill = "gray85")
-
-p2
-```
-
-```{r}
-p3 <- p2 +
-  geom_boxplot(width = 0.12, outlier.shape = NA)
-
-p3
-```
-
-Which plot works better for this question: box plot, points, or violin? Why?
-
-> TODO: Replace this with your answer.
-
-# Part 5: Group Summaries
-
-```{r}
-age_group_summary <- adult_bp |>
-  group_by(age_group) |>
-  summarise(
-    n = n(),
-    mean_systolic = mean(systolic_mean),
-    median_systolic = median(systolic_mean),
-    iqr_systolic = IQR(systolic_mean),
-    .groups = "drop"
-  )
-
-age_group_summary
-```
-
-Write a short interpretation using both the plot and the summary table.
-
-> TODO: Replace this with your interpretation.
+> TODO: Which groups differ in center, spread, shape, or unusual values? What limitations should readers keep in mind?

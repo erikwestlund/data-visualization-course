@@ -1,0 +1,41 @@
+---
+title: "Instructor Only: Outliers And Summaries Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+davis <- read_csv("data/real/davis_height_weight.csv", show_col_types = FALSE)
+
+davis |>
+  filter(!is.na(weight_reporting_error_kg)) |>
+  summarise(
+    n = n(),
+    mean_error = mean(weight_reporting_error_kg),
+    median_error = median(weight_reporting_error_kg),
+    min_error = min(weight_reporting_error_kg),
+    max_error = max(weight_reporting_error_kg),
+    iqr_error = IQR(weight_reporting_error_kg)
+  )
+
+ggplot(davis, aes(x = weight_reporting_error_kg)) +
+  geom_histogram(binwidth = 2, fill = "steelblue", color = "white") +
+  labs(
+    title = "Measured Minus Reported Weight",
+    x = "Weight reporting error (kg)",
+    y = "Number of people"
+  ) +
+  theme_minimal()
+```

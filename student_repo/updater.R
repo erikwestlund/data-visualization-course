@@ -7,6 +7,10 @@
 # 1. If this folder is a Git clone, run `git pull --ff-only`.
 # 2. Copy missing files from practice/templates/ to practice/work/.
 # 3. Leave existing files in practice/work/ alone.
+#
+# Git updates instructor-owned course files. That means files in folders such as
+# modules/, slides/, assignments/, data/, and practice/templates/ may be added,
+# changed, renamed, or removed. Your own practice files belong in practice/work/.
 
 run_git_pull <- function(project_root) {
   git_available <- nzchar(Sys.which("git"))
@@ -28,7 +32,8 @@ run_git_pull <- function(project_root) {
     return(invisible(FALSE))
   }
 
-  message("Updating course files with git pull --ff-only...")
+  message("Updating instructor-owned course files with git pull --ff-only...")
+  message("Course files may be added, changed, renamed, or removed. Files in practice/work/ are left alone by this script.")
 
   output <- suppressWarnings(system2(
     "git",

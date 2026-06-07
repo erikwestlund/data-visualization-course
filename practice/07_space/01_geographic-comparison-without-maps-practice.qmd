@@ -1,0 +1,58 @@
+---
+title: "Practice: Geographic Comparison Without Maps"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice comparing places without making a map.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/places_county_core_measures_long.csv`
+- `data/real/epa_air_quality_county_2025_long.csv`
+- `data/simulated/county_wellness_indicators_long.csv`
+
+Helpful module reference: `modules/07_space/01_geographic-comparison-without-maps.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Identify place names, state/county variables, measures, and estimates.
+```
+
+# Focus The Comparison
+
+Choose one measure and a manageable set of places.
+
+```{r}
+# Filter to one measure and selected places here.
+```
+
+# Plot
+
+Use a ranked dot plot, interval plot, or small multiples.
+
+```{r}
+# Build your geographic comparison plot here.
+```
+
+# Interpret
+
+> TODO: Which places stand out? What context is missing without a map?

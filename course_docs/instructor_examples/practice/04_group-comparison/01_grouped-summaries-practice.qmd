@@ -1,0 +1,46 @@
+---
+title: "Instructor Only: Grouped Summaries Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+nhanes <- read_csv("data/real/nhanes_2021_2023_analysis.csv", show_col_types = FALSE)
+
+bp_by_age <- nhanes |>
+  filter(age_years >= 18, !is.na(age_group), !is.na(systolic_mean)) |>
+  group_by(age_group) |>
+  summarise(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    sd_systolic = sd(systolic_mean),
+    se_systolic = sd_systolic / sqrt(n),
+    lower = mean_systolic - 1.96 * se_systolic,
+    upper = mean_systolic + 1.96 * se_systolic,
+    .groups = "drop"
+  ) |>
+  mutate(age_group = reorder(age_group, mean_systolic))
+
+ggplot(bp_by_age, aes(x = age_group, y = mean_systolic)) +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15, color = "gray50") +
+  geom_point(size = 3, color = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Mean Systolic Blood Pressure By Age Group",
+    x = NULL,
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+```

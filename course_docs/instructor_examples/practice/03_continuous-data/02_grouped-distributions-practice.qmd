@@ -1,0 +1,34 @@
+---
+title: "Instructor Only: Grouped Distributions Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+nhanes <- read_csv("data/real/nhanes_2021_2023_analysis.csv", show_col_types = FALSE)
+
+adult_bp <- nhanes |>
+  filter(age_years >= 18, !is.na(age_group), !is.na(systolic_mean))
+
+ggplot(adult_bp, aes(x = age_group, y = systolic_mean)) +
+  geom_boxplot(fill = "gray85") +
+  coord_flip() +
+  labs(
+    title = "Adult Systolic Blood Pressure By Age Group",
+    x = NULL,
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+```

@@ -15,121 +15,48 @@ library(readr)
 
 # Goal
 
-Practice describing one continuous distribution.
+Practice describing the distribution of one numeric variable.
 
-# Load Data
+# Suggested Data
 
-```{r}
-nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+Choose one:
 
-nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/davis_height_weight.csv`
+- `data/simulated/neighborhood_health_survey_analysis.csv`
 
-nhanes |>
-  glimpse()
-```
+Helpful module reference: `modules/03_continuous-data/01_histograms-and-density.qmd`.
 
-What does one row represent?
-
-> TODO: Replace this with your answer.
-
-# Part 1: Prepare Data
+# Load And Inspect
 
 ```{r}
-adult_bp <- nhanes |>
-  filter(
-    age_years >= 18,
-    !is.na(systolic_mean)
-  )
-
-adult_bp |>
-  select(respondent_id, age_years, gender, age_group, systolic_mean) |>
-  head()
-```
-
-# Part 2: Histogram
-
-```{r}
-p1 <- ggplot(adult_bp, aes(x = systolic_mean))
-
-p1
+# Load your dataset here.
 ```
 
 ```{r}
-p2 <- p1 +
-  geom_histogram(binwidth = 5)
+# Use glimpse() to find numeric variables.
+```
 
-p2
+# Choose A Numeric Variable
+
+Pick one numeric variable. Filter out missing values if needed.
+
+```{r}
+# Prepare the variable you want to plot.
+```
+
+# Plot
+
+Make a histogram. Try at least two bin widths.
+
+```{r}
+# Histogram with your first bin width.
 ```
 
 ```{r}
-p3 <- p2 +
-  labs(
-    title = "Distribution Of Adult Mean Systolic Blood Pressure",
-    x = "Mean systolic blood pressure",
-    y = "Number of participants"
-  ) +
-  theme_minimal()
-
-p3
+# Histogram with another bin width or a density plot.
 ```
 
-Describe the center, spread, shape, and any unusual values.
+# Interpret
 
-> TODO: Replace this with your answer.
-
-# Part 3: Change Bin Width
-
-```{r}
-p1 <- ggplot(adult_bp, aes(x = systolic_mean)) +
-  geom_histogram(binwidth = 2)
-
-p1
-```
-
-```{r}
-p2 <- ggplot(adult_bp, aes(x = systolic_mean)) +
-  geom_histogram(binwidth = 10)
-
-p2
-```
-
-What changes when the bin width changes?
-
-> TODO: Replace this with your answer.
-
-# Part 4: Density Plot
-
-```{r}
-p1 <- ggplot(adult_bp, aes(x = systolic_mean))
-
-p1
-```
-
-```{r}
-p2 <- p1 +
-  geom_density(fill = "steelblue", alpha = 0.3)
-
-p2
-```
-
-What does the density plot make easier or harder to see than the histogram?
-
-> TODO: Replace this with your answer.
-
-# Part 5: Summaries
-
-```{r}
-adult_bp |>
-  summarise(
-    n = n(),
-    mean_systolic = mean(systolic_mean),
-    median_systolic = median(systolic_mean),
-    min_systolic = min(systolic_mean),
-    max_systolic = max(systolic_mean),
-    iqr_systolic = IQR(systolic_mean)
-  )
-```
-
-How do the summaries support or complicate what you saw in the plot?
-
-> TODO: Replace this with your answer.
+> TODO: Describe center, spread, shape, and unusual values. How did bin width affect what you saw?

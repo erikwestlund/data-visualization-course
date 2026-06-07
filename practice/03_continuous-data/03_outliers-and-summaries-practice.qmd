@@ -15,147 +15,48 @@ library(readr)
 
 # Goal
 
-Practice identifying and interpreting unusual continuous values.
+Practice identifying unusual values and comparing plots with summary statistics.
 
-# Load Data
+# Suggested Data
 
-```{r}
-nhanes_path <- "data/real/nhanes_2021_2023_analysis.csv"
+Choose one:
 
-nhanes <- read_csv(nhanes_path, show_col_types = FALSE)
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/davis_height_weight.csv`
+- `data/simulated/measured_vs_self_reported_exercise_minutes.csv`
 
-nhanes |>
-  glimpse()
-```
+Helpful module reference: `modules/03_continuous-data/03_outliers-and-summaries.qmd`.
 
-# Part 1: Prepare Data
-
-```{r}
-diet <- nhanes |>
-  filter(!is.na(mean_daily_energy_kcal))
-
-diet |>
-  select(respondent_id, age_years, gender, age_group, mean_daily_energy_kcal) |>
-  head()
-```
-
-What does `mean_daily_energy_kcal` represent in this teaching file?
-
-> TODO: Replace this with your answer.
-
-# Part 2: Plot The Distribution
+# Load And Inspect
 
 ```{r}
-p1 <- ggplot(diet, aes(x = mean_daily_energy_kcal))
-
-p1
+# Load your dataset here.
 ```
 
 ```{r}
-p2 <- p1 +
-  geom_histogram(binwidth = 250)
+# Inspect the dataset here.
+```
 
-p2
+# Choose A Variable
+
+Pick one numeric variable where unusual values might matter.
+
+```{r}
+# Prepare that variable here.
+```
+
+# Plot And Summarize
+
+Create a plot that can reveal unusual values, then calculate a few summaries.
+
+```{r}
+# Plot the variable here.
 ```
 
 ```{r}
-p3 <- p2 +
-  labs(
-    title = "Distribution Of Mean Daily Energy Intake",
-    x = "Mean daily energy intake, kcal",
-    y = "Number of participants"
-  ) +
-  theme_minimal()
-
-p3
+# Calculate summaries such as n, mean, median, min, max, and IQR.
 ```
 
-Describe the shape and tail of the distribution.
+# Interpret
 
-> TODO: Replace this with your answer.
-
-# Part 3: IQR Outlier Rule
-
-```{r}
-energy_cutoffs <- diet |>
-  summarise(
-    q1 = quantile(mean_daily_energy_kcal, 0.25),
-    q3 = quantile(mean_daily_energy_kcal, 0.75),
-    iqr = IQR(mean_daily_energy_kcal),
-    lower_cutoff = q1 - 1.5 * iqr,
-    upper_cutoff = q3 + 1.5 * iqr
-  )
-
-energy_cutoffs
-```
-
-What does the upper cutoff mean?
-
-> TODO: Replace this with your answer.
-
-# Part 4: Flag Unusual Values
-
-```{r}
-diet_flagged <- diet |>
-  mutate(
-    high_energy_outlier = mean_daily_energy_kcal > energy_cutoffs$upper_cutoff
-  )
-
-diet_flagged |>
-  count(high_energy_outlier)
-```
-
-```{r}
-p1 <- ggplot(
-  diet_flagged,
-  aes(
-    x = mean_daily_energy_kcal,
-    fill = high_energy_outlier
-  )
-) +
-  geom_histogram(binwidth = 250)
-
-p1
-```
-
-```{r}
-p2 <- p1 +
-  scale_fill_manual(
-    values = c("TRUE" = "firebrick", "FALSE" = "gray70"),
-    labels = c("FALSE" = "Not flagged", "TRUE" = "Flagged high"),
-    name = NULL
-  ) +
-  labs(
-    title = "High Energy Intake Values Flagged By IQR Rule",
-    x = "Mean daily energy intake, kcal",
-    y = "Number of participants"
-  ) +
-  theme_minimal()
-
-p2
-```
-
-Does the flagged group look like isolated errors, a long tail, or something else?
-
-> TODO: Replace this with your answer.
-
-# Part 5: Inspect Rows
-
-```{r}
-diet_flagged |>
-  filter(high_energy_outlier) |>
-  select(respondent_id, age_years, gender, age_group, dietary_days, mean_daily_energy_kcal) |>
-  arrange(desc(mean_daily_energy_kcal)) |>
-  head(10)
-```
-
-What would you check before removing or changing these rows?
-
-> TODO: Replace this with your answer.
-
-# Checklist
-
-- Did you describe shape, center, spread, and tail?
-- Did you inspect the rows behind unusual values?
-- Did you avoid calling outliers errors without evidence?
-- Did you mention the teaching-file caution for dietary summaries?
+> TODO: Are there unusual values? Do they look like errors, rare real observations, or values that need more context?

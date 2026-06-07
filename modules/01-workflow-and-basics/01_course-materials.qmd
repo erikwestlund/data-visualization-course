@@ -32,7 +32,7 @@ Click **New Project...**.
 
 # Step 2: Choose Version Control
 
-![RStudio New Project Wizard showing Version Control](images/rstudio-new-project-wizard-version-control.svg){fig-alt="RStudio New Project Wizard with New Directory, Existing Directory, and Version Control options."}
+![RStudio New Project Wizard showing Version Control](images/rstudio-new-project-wizard-version-control.png){fig-alt="RStudio New Project Wizard with New Directory, Existing Directory, and Version Control options."}
 
 In the New Project Wizard, click **Version Control**.
 
@@ -116,7 +116,7 @@ This folder contains the datasets we will use in modules, practice notebooks, pr
 
 The most important file to open first is:
 
-- [`data/data.html`](data/data.html): the Course Data Summary
+- [`data/data.html`](../../../data/data.html): the Course Data Summary
 
 You can find it in the Files pane by opening the `data/` folder and clicking `data.html`.
 
@@ -140,9 +140,9 @@ The codebook is where you check:
 
 Open the `modules/` folder in the Files pane.
 
-Modules are the notebooks we will use during class. I will often open a module, make the text large, talk through the setup, run code chunks step by step, and show the output as we go.
+Modules are the course-owned notebooks we will use during class. I will often open a module, make the text large, talk through the setup, run code chunks step by step, and show the output as we go.
 
-The `modules/` folder contains the editable notebook files:
+The `modules/` folder contains Quarto notebook source files:
 
 - `modules/01-workflow-and-basics/`
 - `modules/02_categorical-data/`
@@ -153,8 +153,10 @@ Most module files end in `.qmd`. These are Quarto notebook source files.
 
 The course also includes `modules/rendered/`, a folder with HTML versions of module notebooks. Use those when you want to quickly view a finished version without running the code yourself.
 
-- `modules/`: notebooks we can open, run, and edit during class
+- `modules/`: course-owned notebooks we can open and run during class
 - `modules/rendered/`: HTML versions for quick viewing
+
+Do not use `modules/` for your own saved work. Course updates may add, rename, or remove files in `modules/`.
 
 ## Practice
 
@@ -177,10 +179,12 @@ source("updater.R")
 
 The updater does two things:
 
-- gets the latest course files if you are using the Git version of the course folder
+- gets the latest instructor-owned course files if you are using the Git version of the course folder
 - copies any missing practice templates into `practice/work/`
 
-It does not overwrite files that already exist in `practice/work/`.
+Instructor-owned course files in folders such as `modules/`, `slides/`, `assignments/`, `data/`, and `practice/templates/` may be added, changed, renamed, or removed when the course updates.
+
+The updater does not overwrite files that already exist in `practice/work/`.
 
 You should see one of these outcomes in the Console:
 

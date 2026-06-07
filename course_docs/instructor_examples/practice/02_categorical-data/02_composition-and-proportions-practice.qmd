@@ -1,0 +1,35 @@
+---
+title: "Instructor Only: Composition And Proportions Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+census <- read_csv("data/real/census_state_race_ethnicity_long.csv", show_col_types = FALSE)
+
+selected_states <- census |>
+  filter(state %in% c("CA", "FL", "MD", "MA", "TX", "WA"))
+
+ggplot(selected_states, aes(x = state_name, y = share, fill = race_ethnicity)) +
+  geom_col() +
+  scale_y_continuous(labels = function(x) paste0(round(x * 100), "%")) +
+  labs(
+    title = "Race/Ethnicity Composition In Selected States",
+    x = NULL,
+    y = "Share of included race/ethnicity population",
+    fill = "Category"
+  ) +
+  theme_minimal()
+```

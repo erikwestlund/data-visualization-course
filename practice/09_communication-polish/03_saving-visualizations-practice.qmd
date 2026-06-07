@@ -1,0 +1,58 @@
+---
+title: "Practice: Saving Visualizations"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice creating a final plot object and saving it intentionally.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/state_population_ranks.csv`
+- `data/real/flu_vaccination_age_time_clean.csv`
+- `data/simulated/state_enrollment_ranks.csv`
+
+Helpful module reference: `modules/09_communication-polish/03_saving-visualizations.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect variables you could use in a final plot.
+```
+
+# Build A Final Plot Object
+
+Create one polished plot and save it as an object such as `final_plot`.
+
+```{r}
+# Build final_plot here.
+```
+
+# Save The Plot
+
+Choose a filename, width, height, and units. Save into your own work folder.
+
+```{r}
+# Save your plot with ggsave() here.
+```
+
+# Reflect
+
+> TODO: Why did you choose this size and file format? Does the saved version remain readable?

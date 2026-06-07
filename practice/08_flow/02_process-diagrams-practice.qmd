@@ -1,0 +1,50 @@
+---
+title: "Practice: Process Diagrams"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice using a simple diagram to explain an analytic workflow or conceptual structure.
+
+Helpful module reference: `modules/08_flow/02_process-diagrams.qmd`.
+
+# Sketch The Process
+
+Choose one process to explain:
+
+- how raw data become a final figure
+- how a sample is filtered
+- how variables might relate conceptually
+- how a reader should move through a report
+
+# Mermaid Diagram
+
+Create a simple Mermaid diagram. Keep it small enough to explain verbally.
+
+```{mermaid}
+flowchart LR
+  A[Start] --> B[Next step]
+  B --> C[Final step]
+```
+
+# Optional: ggplot Diagram
+
+If you want custom labels or counts, sketch a static diagram with `ggplot2`.
+
+```{r}
+# Optional ggplot diagram code here.
+```
+
+# Interpret
+
+> TODO: What does the diagram clarify that a normal plot would not?

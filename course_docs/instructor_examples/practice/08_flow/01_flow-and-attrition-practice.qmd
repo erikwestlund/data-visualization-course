@@ -1,0 +1,52 @@
+---
+title: "Instructor Only: Flow And Attrition Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+nhanes <- read_csv("data/real/nhanes_2021_2023_analysis.csv", show_col_types = FALSE)
+
+attrition <- data.frame(
+  stage = c(
+    "All records",
+    "Adults",
+    "Adults with BP",
+    "Adults with BP and diet",
+    "Adults with BP, diet, and income"
+  ),
+  n = c(
+    nrow(nhanes),
+    nhanes |> filter(age_years >= 18) |> nrow(),
+    nhanes |> filter(age_years >= 18, !is.na(systolic_mean)) |> nrow(),
+    nhanes |> filter(age_years >= 18, !is.na(systolic_mean), !is.na(mean_daily_energy_kcal)) |> nrow(),
+    nhanes |> filter(age_years >= 18, !is.na(systolic_mean), !is.na(mean_daily_energy_kcal), !is.na(family_income_to_poverty)) |> nrow()
+  )
+)
+
+attrition <- attrition |>
+  mutate(stage = factor(stage, levels = stage), retained_percent = n / first(n) * 100)
+
+ggplot(attrition, aes(x = stage, y = n)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = paste0(round(retained_percent), "% retained")), hjust = -0.05) +
+  coord_flip() +
+  labs(
+    title = "Attrition Across Analysis Filters",
+    x = NULL,
+    y = "Number of rows"
+  ) +
+  theme_minimal()
+```

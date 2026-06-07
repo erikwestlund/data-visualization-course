@@ -1,0 +1,56 @@
+---
+title: "Practice: Color Accessibility And Highlighting"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice using color to guide attention rather than decorate every category equally.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/census_state_race_ethnicity_long.csv`
+- `data/real/places_county_core_measures_long.csv`
+- `data/simulated/state_school_enrollment_groups_long.csv`
+
+Helpful module reference: `modules/09_communication-polish/02_color-accessibility-and-highlighting.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect categories and possible highlight targets.
+```
+
+# Build A First Plot
+
+```{r}
+# Build a first plot with default or many colors.
+```
+
+# Add Highlighting
+
+Choose one group, place, or category to highlight. Make the rest visually quieter.
+
+```{r}
+# Build a highlighted version here.
+```
+
+# Interpret
+
+> TODO: What should the reader notice first? Is the plot still understandable without relying only on color?

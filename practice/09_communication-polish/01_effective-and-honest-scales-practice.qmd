@@ -1,0 +1,56 @@
+---
+title: "Practice: Effective And Honest Scales"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice choosing scales that make patterns visible without misleading readers.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/flu_vaccination_age_time_clean.csv`
+- `data/real/state_population_ranks.csv`
+- `data/simulated/respiratory_booster_coverage.csv`
+
+Helpful module reference: `modules/09_communication-polish/01_effective-and-honest-scales.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect variables and ranges.
+```
+
+# Build A First Plot
+
+```{r}
+# Build a first version of your plot here.
+```
+
+# Revise The Scale
+
+Try a different axis limit, break spacing, coordinate choice, or percent formatting.
+
+```{r}
+# Build a revised scale version here.
+```
+
+# Interpret
+
+> TODO: Which scale choice is more honest for the comparison? What tradeoff does it make?

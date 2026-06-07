@@ -1,0 +1,49 @@
+---
+title: "Instructor Only: Saving Visualizations Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+states <- read_csv("data/real/state_population_ranks.csv", show_col_types = FALSE)
+
+top_states <- states |>
+  slice_max(population, n = 10) |>
+  mutate(state_name = reorder(state_name, population))
+
+final_plot <- ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Largest States In The Population Rank Dataset",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal()
+
+final_plot
+
+saved_file <- file.path(tempdir(), "top-states-practice-reference.png")
+
+ggsave(
+  filename = saved_file,
+  plot = final_plot,
+  width = 7,
+  height = 5,
+  dpi = 300
+)
+
+saved_file
+```

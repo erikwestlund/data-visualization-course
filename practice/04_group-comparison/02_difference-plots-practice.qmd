@@ -1,0 +1,58 @@
+---
+title: "Practice: Difference Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice plotting differences rather than only plotting two values side by side.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/prams_2011_selected.csv`
+- `data/real/davis_height_weight.csv`
+- `data/simulated/new_parent_wellness_survey.csv`
+
+Helpful module reference: `modules/04_group-comparison/02_difference-plots.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect variables that can be compared or subtracted.
+```
+
+# Define A Difference
+
+Choose two related measures or two groups to compare. Calculate a difference where positive and negative values have clear meanings.
+
+```{r}
+# Create your difference variable or difference table here.
+```
+
+# Plot
+
+Make a plot centered around the difference.
+
+```{r}
+# Build your difference plot here.
+```
+
+# Interpret
+
+> TODO: What does zero mean? What does a positive value mean? What does a negative value mean?

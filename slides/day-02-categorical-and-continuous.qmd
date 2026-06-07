@@ -1,0 +1,519 @@
+---
+title: "Data Visualization: Day 2"
+subtitle: "Categorical And Continuous Data"
+author: "Erik Westlund"
+format: revealjs
+---
+
+# Welcome Back
+
+## Today's Goals
+
+1. Move from making a first plot to asking better exploratory questions.
+2. Visualize categorical variables with counts, proportions, and ranks.
+3. Visualize continuous variables with attention to center, spread, shape, and unusual values.
+4. Practice choosing a plot based on the question, not the chart type.
+
+## Where We Are
+
+Yesterday was about getting working:
+
+- course project
+- Quarto notebooks
+- `source("updater.R")`
+- direct project-root paths
+- first `ggplot2` layers
+
+Today is about using those tools to explore data.
+
+## Day 1 Pattern
+
+We will keep using the same build-and-check workflow:
+
+```r
+p1 <- ggplot(data, aes(...))
+p1
+
+p2 <- p1 + geom_*()
+p2
+
+p3 <- p2 + labs(...)
+p3
+```
+
+The point is not just cleaner code.
+
+The point is to see what each decision contributes.
+
+# Exploratory Questions
+
+## Start With The Variable
+
+Before choosing a plot, ask:
+
+- What does one row represent?
+- What type of variable am I plotting?
+- What question am I asking?
+- What comparison should the viewer make?
+
+## Two Big Variable Types Today
+
+Categorical variables answer questions like:
+
+- Which category?
+- Which group?
+- Which place?
+- Which label?
+
+Continuous variables answer questions like:
+
+- How much?
+- How high?
+- How long?
+- How many units?
+
+## The Plot Is A Statistical Claim
+
+Every plot is making a claim about the data.
+
+Examples:
+
+- This category is common.
+- This group is larger.
+- This distribution is skewed.
+- This value is unusual.
+- This pattern differs across groups.
+
+The plot should match the claim.
+
+# Categorical Data
+
+## Categorical Question 1
+
+How many observations are in each category?
+
+This is a count question.
+
+Common tools:
+
+- row counts
+- `count()`
+- bar charts
+- dot plots
+
+## Count What?
+
+Counting rows is only meaningful if the rows mean what you think they mean.
+
+Ask:
+
+- Is one row a person?
+- Is one row a state?
+- Is one row a state-category combination?
+- Is one row an already-summarized estimate?
+
+Same plot form, different statistical meaning.
+
+## Counts Versus Summaries
+
+Sometimes we count rows.
+
+Sometimes we summarize values by category.
+
+Those are different operations:
+
+```r
+count(category)
+```
+
+versus
+
+```r
+group_by(category) |>
+  summarise(total = sum(value))
+```
+
+## Ordering Matters
+
+Alphabetical order is rarely the analytic order.
+
+Useful orders include:
+
+- largest to smallest
+- smallest to largest
+- meaningful sequence
+- reference category first
+- grouped by concept
+
+Ordering is part of the argument.
+
+## Transition To Module
+
+Open:
+
+`modules/02_categorical-data/01_counts-and-ordering.qmd`
+
+Watch for:
+
+- what one row represents
+- when a count is meaningful
+- how ordering changes readability
+
+# Composition
+
+## Categorical Question 2
+
+What is the whole made of?
+
+This is a composition question.
+
+Examples:
+
+- racial/ethnic composition of a state
+- categories within a sample
+- share of observations in each outcome group
+- parts of a budget, population, or total
+
+## Define The Whole
+
+Composition plots require a clear denominator.
+
+Ask:
+
+- What adds up to 100 percent?
+- Is the whole a state, county, year, subgroup, or sample?
+- Are any categories excluded?
+- Are we showing counts or shares?
+
+## Counts Can Mislead Composition
+
+Raw counts mix two ideas:
+
+- the size of the whole
+- the composition of the whole
+
+If the question is composition, proportions are often clearer.
+
+## Stacked Bars Are Not Magic
+
+Stacked bars can show composition.
+
+But they make some comparisons hard:
+
+- middle segments lack a shared baseline
+- small differences can be hard to see
+- too many categories create clutter
+
+Sometimes filtering to one category is clearer.
+
+## Transition To Module
+
+Open:
+
+`modules/02_categorical-data/02_composition-and-proportions.qmd`
+
+Watch for:
+
+- raw counts versus shares
+- defining the whole
+- filtering to clarify one comparison
+
+# Rank
+
+## Categorical Question 3
+
+What is higher or lower?
+
+This is a rank question.
+
+Rank is useful when the task is comparison.
+
+It is less useful when the task is understanding full distributional shape.
+
+## Rank Hides Magnitude
+
+Rank tells us order.
+
+It does not always tell us how different values are.
+
+Ask:
+
+- Are the top two nearly tied?
+- Is there a big gap after the first few?
+- Are small differences meaningful?
+- Is uncertainty available?
+
+## Top-N Choices
+
+Top-10 and bottom-10 plots are useful.
+
+They are also selective.
+
+When using them, say:
+
+- what was included
+- what was excluded
+- what the ranking variable is
+- whether the ranking is stable or uncertain
+
+## Transition To Module
+
+Open:
+
+`modules/02_categorical-data/03_ranked-comparisons.qmd`
+
+Watch for:
+
+- ranking by a numeric variable
+- limiting to a readable number of categories
+- interpreting rank and magnitude together
+
+# Continuous Data
+
+## Continuous Question 1
+
+What does this variable look like?
+
+This is a distribution question.
+
+We usually describe:
+
+- center
+- spread
+- shape
+- unusual values
+
+## Center
+
+Center asks what is typical.
+
+Common summaries:
+
+- mean
+- median
+- mode or peak
+
+Plots help us see when a single center is not enough.
+
+## Spread
+
+Spread asks how much variation there is.
+
+Common summaries:
+
+- range
+- interquartile range
+- standard deviation
+
+Plots help us see whether spread is symmetric, uneven, or group-specific.
+
+## Shape
+
+Shape includes:
+
+- skew
+- tails
+- gaps
+- peaks
+- heaping
+- zero inflation
+- multiple modes
+
+Shape is one reason histograms matter.
+
+Summary statistics alone often miss it.
+
+## Histograms
+
+Histograms show how numeric values are distributed across bins.
+
+Key choice:
+
+- bin width
+
+Too narrow can make noise look meaningful.
+
+Too wide can hide important structure.
+
+## Density Plots
+
+Density plots smooth the distribution.
+
+They can make shape easier to compare.
+
+But they are more abstract than histograms.
+
+Use them carefully with small samples or bounded variables.
+
+## Transition To Module
+
+Open:
+
+`modules/03_continuous-data/01_histograms-and-density.qmd`
+
+Watch for:
+
+- bin width
+- center, spread, and shape
+- what density emphasizes differently
+
+# Grouped Distributions
+
+## Continuous Question 2
+
+How does the distribution differ across groups?
+
+This is not just a mean-comparison question.
+
+Groups can differ in:
+
+- center
+- spread
+- shape
+- outliers
+- sample size
+
+## Boxplots
+
+Boxplots compactly show:
+
+- median
+- interquartile range
+- rough spread
+- potential outliers
+
+They are useful for comparing many groups.
+
+They hide detailed shape.
+
+## Violin Plots And Facets
+
+Violin plots and faceted histograms show more shape.
+
+They can also take more space.
+
+Use them when shape matters, not only because they look more interesting.
+
+## Grouped Plot Checklist
+
+Ask:
+
+- How many groups are there?
+- Are group sizes very different?
+- Is the variable bounded?
+- Do we need full shape or only summaries?
+- Would faceting be clearer than color?
+
+## Transition To Module
+
+Open:
+
+`modules/03_continuous-data/02_grouped-distributions.qmd`
+
+Watch for:
+
+- boxplots versus fuller distribution views
+- group sample size
+- whether center alone is enough
+
+# Outliers And Summaries
+
+## Unusual Values
+
+Outliers are not automatically errors.
+
+They might be:
+
+- data entry problems
+- rare but real observations
+- important cases
+- signs of a bad transformation
+- values needing domain context
+
+## What To Do With Outliers
+
+Before removing anything, ask:
+
+- Is the value possible?
+- Is the unit correct?
+- Does the codebook explain it?
+- Does it change the pattern?
+- Should it be flagged, transformed, or left alone?
+
+## Summaries And Plots Work Together
+
+Use summaries to support what you see.
+
+Use plots to check what summaries hide.
+
+Neither is enough by itself.
+
+## Transition To Module
+
+Open:
+
+`modules/03_continuous-data/03_outliers-and-summaries.qmd`
+
+Watch for:
+
+- unusual values
+- summary statistics
+- how plots and summaries check each other
+
+# Practice
+
+## Today's Practice Options
+
+Use one or more practice notebooks from:
+
+- `practice/templates/02_categorical-data/`
+- `practice/templates/03_continuous-data/`
+
+Work in:
+
+`practice/work/`
+
+## Minimum Practice Goal
+
+By the end of practice time, aim to have:
+
+1. one categorical plot
+2. one continuous distribution plot
+3. short interpretation for each
+4. at least one sentence about what one row represents
+
+## If You Finish Early
+
+Revise one plot:
+
+- reorder categories
+- change bin width
+- add clearer labels
+- compare groups
+- check the codebook
+- write a more precise interpretation
+
+# Wrap-Up
+
+## What You Should Be Able To Do
+
+After today, you should be able to:
+
+- distinguish row counts from summarized values
+- define a denominator for a composition plot
+- use rank without forgetting magnitude
+- describe center, spread, shape, and unusual values
+- choose a distribution plot for the question
+
+## Tomorrow
+
+We move from one-variable displays to relationships:
+
+- group summaries
+- differences
+- association
+- model-output plots
+
+The core question becomes:
+
+How do variables or groups relate to each other?

@@ -1,0 +1,58 @@
+---
+title: "Practice: Flow And Attrition"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice showing how observations move through filters or stages.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/titanic_passengers.csv`
+- `data/simulated/neighborhood_health_survey_analysis.csv`
+
+Helpful module reference: `modules/08_flow/01_flow-and-attrition.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect variables that could define inclusion stages.
+```
+
+# Define Stages
+
+Create a small table with one row per stage and a count for each stage.
+
+```{r}
+# Create your stage-count table here.
+```
+
+# Plot
+
+Use a bar chart, dot plot, or connected step plot to show retention or loss.
+
+```{r}
+# Build your flow or attrition plot here.
+```
+
+# Interpret
+
+> TODO: Where are most observations lost? What does the final analytic sample represent?

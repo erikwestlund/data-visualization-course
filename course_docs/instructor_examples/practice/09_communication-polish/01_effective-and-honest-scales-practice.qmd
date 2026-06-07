@@ -1,0 +1,40 @@
+---
+title: "Instructor Only: Effective And Honest Scales Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+flu <- read_csv("data/real/flu_vaccination_age_time_clean.csv", show_col_types = FALSE)
+
+latest_flu <- flu |>
+  filter(
+    month == 5,
+    season_start_year == max(season_start_year, na.rm = TRUE),
+    !is.na(estimate)
+  ) |>
+  mutate(age_group = reorder(age_group, estimate))
+
+ggplot(latest_flu, aes(x = age_group, y = estimate)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 100)) +
+  labs(
+    title = "Latest Flu Vaccination Estimates By Age Group",
+    x = NULL,
+    y = "Estimate (%)"
+  ) +
+  theme_minimal()
+```

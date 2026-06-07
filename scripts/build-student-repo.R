@@ -360,7 +360,7 @@ write_rendered_modules_index <- function() {
       "</head>",
       "<body>",
       "  <h1>Rendered Module Notebooks</h1>",
-      "  <p>These are HTML versions of the class module notebooks. Use the other folders in <code>modules/</code> when you want to open and run the editable Quarto notebooks.</p>",
+      "  <p>These are HTML versions of the class module notebooks. Use the other folders in <code>modules/</code> when you want to open and run the course-owned Quarto notebooks.</p>",
       "  <ul>",
       links,
       "  </ul>",

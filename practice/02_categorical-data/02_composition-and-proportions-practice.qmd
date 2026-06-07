@@ -15,155 +15,52 @@ library(readr)
 
 # Goal
 
-Practice visualizing composition with proportions.
+Practice showing how parts relate to a whole.
 
-# Load Data
+# Suggested Data
 
-```{r}
-census_path <- "data/real/census_state_race_ethnicity_long.csv"
+Choose one:
 
-census <- read_csv(census_path, show_col_types = FALSE)
+- `data/real/census_state_race_ethnicity_long.csv`
+- `data/real/state_race_population_summary.csv`
+- `data/simulated/state_school_enrollment_groups_long.csv`
 
-census |>
-  glimpse()
-```
+Helpful module reference: `modules/02_categorical-data/02_composition-and-proportions.qmd`.
 
-# Part 1: Select States
-
-Start with these states. You may change them later.
+# Load And Inspect
 
 ```{r}
-selected_states <- census |>
-  filter(state %in% c("CA", "FL", "MD", "MA", "TX", "WA"))
-
-selected_states |>
-  select(state_name, race_ethnicity, race_ethnicity_population, share) |>
-  head()
-```
-
-Why is it useful to keep only a few states for this plot?
-
-> TODO: Replace this with your answer.
-
-# Part 2: Raw Counts
-
-```{r}
-p1 <- ggplot(
-  selected_states,
-  aes(
-    x = state_name,
-    y = race_ethnicity_population,
-    fill = race_ethnicity
-  )
-)
-
-p1
+# Load your dataset here.
 ```
 
 ```{r}
-p2 <- p1 +
-  geom_col()
-
-p2
+# Inspect the rows and variables.
 ```
 
-What question does this count plot answer?
+# Choose A Whole
 
-> TODO: Replace this with your answer.
-
-# Part 3: Proportions
+Decide what the whole is. Examples: one state, one year, one county, or one subgroup.
 
 ```{r}
-p1 <- ggplot(
-  selected_states,
-  aes(
-    x = state_name,
-    y = share,
-    fill = race_ethnicity
-  )
-)
-
-p1
+# Filter or summarize the data so the parts add up within a clear whole.
 ```
+
+# Calculate Proportions
+
+Create a proportion or percentage variable if the dataset does not already have one.
 
 ```{r}
-p2 <- p1 +
-  geom_col()
-
-p2
+# Calculate the part-to-whole measure here.
 ```
+
+# Plot
+
+Build a composition plot. Consider columns, stacked columns, or a dot plot of proportions.
 
 ```{r}
-p3 <- p2 +
-  scale_y_continuous(
-    labels = function(x) paste0(round(x * 100), "%")
-  ) +
-  labs(
-    title = "Race/Ethnicity Composition In Selected States",
-    x = NULL,
-    y = "Share of included race/ethnicity population",
-    fill = "Category"
-  ) +
-  theme_minimal()
-
-p3
+# Build the plot here.
 ```
 
-What question does this proportion plot answer?
+# Interpret
 
-> TODO: Replace this with your answer.
-
-# Part 4: One Category Across States
-
-Choose one race/ethnicity category and compare its share across states.
-
-```{r}
-one_category <- census |>
-  filter(race_ethnicity == "Hispanic or Latino") |>
-  mutate(state_name = reorder(state_name, share))
-
-one_category |>
-  select(state_name, share) |>
-  head()
-```
-
-```{r}
-p1 <- ggplot(one_category, aes(x = state_name, y = share))
-
-p1
-```
-
-```{r}
-p2 <- p1 +
-  geom_col(fill = "steelblue")
-
-p2
-```
-
-```{r}
-p3 <- p2 +
-  coord_flip() +
-  scale_y_continuous(
-    labels = function(x) paste0(round(x * 100), "%")
-  ) +
-  labs(
-    title = "Hispanic Or Latino Share By State",
-    x = NULL,
-    y = "Share"
-  ) +
-  theme_minimal()
-
-p3
-```
-
-Write a short interpretation. Be clear about the denominator.
-
-> TODO: Replace this with your interpretation.
-
-# Extension
-
-Change `"Hispanic or Latino"` to another category and rerun the notebook.
-
-Which category did you choose, and what changed?
-
-> TODO: Replace this with your answer.
+> TODO: What is the whole? What are the parts? What should readers be careful not to over-interpret?

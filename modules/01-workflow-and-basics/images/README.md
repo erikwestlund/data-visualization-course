@@ -5,7 +5,7 @@ Store screenshots for `modules/01-workflow-and-basics/01_course-materials.qmd` i
 Expected filenames:
 
 - `rstudio-project-menu-new-project.png`: RStudio project menu showing the New Project option.
-- `rstudio-new-project-wizard-version-control.svg`: RStudio New Project Wizard showing the Version Control option.
+- `rstudio-new-project-wizard-version-control.png`: RStudio New Project Wizard showing the Version Control option.
 - `rstudio-version-control-git.png`: RStudio Version Control screen showing the Git option.
 - `rstudio-clone-git-repository.png`: RStudio Clone Git Repository screen showing repository URL and local folder fields.
 - `rstudio-project-open-four-panes.png`: RStudio after the course project opens, showing the main panes and project files.

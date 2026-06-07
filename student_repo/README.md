@@ -20,7 +20,7 @@ Please note that this repository will likely be updated daily.
 
 - `data/`: course datasets, rendered codebooks, and `data/data.html` index.
 - `slides/`: rendered course slides as HTML files.
-- `modules/`: lesson notebooks and setup checks as Quarto `.qmd` files.
+- `modules/`: course-owned lesson notebooks and setup checks as Quarto `.qmd` files.
 - `modules/rendered/`: rendered HTML versions of lesson notebooks, starting at `modules/rendered/index.html`.
 - `assignments/`: rendered problem set and project instructions as HTML files.
 - `practice/templates/`: practice starter notebooks that may be updated during the course.
@@ -28,7 +28,7 @@ Please note that this repository will likely be updated daily.
 
 ## Practice Work
 
-Do not edit files in `practice/templates/` if you want to keep your work. Those files may be updated during the course.
+Do not use `modules/` or `practice/templates/` for your own saved work. Those files may be added, changed, renamed, or removed during course updates.
 
 Instead, run this from the R Console at the project root:
 
@@ -42,7 +42,7 @@ Open and edit notebooks from `practice/work/`.
 
 ## Rendering Notebooks
 
-Module notebooks in `modules/` are editable Quarto `.qmd` files. Rendered versions for quick viewing are in `modules/rendered/`.
+Module notebooks in `modules/` are course-owned Quarto `.qmd` files. Rendered versions for quick viewing are in `modules/rendered/`.
 
 When you render your own notebooks, the included `_quarto.yml` file sets `embed-resources: true`, so rendered notebooks can be submitted or shared as single HTML files.
 

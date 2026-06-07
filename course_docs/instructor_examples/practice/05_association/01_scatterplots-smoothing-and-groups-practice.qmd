@@ -1,0 +1,35 @@
+---
+title: "Instructor Only: Scatterplots, Smoothing, And Groups Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+davis <- read_csv("data/real/davis_height_weight.csv", show_col_types = FALSE)
+
+weight_data <- davis |>
+  filter(!is.na(weight_kg), !is.na(reported_weight_kg), !is.na(sex))
+
+ggplot(weight_data, aes(x = weight_kg, y = reported_weight_kg, color = sex)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Measured And Reported Weight",
+    x = "Measured weight (kg)",
+    y = "Reported weight (kg)",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```

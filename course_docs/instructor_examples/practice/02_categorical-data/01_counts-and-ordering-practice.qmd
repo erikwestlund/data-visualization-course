@@ -1,0 +1,36 @@
+---
+title: "Instructor Only: Counts And Ordering Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+census <- read_csv("data/real/census_state_race_ethnicity_long.csv", show_col_types = FALSE)
+
+category_population <- census |>
+  group_by(race_ethnicity) |>
+  summarise(total_population = sum(race_ethnicity_population), .groups = "drop") |>
+  mutate(race_ethnicity = reorder(race_ethnicity, total_population))
+
+ggplot(category_population, aes(x = race_ethnicity, y = total_population)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Included Population By Race/Ethnicity Category",
+    x = NULL,
+    y = "Population count"
+  ) +
+  theme_minimal()
+```

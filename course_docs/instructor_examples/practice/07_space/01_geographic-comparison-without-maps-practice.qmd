@@ -1,0 +1,42 @@
+---
+title: "Instructor Only: Geographic Comparison Without Maps Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+places <- read_csv("data/real/places_county_core_measures_long.csv", show_col_types = FALSE)
+
+maryland_smoking <- places |>
+  filter(
+    state == "MD",
+    measure_key == "current_smoking",
+    !is.na(estimate),
+    !is.na(ci_lower),
+    !is.na(ci_upper)
+  ) |>
+  mutate(county_name = reorder(county_name, estimate))
+
+ggplot(maryland_smoking, aes(x = county_name, y = estimate)) +
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, color = "gray60") +
+  geom_point(color = "steelblue", size = 2) +
+  coord_flip() +
+  labs(
+    title = "Current-Smoking Estimates Across Maryland Counties",
+    x = NULL,
+    y = "Current smoking estimate (%)"
+  ) +
+  theme_minimal()
+```

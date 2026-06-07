@@ -1,0 +1,58 @@
+---
+title: "Practice: Time Trends And Small Multiples"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice plotting change over time and separating groups into small multiples when needed.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/flu_vaccination_age_time_clean.csv`
+- `data/real/migraine_headache_diary.csv`
+- `data/simulated/respiratory_booster_coverage.csv`
+
+Helpful module reference: `modules/06_change/01_time-trends-and-small-multiples.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Identify the time variable, measure, and grouping variables.
+```
+
+# Prepare A Time Series
+
+Choose one outcome over time. Filter to a focused comparison.
+
+```{r}
+# Prepare the time trend data here.
+```
+
+# Plot
+
+Make a line plot. If there are several groups, try color or facets.
+
+```{r}
+# Build your time trend plot here.
+```
+
+# Interpret
+
+> TODO: What changes over time? Are there group differences? Are the time points equally spaced and comparable?

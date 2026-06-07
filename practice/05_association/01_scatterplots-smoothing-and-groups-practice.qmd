@@ -1,0 +1,58 @@
+---
+title: "Practice: Scatterplots, Smoothing, And Groups"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice using scatterplots to examine association between two numeric variables.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/davis_height_weight.csv`
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/simulated/measured_vs_self_reported_exercise_minutes.csv`
+
+Helpful module reference: `modules/05_association/01_scatterplots-smoothing-and-groups.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect numeric variables and possible grouping variables.
+```
+
+# Prepare Variables
+
+Pick two numeric variables. Optionally choose a grouping variable for color or facets.
+
+```{r}
+# Filter missing values and prepare variables here.
+```
+
+# Plot
+
+Make a scatterplot. Then try adding transparency, a smooth line, or color by group.
+
+```{r}
+# Build your scatterplot here.
+```
+
+# Interpret
+
+> TODO: Describe direction, form, strength, groups, and any unusual points. Avoid causal language unless your design supports it.

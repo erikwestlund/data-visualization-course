@@ -1,0 +1,58 @@
+---
+title: "Practice: Grouped Summaries"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Goal
+
+Practice calculating and plotting one summary for each group.
+
+# Suggested Data
+
+Choose one:
+
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/places_county_core_measures_long.csv`
+- `data/simulated/neighborhood_health_survey_analysis.csv`
+
+Helpful module reference: `modules/04_group-comparison/01_grouped-summaries.qmd`.
+
+# Load And Inspect
+
+```{r}
+# Load your dataset here.
+```
+
+```{r}
+# Inspect groups and numeric variables.
+```
+
+# Summarize By Group
+
+Choose a grouping variable and a numeric variable. Calculate a group-level summary.
+
+```{r}
+# Create one row per group with summaries such as n, mean, median, or standard error.
+```
+
+# Plot
+
+Try a dot plot or bar chart. Add uncertainty intervals if you calculate them.
+
+```{r}
+# Build your grouped summary plot here.
+```
+
+# Interpret
+
+> TODO: Which groups are higher or lower? Is the summary appropriate for the variable and question?

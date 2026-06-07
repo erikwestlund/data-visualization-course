@@ -1,0 +1,48 @@
+---
+title: "Instructor Only: Model Output Plots Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+nhanes <- read_csv("data/real/nhanes_2021_2023_analysis.csv", show_col_types = FALSE)
+
+model_data <- nhanes |>
+  filter(age_years >= 18, !is.na(age_years), !is.na(gender), !is.na(systolic_mean))
+
+bp_model <- lm(systolic_mean ~ age_years + gender, data = model_data)
+
+prediction_data <- expand.grid(
+  age_years = seq(20, 80, by = 5),
+  gender = sort(unique(model_data$gender))
+)
+
+prediction_data <- cbind(
+  prediction_data,
+  as.data.frame(predict(bp_model, newdata = prediction_data, interval = "confidence"))
+)
+
+ggplot(prediction_data, aes(x = age_years, y = fit, color = gender, fill = gender)) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.15, color = NA) +
+  geom_line(linewidth = 1) +
+  labs(
+    title = "Model-Based Mean Systolic Blood Pressure By Age",
+    x = "Age in years",
+    y = "Predicted mean systolic blood pressure",
+    color = "Gender",
+    fill = "Gender"
+  ) +
+  theme_minimal()
+```

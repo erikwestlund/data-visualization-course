@@ -1,0 +1,37 @@
+---
+title: "Instructor Only: Before-After And Trajectories Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+diary <- read_csv("data/real/migraine_headache_diary.csv", show_col_types = FALSE)
+
+daily_summary <- diary |>
+  filter(!is.na(day), !is.na(medication), !is.na(headache_reported)) |>
+  group_by(day, medication) |>
+  summarise(headache_percent = mean(headache_reported) * 100, .groups = "drop")
+
+ggplot(daily_summary, aes(x = day, y = headache_percent, color = medication)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(
+    title = "Headache Reports Over Diary Days",
+    x = "Diary day",
+    y = "Percent reporting headache",
+    color = "Medication"
+  ) +
+  theme_minimal()
+```

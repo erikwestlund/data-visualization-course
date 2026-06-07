@@ -1,0 +1,39 @@
+---
+title: "Instructor Only: Time Trends And Small Multiples Practice"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+# Worked Reference
+
+```{r}
+flu <- read_csv("data/real/flu_vaccination_age_time_clean.csv", show_col_types = FALSE)
+
+selected_age_groups <- flu |>
+  filter(
+    month == 5,
+    age_group %in% c("6 Months - 4 Years", "18-49 Years", "50-64 Years", ">=65 Years"),
+    !is.na(estimate)
+  )
+
+ggplot(selected_age_groups, aes(x = season_start_year, y = estimate)) +
+  geom_line(color = "steelblue") +
+  geom_point(color = "steelblue") +
+  facet_wrap(vars(age_group)) +
+  labs(
+    title = "Flu Vaccination Estimates Over Time",
+    x = "Season start year",
+    y = "Estimate (%)"
+  ) +
+  theme_minimal()
+```
