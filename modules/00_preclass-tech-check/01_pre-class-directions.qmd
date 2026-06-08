@@ -95,14 +95,14 @@ After installing Quarto, restart RStudio or Positron.
 
 # Install Packages
 
-Run this once in the R Console if you do not already have these packages installed:
+After opening the course project, run this once in the R Console:
 
 ```{r}
 #| eval: false
-install.packages(c("dplyr", "ggplot2", "readr", "stringr", "tidyr"))
+source("install-packages.R")
 ```
 
-The setup check only uses `dplyr` and `ggplot2`, but installing the full set now will make later work smoother.
+This installs any missing R packages used in the course notebooks. If everything is already installed, it will simply say so.
 
 # Run The Setup Check
 

@@ -12,7 +12,13 @@ library(dplyr)
 library(ggplot2)
 ```
 
-Use this notebook to confirm that R, `ggplot2`, and Quarto rendering work on your computer.
+Use this notebook to confirm that R, the course packages, and Quarto rendering work on your computer.
+
+If this notebook fails because a package is missing, run this in the R Console from the course project root:
+
+```r
+source("install-packages.R")
+```
 
 After opening this file:
 

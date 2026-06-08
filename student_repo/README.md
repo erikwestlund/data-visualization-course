@@ -12,9 +12,10 @@ Please note that this repository will likely be updated daily.
 ## Start Here
 
 1. Open `data-visualization-course.Rproj` in RStudio, or open this folder in Positron.
-2. Open `modules/00_preclass-tech-check/01_pre-class-directions.qmd`.
-3. Open and render `modules/00_preclass-tech-check/02_setup-check.qmd`.
-4. Open `syllabus.html` for the course syllabus.
+2. Run `source("install-packages.R")` in the R Console.
+3. Open `modules/00_preclass-tech-check/01_pre-class-directions.qmd`.
+4. Open and render `modules/00_preclass-tech-check/02_setup-check.qmd`.
+5. Open `syllabus.html` for the course syllabus.
 
 ## What Is In This Folder
 
@@ -48,8 +49,8 @@ When you render your own notebooks, the included `_quarto.yml` file sets `embed-
 
 If rendering fails, check that R, Quarto, and the required packages are installed.
 
-Required R packages for the first part of the course:
+To install missing course packages, run this from the R Console at the project root:
 
 ```r
-install.packages(c("dplyr", "ggplot2", "readr", "stringr"))
+source("install-packages.R")
 ```

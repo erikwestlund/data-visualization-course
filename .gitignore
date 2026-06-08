@@ -38,6 +38,11 @@
 # Rendered slide artifacts
 /slides/_rendered/
 
+# Temporary render staging for student exports
+/docs/*
+!/docs/umich-syllabus.docx
+!/docs/umich-syllabus.pdf
+
 # Downloaded reading mirrors
 /readings/healy/**
 

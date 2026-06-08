@@ -120,13 +120,13 @@ This should print the R version installed on your computer.
 
 # Step 6: Install Course Packages
 
-In the R Console, run:
+After opening the course folder, run this in the R Console:
 
 ```r
-install.packages(c("dplyr", "ggplot2", "readr", "stringr", "tidyr"))
+source("install-packages.R")
 ```
 
-These packages are enough for the first course notebooks.
+This installs any missing R packages used in the course notebooks.
 
 # Step 7: Open A Quarto Notebook
 

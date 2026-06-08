@@ -51,27 +51,33 @@ export_manifest <- read_simple_manifest(manifest_path)
 day_definitions <- list(
   preclass = list(
     module_dirs = c("00_preclass-tech-check"),
-    practice_dirs = character()
+    practice_dirs = character(),
+    slide_files = character()
   ),
   `day-01` = list(
     module_dirs = c("01-workflow-and-basics"),
-    practice_dirs = c("01-workflow-and-basics")
+    practice_dirs = c("01-workflow-and-basics"),
+    slide_files = c("day-01-intro-and-workflow.qmd")
   ),
   `day-02` = list(
     module_dirs = c("02_categorical-data", "03_continuous-data"),
-    practice_dirs = c("02_categorical-data", "03_continuous-data")
+    practice_dirs = c("02_categorical-data", "03_continuous-data"),
+    slide_files = c("day-02-categorical-and-continuous.qmd")
   ),
   `day-03` = list(
     module_dirs = c("04_group-comparison", "05_association"),
-    practice_dirs = c("04_group-comparison", "05_association")
+    practice_dirs = c("04_group-comparison", "05_association"),
+    slide_files = c("day-03-comparison-and-association.qmd")
   ),
   `day-04` = list(
     module_dirs = c("06_change", "07_space", "08_flow"),
-    practice_dirs = c("06_change", "07_space", "08_flow")
+    practice_dirs = c("06_change", "07_space", "08_flow"),
+    slide_files = c("day-04-change-space-flow.qmd")
   ),
   `day-05` = list(
     module_dirs = c("09_communication-polish"),
-    practice_dirs = c("09_communication-polish")
+    practice_dirs = c("09_communication-polish"),
+    slide_files = c("day-05-communication-and-studio.qmd")
   )
 )
 
@@ -94,6 +100,7 @@ if (length(unknown_days) > 0) {
 published_day_definitions <- day_definitions[published_days]
 published_module_dirs <- unique(unlist(lapply(published_day_definitions, `[[`, "module_dirs"), use.names = FALSE))
 published_practice_dirs <- unique(unlist(lapply(published_day_definitions, `[[`, "practice_dirs"), use.names = FALSE))
+published_slide_files <- unique(unlist(lapply(published_day_definitions, `[[`, "slide_files"), use.names = FALSE))
 
 args <- commandArgs(trailingOnly = TRUE)
 
@@ -119,6 +126,25 @@ target_root <- normalizePath(path.expand(target_arg), winslash = "/", mustWork =
 dir_create <- function(path) {
   if (!dir.exists(path)) {
     dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  }
+}
+
+clean_generated_docs <- function() {
+  generated_dirs <- c(
+    "assignments",
+    "course_docs",
+    "data",
+    "modules",
+    "practice",
+    "slides"
+  )
+
+  for (generated_dir in generated_dirs) {
+    path <- p(source_root, "docs", generated_dir)
+
+    if (dir.exists(path)) {
+      unlink(path, recursive = TRUE, force = TRUE)
+    }
   }
 }
 
@@ -198,6 +224,7 @@ if (!dir.exists(p(source_root, "scripts")) || !is_file(p(source_root, "course_do
 
 student_readme <- p(source_root, "student_repo", "README.md")
 student_updater <- p(source_root, "student_repo", "updater.R")
+course_installer <- p(source_root, "install-packages.R")
 
 if (!is_file(student_readme)) {
   stop("Missing student README template: student_repo/README.md", call. = FALSE)
@@ -205,6 +232,10 @@ if (!is_file(student_readme)) {
 
 if (!is_file(student_updater)) {
   stop("Missing student updater script: student_repo/updater.R", call. = FALSE)
+}
+
+if (!is_file(course_installer)) {
+  stop("Missing course package installer: install-packages.R", call. = FALSE)
 }
 
 if (identical(target_root, source_root) || is_inside(target_root, source_root)) {
@@ -222,6 +253,7 @@ managed_paths <- c(
   "slides",
   "syllabus.html",
   "README.md",
+  "install-packages.R",
   "updater.R",
   ".gitignore",
   "_quarto.yml",
@@ -362,6 +394,7 @@ render_qmds_in <- function(directory) {
 
 slide_qmd_files <- function() {
   files <- list.files(p(source_root, "slides"), pattern = "[.]qmd$", full.names = TRUE)
+  files <- files[basename(files) %in% published_slide_files]
   files[order(files)]
 }
 
@@ -751,6 +784,8 @@ rewrite_student_manifest_codebooks <- function(path) {
   writeLines(manifest_lines, path)
 }
 
+clean_generated_docs()
+
 render_file(p("course_docs", "syllabus.qmd"))
 render_qmds_in("assignments")
 render_slide_qmds()
@@ -917,10 +952,13 @@ write_lines(
 )
 
 copy_file(student_readme, p(target_root, "README.md"))
+copy_file(course_installer, p(target_root, "install-packages.R"))
 copy_file(student_updater, p(target_root, "updater.R"))
 
 validate_manifest_paths(export_manifest$must_exist_after_export, should_exist = TRUE)
 validate_manifest_paths(export_manifest$must_not_exist_after_export, should_exist = FALSE)
+
+clean_generated_docs()
 
 message("Student repository built at: ", target_root)
 message("Published days: ", paste(published_days, collapse = ", "))

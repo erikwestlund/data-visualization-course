@@ -157,6 +157,8 @@ This folder has two main parts:
 
 The `practice/work/` folder is the place for edits. The updater copies new templates into `practice/work/` without overwriting files that are already there.
 
+If packages are missing, run `source("install-packages.R")` from the project root once before rendering notebooks.
+
 # Step 7: Test The Updater
 
 This command runs in the R Console from the project root:

@@ -1,6 +1,6 @@
 ---
 title: "Data Visualization: Day 1"
-subtitle: "Getting Ready To Work, Then Learning The Basics"
+subtitle: "Introduction to Data Visualization & Workflow"
 author: "Erik Westlund"
 format: revealjs
 ---
@@ -9,8 +9,9 @@ format: revealjs
 
 ## Today's Goals
 
-1. Open the course project, run `source("updater.R")`, and render a notebook.
-2. Use grammar-of-graphics vocabulary to build and read a first `ggplot2` plot.
+1. Introduction of basic concepts
+2. Understand course workflow with GitHub, RStudio/Positron
+3. Use grammar-of-graphics vocabulary to build and read a first `ggplot2` plot.
 
 ## What This Course Is About
 
@@ -430,7 +431,12 @@ Do not wait until the end to find out the notebook cannot render.
 - I use LLMs now in many aspects of my work
 - LLMs can often help with syntax, but syntax is not the whole task.
 - You still need to define the question, choose an appropriate plot, and check whether the output is honest.
-- In this course, we will use code to learn visualization judgment, not just to make software produce an image.
+
+## AI/LLMs in this Course
+
+- In this course, we will use code to learn "good visualization judgment,"" not just to make software produce an image.
+- You can use LLMs to help you make visualizations, but do not use them to "do everything for you."
+- The more you know and can do on your own, the more useful LLMs are to help you work efficiently and focus on substance over technical matters.
 
 # Grammar Of Graphics
 

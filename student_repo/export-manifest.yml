@@ -7,11 +7,11 @@
 target_root_default: ~/Code/Courses/data-visualization-2026
 
 # Day-level publishing gate for the public/student repo.
-# This controls only copied module folders, rendered module HTML, and practice
-# templates. Slides, assignments, data, codebooks, and the syllabus are always
-# exported. Day 2 maps to modules/02_categorical-data,
-# modules/03_continuous-data, practice/02_categorical-data, and
-# practice/03_continuous-data.
+# This controls copied module folders, rendered module HTML, practice templates,
+# and rendered slides. Assignments, data, codebooks, and the syllabus are always
+# exported. Day 2 maps to modules/02_categorical-data, modules/03_continuous-data,
+# practice/02_categorical-data, practice/03_continuous-data, and
+# slides/day-02-categorical-and-continuous.html.
 # Valid values: preclass, day-01, day-02, day-03, day-04, day-05, all.
 # For now, keep only setup/preclass and Day 1 public.
 published_days:
@@ -23,6 +23,7 @@ published_days:
 source_exports:
   - modules/**/*.qmd
   - practice/templates/**/*.qmd
+  - install-packages.R
   - updater.R
   - README.md
 
@@ -49,8 +50,8 @@ must_exist_after_export:
   - modules/01-workflow-and-basics/02_first-visualization.qmd
   - practice/templates/01-workflow-and-basics/01_explore-and-visualize.qmd
   - slides/day-01-intro-and-workflow.html
-  - slides/day-02-categorical-and-continuous.html
   - assignments/problem-set-1.html
+  - install-packages.R
   - updater.R
   - data-visualization-course.Rproj
   - data-visualization-course.code-workspace
@@ -69,6 +70,10 @@ must_not_exist_after_export:
   - rendered/modules/01-workflow-and-basics/01_course-materials.html
   - assignments/problem-set-1.qmd
   - slides/day-01-intro-and-workflow.qmd
+  - slides/day-02-categorical-and-continuous.html
+  - slides/day-03-comparison-and-association.html
+  - slides/day-04-change-space-flow.html
+  - slides/day-05-communication-and-studio.html
   - modules/02_categorical-data/01_counts-and-ordering.qmd
   - modules/03_continuous-data/01_histograms-and-density.qmd
   - modules/rendered/02_categorical-data/01_counts-and-ordering.html
