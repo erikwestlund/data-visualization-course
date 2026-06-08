@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice choosing scales that make patterns visible without misleading readers.
+The module showed how to:
 
-# Suggested Data
+- compare full and focused axes
+- use percent scales carefully
+- decide when zero is needed
+- make scale choices visible to readers
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a first plot
+2. a revised version with a different scale choice
+3. a short interpretation of the tradeoff
+
+Suggested datasets:
 
 - `data/real/flu_vaccination_age_time_clean.csv`
 - `data/real/state_population_ranks.csv`
@@ -27,30 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/09_communication-polish/01_effective-and-honest-scales.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, build a first plot, then build a revised scale version.
 ```
 
-```{r}
-# Inspect variables and ranges.
-```
+# Interpretation
 
-# Build A First Plot
-
-```{r}
-# Build a first version of your plot here.
-```
-
-# Revise The Scale
-
-Try a different axis limit, break spacing, coordinate choice, or percent formatting.
-
-```{r}
-# Build a revised scale version here.
-```
-
-# Interpret
-
-> TODO: Which scale choice is more honest for the comparison? What tradeoff does it make?
+Write briefly: which scale choice is more honest for the comparison and what tradeoff it makes.

@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice using rank to compare places or groups.
+The module showed how to:
 
-# Suggested Data
+- sort observations by a numeric variable
+- limit a plot to a readable top or bottom group
+- show rank without hiding magnitude
+- highlight one category while preserving context
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a ranked table
+2. one ranked comparison plot
+3. a short interpretation that names what was included and excluded
+
+Suggested datasets:
 
 - `data/real/state_population_ranks.csv`
 - `data/real/places_county_core_measures_long.csv`
@@ -27,32 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/02_categorical-data/03_ranked-comparisons.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, create a ranked table, and build a ranked comparison plot.
 ```
 
-```{r}
-# Inspect the dataset here.
-```
+# Interpretation
 
-# Choose A Ranking Variable
-
-Pick the numeric variable you want to rank by. If the data already include a rank, decide whether to use it or calculate your own.
-
-```{r}
-# Create a ranked table here. Consider showing only the top or bottom 10.
-```
-
-# Plot
-
-Build a ranked plot. A horizontal dot plot or column plot often works well.
-
-```{r}
-# Build your ranked comparison plot here.
-```
-
-# Interpret
-
-> TODO: What is being ranked? What is the comparison group? Does rank hide any important magnitude differences?
+Write briefly: what is ranked, what comparison group is shown, and whether rank hides any important magnitude differences.

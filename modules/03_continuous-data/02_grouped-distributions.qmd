@@ -172,7 +172,7 @@ Summaries help check what the plot suggests.
 ```{r}
 age_group_summary <- adult_bp |>
   group_by(age_group) |>
-  summarise(
+  summarize(
     n = n(),
     mean_systolic = mean(systolic_mean),
     median_systolic = median(systolic_mean),

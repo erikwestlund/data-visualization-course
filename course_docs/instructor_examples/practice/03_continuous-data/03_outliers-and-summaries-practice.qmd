@@ -21,7 +21,7 @@ davis <- read_csv("data/real/davis_height_weight.csv", show_col_types = FALSE)
 
 davis |>
   filter(!is.na(weight_reporting_error_kg)) |>
-  summarise(
+  summarize(
     n = n(),
     mean_error = mean(weight_reporting_error_kg),
     median_error = median(weight_reporting_error_kg),

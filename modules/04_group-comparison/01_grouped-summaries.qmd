@@ -45,7 +45,7 @@ adult_bp <- nhanes |>
 
 bp_by_age <- adult_bp |>
   group_by(age_group) |>
-  summarise(
+  summarize(
     n = n(),
     mean_systolic = mean(systolic_mean),
     median_systolic = median(systolic_mean),

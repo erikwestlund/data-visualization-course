@@ -1163,9 +1163,9 @@ Erik Westlund
 </section>
 <section id="zero-is-not-always-required" class="slide level2 center">
 <h2>Zero Is Not Always Required</h2>
-<p>Zero is usually important for bars because bar length implies amount from zero.</p>
-<p>For line plots and point plots, a nonzero axis can be reasonable.</p>
-<p>But it should not exaggerate a small difference into a dramatic story.</p>
+<p>Bars should usually start at zero because bar length encodes amount.</p>
+<p>For line plots and point plots, a nonzero axis can be acceptable.</p>
+<p>If you use a nonzero axis, label it clearly and do not use it to exaggerate small differences.</p>
 </section>
 <section id="transition-to-module" class="slide level2 center">
 <h2>Transition To Module</h2>
@@ -1216,7 +1216,9 @@ Erik Westlund
 <li>position</li>
 <li>shape or line type when needed</li>
 <li>readable contrast</li>
-<li>meaningful ordering</li>
+<li>colorblind-safe palettes</li>
+<li>direct labels when a legend is hard to track</li>
+<li>ordering that supports the comparison</li>
 </ul>
 </section>
 <section id="highlighting" class="slide level2 center">
@@ -1259,7 +1261,7 @@ Erik Westlund
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href></a>final_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(...) <span class="sc">+</span></span>
 <span id="cb1-2"><a href></a>  ...</span>
 <span id="cb1-3"><a href></a></span>
-<span id="cb1-4"><a href></a><span class="fu">ggsave</span>(<span class="st">&quot;figure.png&quot;</span>, final_plot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href></a><span class="fu">ggsave</span>(<span class="st">&quot;practice/work/figure.png&quot;</span>, final_plot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Build the object.</p>
 <p>Then save it intentionally.</p>
 </section>
@@ -1325,7 +1327,7 @@ Erik Westlund
 <li>focused final visualizations</li>
 </ol>
 <p>The final figures should grow out of the exploration.</p>
-<p>They should not be disconnected decorations.</p>
+<p>They should answer questions that emerged from your exploration, not be added only because they look polished.</p>
 </section>
 <section id="studio-goals" class="slide level2 center">
 <h2>Studio Goals</h2>
@@ -1358,10 +1360,10 @@ Erik Westlund
 <h2>Today’s Practice Options</h2>
 <p>Use one or more practice notebooks from:</p>
 <ul>
-<li><code>practice/templates/09_communication-polish/</code></li>
+<li><code>practice/09_communication-polish/</code></li>
 </ul>
 <p>Or work directly on your final project.</p>
-<p>Work in:</p>
+<p>For today’s studio work, use:</p>
 <p><code>practice/work/</code></p>
 </section>
 <section id="minimum-practice-goal" class="slide level2 center">

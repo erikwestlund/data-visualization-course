@@ -22,7 +22,7 @@ nhanes <- read_csv("data/real/nhanes_2021_2023_analysis.csv", show_col_types = F
 bp_by_age <- nhanes |>
   filter(age_years >= 18, !is.na(age_group), !is.na(systolic_mean)) |>
   group_by(age_group) |>
-  summarise(
+  summarize(
     n = n(),
     mean_systolic = mean(systolic_mean),
     sd_systolic = sd(systolic_mean),

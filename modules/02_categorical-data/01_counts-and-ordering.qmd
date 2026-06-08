@@ -17,11 +17,13 @@ library(readr)
 
 This notebook shows how to visualize categorical counts and order categories so the plot answers a clearer question.
 
+It also introduces the data verbs we will use throughout the course: `select()`, `count()`, `group_by()`, `summarize()`, `arrange()`, and `mutate()`.
+
 # Analytic Questions
 
 We will use a cleaned Census race/ethnicity dataset to ask:
 
-- How many state rows appear for each race/ethnicity category?
+- How many state-category observations appear for each race/ethnicity category?
 - Which race/ethnicity categories account for the largest total population in this file?
 - How does ordering change what the reader can see?
 
@@ -36,13 +38,34 @@ census |>
   glimpse()
 ```
 
-Each row is one race/ethnicity category within one state.
+Each observation is one race/ethnicity category within one state.
 
 Here, "included" means the race/ethnicity categories present in this teaching file. Check the codebook before treating them as every possible category.
 
-# Count Rows
+# Explore The Structure
 
-First, count how many rows appear for each race/ethnicity category.
+Before plotting, use a small table to check the structure of the file.
+
+```{r}
+census |>
+  summarize(
+    observations = n(),
+    states = n_distinct(state),
+    categories = n_distinct(race_ethnicity)
+  )
+```
+
+Use `select()` when you want to inspect only the variables relevant to the next question.
+
+```{r}
+census |>
+  select(state_name, race_ethnicity, race_ethnicity_population, share) |>
+  head()
+```
+
+# Count Observations
+
+First, count how many observations appear for each race/ethnicity category.
 
 ```{r}
 category_counts <- census |>
@@ -73,16 +96,18 @@ p2
 
 This plot is not very informative because every category appears once per state.
 
-It is still useful as a reminder: before plotting counts, ask what the rows mean.
+It is still useful as a reminder: before plotting counts, ask what the observations mean.
 
 # Summarize Population By Category
 
 A categorical summary that better matches the question is total included population by race/ethnicity category.
 
+This is aggregation: `group_by()` defines the groups, and `summarize()` reduces many state-category observations into one value per category.
+
 ```{r}
 category_population <- census |>
   group_by(race_ethnicity) |>
-  summarise(
+  summarize(
     total_population = sum(race_ethnicity_population),
     .groups = "drop"
   ) |>
@@ -91,7 +116,7 @@ category_population <- census |>
 category_population
 ```
 
-Now each row is one race/ethnicity category.
+Now each summarized observation is one race/ethnicity category.
 
 ```{r}
 p1 <- ggplot(
@@ -113,7 +138,7 @@ p2
 
 The labels are hard to read, and alphabetical order does not help answer the ranking question.
 
-Reorder by total population.
+Reorder by total population. This uses `mutate()` to change the category order before plotting.
 
 ```{r}
 category_population_ordered <- category_population |>
@@ -143,7 +168,7 @@ Add labels and a theme.
 p5 <- p4 +
   labs(
     title = "Included Population By Race/Ethnicity Category",
-    subtitle = "Census 2020 state race/ethnicity counts in the course data",
+    subtitle = "Census 2020 state race/ethnicity population counts in the course data",
     x = NULL,
     y = "Population count"
   ) +
@@ -188,8 +213,9 @@ p3
 
 # Takeaways
 
-- Categorical plots depend on what one row represents.
-- `geom_bar()` counts rows inside `ggplot2`.
+- Categorical plots depend on what one observation represents.
+- `count()` and `geom_bar()` count observations.
+- `group_by()` + `summarize()` aggregate values by group.
 - `geom_col()` uses heights already calculated in the data.
 - Ordering categories often makes the plot easier to interpret.
-- A count of rows is not the same thing as a count of people, events, or cases.
+- A count of observations is not the same thing as a count of people, events, or cases.

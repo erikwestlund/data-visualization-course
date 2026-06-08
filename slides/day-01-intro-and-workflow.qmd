@@ -95,7 +95,6 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 
 ::: {.incremental}
 - **Counts**: how many are in each category?
-- **Composition**: what is the whole made of?
 - **Rank**: what is higher or lower?
 - **Center**: what is typical?
 - **Spread**: how much variation is there?
@@ -106,6 +105,7 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 ## Core Visualization Questions
 
 ::: {.incremental}
+- **Composition**: what is the whole made of?
 - **Grouping**: how do patterns differ across categories?
 - **Association**: how do variables move together?
 - **Change**: how do patterns move over time or order?
@@ -113,11 +113,31 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 - **Flow**: how do entities, such as people or decisions, move through stages?
 :::
 
-## Take Note
+## Data Visualization & Science
 
-- These are not just chart types.
-- They are recurring scientific questions.
-- Throughout the course, we will choose plots by naming the question first.
+Lets pause and go back to the above list.
+
+What type of real-world scientific questions/topics might these visualizations help us understand or answer?
+
+::: {.incremental}
+- **Counts**: how many are in each category?
+- **Rank**: what is higher or lower?
+- **Center**: what is typical?
+- **Spread**: how much variation is there?
+- **Shape**: what does the distribution look like?
+- **Outliers and anomalies**: what is unusual?
+:::
+
+## Data Visualization & Science (cont.)
+
+::: {.incremental}
+- **Composition**: what is the whole made of?
+- **Grouping**: how do patterns differ across categories?
+- **Association**: how do variables move together?
+- **Change**: how do patterns move over time or order?
+- **Space**: where do patterns occur?
+- **Flow**: how do entities, such as people or decisions, move through stages?
+:::
 
 ## Today
 
@@ -131,15 +151,17 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 ## Preview: Day 2
 
 ::: {.incremental}
-- **categorical data**: counts, composition, and rank
-- **continuous data**: center, spread, shape, and outliers
-- choosing plots from the question, not from a chart menu
+- data manipulation required for data visualizatoin
+- basic plots: counts, summaries, ordering, and rank
+- one-variable exploratory data analysis
+- center, spread, distribution shape, and unusual values
 :::
 
 ## Preview: Day 3
 
 ::: {.incremental}
 - **group comparison**: distributions and summaries across groups
+- **composition**: denominators, proportions, and part-to-whole comparisons
 - **association**: how variables move together
 - interaction as association plus grouping
 :::
@@ -262,7 +284,7 @@ Scientific notebooks let us keep together:
 
 :::
 
-That matters because visualization is a process, not just a final image.
+Visualization is a process, not just a final image.
 
 ## Quarto
 
@@ -338,7 +360,7 @@ library(dplyr)
 library(ggplot2)
 
 mtcars |>
-  summarise(avg_mpg = mean(mpg))
+  summarize(avg_mpg = mean(mpg))
 ```
 
 Chunks are where the notebook does work: loading data, transforming data, making tables, and drawing plots.
@@ -418,7 +440,7 @@ Do not wait until the end to find out the notebook cannot render.
 - Like grammar in language, it gives us parts and relationships.
 - It lets us describe a figure without starting from chart names.
 
-## Why This Matters (Theoretically)
+## Grammar Versus Chart Names
 
 - When you only think in chart types, you ask: "Should I make a bar chart or a scatterplot?"
 - When you think in grammar, you ask: "What data do I have, what comparison do I need, and how should variables become visual features?"
@@ -444,11 +466,25 @@ This is the conceptual workflow, whereas `ggplot2` in R is an implementation of 
 
 ## Start With Data
 
-Before plotting, think about your level of measurement.
+Before plotting, think about the level of observation.
 
-- what does one row represent?
-- are rows people, places, events, months, or summaries?
+- what does one observation represent?
+- are observations people, places, events, months, or summaries?
 - are values raw measurements, counts, percentages, or model estimates?
+
+## Data Manipulation Is Fundamental
+
+Most visualization work starts by shaping the data:
+
+- selecting variables
+- filtering to the right observations
+- counting categories
+- summarizing values by group
+- creating variables that match the question
+
+Today we will do this lightly. On Day 2 we will dedicate a lot of time to this, as it is truly a prerequisite for good data visualization and good data analysis in general.
+
+Day 2 starts with easy wins: counts, summaries, and ordering. Then we use the same data habits to study one variable at a time.
 
 ## Aesthetic Mappings
 
@@ -535,6 +571,8 @@ Mappings are claims about what the reader should compare.
     - `fill`: Stack bars, but make them always fill up vertical space to 1
     - `dodge`: Put the bars next to each other
 
+We will return to these choices later. Day 2 will first emphasize position on a common scale, because that is usually the easiest visual comparison for readers.
+
 ## Consider Faceting
 
 When you reach for fill, always consider faceting in small multiples.
@@ -556,7 +594,7 @@ Many visualizations summarize rows into groups.
 ```r
 cars |>
   group_by(make) |>
-  summarise(avg_mpg = mean(mpg))
+  summarize(avg_mpg = mean(mpg))
 ```
 This example shows the logic of grouping and transforming to get a single value we might plot with a bar chart.
 

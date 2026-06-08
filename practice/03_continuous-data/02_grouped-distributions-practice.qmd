@@ -13,13 +13,25 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice comparing the distribution of one numeric variable across groups.
+The module showed how to:
 
-# Suggested Data
+- check group sizes before comparing distributions
+- compare center, spread, shape, and unusual values across groups
+- use box plots, violin plots, or faceted distribution plots
+- pair plots with grouped summary tables
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a group-size table
+2. a grouped summary table
+3. one grouped distribution plot
+4. a short interpretation comparing summaries and the plot
+
+Suggested datasets:
 
 - `data/real/nhanes_2021_2023_analysis.csv`
 - `data/real/exercise_eating_disorders.csv`
@@ -27,32 +39,12 @@ Choose one:
 
 Helpful module reference: `modules/03_continuous-data/02_grouped-distributions.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, create group-size and summary tables, and build one grouped distribution plot.
 ```
 
-```{r}
-# Inspect numeric and grouping variables.
-```
+# Interpretation
 
-# Prepare Groups
-
-Choose one numeric variable and one grouping variable. Keep the number of groups manageable.
-
-```{r}
-# Filter and prepare your grouped data here.
-```
-
-# Plot
-
-Try a boxplot, violin plot, faceted histogram, or density plot.
-
-```{r}
-# Build your grouped distribution plot here.
-```
-
-# Interpret
-
-> TODO: Which groups differ in center, spread, shape, or unusual values? What limitations should readers keep in mind?
+Write briefly: which groups differ in center, spread, shape, or unusual values, and how the summary table compares with the plot.

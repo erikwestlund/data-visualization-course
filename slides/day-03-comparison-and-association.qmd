@@ -1,6 +1,6 @@
 ---
 title: "Data Visualization: Day 3"
-subtitle: "Group Comparison And Association"
+subtitle: "Group Comparison, Composition, And Association"
 author: "Erik Westlund"
 format: revealjs
 ---
@@ -10,10 +10,10 @@ format: revealjs
 ## Today's Goals
 
 1. Compare groups using summaries and distributions.
-2. Plot differences directly when the question is about a gap.
-3. Visualize association between two variables.
-4. Add grouping carefully without overloading the plot.
-5. Read simple model-output plots as model-based summaries, not raw data.
+2. Define denominators for composition and proportion questions.
+3. Plot differences directly when the question is about a gap.
+4. Visualize association between two variables.
+5. Add grouping carefully without overloading the plot.
 
 ## Where We Are
 
@@ -21,20 +21,74 @@ Day 1: workflow and first plots.
 
 Day 2: one-variable EDA:
 
-- categorical counts, composition, rank
-- continuous center, spread, shape, outliers
+- categorical counts, summaries, and rank
+- continuous center, spread, shape, and outliers
 
-Day 3 moves to comparison and association.
+Day 3 moves to groups, proportions, and relationships.
 
 ## Today's Core Questions
 
 - How do groups differ?
+- What is the denominator?
 - How large is the difference?
 - How do two variables move together?
 - Does that association differ across groups?
 - What can a model plot show that a raw plot cannot?
 
 # Group Comparison
+
+## From One Distribution To Many
+
+Yesterday we asked:
+
+What does one variable look like?
+
+Today we ask:
+
+How does that variable look across groups?
+
+The same vocabulary still matters:
+
+- center
+- spread
+- shape
+- unusual values
+- sample size
+
+## Grouped Distributions
+
+Grouped distribution plots compare more than averages.
+
+They can show whether groups differ in:
+
+- typical values
+- variability
+- tails
+- overlap
+- unusual values
+
+## Boxplots And Violins
+
+Boxplots compactly show median, middle 50%, and potential outliers.
+
+Violin plots show more shape, but they rely on smoothing.
+
+Use the fuller display when shape matters.
+
+Use the compact display when many groups need comparison.
+
+## Transition To Module
+
+Open:
+
+`modules/03_continuous-data/02_grouped-distributions.qmd`
+
+Watch for:
+
+- distribution before summary
+- center, spread, and overlap
+- boxplots versus fuller distribution views
+- group sample size
 
 ## Comparing Groups
 
@@ -114,6 +168,65 @@ Watch for:
 - group means
 - intervals
 - dot plots versus bars
+
+# Composition
+
+## Composition Questions
+
+Composition asks:
+
+What is the whole made of?
+
+Examples:
+
+- racial/ethnic composition of a state
+- categories within a sample
+- share of observations in an outcome group
+- parts of a budget, population, or total
+
+## Define The Whole
+
+Composition plots require a clear denominator.
+
+Ask:
+
+- What adds up to 100 percent?
+- Is the whole a state, county, year, subgroup, or sample?
+- Are any categories excluded?
+- Are we showing counts or shares?
+
+## Counts Can Mislead Composition
+
+Raw counts mix two ideas:
+
+- the size of the whole
+- the composition of the whole
+
+If the question is composition, proportions are often clearer.
+
+## Stacked Bars Have Tradeoffs
+
+Stacked bars can show composition.
+
+But they make some comparisons hard:
+
+- middle segments lack a shared baseline
+- small differences can be hard to see
+- too many categories create clutter
+
+If the main question is one category's share across groups, plot that category directly.
+
+## Transition To Module
+
+Open:
+
+`modules/02_categorical-data/02_composition-and-proportions.qmd`
+
+Watch for:
+
+- raw counts versus shares
+- defining the whole
+- filtering to clarify one comparison
 
 # Difference Plots
 
@@ -303,6 +416,8 @@ Watch for:
 
 Use one or more practice notebooks from:
 
+- `practice/03_continuous-data/02_grouped-distributions-practice.qmd`
+- `practice/02_categorical-data/02_composition-and-proportions-practice.qmd`
 - `practice/04_group-comparison/`
 - `practice/05_association/`
 
@@ -314,8 +429,8 @@ Work in:
 
 By the end of practice time, aim to have:
 
-1. one grouped summary or difference plot
-2. one association plot
+1. one grouped distribution, composition, summary, or difference plot
+2. one association plot if time allows
 3. short interpretations using cautious language
 
 ## If You Finish Early
@@ -324,6 +439,7 @@ Revise one plot:
 
 - add intervals
 - reorder groups
+- define the denominator more clearly
 - plot the difference directly
 - add or remove a smooth
 - facet instead of color
@@ -335,7 +451,9 @@ Revise one plot:
 
 After today, you should be able to:
 
+- compare grouped distributions before reducing groups to one value
 - compare groups without defaulting to bars
+- define a denominator for composition and proportion plots
 - decide when to plot a difference directly
 - describe association without causal overclaiming
 - use grouping carefully in association plots

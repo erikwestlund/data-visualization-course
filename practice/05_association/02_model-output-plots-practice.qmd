@@ -13,13 +13,25 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice turning simple model output into a plot readers can understand.
+The module showed how to:
 
-# Suggested Data
+- fit a simple linear model
+- create values for prediction
+- plot model-based summaries
+- keep model output connected to the observed data
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a simple model
+2. a small table of predictions or model summaries
+3. one plot of the model output
+4. a short interpretation that names what the model does and does not show
+
+Suggested datasets:
 
 - `data/real/nhanes_2021_2023_analysis.csv`
 - `data/real/davis_height_weight.csv`
@@ -27,38 +39,12 @@ Choose one:
 
 Helpful module reference: `modules/05_association/02_model-output-plots.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, fit a simple model, create model output, and plot it.
 ```
 
-```{r}
-# Inspect variables that could go into a simple linear model.
-```
+# Interpretation
 
-# Fit A Simple Model
-
-Choose one outcome and one or two predictors. Keep the model simple.
-
-```{r}
-# Fit your model here with lm().
-```
-
-# Create Values To Plot
-
-Make a small prediction dataset or coefficient summary.
-
-```{r}
-# Create model output or predictions to plot here.
-```
-
-# Plot
-
-```{r}
-# Plot the model output here.
-```
-
-# Interpret
-
-> TODO: What does the plotted model output show? What does it not show?
+Write briefly: what the plotted model output shows, what assumptions it inherits, and what raw data context is missing.

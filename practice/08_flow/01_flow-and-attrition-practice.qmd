@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice showing how observations move through filters or stages.
+The module showed how to:
 
-# Suggested Data
+- define cumulative stages
+- count observations retained at each step
+- calculate stage-to-stage loss or percent retained
+- plot attrition through a workflow
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a stage-count table
+2. one attrition or retention plot
+3. a short interpretation of where observations are lost
+
+Suggested datasets:
 
 - `data/real/nhanes_2021_2023_analysis.csv`
 - `data/real/titanic_passengers.csv`
@@ -27,32 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/08_flow/01_flow-and-attrition.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, create a stage-count table, and build one attrition plot.
 ```
 
-```{r}
-# Inspect variables that could define inclusion stages.
-```
+# Interpretation
 
-# Define Stages
-
-Create a small table with one row per stage and a count for each stage.
-
-```{r}
-# Create your stage-count table here.
-```
-
-# Plot
-
-Use a bar chart, dot plot, or connected step plot to show retention or loss.
-
-```{r}
-# Build your flow or attrition plot here.
-```
-
-# Interpret
-
-> TODO: Where are most observations lost? What does the final analytic sample represent?
+Write briefly: which restriction removes the most observations and what the final analytic sample represents.

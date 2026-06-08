@@ -46,7 +46,7 @@ This summary should run during rendering.
 
 ```{r}
 mtcars |>
-  summarise(
+  summarize(
     rows = n(),
     average_mpg = mean(mpg),
     minimum_mpg = min(mpg),

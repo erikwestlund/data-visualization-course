@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice visualizing repeated measurements, before-after comparisons, or trajectories.
+The module showed how to:
 
-# Suggested Data
+- mark a reference time point
+- summarize repeated observations over time
+- compare group-level trajectories
+- distinguish individual paths from group summaries
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a prepared before-after or trajectory table
+2. one plot with a clear reference point or shared time scale
+3. a short interpretation of what changes and for whom
+
+Suggested datasets:
 
 - `data/real/migraine_headache_diary.csv`
 - `data/real/post_coma_recovery.csv`
@@ -27,30 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/06_change/02_before-after-and-trajectories.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, prepare before-after or trajectory data, and build one change plot.
 ```
 
-```{r}
-# Identify the time/stage variable and the outcome.
-```
+# Interpretation
 
-# Summarize Or Select Trajectories
-
-Decide whether to show individual trajectories, group summaries over time, or before-after differences.
-
-```{r}
-# Prepare trajectory or before-after data here.
-```
-
-# Plot
-
-```{r}
-# Build your trajectory or before-after plot here.
-```
-
-# Interpret
-
-> TODO: What changes? Are you showing individual change, group change, or both?
+Write briefly: what changes, the reference point, and whether the plot shows individual change, group change, or both.

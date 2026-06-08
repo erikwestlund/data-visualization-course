@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../Code/Courses/clinical-data-viz"
+		},
+		{
+			"path": "../../Code/Courses/data-viz-summer-25"
 		}
 	],
 	"settings": {}

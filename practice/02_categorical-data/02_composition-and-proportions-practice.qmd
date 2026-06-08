@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice showing how parts relate to a whole.
+The module showed how to:
 
-# Suggested Data
+- define the whole before plotting parts
+- use counts and proportions for different questions
+- calculate or use a share variable
+- simplify a stacked comparison by filtering to one category
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a table that defines the whole and its parts
+2. one composition or proportion plot
+3. a short interpretation naming the denominator
+
+Suggested datasets:
 
 - `data/real/census_state_race_ethnicity_long.csv`
 - `data/real/state_race_population_summary.csv`
@@ -27,40 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/02_categorical-data/02_composition-and-proportions.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, define the whole, calculate or use proportions, and build the plot.
 ```
 
-```{r}
-# Inspect the rows and variables.
-```
+# Interpretation
 
-# Choose A Whole
-
-Decide what the whole is. Examples: one state, one year, one county, or one subgroup.
-
-```{r}
-# Filter or summarize the data so the parts add up within a clear whole.
-```
-
-# Calculate Proportions
-
-Create a proportion or percentage variable if the dataset does not already have one.
-
-```{r}
-# Calculate the part-to-whole measure here.
-```
-
-# Plot
-
-Build a composition plot. Consider columns, stacked columns, or a dot plot of proportions.
-
-```{r}
-# Build the plot here.
-```
-
-# Interpret
-
-> TODO: What is the whole? What are the parts? What should readers be careful not to over-interpret?
+Write briefly: what the whole is, what the parts are, and what readers should not over-interpret.

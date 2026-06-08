@@ -38,6 +38,9 @@
 # Rendered slide artifacts
 /slides/_rendered/
 
+# Downloaded reading mirrors
+/readings/healy/**
+
 # Allow structure documentation
 !/slides/_rendered/**/README.md
 

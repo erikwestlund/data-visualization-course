@@ -988,7 +988,7 @@ margin-right: 0; }
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Data Visualization: Day 3</h1>
-  <p class="subtitle">Group Comparison And Association</p>
+  <p class="subtitle">Group Comparison, Composition, And Association</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -1008,10 +1008,10 @@ Erik Westlund
 <h2>Today’s Goals</h2>
 <ol type="1">
 <li>Compare groups using summaries and distributions.</li>
+<li>Define denominators for composition and proportion questions.</li>
 <li>Plot differences directly when the question is about a gap.</li>
 <li>Visualize association between two variables.</li>
 <li>Add grouping carefully without overloading the plot.</li>
-<li>Read simple model-output plots as visual summaries, not magic answers.</li>
 </ol>
 </section>
 <section id="where-we-are" class="slide level2 center">
@@ -1019,15 +1019,16 @@ Erik Westlund
 <p>Day 1: workflow and first plots.</p>
 <p>Day 2: one-variable EDA:</p>
 <ul>
-<li>categorical counts, composition, rank</li>
-<li>continuous center, spread, shape, outliers</li>
+<li>categorical counts, summaries, and rank</li>
+<li>continuous center, spread, shape, and outliers</li>
 </ul>
-<p>Day 3 moves to comparison and association.</p>
+<p>Day 3 moves to groups, proportions, and relationships.</p>
 </section>
 <section id="todays-core-questions" class="slide level2 center">
 <h2>Today’s Core Questions</h2>
 <ul>
 <li>How do groups differ?</li>
+<li>What is the denominator?</li>
 <li>How large is the difference?</li>
 <li>How do two variables move together?</li>
 <li>Does that association differ across groups?</li>
@@ -1038,6 +1039,52 @@ Erik Westlund
 <section id="group-comparison" class="title-slide slide level1 center">
 <h1>Group Comparison</h1>
 
+</section>
+<section id="from-one-distribution-to-many" class="slide level2 center">
+<h2>From One Distribution To Many</h2>
+<p>Yesterday we asked:</p>
+<p>What does one variable look like?</p>
+<p>Today we ask:</p>
+<p>How does that variable look across groups?</p>
+<p>The same vocabulary still matters:</p>
+<ul>
+<li>center</li>
+<li>spread</li>
+<li>shape</li>
+<li>unusual values</li>
+<li>sample size</li>
+</ul>
+</section>
+<section id="grouped-distributions" class="slide level2 center">
+<h2>Grouped Distributions</h2>
+<p>Grouped distribution plots compare more than averages.</p>
+<p>They can show whether groups differ in:</p>
+<ul>
+<li>typical values</li>
+<li>variability</li>
+<li>tails</li>
+<li>overlap</li>
+<li>unusual values</li>
+</ul>
+</section>
+<section id="boxplots-and-violins" class="slide level2 center">
+<h2>Boxplots And Violins</h2>
+<p>Boxplots compactly show median, middle 50%, and potential outliers.</p>
+<p>Violin plots show more shape, but they rely on smoothing.</p>
+<p>Use the fuller display when shape matters.</p>
+<p>Use the compact display when many groups need comparison.</p>
+</section>
+<section id="transition-to-module" class="slide level2 center">
+<h2>Transition To Module</h2>
+<p>Open:</p>
+<p><code>modules/03_continuous-data/02_grouped-distributions.qmd</code></p>
+<p>Watch for:</p>
+<ul>
+<li>distribution before summary</li>
+<li>center, spread, and overlap</li>
+<li>boxplots versus fuller distribution views</li>
+<li>group sample size</li>
+</ul>
 </section>
 <section id="comparing-groups" class="slide level2 center">
 <h2>Comparing Groups</h2>
@@ -1056,7 +1103,8 @@ Erik Westlund
 </section>
 <section id="summaries-are-choices" class="slide level2 center">
 <h2>Summaries Are Choices</h2>
-<p>A group mean is useful when the question is about a typical value.</p>
+<p>A group mean is useful when the question is about the average or expected value.</p>
+<p>If the question is about a typical case, the median or full distribution may be better.</p>
 <p>But it can hide:</p>
 <ul>
 <li>skew</li>
@@ -1096,11 +1144,11 @@ Erik Westlund
 <li>How many observations are in each group?</li>
 <li>Are group sizes similar?</li>
 <li>Are intervals available or appropriate?</li>
-<li>Are differences visually large enough to matter?</li>
+<li>Are differences large enough to matter relative to uncertainty and sample size?</li>
 </ul>
 <p>The plot should not make small, unstable differences look definitive.</p>
 </section>
-<section id="transition-to-module" class="slide level2 center">
+<section id="transition-to-module-1" class="slide level2 center">
 <h2>Transition To Module</h2>
 <p>Open:</p>
 <p><code>modules/04_group-comparison/01_grouped-summaries.qmd</code></p>
@@ -1110,6 +1158,65 @@ Erik Westlund
 <li>group means</li>
 <li>intervals</li>
 <li>dot plots versus bars</li>
+</ul>
+</section></section>
+<section>
+<section id="composition" class="title-slide slide level1 center">
+<h1>Composition</h1>
+
+</section>
+<section id="composition-questions" class="slide level2 center">
+<h2>Composition Questions</h2>
+<p>Composition asks:</p>
+<p>What is the whole made of?</p>
+<p>Examples:</p>
+<ul>
+<li>racial/ethnic composition of a state</li>
+<li>categories within a sample</li>
+<li>share of observations in an outcome group</li>
+<li>parts of a budget, population, or total</li>
+</ul>
+</section>
+<section id="define-the-whole" class="slide level2 center">
+<h2>Define The Whole</h2>
+<p>Composition plots require a clear denominator.</p>
+<p>Ask:</p>
+<ul>
+<li>What adds up to 100 percent?</li>
+<li>Is the whole a state, county, year, subgroup, or sample?</li>
+<li>Are any categories excluded?</li>
+<li>Are we showing counts or shares?</li>
+</ul>
+</section>
+<section id="counts-can-mislead-composition" class="slide level2 center">
+<h2>Counts Can Mislead Composition</h2>
+<p>Raw counts mix two ideas:</p>
+<ul>
+<li>the size of the whole</li>
+<li>the composition of the whole</li>
+</ul>
+<p>If the question is composition, proportions are often clearer.</p>
+</section>
+<section id="stacked-bars-have-tradeoffs" class="slide level2 center">
+<h2>Stacked Bars Have Tradeoffs</h2>
+<p>Stacked bars can show composition.</p>
+<p>But they make some comparisons hard:</p>
+<ul>
+<li>middle segments lack a shared baseline</li>
+<li>small differences can be hard to see</li>
+<li>too many categories create clutter</li>
+</ul>
+<p>If the main question is one category’s share across groups, plot that category directly.</p>
+</section>
+<section id="transition-to-module-2" class="slide level2 center">
+<h2>Transition To Module</h2>
+<p>Open:</p>
+<p><code>modules/02_categorical-data/02_composition-and-proportions.qmd</code></p>
+<p>Watch for:</p>
+<ul>
+<li>raw counts versus shares</li>
+<li>defining the whole</li>
+<li>filtering to clarify one comparison</li>
 </ul>
 </section></section>
 <section>
@@ -1144,10 +1251,10 @@ Erik Westlund
 <li>Are units the same?</li>
 <li>Is subtraction meaningful?</li>
 <li>Does positive have a clear interpretation?</li>
-<li>Should the axis include zero?</li>
+<li>Include a clear zero reference line unless there is a specific reason not to.</li>
 </ul>
 </section>
-<section id="transition-to-module-1" class="slide level2 center">
+<section id="transition-to-module-3" class="slide level2 center">
 <h2>Transition To Module</h2>
 <p>Open:</p>
 <p><code>modules/04_group-comparison/02_difference-plots.qmd</code></p>
@@ -1231,7 +1338,7 @@ Erik Westlund
 <li>Are group sample sizes adequate?</li>
 </ul>
 </section>
-<section id="transition-to-module-2" class="slide level2 center">
+<section id="transition-to-module-4" class="slide level2 center">
 <h2>Transition To Module</h2>
 <p>Open:</p>
 <p><code>modules/05_association/01_scatterplots-smoothing-and-groups.qmd</code></p>
@@ -1256,7 +1363,8 @@ Erik Westlund
 <section id="raw-data-and-model-output" class="slide level2 center">
 <h2>Raw Data And Model Output</h2>
 <p>Raw plots show observed data.</p>
-<p>Model-output plots show fitted summaries.</p>
+<p>Model-output plots show summaries produced by a model.</p>
+<p>A prediction plot shows the model’s expected outcome for chosen input values.</p>
 <p>Both are useful.</p>
 <p>They answer different questions.</p>
 </section>
@@ -1281,7 +1389,7 @@ Erik Westlund
 <li>Are raw data also shown somewhere?</li>
 </ul>
 </section>
-<section id="transition-to-module-3" class="slide level2 center">
+<section id="transition-to-module-5" class="slide level2 center">
 <h2>Transition To Module</h2>
 <p>Open:</p>
 <p><code>modules/05_association/02_model-output-plots.qmd</code></p>
@@ -1301,8 +1409,10 @@ Erik Westlund
 <h2>Today’s Practice Options</h2>
 <p>Use one or more practice notebooks from:</p>
 <ul>
-<li><code>practice/templates/04_group-comparison/</code></li>
-<li><code>practice/templates/05_association/</code></li>
+<li><code>practice/03_continuous-data/02_grouped-distributions-practice.qmd</code></li>
+<li><code>practice/02_categorical-data/02_composition-and-proportions-practice.qmd</code></li>
+<li><code>practice/04_group-comparison/</code></li>
+<li><code>practice/05_association/</code></li>
 </ul>
 <p>Work in:</p>
 <p><code>practice/work/</code></p>
@@ -1311,8 +1421,8 @@ Erik Westlund
 <h2>Minimum Practice Goal</h2>
 <p>By the end of practice time, aim to have:</p>
 <ol type="1">
-<li>one grouped summary or difference plot</li>
-<li>one association plot</li>
+<li>one grouped distribution, composition, summary, or difference plot</li>
+<li>one association plot if time allows</li>
 <li>short interpretations using cautious language</li>
 </ol>
 </section>
@@ -1322,6 +1432,7 @@ Erik Westlund
 <ul>
 <li>add intervals</li>
 <li>reorder groups</li>
+<li>define the denominator more clearly</li>
 <li>plot the difference directly</li>
 <li>add or remove a smooth</li>
 <li>facet instead of color</li>
@@ -1337,7 +1448,9 @@ Erik Westlund
 <h2>What You Should Be Able To Do</h2>
 <p>After today, you should be able to:</p>
 <ul>
+<li>compare grouped distributions before reducing groups to one value</li>
 <li>compare groups without defaulting to bars</li>
+<li>define a denominator for composition and proportion plots</li>
 <li>decide when to plot a difference directly</li>
 <li>describe association without causal overclaiming</li>
 <li>use grouping carefully in association plots</li>

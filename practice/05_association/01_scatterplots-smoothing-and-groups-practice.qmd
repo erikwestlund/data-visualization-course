@@ -13,13 +13,25 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice using scatterplots to examine association between two numeric variables.
+The module showed how to:
 
-# Suggested Data
+- plot association between two numeric variables
+- use transparency for overplotting
+- add a smoother as a visual summary
+- use grouping only when it serves the question
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a prepared table with two numeric variables
+2. one scatterplot
+3. one revision using transparency, smoothing, grouping, or faceting
+4. a short interpretation using non-causal language
+
+Suggested datasets:
 
 - `data/real/davis_height_weight.csv`
 - `data/real/nhanes_2021_2023_analysis.csv`
@@ -27,32 +39,12 @@ Choose one:
 
 Helpful module reference: `modules/05_association/01_scatterplots-smoothing-and-groups.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, prepare two numeric variables, and build one or two association plots.
 ```
 
-```{r}
-# Inspect numeric variables and possible grouping variables.
-```
+# Interpretation
 
-# Prepare Variables
-
-Pick two numeric variables. Optionally choose a grouping variable for color or facets.
-
-```{r}
-# Filter missing values and prepare variables here.
-```
-
-# Plot
-
-Make a scatterplot. Then try adding transparency, a smooth line, or color by group.
-
-```{r}
-# Build your scatterplot here.
-```
-
-# Interpret
-
-> TODO: Describe direction, form, strength, groups, and any unusual points. Avoid causal language unless your design supports it.
+Write briefly: direction, form, strength, groups, unusual points, and one causal claim to avoid.

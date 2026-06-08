@@ -88,7 +88,7 @@ Use the common 1.5 IQR rule as a screening tool.
 
 ```{r}
 energy_cutoffs <- diet |>
-  summarise(
+  summarize(
     q1 = quantile(mean_daily_energy_kcal, 0.25),
     q3 = quantile(mean_daily_energy_kcal, 0.75),
     iqr = IQR(mean_daily_energy_kcal),
@@ -159,7 +159,9 @@ diet_flagged |>
   head(10)
 ```
 
-# Compare With A Box Plot
+# Optional Preview: Compare With A Box Plot
+
+The main Day 2 goal is one-variable EDA. This box plot previews Day 3, when we compare distributions across groups.
 
 ```{r}
 p1 <- ggplot(

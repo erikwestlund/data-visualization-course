@@ -1,33 +1,35 @@
-# Day 2 Schedule: Categorical And Continuous Data
+# Day 2 Schedule: One Variable And Distributions
 
 Assumed class block: 3 hours.
 
 ## Main Goal
 
-Students can make and interpret one categorical plot and one continuous distribution plot.
+Students can inspect a dataset, use basic data verbs to prepare one-variable summaries, and make categorical or continuous plots that reveal counts, center, spread, shape, and unusual values. Close to half of the day should be spent on data preparation and aggregation habits.
 
 ## Schedule
 
 | Time | Segment | Materials | Notes |
 |---:|---|---|---|
 | 0:00-0:10 | Day 1 debrief and technical fixes | Verbal, `source("updater.R")` if needed | Resolve blockers before content. |
-| 0:10-0:30 | EDA framing: rows, variables, questions | `slides/day-02-categorical-and-continuous.qmd` | Keep conceptual. |
-| 0:30-0:55 | Counts and ordering | `modules/02_categorical-data/01_counts-and-ordering.qmd` | Focus on row meaning and ordering. |
-| 0:55-1:15 | Composition and proportions | `modules/02_categorical-data/02_composition-and-proportions.qmd` | Define the denominator. |
-| 1:15-1:25 | Rank | `modules/02_categorical-data/03_ranked-comparisons.qmd` | Short demo only. |
-| 1:25-1:35 | Break |  | Buffer for questions. |
-| 1:35-2:00 | Histograms and density | `modules/03_continuous-data/01_histograms-and-density.qmd` | Emphasize bin width and shape. |
-| 2:00-2:20 | Grouped distributions | `modules/03_continuous-data/02_grouped-distributions.qmd` | Boxplot versus fuller distribution. |
-| 2:20-2:35 | Outliers and summaries | `modules/03_continuous-data/03_outliers-and-summaries.qmd` | Brief, tied to codebook caution. |
-| 2:35-2:55 | Student practice | `practice/templates/02_categorical-data/`, `practice/templates/03_continuous-data/` | Pick one categorical and one continuous task. |
+| 0:10-0:35 | Data verbs before plots | `slides/day-02-categorical-and-continuous.qmd` | Observation, `select()`, `filter()`, `count()`, `group_by()` + `summarize()`, `mutate()`, `arrange()`. |
+| 0:35-1:05 | Counts, summaries, and ordering | `modules/02_categorical-data/01_counts-and-ordering.qmd` | Focus on observation meaning, aggregation, and ordering. |
+| 1:05-1:20 | Position on a common scale | `slides/day-02-categorical-and-continuous.qmd` | Explain why ordered bars, dot plots, histograms, and aligned axes work well. |
+| 1:20-1:30 | Rank as ordered position | Brief excerpt from `modules/02_categorical-data/03_ranked-comparisons.qmd` | Optional teaser only; rank supports the common-scale idea. |
+| 1:30-1:40 | Break |  | Buffer for questions. |
+| 1:40-2:15 | Summaries, histograms, and density | `modules/03_continuous-data/01_histograms-and-density.qmd` | Emphasize mean, median, spread, bin width, shape, and smoothing cautions. |
+| 2:15-2:35 | Outliers and summaries | `modules/03_continuous-data/03_outliers-and-summaries.qmd` | Use the univariate parts; inspect unusual records before judging them. |
+| 2:35-2:55 | Student practice | `practice/02_categorical-data/01_counts-and-ordering-practice.qmd`, `practice/03_continuous-data/01_histograms-and-density-practice.qmd`, `practice/03_continuous-data/03_outliers-and-summaries-practice.qmd` | Require one structure/summary table and one one-variable plot. |
 | 2:55-3:00 | Wrap | Verbal | Preview comparison and association. |
 
 ## If Time Runs Short
 
-Skip the full ranked-comparisons module and treat it as optional practice. Preserve histogram/bin-width work.
+Skip the ranked-comparisons excerpt and treat it as optional practice. Preserve the data-verbs opening, counts/summaries work, common-scale idea, and histogram/bin-width work.
 
 ## Instructor Priorities
 
-- Students explain what one row represents.
-- Students distinguish counts, summaries, and proportions.
+- Students explain what one observation represents.
+- Students use `count()` or `group_by()` + `summarize()` before plotting.
+- Students distinguish observation counts from summarized numeric values.
+- Students understand why position on a common scale supports accurate comparison.
 - Students describe center, spread, shape, and unusual values.
+- Students know that grouped distributions and composition are Day 3 comparison topics.

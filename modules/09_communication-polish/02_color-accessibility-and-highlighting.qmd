@@ -74,7 +74,7 @@ asian_share <- selected_states |>
     highlight = if_else(race_ethnicity == "Asian", "Asian", "Other categories")
   ) |>
   group_by(state_name, highlight) |>
-  summarise(
+  summarize(
     share_percent = sum(share_percent),
     .groups = "drop"
   )

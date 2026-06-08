@@ -19,11 +19,14 @@ This notebook shows how to visualize the distribution of one continuous variable
 
 We focus on center, spread, shape, and unusual values.
 
+A distribution is the collection of observed positions along a measurement scale. The summaries and plots in this notebook are different ways to understand those positions.
+
 # Analytic Questions
 
 We will use a simplified NHANES teaching file to ask:
 
 - What does the distribution of adult systolic blood pressure look like?
+- Which summaries describe center and spread?
 - How does the bin width change a histogram?
 - What does a density plot emphasize differently from a histogram?
 
@@ -44,6 +47,8 @@ NHANES is a complex survey. In this course, these are exploratory sample visuali
 
 # Prepare Adult Blood Pressure Data
 
+Use `filter()` to keep the observations that match the question: adults with a non-missing blood pressure value.
+
 ```{r}
 adult_bp <- nhanes |>
   filter(
@@ -55,6 +60,29 @@ adult_bp |>
   select(respondent_id, age_years, gender, age_group, systolic_mean) |>
   head()
 ```
+
+# Summarize Before Plotting
+
+Summary statistics are aggregations. They reduce many participant values to a few numbers.
+
+```{r}
+adult_bp_summary <- adult_bp |>
+  summarize(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    min_systolic = min(systolic_mean),
+    max_systolic = max(systolic_mean),
+    iqr_systolic = IQR(systolic_mean),
+    sd_systolic = sd(systolic_mean)
+  )
+
+adult_bp_summary
+```
+
+The mean and median describe center. The range, IQR, and standard deviation describe spread. The plot will show shape and unusual values that these summaries compress.
+
+This is the main EDA habit: summarize to get oriented, then plot to see what the summaries hide.
 
 # First Histogram
 
@@ -121,6 +149,8 @@ A density plot shows a smoothed distribution.
 
 The y-axis is density, not number of participants. The total area under the curve is scaled to 1.
 
+Because density plots are smoothed, they can suggest more certainty or structure than the raw data support. Use them as a way to inspect shape, not as proof that every bump is meaningful.
+
 ```{r}
 p1 <- ggplot(adult_bp, aes(x = systolic_mean))
 
@@ -146,25 +176,12 @@ p3 <- p2 +
 p3
 ```
 
-# Summary Statistics
-
-Use summaries to support what the plot suggests.
-
-```{r}
-adult_bp |>
-  summarise(
-    n = n(),
-    mean_systolic = mean(systolic_mean),
-    median_systolic = median(systolic_mean),
-    min_systolic = min(systolic_mean),
-    max_systolic = max(systolic_mean),
-    iqr_systolic = IQR(systolic_mean)
-  )
-```
-
 # Takeaways
 
+- `filter()` and `select()` prepare the data for the question.
+- `summarize()` aggregates many values into summary statistics.
 - Histograms are good for count-based distribution questions.
 - Bin width is a choice that affects what patterns are visible.
 - Density plots emphasize smoothed shape rather than counts.
+- Smoothed density can mislead with small samples, bounded variables, or overly detailed interpretations.
 - Always connect distribution shape to the unit of observation and the analytic question.

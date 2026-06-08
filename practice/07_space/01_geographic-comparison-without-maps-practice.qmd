@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice comparing places without making a map.
+The module showed how to:
 
-# Suggested Data
+- compare places without defaulting to a map
+- filter to one measure or region
+- use ranked or interval plots for place comparisons
+- include uncertainty when available
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a focused place-comparison table
+2. one non-map geographic comparison plot
+3. a short interpretation of which places stand out
+
+Suggested datasets:
 
 - `data/real/places_county_core_measures_long.csv`
 - `data/real/epa_air_quality_county_2025_long.csv`
@@ -27,32 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/07_space/01_geographic-comparison-without-maps.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, focus the place comparison, and build one non-map plot.
 ```
 
-```{r}
-# Identify place names, state/county variables, measures, and estimates.
-```
+# Interpretation
 
-# Focus The Comparison
-
-Choose one measure and a manageable set of places.
-
-```{r}
-# Filter to one measure and selected places here.
-```
-
-# Plot
-
-Use a ranked dot plot, interval plot, or small multiples.
-
-```{r}
-# Build your geographic comparison plot here.
-```
-
-# Interpret
-
-> TODO: Which places stand out? What context is missing without a map?
+Write briefly: which places stand out, what the plot makes easy to compare, and what context is missing without a map.

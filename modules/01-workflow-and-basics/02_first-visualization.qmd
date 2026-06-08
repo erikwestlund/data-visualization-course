@@ -56,22 +56,76 @@ prams |>
   glimpse()
 ```
 
-Each row is a pre-aggregated percentage for one location, subgroup category, and subgroup.
+Each observation in this file is a pre-aggregated percentage for one location, subgroup category, and subgroup.
 
 This is not person-level data.
 
-# Plot 1: Distribution
+# Explore The Data Structure
 
-Question: what is the distribution of reported binge drinking before pregnancy?
+Visualization starts before the first plot. First, use tables to understand what the plotted observations would represent.
 
-First, filter to rows where binge drinking is observed.
+**How many records are in the file, how many locations are represented, and how many subgroup categories are included?**
 
 ```{r}
-prams_binge <- prams |>
+prams |>
+  summarize(
+    records = n(),
+    locations = n_distinct(location),
+    subgroup_categories = n_distinct(subgroup_cat)
+  )
+```
+
+**Which subgroup categories appear in the file?**
+
+```{r}
+subgroup_counts <- prams |>
+  count(subgroup_cat, sort = TRUE)
+
+subgroup_counts
+```
+
+**How many estimates does each location contribute?**
+
+```{r}
+prams |>
+  count(location, sort = TRUE) |>
+  head(10)
+```
+
+Each location appears many times because the file includes overall estimates and subgroup estimates. A plot of all records would mix those levels together.
+
+The `None` subgroup category gives the overall estimate for each location. That is the right level for a first state/location comparison.
+
+```{r}
+prams_overall <- prams |>
+  filter(subgroup_cat == "None")
+
+prams_overall |>
+  select(
+    location,
+    location_abbr,
+    binge_drinking_within_3_months_birth,
+    alcohol_use_within_3_months_birth
+  ) |>
+  head()
+```
+
+For plots about overall location estimates, we will use `prams_overall`. For plots about the structure of the PRAMS file, we will use the full `prams` data.
+
+This kind of data preparation is part of visualization. A plot can only answer the right question if the data are suited to the questions of interest. On Day 2 we will spend more time on the basic data verbs used to inspect, filter, summarize, and arrange data before plotting one variable at a time.
+
+# Plot 1: Distribution
+
+Question: what is the distribution of reported binge drinking in the 3 months before birth?
+
+For this first plot, use the overall location estimates. That way each plotted observation represents one state/location, not a subgroup slice.
+
+```{r}
+prams_binge <- prams_overall |>
   filter(!is.na(binge_drinking_within_3_months_birth))
 
 prams_binge |>
-  select(location_abbr, subgroup_cat, subgroup, binge_drinking_within_3_months_birth) |>
+  select(location, location_abbr, binge_drinking_within_3_months_birth) |>
   head()
 ```
 
@@ -108,10 +162,10 @@ Add labels.
 ```{r}
 p4 <- p3 +
   labs(
-    title = "Distribution of Reported Binge Drinking Before Pregnancy",
-    subtitle = "Rows are PRAMS state/subgroup estimates",
+    title = "Reported Binge Drinking In The 3 Months Before Birth",
+    subtitle = "Overall PRAMS state/location estimates",
     x = "Percent reporting binge drinking",
-    y = "Number of state/subgroup rows"
+    y = "Number of states/locations"
   )
 
 p4
@@ -126,44 +180,32 @@ p5 <- p4 +
 p5
 ```
 
-Interpretation: most observed subgroup estimates are below 30 percent, but the distribution has a long right tail with some much higher estimates.
+Interpretation: most overall state/location estimates are below 30 percent, but the distribution has a right tail with some higher estimates.
 
-# Plot 2: Counts By Category
+# Plot 2: Compare Categories
 
-Question: which subgroup categories appear most often?
+Question: which states or locations have higher overall reported binge drinking estimates?
 
-`geom_bar()` counts rows inside `ggplot2`.
+First, make a small table for the comparison.
 
 ```{r}
-p1 <- ggplot(prams, aes(x = subgroup_cat))
+prams_binge_ordered <- prams_binge |>
+  arrange(desc(binge_drinking_within_3_months_birth)) |>
+  select(location, binge_drinking_within_3_months_birth)
 
-p1
+prams_binge_ordered |>
+  head(10)
 ```
 
-```{r}
-p2 <- p1 +
-  geom_bar()
-
-p2
-```
-
-That works, but the category names are hard to read.
-
-Often it is clearer to count first, then plot the summary.
+Start with the ordered data and mappings.
 
 ```{r}
-subgroup_counts <- prams |>
-  count(subgroup_cat, sort = TRUE)
+prams_binge_ordered <- prams_binge_ordered |>
+  mutate(location = reorder(location, binge_drinking_within_3_months_birth))
 
-subgroup_counts
-```
-
-Now one row is one subgroup category.
-
-```{r}
 p1 <- ggplot(
-  subgroup_counts,
-  aes(x = subgroup_cat, y = n)
+  prams_binge_ordered,
+  aes(x = location, y = binge_drinking_within_3_months_birth)
 )
 
 p1
@@ -178,54 +220,40 @@ p2 <- p1 +
 p2
 ```
 
-Reorder the categories before plotting.
+Flip the coordinates so the location names are readable.
 
 ```{r}
-subgroup_counts_ordered <- subgroup_counts |>
-  mutate(subgroup_cat = reorder(subgroup_cat, n))
-
-p3 <- ggplot(
-  subgroup_counts_ordered,
-  aes(x = subgroup_cat, y = n)
-) +
-  geom_col()
-
-p3
-```
-
-Flip the coordinates.
-
-```{r}
-p4 <- p3 +
+p3 <- p2 +
   coord_flip()
 
-p4
+p3
 ```
 
 Add labels and a theme.
 
 ```{r}
-p5 <- p4 +
+p4 <- p3 +
   labs(
-    title = "PRAMS Rows By Subgroup Category",
+    title = "Reported Binge Drinking By Location",
+    subtitle = "Overall PRAMS state/location estimates",
     x = NULL,
-    y = "Number of rows"
+    y = "Percent reporting binge drinking"
   ) +
   theme_minimal()
 
-p5
+p4
 ```
 
-Interpretation: subgroup categories with more subgroup levels contribute more rows to this selected PRAMS dataset.
+Interpretation: the plot compares overall location estimates, not individual people. Ordering the locations makes the higher and lower estimates easier to see.
 
 # Plot 3: Association
 
 Question: how are reported alcohol use and binge drinking related?
 
-Filter to rows where both measures are observed.
+Use the same overall location estimates, then filter to places where both measures are observed.
 
 ```{r}
-prams_alcohol <- prams |>
+prams_alcohol <- prams_overall |>
   filter(
     !is.na(alcohol_use_within_3_months_birth),
     !is.na(binge_drinking_within_3_months_birth)
@@ -233,9 +261,8 @@ prams_alcohol <- prams |>
 
 prams_alcohol |>
   select(
+    location,
     location_abbr,
-    subgroup_cat,
-    subgroup,
     alcohol_use_within_3_months_birth,
     binge_drinking_within_3_months_birth
   ) |>
@@ -274,99 +301,101 @@ p3 <- p1 +
 p3
 ```
 
-Map another variable to color.
+Add a trend line.
 
 ```{r}
-p4 <- ggplot(
-  prams_alcohol,
-  aes(
-    x = alcohol_use_within_3_months_birth,
-    y = binge_drinking_within_3_months_birth,
-    color = subgroup_cat
-  )
-) +
-  geom_point(alpha = 0.6)
-
-p4
-```
-
-This adds information, but it may be too much information for this plot. That is a design judgment.
-
-Return to the simpler plot and add a trend line.
-
-```{r}
-p5 <- p3 +
+p4 <- p3 +
   geom_smooth(method = "lm", se = FALSE)
 
-p5
+p4
 ```
 
 Add labels and a theme.
 
 ```{r}
-p6 <- p5 +
+p5 <- p4 +
   labs(
-    title = "Alcohol Use And Binge Drinking Before Pregnancy",
-    subtitle = "Each point is a PRAMS state/subgroup estimate",
+    title = "Alcohol Use And Binge Drinking In The 3 Months Before Birth",
+    subtitle = "Each point is one overall PRAMS state/location estimate",
     x = "Percent reporting any alcohol use",
     y = "Percent reporting binge drinking"
   ) +
   theme_minimal()
 
-p6
+p5
 ```
 
-Interpretation: rows with higher reported alcohol use tend to have higher reported binge drinking. This is an association across pre-aggregated state/subgroup estimates, not a person-level causal claim.
+Interpretation: state/location estimates with higher reported alcohol use tend to have higher reported binge drinking. This is an association across pre-aggregated location estimates, not a person-level causal claim.
 
-# Transform Before Plotting
+# Create A Flag Before Plotting
 
-Sometimes the variable we want to plot is not already in the data.
+Sometimes the variable we want to plot is not already in the data. Here, we can mark which locations are above the median binge-drinking estimate.
 
 ```{r}
-prams_difference <- prams_alcohol |>
+binge_median <- median(prams_binge$binge_drinking_within_3_months_birth)
+
+prams_binge_flagged <- prams_binge |>
   mutate(
-    alcohol_minus_binge = alcohol_use_within_3_months_birth -
-      binge_drinking_within_3_months_birth
+    binge_group = if_else(
+      binge_drinking_within_3_months_birth > binge_median,
+      "Above median",
+      "At or below median"
+    ),
+    location = reorder(location, binge_drinking_within_3_months_birth)
   )
 
-prams_difference |>
-  select(
-    location_abbr,
-    subgroup_cat,
-    alcohol_use_within_3_months_birth,
-    binge_drinking_within_3_months_birth,
-    alcohol_minus_binge
-  ) |>
-  head()
+prams_binge_flagged |>
+  select(location, binge_drinking_within_3_months_birth, binge_group) |>
+  head(10)
 ```
 
-Build a plot of the transformed variable.
+Build a plot that uses the new flag for highlighting.
 
 ```{r}
-p1 <- ggplot(prams_difference, aes(x = alcohol_minus_binge))
+p1 <- ggplot(
+  prams_binge_flagged,
+  aes(
+    x = location,
+    y = binge_drinking_within_3_months_birth,
+    fill = binge_group
+  )
+)
 
 p1
 ```
 
 ```{r}
 p2 <- p1 +
-  geom_histogram(binwidth = 5)
+  geom_col()
 
 p2
 ```
 
 ```{r}
 p3 <- p2 +
-  labs(
-    title = "Difference Between Any Alcohol Use And Binge Drinking",
-    subtitle = "Rows are PRAMS state/subgroup estimates",
-    x = "Alcohol use percentage minus binge drinking percentage",
-    y = "Number of rows"
-  ) +
-  theme_minimal()
+  coord_flip()
 
 p3
 ```
+
+```{r}
+p4 <- p3 +
+  scale_fill_manual(
+    values = c("Above median" = "steelblue", "At or below median" = "gray75")
+  ) +
+  labs(
+    title = "Reported Binge Drinking Above And Below The Median",
+    subtitle = "Overall PRAMS state/location estimates",
+    x = NULL,
+    y = "Percent reporting binge drinking",
+    fill = NULL
+  ) +
+  theme_minimal()
+
+p4
+```
+
+Interpretation: the new variable does not change the estimates. It changes what the figure emphasizes by separating locations above the median from the rest.
 
 # Day 1 Pattern
 
@@ -384,6 +413,8 @@ p3
 ```
 
 This makes it easier to see what each line of code contributes to the figure.
+
+Tomorrow we will use this same pattern for counts, summaries, ordered categories, histograms, density plots, and unusual values.
 
 # Render Check
 

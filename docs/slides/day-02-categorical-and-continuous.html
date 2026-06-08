@@ -1054,7 +1054,7 @@ margin-right: 0; }
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Data Visualization: Day 2</h1>
-  <p class="subtitle">Categorical And Continuous Data</p>
+  <p class="subtitle">One Variable And Distributions</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -1065,17 +1065,13 @@ Erik Westlund
 </div>
 
 </section>
-<section>
-<section id="welcome-back" class="title-slide slide level1 center">
-<h1>Welcome Back</h1>
-
-</section>
-<section id="todays-goals" class="slide level2 center">
-<h2>Today’s Goals</h2>
+<section id="day-2-goals" class="slide level2 center">
+<h2>Day 2 Goals</h2>
 <ol type="1">
-<li>Move from making a first plot to asking better exploratory questions.</li>
-<li>Visualize categorical variables with counts, proportions, and ranks.</li>
-<li>Visualize continuous variables with attention to center, spread, shape, and unusual values.</li>
+<li>Use core data verbs to inspect, filter, summarize, and arrange data before plotting.</li>
+<li>Make easy one-variable plots for categorical and numeric variables.</li>
+<li>Explain why position on a common scale is a powerful visual encoding.</li>
+<li>Describe distributions using center, spread, shape, and unusual values.</li>
 <li>Practice choosing a plot based on the question, not the chart type.</li>
 </ol>
 </section>
@@ -1089,7 +1085,7 @@ Erik Westlund
 <li>direct project-root paths</li>
 <li>first <code>ggplot2</code> layers</li>
 </ul>
-<p>Today is about using those tools to explore data.</p>
+<p>Today is about using those tools for one-variable exploratory data analysis.</p>
 </section>
 <section id="day-1-pattern" class="slide level2 center">
 <h2>Day 1 Pattern</h2>
@@ -1104,37 +1100,45 @@ Erik Westlund
 <span id="cb1-8"><a href></a>p3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The point is not just cleaner code.</p>
 <p>The point is to see what each decision contributes.</p>
-</section></section>
+</section>
 <section>
-<section id="exploratory-questions" class="title-slide slide level1 center">
-<h1>Exploratory Questions</h1>
+<section id="data-verbs-before-plots" class="title-slide slide level1 center">
+<h1>Data Verbs Before Plots</h1>
 
 </section>
-<section id="start-with-the-variable" class="slide level2 center">
-<h2>Start With The Variable</h2>
-<p>Before choosing a plot, ask:</p>
+<section id="visualization-starts-with-data-work" class="slide level2 center">
+<h2>Visualization Starts With Data Work</h2>
+<p>Before choosing a plot, inspect and shape the data:</p>
 <ul>
-<li>What does one row represent?</li>
-<li>What type of variable am I plotting?</li>
-<li>What question am I asking?</li>
-<li>What comparison should the viewer make?</li>
+<li>What does one observation represent?</li>
+<li>Are observations raw records, summaries, percentages, or estimates?</li>
+<li>Do we need to filter to the level that matches the question?</li>
+<li>Do we need to summarize before plotting?</li>
 </ul>
 </section>
-<section id="two-big-variable-types-today" class="slide level2 center">
-<h2>Two Big Variable Types Today</h2>
-<p>Categorical variables answer questions like:</p>
+<section id="core-verbs-today" class="slide level2 center">
+<h2>Core Verbs Today</h2>
+<p>We will keep using these verbs:</p>
 <ul>
-<li>Which category?</li>
-<li>Which group?</li>
-<li>Which place?</li>
-<li>Which label?</li>
+<li><code>select()</code>: keep variables we need</li>
+<li><code>filter()</code>: keep observations that match the question</li>
+<li><code>count()</code>: count observations by category</li>
+<li><code>group_by()</code> + <code>summarize()</code>: aggregate values by group</li>
+<li><code>mutate()</code>: create or recode variables</li>
+<li><code>arrange()</code>: sort a table before plotting</li>
 </ul>
-<p>Continuous variables answer questions like:</p>
+</section>
+<section id="common-summary-functions" class="slide level2 center">
+<h2>Common Summary Functions</h2>
+<p>Aggregation turns many values into fewer values.</p>
+<p>Common summaries:</p>
 <ul>
-<li>How much?</li>
-<li>How high?</li>
-<li>How long?</li>
-<li>How many units?</li>
+<li><code>n()</code>: number of observations</li>
+<li><code>sum()</code>: total amount</li>
+<li><code>mean()</code>: average</li>
+<li><code>median()</code>: middle value</li>
+<li><code>min()</code> and <code>max()</code>: range endpoints</li>
+<li><code>IQR()</code> and <code>sd()</code>: spread</li>
 </ul>
 </section>
 <section id="the-plot-is-a-statistical-claim" class="slide level2 center">
@@ -1143,16 +1147,15 @@ Erik Westlund
 <p>Examples:</p>
 <ul>
 <li>This category is common.</li>
-<li>This group is larger.</li>
+<li>This category has a larger total.</li>
 <li>This distribution is skewed.</li>
 <li>This value is unusual.</li>
-<li>This pattern differs across groups.</li>
 </ul>
 <p>The plot should match the claim.</p>
 </section></section>
 <section>
-<section id="categorical-data" class="title-slide slide level1 center">
-<h1>Categorical Data</h1>
+<section id="categorical-easy-wins" class="title-slide slide level1 center">
+<h1>Categorical Easy Wins</h1>
 
 </section>
 <section id="categorical-question-1" class="slide level2 center">
@@ -1161,7 +1164,7 @@ Erik Westlund
 <p>This is a count question.</p>
 <p>Common tools:</p>
 <ul>
-<li>row counts</li>
+<li>observation counts</li>
 <li><code>count()</code></li>
 <li>bar charts</li>
 <li>dot plots</li>
@@ -1169,25 +1172,28 @@ Erik Westlund
 </section>
 <section id="count-what" class="slide level2 center">
 <h2>Count What?</h2>
-<p>Counting rows is only meaningful if the rows mean what you think they mean.</p>
+<p>Counting observations is only meaningful if the observations mean what you think they mean.</p>
 <p>Ask:</p>
 <ul>
-<li>Is one row a person?</li>
-<li>Is one row a state?</li>
-<li>Is one row a state-category combination?</li>
-<li>Is one row an already-summarized estimate?</li>
+<li>Is one observation a person?</li>
+<li>Is one observation a state?</li>
+<li>Is one observation a state-category combination?</li>
+<li>Is one observation an already-summarized estimate?</li>
 </ul>
 <p>Same plot form, different statistical meaning.</p>
 </section>
 <section id="counts-versus-summaries" class="slide level2 center">
 <h2>Counts Versus Summaries</h2>
-<p>Sometimes we count rows.</p>
+<p>Sometimes we count observations.</p>
 <p>Sometimes we summarize values by category.</p>
 <p>Those are different operations:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href></a><span class="fu">count</span>(category)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href></a>data <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href></a>  <span class="fu">count</span>(category)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>versus</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href></a><span class="fu">group_by</span>(category) <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(value))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href></a>data <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href></a>  <span class="fu">group_by</span>(category) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">sum</span>(value))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first counts records. The second aggregates a numeric variable.</p>
 </section>
 <section id="ordering-matters" class="slide level2 center">
 <h2>Ordering Matters</h2>
@@ -1196,7 +1202,7 @@ Erik Westlund
 <ul>
 <li>largest to smallest</li>
 <li>smallest to largest</li>
-<li>meaningful sequence</li>
+<li>natural sequence</li>
 <li>reference category first</li>
 <li>grouped by concept</li>
 </ul>
@@ -1208,86 +1214,66 @@ Erik Westlund
 <p><code>modules/02_categorical-data/01_counts-and-ordering.qmd</code></p>
 <p>Watch for:</p>
 <ul>
-<li>what one row represents</li>
-<li>when a count is meaningful</li>
+<li>what one observation represents</li>
+<li>when to count observations versus summarize values</li>
 <li>how ordering changes readability</li>
 </ul>
 </section></section>
 <section>
-<section id="composition" class="title-slide slide level1 center">
-<h1>Composition</h1>
+<section id="position-on-a-common-scale" class="title-slide slide level1 center">
+<h1>Position On A Common Scale</h1>
 
 </section>
-<section id="categorical-question-2" class="slide level2 center">
-<h2>Categorical Question 2</h2>
-<p>What is the whole made of?</p>
-<p>This is a composition question.</p>
-<p>Examples:</p>
+<section id="a-first-design-principle" class="slide level2 center">
+<h2>A First Design Principle</h2>
+<p>People usually compare positions on a shared, aligned scale more accurately than they compare:</p>
 <ul>
-<li>racial/ethnic composition of a state</li>
-<li>categories within a sample</li>
-<li>share of observations in each outcome group</li>
-<li>parts of a budget, population, or total</li>
+<li>angles</li>
+<li>areas</li>
+<li>volumes</li>
+<li>colors</li>
+<li>positions on different scales</li>
 </ul>
+<p>This is one reason simple plots often work well.</p>
 </section>
-<section id="define-the-whole" class="slide level2 center">
-<h2>Define The Whole</h2>
-<p>Composition plots require a clear denominator.</p>
-<p>Ask:</p>
+<section id="common-scale-examples" class="slide level2 center">
+<h2>Common Scale Examples</h2>
+<p>These all use position on a common scale:</p>
 <ul>
-<li>What adds up to 100 percent?</li>
-<li>Is the whole a state, county, year, subgroup, or sample?</li>
-<li>Are any categories excluded?</li>
-<li>Are we showing counts or shares?</li>
+<li>ordered bars with a shared baseline</li>
+<li>dot plots on one axis</li>
+<li>histograms along one measurement scale</li>
+<li>box plots aligned to one numeric scale</li>
+<li>reference lines at meaningful values</li>
 </ul>
+<p>The reader can ask: where is this value relative to the others?</p>
 </section>
-<section id="counts-can-mislead-composition" class="slide level2 center">
-<h2>Counts Can Mislead Composition</h2>
-<p>Raw counts mix two ideas:</p>
+<section id="when-common-scales-break-down" class="slide level2 center">
+<h2>When Common Scales Break Down</h2>
+<p>Comparisons get harder when:</p>
 <ul>
-<li>the size of the whole</li>
-<li>the composition of the whole</li>
+<li>facets use different axes</li>
+<li>stacked bar segments do not share a baseline</li>
+<li>too many colors carry numeric meaning</li>
+<li>area or bubble size encodes magnitude</li>
+<li>the axis is cropped or transformed without explanation</li>
 </ul>
-<p>If the question is composition, proportions are often clearer.</p>
+<p>These choices are not always wrong, but they need a reason.</p>
 </section>
-<section id="stacked-bars-are-not-magic" class="slide level2 center">
-<h2>Stacked Bars Are Not Magic</h2>
-<p>Stacked bars can show composition.</p>
-<p>But they make some comparisons hard:</p>
+<section id="rank-uses-position" class="slide level2 center">
+<h2>Rank Uses Position</h2>
+<p>Ranked plots use order to make comparison easier.</p>
+<p>Rank is useful when the question is:</p>
 <ul>
-<li>middle segments lack a shared baseline</li>
-<li>small differences can be hard to see</li>
-<li>too many categories create clutter</li>
+<li>highest or lowest</li>
+<li>largest or smallest</li>
+<li>top or bottom group</li>
+<li>relative position</li>
 </ul>
-<p>Sometimes filtering to one category is clearer.</p>
-</section>
-<section id="transition-to-module-1" class="slide level2 center">
-<h2>Transition To Module</h2>
-<p>Open:</p>
-<p><code>modules/02_categorical-data/02_composition-and-proportions.qmd</code></p>
-<p>Watch for:</p>
-<ul>
-<li>raw counts versus shares</li>
-<li>defining the whole</li>
-<li>filtering to clarify one comparison</li>
-</ul>
-</section></section>
-<section>
-<section id="rank" class="title-slide slide level1 center">
-<h1>Rank</h1>
-
-</section>
-<section id="categorical-question-3" class="slide level2 center">
-<h2>Categorical Question 3</h2>
-<p>What is higher or lower?</p>
-<p>This is a rank question.</p>
-<p>Rank is useful when the task is comparison.</p>
-<p>It is less useful when the task is understanding full distributional shape.</p>
+<p>But rank alone can hide magnitude.</p>
 </section>
 <section id="rank-hides-magnitude" class="slide level2 center">
 <h2>Rank Hides Magnitude</h2>
-<p>Rank tells us order.</p>
-<p>It does not always tell us how different values are.</p>
 <p>Ask:</p>
 <ul>
 <li>Are the top two nearly tied?</li>
@@ -1295,39 +1281,21 @@ Erik Westlund
 <li>Are small differences meaningful?</li>
 <li>Is uncertainty available?</li>
 </ul>
-</section>
-<section id="top-n-choices" class="slide level2 center">
-<h2>Top-N Choices</h2>
-<p>Top-10 and bottom-10 plots are useful.</p>
-<p>They are also selective.</p>
-<p>When using them, say:</p>
-<ul>
-<li>what was included</li>
-<li>what was excluded</li>
-<li>what the ranking variable is</li>
-<li>whether the ranking is stable or uncertain</li>
-</ul>
-</section>
-<section id="transition-to-module-2" class="slide level2 center">
-<h2>Transition To Module</h2>
-<p>Open:</p>
-<p><code>modules/02_categorical-data/03_ranked-comparisons.qmd</code></p>
-<p>Watch for:</p>
-<ul>
-<li>ranking by a numeric variable</li>
-<li>limiting to a readable number of categories</li>
-<li>interpreting rank and magnitude together</li>
-</ul>
+<p>Rank is an easy win, not a substitute for interpretation.</p>
 </section></section>
 <section>
-<section id="continuous-data" class="title-slide slide level1 center">
-<h1>Continuous Data</h1>
+<section id="continuous-one-variable-eda" class="title-slide slide level1 center">
+<h1>Continuous One-Variable EDA</h1>
 
 </section>
 <section id="continuous-question-1" class="slide level2 center">
 <h2>Continuous Question 1</h2>
 <p>What does this variable look like?</p>
 <p>This is a distribution question.</p>
+<p>A distribution is the collection of observed positions along a measurement scale.</p>
+</section>
+<section id="describe-the-distribution" class="slide level2 center">
+<h2>Describe The Distribution</h2>
 <p>We usually describe:</p>
 <ul>
 <li>center</li>
@@ -1335,6 +1303,7 @@ Erik Westlund
 <li>shape</li>
 <li>unusual values</li>
 </ul>
+<p>These are not separate from the plot. They are what the plot helps us see.</p>
 </section>
 <section id="center" class="slide level2 center">
 <h2>Center</h2>
@@ -1356,7 +1325,7 @@ Erik Westlund
 <li>interquartile range</li>
 <li>standard deviation</li>
 </ul>
-<p>Plots help us see whether spread is symmetric, uneven, or group-specific.</p>
+<p>Plots help us see whether spread is symmetric, uneven, or dominated by a few values.</p>
 </section>
 <section id="shape" class="slide level2 center">
 <h2>Shape</h2>
@@ -1386,82 +1355,37 @@ Erik Westlund
 <section id="density-plots" class="slide level2 center">
 <h2>Density Plots</h2>
 <p>Density plots smooth the distribution.</p>
-<p>They can make shape easier to compare.</p>
+<p>They can make shape easier to see.</p>
 <p>But they are more abstract than histograms.</p>
-<p>Use them carefully with small samples or bounded variables.</p>
+<p>Use them carefully with:</p>
+<ul>
+<li>small samples</li>
+<li>bounded variables</li>
+<li>variables with impossible regions</li>
+<li>conclusions that depend on small bumps</li>
+</ul>
 </section>
-<section id="transition-to-module-3" class="slide level2 center">
+<section id="summaries-and-plots-work-together" class="slide level2 center">
+<h2>Summaries And Plots Work Together</h2>
+<p>Use summaries to support what you see.</p>
+<p>Use plots to check what summaries hide.</p>
+<p>Neither is enough by itself.</p>
+</section>
+<section id="transition-to-module-1" class="slide level2 center">
 <h2>Transition To Module</h2>
 <p>Open:</p>
 <p><code>modules/03_continuous-data/01_histograms-and-density.qmd</code></p>
 <p>Watch for:</p>
 <ul>
 <li>bin width</li>
+<li><code>mean()</code>, <code>median()</code>, <code>IQR()</code>, and <code>sd()</code></li>
 <li>center, spread, and shape</li>
 <li>what density emphasizes differently</li>
 </ul>
 </section></section>
 <section>
-<section id="grouped-distributions" class="title-slide slide level1 center">
-<h1>Grouped Distributions</h1>
-
-</section>
-<section id="continuous-question-2" class="slide level2 center">
-<h2>Continuous Question 2</h2>
-<p>How does the distribution differ across groups?</p>
-<p>This is not just a mean-comparison question.</p>
-<p>Groups can differ in:</p>
-<ul>
-<li>center</li>
-<li>spread</li>
-<li>shape</li>
-<li>outliers</li>
-<li>sample size</li>
-</ul>
-</section>
-<section id="boxplots" class="slide level2 center">
-<h2>Boxplots</h2>
-<p>Boxplots compactly show:</p>
-<ul>
-<li>median</li>
-<li>interquartile range</li>
-<li>rough spread</li>
-<li>potential outliers</li>
-</ul>
-<p>They are useful for comparing many groups.</p>
-<p>They hide detailed shape.</p>
-</section>
-<section id="violin-plots-and-facets" class="slide level2 center">
-<h2>Violin Plots And Facets</h2>
-<p>Violin plots and faceted histograms show more shape.</p>
-<p>They can also take more space.</p>
-<p>Use them when shape matters, not only because they look more interesting.</p>
-</section>
-<section id="grouped-plot-checklist" class="slide level2 center">
-<h2>Grouped Plot Checklist</h2>
-<p>Ask:</p>
-<ul>
-<li>How many groups are there?</li>
-<li>Are group sizes very different?</li>
-<li>Is the variable bounded?</li>
-<li>Do we need full shape or only summaries?</li>
-<li>Would faceting be clearer than color?</li>
-</ul>
-</section>
-<section id="transition-to-module-4" class="slide level2 center">
-<h2>Transition To Module</h2>
-<p>Open:</p>
-<p><code>modules/03_continuous-data/02_grouped-distributions.qmd</code></p>
-<p>Watch for:</p>
-<ul>
-<li>boxplots versus fuller distribution views</li>
-<li>group sample size</li>
-<li>whether center alone is enough</li>
-</ul>
-</section></section>
-<section>
-<section id="outliers-and-summaries" class="title-slide slide level1 center">
-<h1>Outliers And Summaries</h1>
+<section id="outliers" class="title-slide slide level1 center">
+<h1>Outliers</h1>
 
 </section>
 <section id="unusual-values" class="slide level2 center">
@@ -1472,7 +1396,7 @@ Erik Westlund
 <li>data entry problems</li>
 <li>rare but real observations</li>
 <li>important cases</li>
-<li>signs of a bad transformation</li>
+<li>signs that units or transformations need attention</li>
 <li>values needing domain context</li>
 </ul>
 </section>
@@ -1487,20 +1411,16 @@ Erik Westlund
 <li>Should it be flagged, transformed, or left alone?</li>
 </ul>
 </section>
-<section id="summaries-and-plots-work-together" class="slide level2 center">
-<h2>Summaries And Plots Work Together</h2>
-<p>Use summaries to support what you see.</p>
-<p>Use plots to check what summaries hide.</p>
-<p>Neither is enough by itself.</p>
-</section>
-<section id="transition-to-module-5" class="slide level2 center">
+<section id="transition-to-module-2" class="slide level2 center">
 <h2>Transition To Module</h2>
 <p>Open:</p>
 <p><code>modules/03_continuous-data/03_outliers-and-summaries.qmd</code></p>
+<p>Use the univariate parts today.</p>
 <p>Watch for:</p>
 <ul>
 <li>unusual values</li>
 <li>summary statistics</li>
+<li>inspecting rows behind surprising values</li>
 <li>how plots and summaries check each other</li>
 </ul>
 </section></section>
@@ -1513,8 +1433,9 @@ Erik Westlund
 <h2>Today’s Practice Options</h2>
 <p>Use one or more practice notebooks from:</p>
 <ul>
-<li><code>practice/templates/02_categorical-data/</code></li>
-<li><code>practice/templates/03_continuous-data/</code></li>
+<li><code>practice/02_categorical-data/01_counts-and-ordering-practice.qmd</code></li>
+<li><code>practice/03_continuous-data/01_histograms-and-density-practice.qmd</code></li>
+<li><code>practice/03_continuous-data/03_outliers-and-summaries-practice.qmd</code></li>
 </ul>
 <p>Work in:</p>
 <p><code>practice/work/</code></p>
@@ -1523,10 +1444,11 @@ Erik Westlund
 <h2>Minimum Practice Goal</h2>
 <p>By the end of practice time, aim to have:</p>
 <ol type="1">
-<li>one categorical plot</li>
-<li>one continuous distribution plot</li>
-<li>short interpretation for each</li>
-<li>at least one sentence about what one row represents</li>
+<li>one short table that explores the data structure</li>
+<li>one categorical count/summary plot or one continuous distribution plot</li>
+<li>one use of <code>count()</code> or <code>group_by()</code> + <code>summarize()</code></li>
+<li>short interpretation for the table and plot</li>
+<li>at least one sentence about what one observation represents</li>
 </ol>
 </section>
 <section id="if-you-finish-early" class="slide level2 center">
@@ -1536,7 +1458,7 @@ Erik Westlund
 <li>reorder categories</li>
 <li>change bin width</li>
 <li>add clearer labels</li>
-<li>compare groups</li>
+<li>flag unusual values</li>
 <li>check the codebook</li>
 <li>write a more precise interpretation</li>
 </ul>
@@ -1550,21 +1472,23 @@ Erik Westlund
 <h2>What You Should Be Able To Do</h2>
 <p>After today, you should be able to:</p>
 <ul>
-<li>distinguish row counts from summarized values</li>
-<li>define a denominator for a composition plot</li>
+<li>distinguish observation counts from summarized values</li>
+<li>use core verbs to prepare data for plotting</li>
+<li>explain why common scales help comparisons</li>
 <li>use rank without forgetting magnitude</li>
 <li>describe center, spread, shape, and unusual values</li>
-<li>choose a distribution plot for the question</li>
+<li>choose a one-variable plot for the question</li>
 </ul>
 </section>
 <section id="tomorrow" class="slide level2 center">
 <h2>Tomorrow</h2>
 <p>We move from one-variable displays to relationships:</p>
 <ul>
-<li>group summaries</li>
+<li>grouped distributions</li>
+<li>grouped summaries</li>
+<li>composition and proportions</li>
 <li>differences</li>
 <li>association</li>
-<li>model-output plots</li>
 </ul>
 <p>The core question becomes:</p>
 <p>How do variables or groups relate to each other?</p>

@@ -22,7 +22,7 @@ diary <- read_csv("data/real/migraine_headache_diary.csv", show_col_types = FALS
 daily_summary <- diary |>
   filter(!is.na(day), !is.na(medication), !is.na(headache_reported)) |>
   group_by(day, medication) |>
-  summarise(headache_percent = mean(headache_reported) * 100, .groups = "drop")
+  summarize(headache_percent = mean(headache_reported) * 100, .groups = "drop")
 
 ggplot(daily_summary, aes(x = day, y = headache_percent, color = medication)) +
   geom_line(linewidth = 1) +

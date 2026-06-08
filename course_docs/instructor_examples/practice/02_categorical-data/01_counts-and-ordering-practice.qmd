@@ -21,7 +21,7 @@ census <- read_csv("data/real/census_state_race_ethnicity_long.csv", show_col_ty
 
 category_population <- census |>
   group_by(race_ethnicity) |>
-  summarise(total_population = sum(race_ethnicity_population), .groups = "drop") |>
+  summarize(total_population = sum(race_ethnicity_population), .groups = "drop") |>
   mutate(race_ethnicity = reorder(race_ethnicity, total_population))
 
 ggplot(category_population, aes(x = race_ethnicity, y = total_population)) +

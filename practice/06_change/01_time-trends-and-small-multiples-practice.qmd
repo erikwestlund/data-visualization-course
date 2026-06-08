@@ -13,13 +13,25 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice plotting change over time and separating groups into small multiples when needed.
+The module showed how to:
 
-# Suggested Data
+- put ordered time on the x-axis
+- compare change across groups
+- use color for a few groups
+- use small multiples when color becomes crowded
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a focused time-series table
+2. one line plot
+3. one grouped or faceted version if useful
+4. a short interpretation of change over time
+
+Suggested datasets:
 
 - `data/real/flu_vaccination_age_time_clean.csv`
 - `data/real/migraine_headache_diary.csv`
@@ -27,32 +39,12 @@ Choose one:
 
 Helpful module reference: `modules/06_change/01_time-trends-and-small-multiples.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, prepare a focused time series, and build one or two time plots.
 ```
 
-```{r}
-# Identify the time variable, measure, and grouping variables.
-```
+# Interpretation
 
-# Prepare A Time Series
-
-Choose one outcome over time. Filter to a focused comparison.
-
-```{r}
-# Prepare the time trend data here.
-```
-
-# Plot
-
-Make a line plot. If there are several groups, try color or facets.
-
-```{r}
-# Build your time trend plot here.
-```
-
-# Interpret
-
-> TODO: What changes over time? Are there group differences? Are the time points equally spaced and comparable?
+Write briefly: what changes over time, whether groups differ, and whether the time points are comparable.

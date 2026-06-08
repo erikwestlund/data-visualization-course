@@ -12,24 +12,27 @@ library(dplyr)
 library(ggplot2)
 ```
 
-# Goal
+# What We Practiced
 
-Practice using a simple diagram to explain an analytic workflow or conceptual structure.
+The module showed how to:
 
-Helpful module reference: `modules/08_flow/02_process-diagrams.qmd`.
+- use a simple diagram when structure is the message
+- sketch an analytic workflow or conceptual relationship
+- keep diagrams small enough to explain verbally
+- use Mermaid or `ggplot2` for simple diagrams
 
-# Sketch The Process
+# Task
 
-Choose one process to explain:
+Create one simple process diagram showing one of these:
 
 - how raw data become a final figure
 - how a sample is filtered
 - how variables might relate conceptually
 - how a reader should move through a report
 
-# Mermaid Diagram
+Helpful module reference: `modules/08_flow/02_process-diagrams.qmd`.
 
-Create a simple Mermaid diagram. Keep it small enough to explain verbally.
+# Work
 
 ```{mermaid}
 flowchart LR
@@ -37,14 +40,12 @@ flowchart LR
   B --> C[Final step]
 ```
 
-# Optional: ggplot Diagram
-
-If you want custom labels or counts, sketch a static diagram with `ggplot2`.
+Optional: create a custom static diagram with `ggplot2`.
 
 ```{r}
 # Optional ggplot diagram code here.
 ```
 
-# Interpret
+# Interpretation
 
-> TODO: What does the diagram clarify that a normal plot would not?
+Write briefly: what the diagram clarifies that a normal plot would not.

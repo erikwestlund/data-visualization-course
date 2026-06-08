@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice making a categorical count or summary plot and ordering the categories deliberately.
+The module showed how to:
 
-# Suggested Data
+- count observations by category with `count()`
+- aggregate numeric values by category with `group_by()` and `summarize()`
+- order categories before plotting
+- use `geom_col()` when the bar height is already in the data
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a categorical count or grouped summary table
+2. an ordered categorical plot
+3. a short interpretation explaining what was counted or summarized
+
+Suggested datasets:
 
 - `data/real/census_state_race_ethnicity_long.csv`
 - `data/real/state_population_ranks.csv`
@@ -27,44 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/02_categorical-data/01_counts-and-ordering.qmd`.
 
-# Load And Inspect
-
-Load one dataset and inspect it with `glimpse()`.
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, create the count or summary table, and build the ordered plot.
 ```
 
-```{r}
-# Use glimpse() here.
-```
+# Interpretation
 
-# Count Or Summarize
-
-Pick one categorical variable. Decide whether you are counting rows or summarizing a numeric variable by category.
-
-```{r}
-# Create a table with one row per category.
-```
-
-# Plot
-
-Build the plot step by step. Try `geom_col()` after you have summarized the data yourself.
-
-```{r}
-# Start p1 with ggplot().
-```
-
-```{r}
-# Add a geom.
-```
-
-```{r}
-# Reorder categories if useful, then add labels and a theme.
-```
-
-# Interpret
-
-Write two or three sentences.
-
-> TODO: What did you count or summarize? Which categories are largest or smallest? Why did you choose this ordering?
+Write briefly: what was counted or summarized, what one plotted observation represents, and why the ordering was chosen.

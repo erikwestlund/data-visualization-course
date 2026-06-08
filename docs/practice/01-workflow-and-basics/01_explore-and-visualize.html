@@ -2207,13 +2207,11 @@ vertical-align: -.125em;
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#goal" id="toc-goal" class="nav-link active" data-scroll-target="#goal">Goal</a></li>
-  <li><a href="#choose-a-dataset" id="toc-choose-a-dataset" class="nav-link" data-scroll-target="#choose-a-dataset">Choose A Dataset</a></li>
+  <li><a href="#practice-task" id="toc-practice-task" class="nav-link active" data-scroll-target="#practice-task">Practice Task</a></li>
   <li><a href="#load-and-inspect" id="toc-load-and-inspect" class="nav-link" data-scroll-target="#load-and-inspect">Load And Inspect</a></li>
-  <li><a href="#tabulate-a-few-things" id="toc-tabulate-a-few-things" class="nav-link" data-scroll-target="#tabulate-a-few-things">Tabulate A Few Things</a></li>
-  <li><a href="#make-one-visualization" id="toc-make-one-visualization" class="nav-link" data-scroll-target="#make-one-visualization">Make One Visualization</a></li>
-  <li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn">Your Turn</a></li>
-  <li><a href="#render-check" id="toc-render-check" class="nav-link" data-scroll-target="#render-check">Render Check</a></li>
+  <li><a href="#prepare-data" id="toc-prepare-data" class="nav-link" data-scroll-target="#prepare-data">Prepare Data</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
   </ul>
 </nav>
 </div>
@@ -2238,14 +2236,28 @@ vertical-align: -.125em;
 </header>
 
 
-<section id="goal" class="level1">
-<h1>Goal</h1>
-<p>Choose one course dataset, inspect it, tabulate a few variables, and create one visualization.</p>
-<p>This practice is intentionally open-ended. The goal is to get comfortable opening a dataset, asking what is in it, and making a first plot.</p>
+<p>The worked example today showed how to:</p>
+<ul>
+<li>load a course dataset</li>
+<li>inspect what one observation represents</li>
+<li>create a small table before plotting</li>
+<li>filter to the level that matches the question</li>
+<li>build a plot step by step with <code>ggplot2</code></li>
+</ul>
+<section id="practice-task" class="level1">
+<h1>Practice Task</h1>
+<p>Pick one course dataset and create:</p>
+<ol type="1">
+<li>a structure table that describes the dataset</li>
+<li>one count or summary table</li>
+<li>one visualization</li>
+<li>a two- or three-sentence interpretation</li>
+</ol>
+<p>Helpful module reference: <code>modules/01-workflow-and-basics/02_first-visualization.qmd</code>.</p>
+<p>Course data summary and codebooks: <a href="../../data/data.html">rendered Course Data page</a>.</p>
 </section>
-<section id="choose-a-dataset" class="level1">
-<h1>Choose A Dataset</h1>
-<p>Uncomment one dataset path below, or replace it with another path from <code>data/data.html</code>.</p>
+<section id="load-and-inspect" class="level1">
+<h1>Load And Inspect</h1>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset_path &lt;- &quot;data/real/prams_2011_selected.csv&quot;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset_path &lt;- &quot;data/real/census_state_race_ethnicity_long.csv&quot;</span></span>
@@ -2253,16 +2265,12 @@ vertical-align: -.125em;
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset_path &lt;- &quot;data/real/nhanes_2021_2023_analysis.csv&quot;</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset_path &lt;- &quot;data/real/places_county_core_measures_long.csv&quot;</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dataset_path <span class="ot">&lt;-</span> <span class="st">&quot;data/real/prams_2011_selected.csv&quot;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="load-and-inspect" class="level1">
-<h1>Load And Inspect</h1>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataset_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dataset_path <span class="ot">&lt;-</span> <span class="st">&quot;data/real/prams_2011_selected.csv&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(dataset_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,222
 Columns: 8
@@ -2277,76 +2285,23 @@ $ alcohol_use_within_3_months_birth    &lt;dbl&gt; 53.5, 28.7, 40.9, 54.1, 45.8,
 </div>
 </div>
 </section>
-<section id="tabulate-a-few-things" class="level1">
-<h1>Tabulate A Few Things</h1>
-<p>Pick one or two categorical variables and count the rows in each category.</p>
-<p>Use the <code>glimpse()</code> output above to choose variables that look categorical.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count one categorical variable here.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count another categorical variable here.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Write one sentence about what you notice in the counts.</p>
+<section id="prepare-data" class="level1">
+<h1>Prepare Data</h1>
+<p>Create the structure table, count table, summary table, or filtered dataset needed for the plot.</p>
 </section>
-<section id="make-one-visualization" class="level1">
-<h1>Make One Visualization</h1>
-<p>Start with one simple question.</p>
-<p>Examples:</p>
+<section id="visualization" class="level1">
+<h1>Visualization</h1>
+<p>Build one visualization from the prepared data.</p>
+</section>
+<section id="interpretation" class="level1">
+<h1>Interpretation</h1>
+<p>Write briefly:</p>
 <ul>
-<li>How are rows distributed across one categorical variable?</li>
-<li>What is the shape of one numeric variable?</li>
-<li>How are two numeric variables related?</li>
+<li>what one observation represents</li>
+<li>what table or plot was created</li>
+<li>what the plot shows</li>
+<li>what caution belongs with the interpretation</li>
 </ul>
-<p>Prepare the data you want to plot.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare your plot data here, if needed.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Start a plot object.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p1 &lt;- ggplot(...)</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># p1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Add a geom.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p2 &lt;- p1 +</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_...()</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># p2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Add labels and a theme.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p3 &lt;- p2 +</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     title = &quot;...&quot;,</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     x = &quot;...&quot;,</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     y = &quot;...&quot;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) +</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal()</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># p3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Write two or three sentences interpreting your plot.</p>
-</section>
-<section id="your-turn" class="level1">
-<h1>Your Turn</h1>
-<p>If you have time, revise your plot or try a second plot.</p>
-<p>Try one of these:</p>
-<ul>
-<li>choose a different dataset path</li>
-<li>count a different categorical variable</li>
-<li>make a histogram of a numeric variable</li>
-<li>make a scatterplot with two numeric variables</li>
-<li>improve the title and axis labels</li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="render-check" class="level1">
-<h1>Render Check</h1>
-<p>Render this notebook. Confirm that the rendered HTML includes your table output and your visualization.</p>
 </section>
 
 </main>

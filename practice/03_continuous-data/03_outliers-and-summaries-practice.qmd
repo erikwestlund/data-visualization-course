@@ -13,13 +13,25 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice identifying unusual values and comparing plots with summary statistics.
+The module showed how to:
 
-# Suggested Data
+- use summaries and plots together
+- flag unusual values with a simple rule
+- inspect the records behind surprising values
+- avoid treating every outlier as an error
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a summary table for one numeric variable
+2. one plot that shows unusual values
+3. one table of flagged or extreme observations
+4. a short interpretation of whether the unusual values need more context
+
+Suggested datasets:
 
 - `data/real/nhanes_2021_2023_analysis.csv`
 - `data/real/davis_height_weight.csv`
@@ -27,36 +39,12 @@ Choose one:
 
 Helpful module reference: `modules/03_continuous-data/03_outliers-and-summaries.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, summarize a numeric variable, flag unusual values, and build one plot.
 ```
 
-```{r}
-# Inspect the dataset here.
-```
+# Interpretation
 
-# Choose A Variable
-
-Pick one numeric variable where unusual values might matter.
-
-```{r}
-# Prepare that variable here.
-```
-
-# Plot And Summarize
-
-Create a plot that can reveal unusual values, then calculate a few summaries.
-
-```{r}
-# Plot the variable here.
-```
-
-```{r}
-# Calculate summaries such as n, mean, median, min, max, and IQR.
-```
-
-# Interpret
-
-> TODO: Are there unusual values? Do they look like errors, rare real observations, or values that need more context?
+Write briefly: what looks unusual, whether it may be an error or a real value, and what context is needed before deciding what to do.

@@ -48,6 +48,53 @@ if (!is_file(manifest_path)) {
 
 export_manifest <- read_simple_manifest(manifest_path)
 
+day_definitions <- list(
+  preclass = list(
+    module_dirs = c("00_preclass-tech-check"),
+    practice_dirs = character()
+  ),
+  `day-01` = list(
+    module_dirs = c("01-workflow-and-basics"),
+    practice_dirs = c("01-workflow-and-basics")
+  ),
+  `day-02` = list(
+    module_dirs = c("02_categorical-data", "03_continuous-data"),
+    practice_dirs = c("02_categorical-data", "03_continuous-data")
+  ),
+  `day-03` = list(
+    module_dirs = c("04_group-comparison", "05_association"),
+    practice_dirs = c("04_group-comparison", "05_association")
+  ),
+  `day-04` = list(
+    module_dirs = c("06_change", "07_space", "08_flow"),
+    practice_dirs = c("06_change", "07_space", "08_flow")
+  ),
+  `day-05` = list(
+    module_dirs = c("09_communication-polish"),
+    practice_dirs = c("09_communication-polish")
+  )
+)
+
+published_days <- export_manifest$published_days
+
+if (is.null(published_days) || length(published_days) == 0 || "all" %in% published_days) {
+  published_days <- names(day_definitions)
+}
+
+unknown_days <- setdiff(published_days, names(day_definitions))
+
+if (length(unknown_days) > 0) {
+  stop(
+    "Unknown published day(s) in student_repo/export-manifest.yml: ",
+    paste(unknown_days, collapse = ", "),
+    call. = FALSE
+  )
+}
+
+published_day_definitions <- day_definitions[published_days]
+published_module_dirs <- unique(unlist(lapply(published_day_definitions, `[[`, "module_dirs"), use.names = FALSE))
+published_practice_dirs <- unique(unlist(lapply(published_day_definitions, `[[`, "practice_dirs"), use.names = FALSE))
+
 args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) > 1) {
@@ -94,6 +141,28 @@ is_inside <- function(path, parent) {
   parent <- normalizePath(parent, winslash = "/", mustWork = TRUE)
 
   startsWith(path, paste0(parent, "/"))
+}
+
+relative_to <- function(path, root) {
+  path <- normalizePath(path, winslash = "/", mustWork = FALSE)
+  root <- normalizePath(root, winslash = "/", mustWork = TRUE)
+
+  if (identical(path, root)) {
+    return("")
+  }
+
+  substring(path, nchar(root) + 2)
+}
+
+is_in_published_dir <- function(path, root, published_dirs) {
+  relative_path <- relative_to(path, root)
+
+  if (!nzchar(relative_path)) {
+    return(TRUE)
+  }
+
+  first_part <- strsplit(relative_path, "/", fixed = TRUE)[[1]][[1]]
+  first_part %in% published_dirs
 }
 
 validate_manifest_paths <- function(paths, should_exist) {
@@ -229,7 +298,7 @@ rewrite_practice_here_paths <- function(directory, practice_root = "practice/tem
   }
 }
 
-copy_rendered_html_for_sources <- function(source_dir, rendered_dir, target_dir, source_pattern = "[.]qmd$") {
+copy_rendered_html_for_sources <- function(source_dir, rendered_dir, target_dir, source_pattern = "[.]qmd$", source_files = NULL) {
   if (!dir.exists(source_dir)) {
     stop("Missing source directory: ", source_dir, call. = FALSE)
   }
@@ -240,7 +309,12 @@ copy_rendered_html_for_sources <- function(source_dir, rendered_dir, target_dir,
 
   dir_create(target_dir)
 
-  sources <- list.files(source_dir, pattern = source_pattern, full.names = FALSE)
+  sources <- if (is.null(source_files)) {
+    list.files(source_dir, pattern = source_pattern, full.names = FALSE)
+  } else {
+    basename(source_files)
+  }
+
   html_files <- sub("[.][^.]+$", ".html", sources)
 
   for (html_file in html_files) {
@@ -286,9 +360,27 @@ render_qmds_in <- function(directory) {
   }
 }
 
+slide_qmd_files <- function() {
+  files <- list.files(p(source_root, "slides"), pattern = "[.]qmd$", full.names = TRUE)
+  files[order(files)]
+}
+
+render_slide_qmds <- function() {
+  for (qmd_file in slide_qmd_files()) {
+    render_file(qmd_file)
+  }
+}
+
 module_qmd_files <- function() {
   files <- list.files(p(source_root, "modules"), pattern = "[.]qmd$", recursive = TRUE, full.names = TRUE)
   files <- files[!grepl("/00_preclass-tech-check/", files, fixed = TRUE)]
+  files <- files[vapply(
+    files,
+    is_in_published_dir,
+    logical(1),
+    root = p(source_root, "modules"),
+    published_dirs = setdiff(published_module_dirs, "00_preclass-tech-check")
+  )]
   files[order(files)]
 }
 
@@ -529,9 +621,51 @@ markdown_link <- function(label, path) {
   )
 }
 
+topic_key_measures <- function(topic) {
+  measures <- c(
+    "measured vs self-reported exercise minutes" = "measured and reported values; BMI or totals; reporting errors and missing-report flags",
+    "toothache diary" = "person-day, day, treatment/medication condition, reported symptom outcome",
+    "fictional boat passenger survival" = "survival, age, class, sex, and missing-age flag",
+    "rural health indicators" = "income, mortality rate, region, and oil-exporter status",
+    "stress beliefs survey" = "simplicity, fatalism, depression, and adjusted scale scores",
+    "physical therapy activity" = "age, activity hours, subject/group, and repeated observations",
+    "injury recovery follow-up" = "days since injury, injury duration, age, sex, and performance/verbal scores",
+    "neighborhood health survey demographics" = "age, age group, gender, race/ethnicity, income-to-poverty, and survey design variables",
+    "neighborhood blood pressure screening" = "systolic, diastolic, pulse readings, reading means, arm, and cuff size",
+    "neighborhood hepatitis A antibody status" = "participant ID and hepatitis A antibody result/status",
+    "neighborhood dietary food records" = "food-level recalls, eating occasion, food source, energy, nutrients, and recall day",
+    "neighborhood dietary daily summary" = "daily energy, sugars, sodium, nutrients, recall day, and recall quality fields",
+    "neighborhood dietary person summary" = "person-level mean daily energy, sugars, sodium, recall-day totals, and number of recall days",
+    "joined neighborhood health survey" = "demographics, dietary summaries, blood pressure means/categories, and hepatitis A status",
+    "new-parent wellness subgroup estimates" = "state/subgroup percentages for depression, anxiety, binge drinking, and alcohol use",
+    "new-parent wellness state overall wide" = "state-level overall percentages for depression, anxiety, binge drinking, and alcohol use",
+    "new-parent wellness previous births wide" = "state percentages by previous-live-birth categories and wellness indicators",
+    "respiratory booster coverage" = "season, month, geography, age group, coverage estimate, confidence interval, and sample size",
+    "respiratory booster age-month wide" = "age group by month coverage estimates in wide format",
+    "respiratory booster national age-season wide" = "national age-group coverage estimates by flu season in wide format",
+    "state school enrollment groups long" = "state, rank, total population, race/ethnicity group count, and share",
+    "state school enrollment groups wide" = "state-level race/ethnicity group counts and shares in wide format",
+    "state enrollment ranks" = "state, state name, population rank, and total population",
+    "state enrollment group summary" = "state population totals and race/ethnicity group summaries",
+    "county wellness indicators long" = "county, population, PLACES measure, estimate, and confidence interval",
+    "county wellness indicators wide" = "county population plus PLACES measure estimates in wide format",
+    "metro neighborhood wellness indicators long" = "tract/county geography, PLACES measure, estimate, confidence interval, and coordinates",
+    "county noise exposure long" = "county, pollutant, statistic, unit, value, status, standard, and exceedance flag",
+    "county noise exposure wide" = "county-level pollutant metric values and reporting-status fields in wide format",
+    "data directory manifest" = "dataset paths, rows, measures, codebooks, dataset kind, pairing ID, and simulated analog links",
+    "real-to-simulated dataset crosswalk" = "real dataset path, simulated analog path, and pairing topic"
+  )
+
+  ifelse(
+    topic %in% names(measures),
+    paste0(topic, "; ", unname(measures[topic])),
+    topic
+  )
+}
+
 write_manifest_table <- function(df) {
   lines <- c(
-    "| Dataset | Rows | Columns | Codebook | Topic |",
+    "| Dataset | Rows | Measures | Codebook | Topic & Key measures |",
     "|---|---:|---:|---|---|"
   )
 
@@ -546,7 +680,7 @@ write_manifest_table <- function(df) {
         " | ", df$n_rows[[i]],
         " | ", df$n_columns[[i]],
         " | ", markdown_link("Codebook", codebook_path),
-        " | ", markdown_escape(df$analog_topic[[i]]),
+        " | ", markdown_escape(topic_key_measures(df$analog_topic[[i]])),
         " |"
       )
     )
@@ -619,7 +753,7 @@ rewrite_student_manifest_codebooks <- function(path) {
 
 render_file(p("course_docs", "syllabus.qmd"))
 render_qmds_in("assignments")
-render_qmds_in("slides")
+render_slide_qmds()
 render_module_qmds()
 render_markdowns_in(p("data", "codebooks"))
 annotate_rendered_codebooks(p(source_root, "docs", "data", "codebooks"))
@@ -641,15 +775,28 @@ copy_clean_dir(
   p(target_root, "data"),
   extra_skip = function(path) is_codebook_markdown(path) || is_rendered_data_source_markdown(path)
 )
-copy_clean_dir(p(source_root, "modules"), p(target_root, "modules"))
-copy_clean_dir(p(source_root, "practice"), p(target_root, "practice", "templates"))
+copy_clean_dir(
+  p(source_root, "modules"),
+  p(target_root, "modules"),
+  extra_skip = function(path) {
+    !is_in_published_dir(path, p(source_root, "modules"), published_module_dirs)
+  }
+)
+copy_clean_dir(
+  p(source_root, "practice"),
+  p(target_root, "practice", "templates"),
+  extra_skip = function(path) {
+    !is_in_published_dir(path, p(source_root, "practice"), published_practice_dirs)
+  }
+)
 rewrite_practice_here_paths(p(target_root, "practice", "templates"))
 copy_rendered_module_html()
 write_rendered_modules_index()
 copy_rendered_html_for_sources(
   p(source_root, "slides"),
   p(source_root, "docs", "slides"),
-  p(target_root, "slides")
+  p(target_root, "slides"),
+  source_files = slide_qmd_files()
 )
 copy_rendered_html_for_sources(
   p(source_root, "assignments"),
@@ -776,3 +923,4 @@ validate_manifest_paths(export_manifest$must_exist_after_export, should_exist = 
 validate_manifest_paths(export_manifest$must_not_exist_after_export, should_exist = FALSE)
 
 message("Student repository built at: ", target_root)
+message("Published days: ", paste(published_days, collapse = ", "))

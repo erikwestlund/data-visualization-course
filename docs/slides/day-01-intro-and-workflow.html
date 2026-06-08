@@ -1176,7 +1176,6 @@ Erik Westlund
 <h2>Core Visualization Questions</h2>
 <ul>
 <li class="fragment"><strong>Counts</strong>: how many are in each category?</li>
-<li class="fragment"><strong>Composition</strong>: what is the whole made of?</li>
 <li class="fragment"><strong>Rank</strong>: what is higher or lower?</li>
 <li class="fragment"><strong>Center</strong>: what is typical?</li>
 <li class="fragment"><strong>Spread</strong>: how much variation is there?</li>
@@ -1187,6 +1186,7 @@ Erik Westlund
 <section id="core-visualization-questions-1" class="slide level2 center">
 <h2>Core Visualization Questions</h2>
 <ul>
+<li class="fragment"><strong>Composition</strong>: what is the whole made of?</li>
 <li class="fragment"><strong>Grouping</strong>: how do patterns differ across categories?</li>
 <li class="fragment"><strong>Association</strong>: how do variables move together?</li>
 <li class="fragment"><strong>Change</strong>: how do patterns move over time or order?</li>
@@ -1194,12 +1194,28 @@ Erik Westlund
 <li class="fragment"><strong>Flow</strong>: how do entities, such as people or decisions, move through stages?</li>
 </ul>
 </section>
-<section id="take-note" class="slide level2 center">
-<h2>Take Note</h2>
+<section id="data-visualization-science" class="slide level2 center">
+<h2>Data Visualization &amp; Science</h2>
+<p>Lets pause and go back to the above list.</p>
+<p>What type of real-world scientific questions/topics might these visualizations help us understand or answer?</p>
 <ul>
-<li>These are not just chart types.</li>
-<li>They are recurring scientific questions.</li>
-<li>Throughout the course, we will choose plots by naming the question first.</li>
+<li class="fragment"><strong>Counts</strong>: how many are in each category?</li>
+<li class="fragment"><strong>Rank</strong>: what is higher or lower?</li>
+<li class="fragment"><strong>Center</strong>: what is typical?</li>
+<li class="fragment"><strong>Spread</strong>: how much variation is there?</li>
+<li class="fragment"><strong>Shape</strong>: what does the distribution look like?</li>
+<li class="fragment"><strong>Outliers and anomalies</strong>: what is unusual?</li>
+</ul>
+</section>
+<section id="data-visualization-science-cont." class="slide level2 center">
+<h2>Data Visualization &amp; Science (cont.)</h2>
+<ul>
+<li class="fragment"><strong>Composition</strong>: what is the whole made of?</li>
+<li class="fragment"><strong>Grouping</strong>: how do patterns differ across categories?</li>
+<li class="fragment"><strong>Association</strong>: how do variables move together?</li>
+<li class="fragment"><strong>Change</strong>: how do patterns move over time or order?</li>
+<li class="fragment"><strong>Space</strong>: where do patterns occur?</li>
+<li class="fragment"><strong>Flow</strong>: how do entities, such as people or decisions, move through stages?</li>
 </ul>
 </section>
 <section id="today" class="slide level2 center">
@@ -1214,15 +1230,17 @@ Erik Westlund
 <section id="preview-day-2" class="slide level2 center">
 <h2>Preview: Day 2</h2>
 <ul>
-<li class="fragment"><strong>categorical data</strong>: counts, composition, and rank</li>
-<li class="fragment"><strong>continuous data</strong>: center, spread, shape, and outliers</li>
-<li class="fragment">choosing plots from the question, not from a chart menu</li>
+<li class="fragment">data manipulation required for data visualizatoin</li>
+<li class="fragment">basic plots: counts, summaries, ordering, and rank</li>
+<li class="fragment">one-variable exploratory data analysis</li>
+<li class="fragment">center, spread, distribution shape, and unusual values</li>
 </ul>
 </section>
 <section id="preview-day-3" class="slide level2 center">
 <h2>Preview: Day 3</h2>
 <ul>
 <li class="fragment"><strong>group comparison</strong>: distributions and summaries across groups</li>
+<li class="fragment"><strong>composition</strong>: denominators, proportions, and part-to-whole comparisons</li>
 <li class="fragment"><strong>association</strong>: how variables move together</li>
 <li class="fragment">interaction as association plus grouping</li>
 </ul>
@@ -1363,7 +1381,7 @@ Erik Westlund
 </figure>
 </div>
 </div></div>
-<p>That matters because visualization is a process, not just a final image.</p>
+<p>Visualization is a process, not just a final image.</p>
 </section>
 <section id="quarto-1" class="slide level2 center">
 <h2>Quarto</h2>
@@ -1516,8 +1534,8 @@ Erik Westlund
 <li>It lets us describe a figure without starting from chart names.</li>
 </ul>
 </section>
-<section id="why-this-matters-theoretically" class="slide level2 center">
-<h2>Why This Matters (Theoretically)</h2>
+<section id="grammar-versus-chart-names" class="slide level2 center">
+<h2>Grammar Versus Chart Names</h2>
 <ul>
 <li>When you only think in chart types, you ask: “Should I make a bar chart or a scatterplot?”</li>
 <li>When you think in grammar, you ask: “What data do I have, what comparison do I need, and how should variables become visual features?”</li>
@@ -1545,12 +1563,25 @@ Erik Westlund
 </section>
 <section id="start-with-data" class="slide level2 center">
 <h2>Start With Data</h2>
-<p>Before plotting, think about your level of measurement.</p>
+<p>Before plotting, think about the level of observation.</p>
 <ul>
-<li>what does one row represent?</li>
-<li>are rows people, places, events, months, or summaries?</li>
+<li>what does one observation represent?</li>
+<li>are observations people, places, events, months, or summaries?</li>
 <li>are values raw measurements, counts, percentages, or model estimates?</li>
 </ul>
+</section>
+<section id="data-manipulation-is-fundamental" class="slide level2 center">
+<h2>Data Manipulation Is Fundamental</h2>
+<p>Most visualization work starts by shaping the data:</p>
+<ul>
+<li>selecting variables</li>
+<li>filtering to the right observations</li>
+<li>counting categories</li>
+<li>summarizing values by group</li>
+<li>creating variables that match the question</li>
+</ul>
+<p>Today we will do this lightly. On Day 2 we will dedicate a lot of time to this, as it is truly a prerequisite for good data visualization and good data analysis in general.</p>
+<p>Day 2 starts with easy wins: counts, summaries, and ordering. Then we use the same data habits to study one variable at a time.</p>
 </section>
 <section id="aesthetic-mappings" class="slide level2 center">
 <h2>Aesthetic Mappings</h2>
@@ -1705,6 +1736,7 @@ Showing patterns/trends
 <li><code>dodge</code>: Put the bars next to each other</li>
 </ul></li>
 </ul>
+<p>We will return to these choices later. Day 2 will first emphasize position on a common scale, because that is usually the easiest visual comparison for readers.</p>
 </section>
 <section id="consider-faceting" class="slide level2 center">
 <h2>Consider Faceting</h2>
@@ -1728,7 +1760,7 @@ Showing patterns/trends
 <p>Many visualizations summarize rows into groups.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href></a>cars <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href></a>  <span class="fu">group_by</span>(make) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href></a>  <span class="fu">summarise</span>(<span class="at">avg_mpg =</span> <span class="fu">mean</span>(mpg))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href></a>  <span class="fu">summarize</span>(<span class="at">avg_mpg =</span> <span class="fu">mean</span>(mpg))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This example shows the logic of grouping and transforming to get a single value we might plot with a bar chart.</p>
 </section>
 <section id="aggregation-complexity" class="slide level2 center">

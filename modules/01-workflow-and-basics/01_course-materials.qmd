@@ -18,47 +18,47 @@ p.caption {
 
 # Goal
 
-This module walks through getting the course materials in RStudio.
+This module describes how the course materials are set up in RStudio and how the course folder is organized.
 
-We will do this step by step in class. Follow along on your own computer.
+The class walkthrough will move through these steps together.
 
-# Step 1: Open The Project Menu
+# Step 1: The Project Menu
 
 ![RStudio project menu with New Project option](images/rstudio-project-menu-new-project.png){fig-alt="RStudio project menu showing the New Project option."}
 
-In the upper-right corner of RStudio, open the project menu.
+The project menu is in the upper-right corner of RStudio.
 
-Click **New Project...**.
+The **New Project...** option starts the process of creating or opening an RStudio project.
 
-# Step 2: Choose Version Control
+# Step 2: Version Control
 
 ![RStudio New Project Wizard showing Version Control](images/rstudio-new-project-wizard-version-control.png){fig-alt="RStudio New Project Wizard with New Directory, Existing Directory, and Version Control options."}
 
-In the New Project Wizard, click **Version Control**.
+The New Project Wizard includes several ways to create a project. The course repository is copied from GitHub through **Version Control**.
 
-# Step 3: Choose Git
+# Step 3: Git
 
 ![RStudio Version Control screen showing Git](images/rstudio-version-control-git.png){fig-alt="RStudio New Project Wizard version control screen with Git and Subversion options."}
 
-Click **Git**.
+The **Git** option connects RStudio to a GitHub repository.
 
-# Step 4: Enter The Repository And Folder
+# Step 4: Repository And Folder
 
 ![RStudio Clone Git Repository screen](images/rstudio-clone-git-repository.png){fig-alt="RStudio Clone Git Repository screen with repository URL, project directory name, and local folder location fields."}
 
-Paste the course repository address into **Repository URL**:
+The course repository address goes in **Repository URL**:
 
 <div style="border: 1px solid #9ca3af; border-radius: 6px; padding: 0.75em 1em; background: #f8fafc; font-size: 1.05em; overflow-wrap: anywhere;">
 <a href="https://github.com/erikwestlund/data-visualization-2026"><code>https://github.com/erikwestlund/data-visualization-2026</code></a>
 </div>
 
-Then choose where you want the course materials saved on your computer.
+The local folder location controls where the course materials are saved on the computer.
 
-Use **Browse...** if you want to choose a different folder.
+The **Browse...** button can be used to choose a different folder.
 
-Choose a location that does not already contain another copy of this course folder.
+A typical location is a folder used for coursework or projects.
 
-Click **Create Project**.
+The **Create Project** button starts the clone and opens the course project.
 
 This step requires an internet connection and Git. If **Git** does not appear as an option in RStudio, Git is not installed or RStudio has not found it yet.
 
@@ -71,24 +71,22 @@ After RStudio opens the project, the window should say `data-visualization-2026`
 RStudio is usually organized into four panes:
 
 - **Source/editor pane:** where notebooks and scripts open. If no file is open yet, this pane may not be visible.
-- **Console pane:** where you can type and run R commands directly.
-- **Environment pane:** where R objects appear after you create them.
-- **Files/Plots/Packages/Help/Viewer pane:** where you browse files, view plots, manage packages, read help pages, and preview output.
+- **Console pane:** where R commands can be typed and run directly.
+- **Environment pane:** where R objects appear after code creates them.
+- **Files/Plots/Packages/Help/Viewer pane:** where files, plots, packages, help pages, and output previews appear.
 
-In the Files pane, confirm that you can see course files such as `modules`, `practice`, `data`, `slides`, `syllabus.html`, and `updater.R`.
+The Files pane should show course files and folders such as `modules`, `practice`, `data`, `slides`, `syllabus.html`, and `updater.R`.
 
 # Step 6: The Project
 
-The course folder includes two files that tell your software where the course starts:
+The course folder includes two files that tell the software where the course starts:
 
 - `data-visualization-course.Rproj` for RStudio
 - `data-visualization-course.code-workspace` for Positron
 
 These files tell the IDE the base location for the course project.
 
-That matters because the course has many folders: `assignments`, `slides`, `data`, `modules`, and `practice`.
-
-Once the IDE knows the project root, we can refer to files naturally from one shared base location instead of constantly worrying about where each notebook lives in the folder structure.
+Once the IDE knows the project root, notebooks can refer to files naturally from one shared base location instead of depending on where each notebook lives in the folder structure.
 
 For example, a notebook can refer to a data file with a path like:
 
@@ -98,27 +96,21 @@ readr::read_csv("data/real/prams_2011_selected.csv")
 
 ## Assignments
 
-Open the `assignments/` folder in the Files pane.
-
-This folder contains rendered HTML instructions for problem sets and the final project.
+The `assignments/` folder contains rendered HTML instructions for problem sets and the final project.
 
 ## Slides
 
-Open the `slides/` folder in the Files pane.
-
-This folder contains rendered HTML slide decks for class concepts and transitions.
+The `slides/` folder contains rendered HTML slide decks for class concepts and transitions.
 
 ## Data Directory
 
-Open the `data/` folder in the Files pane.
+The `data/` folder contains the datasets used in modules, practice notebooks, problem sets, and the final project.
 
-This folder contains the datasets we will use in modules, practice notebooks, problem sets, and the final project.
-
-The most important file to open first is:
+The most important file in this folder is:
 
 - [`data/data.html`](../../../data/data.html): the Course Data Summary
 
-You can find it in the Files pane by opening the `data/` folder and clicking `data.html`.
+In RStudio, this file can be opened from the Files pane by opening the `data/` folder and clicking `data.html`.
 
 Other important pieces are:
 
@@ -129,20 +121,16 @@ Other important pieces are:
 
 The Course Data Summary links to each dataset and its codebook.
 
-The codebook is where you check:
+The codebook includes:
 
-- what one row represents
-- what each variable means
+- the unit of analysis
+- variable definitions
 - whether values are raw observations, summaries, percentages, or estimates
 - what cautions apply before interpreting a plot
 
 ## Modules
 
-Open the `modules/` folder in the Files pane.
-
-Modules are the course-owned notebooks we will use during class. I will often open a module, make the text large, talk through the setup, run code chunks step by step, and show the output as we go.
-
-The `modules/` folder contains Quarto notebook source files:
+The `modules/` folder contains course-owned notebooks used during class, such as:
 
 - `modules/01-workflow-and-basics/`
 - `modules/02_categorical-data/`
@@ -151,27 +139,27 @@ The `modules/` folder contains Quarto notebook source files:
 
 Most module files end in `.qmd`. These are Quarto notebook source files.
 
-The course also includes `modules/rendered/`, a folder with HTML versions of module notebooks. Use those when you want to quickly view a finished version without running the code yourself.
+The course may also include rendered HTML versions of module notebooks for quick viewing without running the code.
 
-- `modules/`: course-owned notebooks we can open and run during class
-- `modules/rendered/`: HTML versions for quick viewing
+- `modules/`: course-owned notebooks opened and run during class
+- rendered module HTML: finished versions for quick viewing when provided
 
-Do not use `modules/` for your own saved work. Course updates may add, rename, or remove files in `modules/`.
+The `modules/` folder is not for saved student work. Course updates may add, rename, or remove files in `modules/`.
 
 ## Practice
 
-Open the `practice/` folder in the Files pane.
+The `practice/` folder contains starter notebooks and student work copies.
 
-This folder has two parts:
+This folder has two main parts:
 
 - `practice/templates/`: starter notebooks provided with the course
-- `practice/work/`: your own copies of practice notebooks
+- `practice/work/`: personal copies of practice notebooks
 
-Use `practice/work/` for your edits. The updater copies new templates into `practice/work/` without overwriting files that are already there.
+The `practice/work/` folder is the place for edits. The updater copies new templates into `practice/work/` without overwriting files that are already there.
 
 # Step 7: Test The Updater
 
-Run this command in the R Console from the project root:
+This command runs in the R Console from the project root:
 
 ```r
 source("updater.R")
@@ -179,25 +167,25 @@ source("updater.R")
 
 The updater does two things:
 
-- gets the latest instructor-owned course files if you are using the Git version of the course folder
+- gets the latest instructor-owned course files when the Git version of the course folder is in use
 - copies any missing practice templates into `practice/work/`
 
 Instructor-owned course files in folders such as `modules/`, `slides/`, `assignments/`, `data/`, and `practice/templates/` may be added, changed, renamed, or removed when the course updates.
 
 The updater does not overwrite files that already exist in `practice/work/`.
 
-You should see one of these outcomes in the Console:
+One of these outcomes should appear in the Console:
 
 - Git says the course is already up to date
 - Git downloads course updates
 - the updater reports that it copied practice templates
 - the updater reports that practice templates already exist
 
-After it runs, open `practice/work/` in the Files pane. You should see practice notebooks there.
+After the updater runs, the `practice/work/` folder should contain practice notebooks.
 
 # Next Step
 
-Open the first visualization module:
+The next class module is:
 
 `modules/01-workflow-and-basics/02_first-visualization.qmd`
 

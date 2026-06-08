@@ -13,15 +13,28 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+The worked example today showed how to:
 
-Choose one course dataset, inspect it, tabulate a few variables, and create one visualization.
+- load a course dataset
+- inspect what one observation represents
+- create a small table before plotting
+- filter to the level that matches the question
+- build a plot step by step with `ggplot2`
 
-This practice is intentionally open-ended. The goal is to get comfortable opening a dataset, asking what is in it, and making a first plot.
+# Practice Task
 
-# Choose A Dataset
+Pick one course dataset and create:
 
-Uncomment one dataset path below, or replace it with another path listed in the Course Data Summary or `data/manifest.csv`.
+1. a structure table that describes the dataset
+2. one count or summary table
+3. one visualization
+4. a two- or three-sentence interpretation
+
+Helpful module reference: `modules/01-workflow-and-basics/02_first-visualization.qmd`.
+
+Course data summary and codebooks: [rendered Course Data page](../../data/data.html).
+
+# Load And Inspect
 
 ```{r}
 # dataset_path <- "data/real/prams_2011_selected.csv"
@@ -31,98 +44,34 @@ Uncomment one dataset path below, or replace it with another path listed in the 
 # dataset_path <- "data/real/places_county_core_measures_long.csv"
 
 dataset_path <- "data/real/prams_2011_selected.csv"
-```
 
-# Load And Inspect
-
-```{r}
 dat <- read_csv(dataset_path, show_col_types = FALSE)
 
 dat |>
   glimpse()
 ```
 
-# Tabulate A Few Things
+# Prepare Data
 
-Pick one or two categorical variables and count the rows in each category.
-
-Use the `glimpse()` output above to choose variables that look categorical.
+Create the structure table, count table, summary table, or filtered dataset needed for the plot.
 
 ```{r}
-# Count one categorical variable here.
+
 ```
+
+# Visualization
+
+Build one visualization from the prepared data.
 
 ```{r}
-# Count another categorical variable here.
+
 ```
 
-Write one sentence about what you notice in the counts.
+# Interpretation
 
-# Make One Visualization
+Write briefly:
 
-Start with one simple question.
-
-Examples:
-
-- How are rows distributed across one categorical variable?
-- What is the shape of one numeric variable?
-- How are two numeric variables related?
-
-Prepare the data you want to plot.
-
-```{r}
-# Prepare your plot data here, if needed.
-```
-
-Start a plot object.
-
-```{r}
-# p1 <- ggplot(...)
-
-# p1
-```
-
-Add a geom.
-
-```{r}
-# p2 <- p1 +
-#   geom_...()
-
-# p2
-```
-
-Add labels and a theme.
-
-```{r}
-# p3 <- p2 +
-#   labs(
-#     title = "...",
-#     x = "...",
-#     y = "..."
-#   ) +
-#   theme_minimal()
-
-# p3
-```
-
-Write two or three sentences interpreting your plot.
-
-# Your Turn
-
-If you have time, revise your plot or try a second plot.
-
-Try one of these:
-
-- choose a different dataset path
-- count a different categorical variable
-- make a histogram of a numeric variable
-- make a scatterplot with two numeric variables
-- improve the title and axis labels
-
-```{r}
-# Your code here
-```
-
-# Render Check
-
-Render this notebook. Confirm that the rendered HTML includes your table output and your visualization.
+- what one observation represents
+- what table or plot was created
+- what the plot shows
+- what caution belongs with the interpretation

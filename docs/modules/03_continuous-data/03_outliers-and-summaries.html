@@ -2213,9 +2213,9 @@ vertical-align: -.125em;
   <li><a href="#prepare-dietary-data" id="toc-prepare-dietary-data" class="nav-link" data-scroll-target="#prepare-dietary-data">Prepare Dietary Data</a></li>
   <li><a href="#plot-the-distribution" id="toc-plot-the-distribution" class="nav-link" data-scroll-target="#plot-the-distribution">Plot The Distribution</a></li>
   <li><a href="#calculate-a-simple-outlier-rule" id="toc-calculate-a-simple-outlier-rule" class="nav-link" data-scroll-target="#calculate-a-simple-outlier-rule">Calculate A Simple Outlier Rule</a></li>
-  <li><a href="#visualize-the-flag" id="toc-visualize-the-flag" class="nav-link" data-scroll-target="#visualize-the-flag">Visualize The Flag</a></li>
+  <li><a href="#highlight-flagged-high-values" id="toc-highlight-flagged-high-values" class="nav-link" data-scroll-target="#highlight-flagged-high-values">Highlight Flagged High Values</a></li>
   <li><a href="#inspect-flagged-rows" id="toc-inspect-flagged-rows" class="nav-link" data-scroll-target="#inspect-flagged-rows">Inspect Flagged Rows</a></li>
-  <li><a href="#compare-with-a-box-plot" id="toc-compare-with-a-box-plot" class="nav-link" data-scroll-target="#compare-with-a-box-plot">Compare With A Box Plot</a></li>
+  <li><a href="#optional-preview-compare-with-a-box-plot" id="toc-optional-preview-compare-with-a-box-plot" class="nav-link" data-scroll-target="#optional-preview-compare-with-a-box-plot">Optional Preview: Compare With A Box Plot</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
 </nav>
@@ -2405,7 +2405,7 @@ $ adult_bp_category_simplified  &lt;chr&gt; &quot;stage_2_range&quot;, &quot;nor
 <p>Use the common 1.5 IQR rule as a screening tool.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>energy_cutoffs <span class="ot">&lt;-</span> diet <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">q1 =</span> <span class="fu">quantile</span>(mean_daily_energy_kcal, <span class="fl">0.25</span>),</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">q3 =</span> <span class="fu">quantile</span>(mean_daily_energy_kcal, <span class="fl">0.75</span>),</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">iqr =</span> <span class="fu">IQR</span>(mean_daily_energy_kcal),</span>
@@ -2421,7 +2421,7 @@ $ adult_bp_category_simplified  &lt;chr&gt; &quot;stage_2_range&quot;, &quot;nor
 1 1389. 2327.  938.        -18.9        3735.</code></pre>
 </div>
 </div>
-<p>Flag unusual values.</p>
+<p>We calculate both cutoffs, but today’s question focuses on unusually high energy intake, so we flag only values above the upper cutoff.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>diet_flagged <span class="ot">&lt;-</span> diet <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -2439,8 +2439,8 @@ $ adult_bp_category_simplified  &lt;chr&gt; &quot;stage_2_range&quot;, &quot;nor
 </div>
 </div>
 </section>
-<section id="visualize-the-flag" class="level1">
-<h1>Visualize The Flag</h1>
+<section id="highlight-flagged-high-values" class="level1">
+<h1>Highlight Flagged High Values</h1>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  diet_flagged,</span>
@@ -2521,8 +2521,9 @@ $ adult_bp_category_simplified  &lt;chr&gt; &quot;stage_2_range&quot;, &quot;nor
 </div>
 </div>
 </section>
-<section id="compare-with-a-box-plot" class="level1">
-<h1>Compare With A Box Plot</h1>
+<section id="optional-preview-compare-with-a-box-plot" class="level1">
+<h1>Optional Preview: Compare With A Box Plot</h1>
+<p>The main Day 2 goal is one-variable EDA. This box plot previews Day 3, when we compare distributions across groups.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  diet,</span>

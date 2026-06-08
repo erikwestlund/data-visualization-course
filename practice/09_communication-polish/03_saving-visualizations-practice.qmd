@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice creating a final plot object and saving it intentionally.
+The module showed how to:
 
-# Suggested Data
+- save a plot object
+- choose file type, width, height, and resolution
+- check whether labels remain readable at the final size
+- use `ggsave()` intentionally
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. one polished plot object named `final_plot`
+2. one saved PNG, PDF, or SVG file in a personal work folder
+3. a short explanation of the file type and size choices
+
+Suggested datasets:
 
 - `data/real/state_population_ranks.csv`
 - `data/real/flu_vaccination_age_time_clean.csv`
@@ -27,32 +38,17 @@ Choose one:
 
 Helpful module reference: `modules/09_communication-polish/03_saving-visualizations.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data and build final_plot.
 ```
 
 ```{r}
-# Inspect variables you could use in a final plot.
+#| eval: false
+# Save final_plot with ggsave().
 ```
 
-# Build A Final Plot Object
+# Interpretation
 
-Create one polished plot and save it as an object such as `final_plot`.
-
-```{r}
-# Build final_plot here.
-```
-
-# Save The Plot
-
-Choose a filename, width, height, and units. Save into your own work folder.
-
-```{r}
-# Save your plot with ggsave() here.
-```
-
-# Reflect
-
-> TODO: Why did you choose this size and file format? Does the saved version remain readable?
+Write briefly: why the file type and size were chosen and whether the saved version remains readable.

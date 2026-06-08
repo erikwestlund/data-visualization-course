@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice calculating and plotting one summary for each group.
+The module showed how to:
 
-# Suggested Data
+- choose a statistic to represent each group
+- calculate group summaries with `group_by()` and `summarize()`
+- compare bars with dot-and-interval plots
+- check summaries against the underlying distributions
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a grouped summary table
+2. one grouped summary plot
+3. a short interpretation explaining why the statistic fits the question
+
+Suggested datasets:
 
 - `data/real/nhanes_2021_2023_analysis.csv`
 - `data/real/places_county_core_measures_long.csv`
@@ -27,32 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/04_group-comparison/01_grouped-summaries.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, create a grouped summary table, and build one grouped summary plot.
 ```
 
-```{r}
-# Inspect groups and numeric variables.
-```
+# Interpretation
 
-# Summarize By Group
-
-Choose a grouping variable and a numeric variable. Calculate a group-level summary.
-
-```{r}
-# Create one row per group with summaries such as n, mean, median, or standard error.
-```
-
-# Plot
-
-Try a dot plot or bar chart. Add uncertainty intervals if you calculate them.
-
-```{r}
-# Build your grouped summary plot here.
-```
-
-# Interpret
-
-> TODO: Which groups are higher or lower? Is the summary appropriate for the variable and question?
+Write briefly: which groups are higher or lower, what statistic was used, and whether the summary is appropriate for the variable.

@@ -13,13 +13,24 @@ library(ggplot2)
 library(readr)
 ```
 
-# Goal
+# What We Practiced
 
-Practice describing the distribution of one numeric variable.
+The module showed how to:
 
-# Suggested Data
+- filter to the observations needed for a numeric question
+- summarize center and spread with `mean()`, `median()`, `IQR()`, and `sd()`
+- use histograms and density plots to show shape
+- compare bin-width choices
 
-Choose one:
+# Task
+
+Pick one dataset and create:
+
+1. a summary table for one numeric variable
+2. two distribution plots using different bin widths or plot types
+3. a short interpretation comparing the table and plots
+
+Suggested datasets:
 
 - `data/real/nhanes_2021_2023_analysis.csv`
 - `data/real/davis_height_weight.csv`
@@ -27,36 +38,12 @@ Choose one:
 
 Helpful module reference: `modules/03_continuous-data/01_histograms-and-density.qmd`.
 
-# Load And Inspect
+# Work
 
 ```{r}
-# Load your dataset here.
+# Load data, summarize one numeric variable, and build two distribution plots.
 ```
 
-```{r}
-# Use glimpse() to find numeric variables.
-```
+# Interpretation
 
-# Choose A Numeric Variable
-
-Pick one numeric variable. Filter out missing values if needed.
-
-```{r}
-# Prepare the variable you want to plot.
-```
-
-# Plot
-
-Make a histogram. Try at least two bin widths.
-
-```{r}
-# Histogram with your first bin width.
-```
-
-```{r}
-# Histogram with another bin width or a density plot.
-```
-
-# Interpret
-
-> TODO: Describe center, spread, shape, and unusual values. How did bin width affect what you saw?
+Write briefly: what the summary table showed, what the plots added, and how bin width affected the pattern.

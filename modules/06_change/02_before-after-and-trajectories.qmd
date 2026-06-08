@@ -41,7 +41,7 @@ The source data use day 0 as a study reference day. Negative days are before tha
 daily_summary <- diary |>
   filter(!is.na(day), !is.na(medication), !is.na(headache_reported)) |>
   group_by(day, medication) |>
-  summarise(
+  summarize(
     n = n(),
     headache_percent = mean(headache_reported) * 100,
     .groups = "drop"
@@ -59,7 +59,7 @@ Check `n` before interpreting bumps or dips; small daily counts can make a perce
 overall_daily <- diary |>
   filter(!is.na(day), !is.na(headache_reported)) |>
   group_by(day) |>
-  summarise(
+  summarize(
     n = n(),
     headache_percent = mean(headache_reported) * 100,
     .groups = "drop"
