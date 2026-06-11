@@ -331,9 +331,9 @@ write_codebook(
   )
 )
 
-# Blackmore exercise and eating-disorder data ---------------------------------
+# Blackmore and Davis exercise and eating-disorder data -----------------------
 
-exercise_eating_disorders <- read.table(
+blackmore_davis_exercise_eating_disorders <- read.table(
   source_url("Blackmore.txt"),
   header = TRUE,
   na.strings = "NA",
@@ -347,18 +347,18 @@ exercise_eating_disorders <- read.table(
   ) |>
   arrange(group, subject_id, age_years)
 
-write_course_csv(exercise_eating_disorders, "exercise_eating_disorders.csv")
+write_course_csv(blackmore_davis_exercise_eating_disorders, "blackmore_davis_exercise_eating_disorders.csv")
 
 write_codebook(
-  "exercise_eating_disorders.md",
+  "blackmore_davis_exercise_eating_disorders.md",
   c(
-    "# Exercise Eating Disorders",
+    "# Blackmore Davis Exercise Eating Disorders",
     "",
     "Source: John Fox Applied Regression data archive, `Blackmore.txt`.",
     "",
     "Source page: <https://www.john-fox.ca/AppliedRegression/datasets/index.html>",
     "",
-    "Source description: Blackmore and Davis's data on exercise histories of eating-disordered and control subjects.",
+    "Source description: Blackmore and Davis's longitudinal data on eating disorders and exercise.",
     "",
     "Unit of observation: one subject-age observation.",
     "",

@@ -1,0 +1,241 @@
+---
+title: "Practice: Data Preparation"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice the mechanics of basic data preparation one step at a time.
+
+Most chunks already run. Your job is to run the code, inspect the output, and change one small part.
+
+You will practice:
+
+- `select()`
+- `rename()`
+- `mutate()`
+- `filter()`
+- `count()`
+- `group_by()` and `summarize()`
+- `reorder()`
+- `factor(..., levels = c(...))`
+
+# Data
+
+Use NHANES. This file has one row per NHANES participant in the teaching dataset.
+
+```{r}
+dat_raw <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+dat_raw |>
+  glimpse()
+```
+
+# 1. Select Columns
+
+This keeps a smaller set of columns.
+
+```{r}
+dat <- dat_raw |>
+  select(
+    respondent_id,
+    gender,
+    age_years,
+    race_ethnicity,
+    pulse_1,
+    pulse_2,
+    pulse_3,
+    adult_bp_category_simplified
+  )
+
+dat |>
+  head()
+```
+
+Try adding `systolic_mean` to the selected columns.
+
+# 2. Rename Columns
+
+Notice that `rename()` uses `new_name = old_name`.
+
+```{r}
+dat_named_example <- dat |>
+  rename(
+    id = respondent_id,
+    bp_category = adult_bp_category_simplified
+  )
+
+dat_named_example |>
+  names()
+```
+
+Try adding `age = age_years` to the `rename()` call.
+
+For the rest of the practice, use the shorter names below.
+
+```{r}
+dat <- dat_raw |>
+  select(
+    respondent_id,
+    gender,
+    age_years,
+    race_ethnicity,
+    pulse_1,
+    pulse_2,
+    pulse_3,
+    adult_bp_category_simplified
+  ) |>
+  rename(
+    id = respondent_id,
+    bp_category = adult_bp_category_simplified
+  )
+```
+
+# 3. Create Variables
+
+This creates a mean pulse variable and a simple age group.
+
+```{r}
+dat <- dat |>
+  mutate(
+    pulse_mean = rowMeans(
+      pick(pulse_1, pulse_2, pulse_3),
+      na.rm = TRUE
+    ),
+    age_group = case_when(
+      age_years < 18 ~ "Under 18",
+      age_years >= 18 & age_years <= 44 ~ "18-44",
+      age_years >= 45 & age_years <= 64 ~ "45-64",
+      age_years >= 65 ~ "65+",
+      TRUE ~ NA_character_
+    )
+  )
+
+dat |>
+  select(id, age_years, age_group, pulse_mean) |>
+  head()
+```
+
+Try changing the first adult group from `18-44` to `18-39`. You will also need to change the next group so the categories do not overlap.
+
+# 4. Filter Rows
+
+This keeps adults ages 18-44 with non-missing pulse values.
+
+```{r}
+young_adults <- dat |>
+  filter(age_years >= 18) |>
+  filter(age_years <= 44) |>
+  filter(!is.na(pulse_mean))
+
+young_adults |>
+  select(id, age_years, gender, pulse_mean) |>
+  head()
+```
+
+Try changing the upper age cutoff from `44` to `64`.
+
+# 5. Count Categories
+
+This counts observations by age group.
+
+```{r}
+dat |>
+  count(age_group)
+```
+
+Try counting `gender` instead of `age_group`.
+
+# 6. Group And Summarize
+
+This summarizes average pulse by age group.
+
+```{r}
+pulse_by_age <- dat |>
+  group_by(age_group) |>
+  summarize(
+    mean_pulse = mean(pulse_mean, na.rm = TRUE),
+    median_pulse = median(pulse_mean, na.rm = TRUE),
+    n = n(),
+    .groups = "drop"
+  )
+
+pulse_by_age
+```
+
+Try summarizing by `gender` instead of `age_group`.
+
+# 7. Reorder Categories
+
+This orders race/ethnicity categories by average pulse.
+
+```{r}
+pulse_by_race_ethnicity <- dat |>
+  group_by(race_ethnicity) |>
+  summarize(
+    mean_pulse = mean(pulse_mean, na.rm = TRUE),
+    n = n(),
+    .groups = "drop"
+  ) |>
+  mutate(
+    race_ethnicity = reorder(race_ethnicity, mean_pulse)
+  )
+
+ggplot(
+  pulse_by_race_ethnicity,
+  aes(x = race_ethnicity, y = mean_pulse)
+) +
+  geom_point(size = 3) +
+  coord_flip() +
+  labs(
+    title = "Average Pulse By Race/Ethnicity",
+    x = NULL,
+    y = "Average pulse"
+  ) +
+  theme_minimal()
+```
+
+Try ordering by `n` instead of `mean_pulse`.
+
+# 8. Relevel Categories
+
+This puts blood pressure categories in a meaningful order.
+
+```{r}
+dat <- dat |>
+  mutate(
+    bp_category = factor(
+      bp_category,
+      levels = c(
+        "normal_range",
+        "elevated_range",
+        "stage_1_range",
+        "stage_2_range"
+      )
+    )
+  )
+
+dat |>
+  count(bp_category)
+```
+
+Try moving `"stage_2_range"` to the front of the levels. What changes in the output order?
+
+# On Your Own
+
+Choose one small task and try it with less scaffolding:
+
+- Make a summary table of average pulse by blood pressure category.
+- Filter to adults only and count blood pressure categories.
+- Make a dot plot from one of your summary tables.
+
+Write 1-2 sentences: what did one row represent before summarizing, and what does one row represent after summarizing?

@@ -1,0 +1,95 @@
+---
+title: "Practice: Grouped Distributions"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice comparing a continuous variable across groups before reducing each group to one number.
+
+# 1. Load Data
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+nhanes |>
+  glimpse()
+```
+
+# 2. Prepare Adult Blood Pressure Data
+
+This keeps adults with a non-missing mean systolic blood pressure value.
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(age_group),
+    !is.na(systolic_mean)
+  )
+
+adult_bp |>
+  select(respondent_id, age_years, age_group, gender, systolic_mean) |>
+  head()
+```
+
+Try adding `filter(!is.na(gender))` if you want to compare gender groups later.
+
+# 3. Check Group Sizes
+
+Group sizes affect how much we should trust a grouped distribution comparison.
+
+```{r}
+adult_bp |>
+  count(age_group)
+```
+
+# 4. Summarize By Group
+
+These summaries give center and spread by age group.
+
+```{r}
+bp_summary <- adult_bp |>
+  group_by(age_group) |>
+  summarize(
+    n = n(),
+    median_systolic = median(systolic_mean),
+    iqr_systolic = IQR(systolic_mean),
+    mean_systolic = mean(systolic_mean),
+    .groups = "drop"
+  )
+
+bp_summary
+```
+
+Try adding `max_systolic = max(systolic_mean)`.
+
+# 5. Plot Grouped Distributions
+
+This boxplot compares the full distributions, not just one summary.
+
+```{r}
+ggplot(adult_bp, aes(x = age_group, y = systolic_mean)) +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.4) +
+  labs(
+    title = "Adult Systolic Blood Pressure By Age Group",
+    x = "Age group",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+```
+
+Try adding `geom_jitter(width = 0.12, alpha = 0.15)` after `geom_boxplot()`.
+
+# Interpretation
+
+Write 1-2 sentences: which group differs in center, spread, or unusual values? What does the plot show that the summary table compresses?

@@ -432,14 +432,14 @@ Figures supported:
 | Module | Main Lesson Dataset | Homework Cousin | Main Figures |
 |---|---|---|---|
 | `01-workflow-and-basics` | maternal health survey, vaccine clinic log | adolescent wellness survey, screening outreach log | first histogram, bar chart, scatterplot, grammar of graphics |
-| `02_categorical-data` | vaccine clinic log | screening outreach log | counts, composition, rank, ordered bars, proportional bars |
-| `03_continuous-data` | blood pressure screening | air quality symptoms | histogram, density, box plot, violin, outliers |
-| `04_group-comparison` | maternal health survey, blood pressure screening | adolescent wellness survey, air quality symptoms | grouped distributions, grouped summaries, facets |
-| `05_association` | chronic disease risk model, maternal health survey | missed visit risk model, adolescent wellness survey | scatterplot, smoother, grouped association, interaction |
-| `06_change` | respiratory surveillance weekly | gastro surveillance weekly | line chart, small multiples, pre/post, anomalies |
-| `07_space` | county asthma indicators | county heat illness indicators | maps, point maps, ranked spatial alternatives, small multiples |
-| `08_flow` | diabetes care cascade | HIV testing cascade | cascade chart, attrition, process diagram, Mermaid, Sankey extension |
-| `09_communication-polish` | any lesson dataset | any homework cousin | critique, redesign, annotation, accessibility, export |
+| `03_categorical-data` | vaccine clinic log | screening outreach log | counts, composition, rank, ordered bars, proportional bars |
+| `04_continuous-data` | blood pressure screening | air quality symptoms | histogram, density, box plot, violin, outliers |
+| `05_group-comparison` | maternal health survey, blood pressure screening | adolescent wellness survey, air quality symptoms | grouped distributions, grouped summaries, facets |
+| `06_association` | chronic disease risk model, maternal health survey | missed visit risk model, adolescent wellness survey | scatterplot, smoother, grouped association, interaction |
+| `07_change` | respiratory surveillance weekly | gastro surveillance weekly | line chart, small multiples, pre/post, anomalies |
+| `08_space` | county asthma indicators | county heat illness indicators | maps, point maps, ranked spatial alternatives, small multiples |
+| `09_flow` | diabetes care cascade | HIV testing cascade | cascade chart, attrition, process diagram, Mermaid, Sankey extension |
+| `10_communication-polish` | any lesson dataset | any homework cousin | critique, redesign, annotation, accessibility, export |
 
 ## Recommended Minimal Build Set
 

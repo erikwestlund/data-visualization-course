@@ -294,7 +294,7 @@ exercise_eating_disorders <- exercise_subjects |>
   arrange(group, subject_id, age_years)
 
 write_sim_csv(exercise_eating_disorders, "physical_therapy_activity.csv")
-write_sim_codebook("simulated_physical_therapy_activity.md", "data/real/exercise_eating_disorders.csv", "physical therapy activity histories by group", "one subject-age observation", "Includes repeated age observations, skewed activity hours, and group-specific trajectories.")
+write_sim_codebook("simulated_physical_therapy_activity.md", "data/real/blackmore_davis_exercise_eating_disorders.csv", "physical therapy activity histories by group", "one subject-age observation", "Includes repeated age observations, skewed activity hours, and group-specific trajectories.")
 
 # Post-coma recovery-style data ------------------------------------------------
 
@@ -1094,7 +1094,7 @@ simulated_dataset_crosswalk <- tribble(
   "data/real/titanic_passengers.csv", "data/simulated/boaty_mcboatface_passengers.csv", "fictional boat passenger survival",
   "data/real/infant_mortality_countries.csv", "data/simulated/rural_health_indicators.csv", "rural health indicators",
   "data/real/ginzberg_depression.csv", "data/simulated/stress_beliefs_survey.csv", "stress beliefs survey",
-  "data/real/exercise_eating_disorders.csv", "data/simulated/physical_therapy_activity.csv", "physical therapy activity",
+  "data/real/blackmore_davis_exercise_eating_disorders.csv", "data/simulated/physical_therapy_activity.csv", "physical therapy activity",
   "data/real/post_coma_recovery.csv", "data/simulated/injury_recovery_followup.csv", "injury recovery follow-up",
   "data/real/nhanes_2021_2023_demographics.csv", "data/simulated/neighborhood_health_survey_demographics.csv", "neighborhood health survey demographics",
   "data/real/nhanes_2021_2023_blood_pressure.csv", "data/simulated/neighborhood_health_survey_blood_pressure_screening.csv", "neighborhood blood pressure screening",

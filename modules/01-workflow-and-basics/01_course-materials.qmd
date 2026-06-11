@@ -133,8 +133,9 @@ The codebook includes:
 The `modules/` folder contains course-owned notebooks used during class, such as:
 
 - `modules/01-workflow-and-basics/`
-- `modules/02_categorical-data/`
-- `modules/03_continuous-data/`
+- `modules/02_data-preparation/`
+- `modules/03_categorical-data/`
+- `modules/04_continuous-data/`
 - later folders for group comparison, association, change, space, flow, and communication
 
 Most module files end in `.qmd`. These are Quarto notebook source files.

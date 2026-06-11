@@ -1,0 +1,222 @@
+---
+title: "Extra: Cleveland-Style Diagnostic Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This optional notebook shows a few Cleveland-inspired diagnostic graphics that go beyond the main Day 3 material.
+
+These plots are useful when we want to compare location, spread, and residual structure across groups.
+
+# Simulate Example Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Count or summarize | `group_by()`; `summarize()`; `n()` |
+| Combine data frames | `bind_rows()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+set.seed(123)
+
+hospital_data <- bind_rows(
+  tibble::tibble(hospital = "Hospital A", recovery_days = rnorm(120, mean = 8, sd = 2)),
+  tibble::tibble(hospital = "Hospital B", recovery_days = rnorm(120, mean = 10, sd = 2)),
+  tibble::tibble(hospital = "Hospital C", recovery_days = exp(rnorm(120, mean = 2.1, sd = 0.45))),
+  tibble::tibble(
+    hospital = "Hospital D",
+    recovery_days = c(rnorm(60, mean = 6, sd = 1.2), rnorm(60, mean = 12, sd = 1.5))
+  )
+) |>
+  filter(recovery_days > 0)
+
+hospital_data |>
+  group_by(hospital) |>
+  summarize(
+    n = n(),
+    mean_recovery = mean(recovery_days),
+    median_recovery = median(recovery_days),
+    iqr_recovery = IQR(recovery_days),
+    .groups = "drop"
+  )
+```
+
+# Start With The Distributions
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_boxplot()`; `geom_jitter()` |
+| `geom_boxplot()` properties | `fill`; `outlier.alpha` |
+| `geom_jitter()` properties | `width`; `alpha`; `size` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(hospital_data, aes(x = hospital, y = recovery_days)) +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.35) +
+  geom_jitter(width = 0.12, alpha = 0.2, size = 1) +
+  labs(
+    title = "Recovery Time By Hospital",
+    x = NULL,
+    y = "Recovery days"
+  ) +
+  theme_minimal()
+```
+
+The boxplots show center, spread, and unusual values. They do not directly show how spread changes with location.
+
+# Location And Spread Together
+
+Calculate one location and spread summary per hospital.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `group_by()`; `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+hospital_summary <- hospital_data |>
+  group_by(hospital) |>
+  summarize(
+    median_recovery = median(recovery_days),
+    iqr_recovery = IQR(recovery_days),
+    .groups = "drop"
+  )
+
+hospital_summary
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `label` |
+| Geoms / stats | `geom_point()`; `geom_text()` |
+| `geom_point()` properties | `size`; `color` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(hospital_summary, aes(x = median_recovery, y = iqr_recovery, label = hospital)) +
+  geom_point(size = 3, color = "steelblue") +
+  geom_text(nudge_y = 0.25) +
+  labs(
+    title = "Location And Spread By Hospital",
+    x = "Median recovery days",
+    y = "Interquartile range"
+  ) +
+  theme_minimal()
+```
+
+This plot asks whether hospitals with larger typical values also have larger spread.
+
+# Residuals From Group Means
+
+Residuals can be useful even in a simple group comparison. Here, a residual is each observation minus its hospital mean.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `select()` |
+| Create or change columns | `mutate()` |
+| Count or summarize | `group_by()`; `ungroup()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+hospital_residuals <- hospital_data |>
+  group_by(hospital) |>
+  mutate(
+    fitted_group_mean = mean(recovery_days),
+    residual = recovery_days - fitted_group_mean
+  ) |>
+  ungroup()
+
+hospital_residuals |>
+  select(hospital, recovery_days, fitted_group_mean, residual) |>
+  head()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_hline()`; `geom_boxplot()`; `geom_jitter()` |
+| `geom_hline()` properties | `color` |
+| `geom_boxplot()` properties | `fill`; `outlier.alpha` |
+| `geom_jitter()` properties | `width`; `alpha`; `size` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(hospital_residuals, aes(x = hospital, y = residual)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.35) +
+  geom_jitter(width = 0.12, alpha = 0.2, size = 1) +
+  labs(
+    title = "Residuals From Hospital Means",
+    x = NULL,
+    y = "Observed minus hospital mean"
+  ) +
+  theme_minimal()
+```
+
+This shows which hospitals have residuals that are symmetric, skewed, or unusually spread out after removing the group mean.
+
+# Residuals Against Fitted Values
+
+Plot residual spread against the fitted group means.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_hline()`; `geom_jitter()` |
+| `geom_jitter()` properties | `width`; `alpha` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(hospital_residuals, aes(x = fitted_group_mean, y = residual, color = hospital)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_jitter(width = 0.12, alpha = 0.45) +
+  labs(
+    title = "Residual Spread Around Group Means",
+    x = "Fitted hospital mean",
+    y = "Residual"
+  ) +
+  theme_minimal()
+```
+
+This is a compact way to ask whether spread changes as fitted values increase.
+
+# Takeaways
+
+- Boxplots and violins are usually enough for early group comparisons.
+- Location-spread plots help compare center and variability together.
+- Residual plots can reveal skew, unequal spread, and unusual observations after a simple summary has been removed.
+- These are diagnostic tools, not final communication figures for every audience.

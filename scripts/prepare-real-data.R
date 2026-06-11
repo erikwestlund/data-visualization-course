@@ -143,7 +143,18 @@ if (!file.exists(state_rank_path)) {
   stop("Could not find Census state rank file: ", state_rank_path, call. = FALSE)
 }
 
+corrected_state_populations <- data.frame(
+  state = c("KS", "TX", "AR", "LA", "ID", "WY", "NM", "OK", "WV", "MS", "AK"),
+  population_corrected = c(2937880, 29145505, 3011524, 4657757, 1839106, 576851, 2117522, 3959353, 1793716, 2961279, 733391)
+)
+
 state_population_ranks <- read_csv(state_rank_path, show_col_types = FALSE) |>
+  left_join(corrected_state_populations, by = "state") |>
+  mutate(
+    population = coalesce(population_corrected, population),
+    rank = min_rank(desc(population))
+  ) |>
+  select(-population_corrected) |>
   arrange(rank)
 
 write_course_csv(state_population_ranks, "state_population_ranks.csv")

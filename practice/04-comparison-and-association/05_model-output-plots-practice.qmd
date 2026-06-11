@@ -1,0 +1,109 @@
+---
+title: "Practice: Model Output Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice plotting simple model output while keeping the raw data visible.
+
+This is optional extension practice if there is time.
+
+# 1. Load Data
+
+```{r}
+davis <- readr::read_csv("data/real/davis_height_weight.csv")
+```
+
+# 2. Prepare Data
+
+This keeps participants with measured height, measured weight, and sex.
+
+```{r}
+body_size <- davis |>
+  filter(!is.na(height_cm)) |>
+  filter(!is.na(weight_kg)) |>
+  filter(!is.na(sex)) |>
+  filter(!likely_swapped_measured_values)
+
+body_size |>
+  select(participant_id, sex, height_cm, weight_kg) |>
+  head()
+```
+
+# 3. Plot The Data First
+
+```{r}
+ggplot(body_size, aes(x = height_cm, y = weight_kg, color = sex)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    title = "Measured Height And Weight",
+    x = "Measured height, cm",
+    y = "Measured weight, kg",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```
+
+# 4. Fit A Simple Model
+
+We are using the model to create a visual summary, not to turn this into a modeling exercise.
+
+```{r}
+weight_model <- lm(weight_kg ~ height_cm + sex, data = body_size)
+
+summary(weight_model)
+```
+
+# 5. Create Prediction Data
+
+```{r}
+prediction_grid <- expand.grid(
+  height_cm = seq(145, 195, by = 5),
+  sex = sort(unique(body_size$sex))
+)
+
+predictions <- predict(
+  weight_model,
+  newdata = prediction_grid,
+  interval = "confidence"
+)
+
+prediction_data <- bind_cols(
+  prediction_grid,
+  as.data.frame(predictions)
+)
+
+head(prediction_data)
+```
+
+# 6. Plot Predictions With Raw Data
+
+```{r}
+ggplot(body_size, aes(x = height_cm, y = weight_kg)) +
+  geom_point(aes(color = sex), alpha = 0.25) +
+  geom_line(
+    data = prediction_data,
+    aes(x = height_cm, y = fit, color = sex),
+    linewidth = 1
+  ) +
+  labs(
+    title = "Predicted Weight By Height And Sex",
+    x = "Measured height, cm",
+    y = "Measured weight, kg",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```
+
+Try removing the raw points. Do you think this is better or worse?
+

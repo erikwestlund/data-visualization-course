@@ -2,7 +2,7 @@
 
 File: `data/real/state_race_population_summary.csv`
 
-Source: Derived from Census state race/ethnicity long data and state population ranks.
+Source: Derived from Census state race/ethnicity long data and corrected Census 2020 state population ranks.
 
 Rows: 51
 

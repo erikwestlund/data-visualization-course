@@ -9,14 +9,17 @@ target_root_default: ~/Code/Courses/data-visualization-2026
 # Day-level publishing gate for the public/student repo.
 # This controls copied module folders, rendered module HTML, practice templates,
 # and rendered slides. Assignments, data, codebooks, and the syllabus are always
-# exported. Day 2 maps to modules/02_categorical-data, modules/03_continuous-data,
-# practice/02_categorical-data, practice/03_continuous-data, and
-# slides/day-02-categorical-and-continuous.html.
+# exported. Day 2 maps to modules/02_data-preparation, modules/03_categorical-data,
+# practice/02-one-variable-and-distributions, and slides/day-02-data-preparation-and-categorical.html.
+# Day 3 maps to modules/04_continuous-data, practice/03-continuous-data, and
+# slides/day-03-continuous-data.html.
 # Valid values: preclass, day-01, day-02, day-03, day-04, day-05, all.
-# For now, keep only setup/preclass and Day 1 public.
 published_days:
   - preclass
   - day-01
+  - day-02
+  - day-03
+  - day-04
 
 # Editable/source materials students may open and run.
 # Day-controlled source folders are filtered by `published_days` during export.
@@ -50,6 +53,7 @@ must_exist_after_export:
   - modules/01-workflow-and-basics/02_first-visualization.qmd
   - practice/templates/01-workflow-and-basics/01_explore-and-visualize.qmd
   - slides/day-01-intro-and-workflow.html
+  - slides/day-02-data-preparation-and-categorical.html
   - assignments/problem-set-1.html
   - install-packages.R
   - updater.R
@@ -59,6 +63,38 @@ must_exist_after_export:
   - modules/rendered/index.html
   - modules/rendered/01-workflow-and-basics/01_course-materials.html
   - modules/rendered/01-workflow-and-basics/02_first-visualization.html
+  - modules/02_data-preparation/01_data-preparation.qmd
+  - modules/03_categorical-data/01_counts-and-ordering.qmd
+  - modules/03_categorical-data/02_composition-and-proportions.qmd
+  - modules/rendered/02_data-preparation/01_data-preparation.html
+  - modules/rendered/03_categorical-data/01_counts-and-ordering.html
+  - modules/rendered/03_categorical-data/02_composition-and-proportions.html
+  - practice/templates/02-one-variable-and-distributions/01_data-cleaning-practice.qmd
+  - practice/templates/02-one-variable-and-distributions/02_categorical-practice.qmd
+  - slides/day-03-continuous-data.html
+  - modules/04_continuous-data/01_histograms-and-density.qmd
+  - modules/04_continuous-data/02_boxplots-violin-plots-and-outliers.qmd
+  - modules/04_continuous-data/03_quantiles-qq-plots-and-transformations.qmd
+  - modules/rendered/04_continuous-data/01_histograms-and-density.html
+  - modules/rendered/04_continuous-data/02_boxplots-violin-plots-and-outliers.html
+  - modules/rendered/04_continuous-data/03_quantiles-qq-plots-and-transformations.html
+  - practice/templates/03-continuous-data/01_histograms-and-summaries-practice.qmd
+  - practice/templates/03-continuous-data/02_boxplots-and-outliers-practice.qmd
+  - practice/templates/03-continuous-data/03_quantiles-qq-transformations-practice.qmd
+  - slides/day-04-comparison-and-association.html
+  - modules/05_group-comparison/01_grouped-summaries.qmd
+  - modules/05_group-comparison/02_difference-plots.qmd
+  - modules/06_association/01_scatterplots-smoothing-and-groups.qmd
+  - modules/06_association/02_model-output-plots.qmd
+  - modules/rendered/05_group-comparison/01_grouped-summaries.html
+  - modules/rendered/05_group-comparison/02_difference-plots.html
+  - modules/rendered/06_association/01_scatterplots-smoothing-and-groups.html
+  - modules/rendered/06_association/02_model-output-plots.html
+  - practice/templates/04-comparison-and-association/01_grouped-distributions-practice.qmd
+  - practice/templates/04-comparison-and-association/02_grouped-summaries-practice.qmd
+  - practice/templates/04-comparison-and-association/03_difference-plots-practice.qmd
+  - practice/templates/04-comparison-and-association/04_scatterplots-smoothing-and-groups-practice.qmd
+  - practice/templates/04-comparison-and-association/05_model-output-plots-practice.qmd
 
 must_not_exist_after_export:
   - docs/modules/00_preclass-tech-check/01_pre-class-directions.html
@@ -80,4 +116,14 @@ must_not_exist_after_export:
   - modules/rendered/03_continuous-data/01_histograms-and-density.html
   - practice/templates/02_categorical-data/01_counts-and-ordering-practice.qmd
   - practice/templates/03_continuous-data/01_histograms-and-density-practice.qmd
+  - practice/templates/03_categorical-data/01_counts-and-ordering-practice.qmd
+  - practice/templates/02-one-variable-and-distributions/03_continuous-practice.qmd
+  - practice/templates/day-02/01_ordered-bars-practice.qmd
+  - practice/templates/day-02/02_one-proportion-practice.qmd
+  - practice/templates/04_continuous-data/01_histograms-and-density-practice.qmd
+  - practice/templates/04-change-space-flow/01_time-trends-and-small-multiples-practice.qmd
+  - practice/templates/05-change-space-flow/01_time-trends-and-small-multiples-practice.qmd
+  - practice/templates/06-communication-and-studio/01_effective-and-honest-scales-practice.qmd
+  - data/real/exercise_eating_disorders.csv
+  - data/codebooks/exercise_eating_disorders.html
   - data/codebooks/prams_2011_selected.md

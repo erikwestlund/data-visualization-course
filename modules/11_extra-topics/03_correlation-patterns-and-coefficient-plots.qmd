@@ -1,0 +1,200 @@
+---
+title: "Extra: Correlation Patterns And Coefficient Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This optional notebook shows two model-adjacent visualization ideas:
+
+- the same correlation can hide different visual patterns
+- model coefficients can be plotted directly when the model result is the focus
+
+# Same Correlation, Different Patterns
+
+A correlation is one number. It does not show form, spread, outliers, or groups.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `group_by()`; `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+set.seed(123)
+
+correlation_examples <- tibble::tibble(
+  pattern = rep(
+    c("Linear", "Curved", "One outlier", "Two groups"),
+    each = 80
+  ),
+  x = c(
+    rnorm(80),
+    runif(80, -2, 2),
+    c(rnorm(79), 4),
+    c(rnorm(40, -1.5), rnorm(40, 1.5))
+  ),
+  y = c(
+    0.6 * x[1:80] + rnorm(80, sd = 0.8),
+    0.8 * x[81:160]^2 + rnorm(80, sd = 0.4),
+    c(rnorm(79), 4),
+    c(rnorm(40, 1.5), rnorm(40, -1.5))
+  )
+)
+
+correlation_examples |>
+  group_by(pattern) |>
+  summarize(correlation = cor(x, y), .groups = "drop")
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()`; `geom_smooth()` |
+| `geom_point()` properties | `alpha` |
+| `geom_smooth()` properties | `se`; `color` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(correlation_examples, aes(x = x, y = y)) +
+  geom_point(alpha = 0.65) +
+  geom_smooth(se = FALSE, color = "steelblue") +
+  facet_wrap(~ pattern, scales = "free") +
+  labs(
+    title = "Correlation Does Not Replace The Scatterplot",
+    x = "x",
+    y = "y"
+  ) +
+  theme_minimal()
+```
+
+The scatterplots show information that the correlations compress.
+
+# Plot A Model Coefficient Table
+
+Sometimes the model result is a set of coefficients rather than a fitted line.
+
+This example uses a simple linear model for systolic blood pressure.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+bp_model_data <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(systolic_mean),
+    !is.na(age_years),
+    !is.na(gender),
+    !is.na(family_income_to_poverty)
+  )
+
+bp_model <- lm(
+  systolic_mean ~ age_years + gender + family_income_to_poverty,
+  data = bp_model_data
+)
+
+summary(bp_model)
+```
+
+Extract the coefficient estimates and confidence intervals.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `rename()` |
+| Create or change columns | `mutate()`; `case_when()` |
+| Combine data frames | `left_join()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+coefficient_table <- as.data.frame(coef(summary(bp_model))) |>
+  tibble::rownames_to_column("term") |>
+  rename(
+    estimate = Estimate,
+    standard_error = `Std. Error`,
+    statistic = `t value`,
+    p_value = `Pr(>|t|)`
+  )
+
+interval_table <- as.data.frame(confint(bp_model)) |>
+  tibble::rownames_to_column("term") |>
+  rename(conf_low = `2.5 %`, conf_high = `97.5 %`)
+
+coefficient_plot_data <- coefficient_table |>
+  left_join(interval_table, by = "term") |>
+  filter(term != "(Intercept)") |>
+  mutate(
+    term_label = case_when(
+      term == "age_years" ~ "Age, years",
+      term == "gendermale" ~ "Gender: male",
+      term == "family_income_to_poverty" ~ "Family income-to-poverty ratio",
+      TRUE ~ term
+    ),
+    term_label = reorder(term_label, estimate)
+  )
+
+coefficient_plot_data
+```
+
+# Coefficient Plot
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `xmin`; `xmax` |
+| Geoms / stats | `geom_vline()`; `geom_errorbarh()`; `geom_point()` |
+| `geom_vline()` properties | `color`; `linetype` |
+| `geom_errorbarh()` properties | `height`; `color` |
+| `geom_point()` properties | `size`; `color` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(coefficient_plot_data, aes(x = estimate, y = term_label)) +
+  geom_vline(xintercept = 0, color = "gray60", linetype = "dashed") +
+  geom_errorbarh(aes(xmin = conf_low, xmax = conf_high), height = 0.15, color = "gray50") +
+  geom_point(size = 2.5, color = "steelblue") +
+  labs(
+    title = "Coefficient Plot For A Simple Blood Pressure Model",
+    x = "Estimated difference in mean systolic blood pressure",
+    y = NULL
+  ) +
+  theme_minimal()
+```
+
+Read this as a model summary, not raw data. Each point is an estimated coefficient from the fitted model. The interval gives a range of plausible values under the model.
+
+# Takeaways
+
+- Correlations should be paired with scatterplots.
+- Curvature, outliers, and groups can change the story.
+- Coefficient plots are useful when the model output is the object being communicated.
+- A coefficient plot needs clear labels because the terms come from a model formula.

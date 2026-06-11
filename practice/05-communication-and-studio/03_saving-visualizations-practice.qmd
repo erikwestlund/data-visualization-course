@@ -1,0 +1,53 @@
+---
+title: "Practice: Saving Visualizations"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# What We Practiced
+
+The module showed how to:
+
+- save a plot object
+- choose file type, width, height, and resolution
+- check whether labels remain readable at the final size
+- use `ggsave()` intentionally
+
+# Task
+
+Pick one dataset and create:
+
+1. one polished plot object named `final_plot`
+2. one saved PNG, PDF, or SVG file in a personal work folder
+3. a short explanation of the file type and size choices
+
+Suggested datasets:
+
+- `data/real/state_population_ranks.csv`
+- `data/real/flu_vaccination_age_time_clean.csv`
+- `data/simulated/state_enrollment_ranks.csv`
+
+Helpful module reference: `modules/10_communication-polish/03_saving-visualizations.qmd`.
+
+# Work
+
+```{r}
+# Load data and build final_plot.
+```
+
+```{r}
+#| eval: false
+# Save final_plot with ggsave().
+```
+
+# Interpretation
+
+Write briefly: why the file type and size were chosen and whether the saved version remains readable.

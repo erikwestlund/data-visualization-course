@@ -1,0 +1,480 @@
+---
+title: "Data Visualization: Day 3"
+subtitle: "Continuous Data And Diagnostic Graphics"
+author: "Erik Westlund"
+format: revealjs
+---
+
+```{r}
+#| include: false
+if (basename(getwd()) == "slides") {
+  knitr::opts_knit$set(root.dir = dirname(getwd()))
+}
+
+library(dplyr)
+library(ggplot2)
+```
+
+# Welcome Back
+
+## Today's Goals
+
+1. Describe continuous variables using center, spread, shape, and unusual values.
+2. Use histograms, density plots, boxplots, and violin plots to inspect distributions.
+3. Use quantiles to describe position and spread without assuming symmetry.
+4. Use QQ plots as a practical check for distributional assumptions.
+5. Compare raw and transformed variables to see whether structure becomes clearer.
+
+## Where We Are
+
+Day 1: workflow and first plots.
+
+Day 2: data preparation and categorical data.
+
+Day 3: continuous variables.
+
+## EDA Basics for Continuous Variables
+
+For continuous variables, ask:
+
+- What does one row represent?
+- What unit is the variable measured in?
+- What is typical?
+- How much spread is there?
+- What is the shape?
+- Are there unusual values?
+- Is the variable best analyzed in its native distribution, or should it be transformed?
+
+# Continuous One-Variable EDA
+
+## Describe The Distribution
+
+We usually describe:
+
+- center
+- spread
+- shape
+- unusual values
+
+## Center
+
+Center asks what is the most typical value in a dataset. 
+
+Common summaries:
+
+- mean
+- median
+- mode
+
+Plotting can help us see when the mean and median differ due to skew, or whether a distribution has more than one peak (e.g., it is bimodal).
+
+## Spread
+
+Spread asks how much variation there is.
+
+Common summaries:
+
+- range
+- interquartile range
+- standard deviation / variance
+
+Plots help us see whether spread is symmetric, uneven, or dominated by a few values.
+
+## Shape
+
+Shape includes:
+
+- skew
+- tails
+- gaps
+- peaks
+- heaping
+- zero inflation
+- multiple modes
+
+Without plotting, it is often hard to catch these issues.
+
+# Techniques
+
+## Histograms
+
+Histograms show how numeric values are distributed across bins.
+
+The bin width changes what you can see.
+
+- Small bins show more local detail.
+- Large bins smooth over more detail.
+- Neither is automatically correct.
+
+## Example: Histogram
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+davis <- readr::read_csv("data/real/davis_height_weight.csv") |>
+  filter(
+    !is.na(height_cm),
+    !likely_swapped_measured_values
+  )
+
+ggplot(davis, aes(x = height_cm)) +
+  geom_histogram(binwidth = 3, fill = "gray75", color = "white") +
+  labs(
+    title = "Measured Height",
+    x = "Measured height, cm",
+    y = "Number of people"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Density Plots
+
+- Density plots smooth the distribution.
+- They can make shape easier to see.
+- They are more abstract than histograms.
+
+Use them carefully with:
+
+- small samples
+- bounded variables
+- variables with impossible regions
+- conclusions that depend on small bumps
+
+## Example: Histogram And Density
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(davis, aes(x = height_cm)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    binwidth = 3,
+    fill = "gray85",
+    color = "white"
+  ) +
+  geom_density(color = "steelblue", linewidth = 1.2) +
+  labs(
+    title = "Histogram With Density Overlay",
+    x = "Measured height, cm",
+    y = "Density"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Different Displays Show Different Parts
+
+For one continuous variable, we can use several displays.
+
+- Histogram: counts in bins
+- Density plot: smoothed shape
+- Boxplot: median, middle spread, and flagged points
+- Violin plot: smoothed shape and spread together
+
+Each of these plots highlight different features of data.
+
+## Transition To Module
+
+Open:
+
+`modules/04_continuous-data/01_histograms-and-density.qmd`
+
+Watch for:
+
+- bin width
+- `mean()`, `median()`, `IQR()`, and `sd()`
+- center, spread, and shape
+- what density emphasizes differently
+
+## Practice 1: Histograms And Density
+
+Open:
+
+`practice/03-continuous-data/01_histograms-and-summaries-practice.qmd`
+
+Goal:
+
+- create histograms
+- change one numeric variable
+- change one bin width
+- explain what changed
+
+# Spread, Boxplots, And Violins
+
+## Boxplots Emphasize Spread
+
+A boxplot is a compact summary of a distribution.
+
+It shows:
+
+- the median
+- the middle 50% of values
+- the overall reach of typical values
+- points that are unusual by the boxplot rule
+
+## Example: Boxplot
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+exercise <- readr::read_csv("data/real/blackmore_davis_exercise_eating_disorders.csv") |>
+  filter(age_years == 14, !is.na(exercise_hours_per_week))
+
+ggplot(exercise, aes(x = group, y = exercise_hours_per_week)) +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.35) +
+  labs(
+    title = "Exercise Hours By Group At Age 14",
+    x = NULL,
+    y = "Exercise hours per week"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Violin Plots Emphasize Shape And Spread
+
+A violin plot uses smoothing to show where values are concentrated.
+
+It can help us see:
+
+- wide versus narrow parts of the distribution
+- skew
+- multiple peaks
+- differences in spread that a boxplot may hide
+
+But it is still a smoothed display, so small bumps should not be overinterpreted.
+
+## Example: Violin Plot
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(exercise, aes(x = group, y = exercise_hours_per_week)) +
+  geom_violin(fill = "gray85", color = "gray40") +
+  geom_boxplot(width = 0.12, outlier.shape = NA, fill = "white") +
+  labs(
+    title = "Violin Plus Boxplot",
+    x = NULL,
+    y = "Exercise hours per week"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Making Sense Of Unusual Points
+
+Start with spread:
+
+- How much do values vary?
+- Are most values tightly clustered or widely spread?
+- Are the tails short or long?
+- Does one side stretch farther than the other?
+
+## Sources Of Unusual Points
+
+Unusual values might be:
+
+- data entry problems
+- rare but real observations
+- important cases
+- signs that units or transformations need attention
+- values needing domain context
+
+## What To Do With Unusual Points
+
+Before removing anything, ask:
+
+- Is the value possible?
+- Does it influence results?
+- Does it point to a data-quality issue?
+- Does it suggest that a transformation might help?
+
+Unusual values are not necessarily problematic.
+
+## Transition To Module
+
+Open:
+
+`modules/04_continuous-data/02_boxplots-violin-plots-and-outliers.qmd`
+
+Watch for:
+
+- how boxplots connect to quartiles and IQR
+- how changing the boxplot rule changes flagged points
+- how jittered values change the interpretation
+- how violin plots show shape differently from boxplots
+
+## Practice 2: Boxplots And Unusual Values
+
+Open:
+
+`practice/03-continuous-data/02_boxplots-and-outliers-practice.qmd`
+
+Goal:
+
+- create a boxplot
+- inspect flagged values
+- change the grouping variable or boxplot rule
+- explain whether the flagged values look isolated or part of a tail
+
+# Quantiles, QQ Plots, And Transformations
+
+## Quantiles
+
+Quantiles describe positions in a distribution.
+
+Examples:
+
+- 0.25 quantile: 25% of values are at or below this point
+- 0.50 quantile: the median
+- 0.75 quantile: 75% of values are at or below this point
+
+Quantiles help us describe data without assuming the distribution is symmetric. They are extremely useful for comparing distributions.
+
+## More Than Quartiles
+
+Quartiles are useful, but we can also inspect other positions.
+
+Common choices:
+
+- 10th percentile
+- 25th percentile
+- 50th percentile
+- 75th percentile
+- 90th percentile
+
+These can show whether one tail stretches farther than the other.
+
+## QQ Plots
+
+- A QQ plot compares the quantiles of the observed data to the quantiles of a reference distribution.
+- This makes them useful for assessing the plausibility that data come from similar "data-generating mechanisms"
+- This often means asking: Is this data plausibly normally distributed? 
+- Normality is not the only diagnostic QQ plots are useful for, but we'll focus there today.
+
+## Example: QQ Plot
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+recovery <- readr::read_csv("data/real/post_coma_recovery.csv") |>
+  filter(!is.na(days_post_coma), days_post_coma > 0)
+
+ggplot(recovery, aes(sample = days_post_coma)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Days Post-Coma",
+    x = "Theoretical normal quantiles",
+    y = "Observed days post-coma quantiles"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Reading A QQ Plot
+
+- Points roughly along the line: closer to the reference distribution.
+- Curving away from the line: skew or tail differences.
+- Strong departures at the ends: unusual tails or extreme values.
+
+Do not treat a QQ plot as a pass/fail test. It is a diagnostic graphic.
+
+## Transformations
+
+Transformations can make structure easier to see.
+
+Common reasons to try one:
+
+- the variable is strongly right-skewed
+- differences are multiplicative rather than additive
+- a few large values dominate the scale
+- a normal approximation is more plausible after transformation
+
+## Log Transformations
+
+Logs are useful for positive, right-skewed variables.
+
+But:
+
+- zeros need special care
+- negative values cannot be logged directly
+- interpretation changes after transformation
+
+QQ plots can then be used to answer: "did the transformation make the structure easier to understand?"
+
+## Example: Raw And Log Scales
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+recovery_scales <- recovery |>
+  transmute(
+    `Raw days` = days_post_coma,
+    `Log days` = log(days_post_coma)
+  ) |>
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = "scale",
+    values_to = "value"
+  ) |>
+  mutate(
+    scale = factor(scale, levels = c("Raw days", "Log days"))
+  )
+
+ggplot(recovery_scales, aes(x = value)) +
+  geom_histogram(bins = 30, fill = "gray75", color = "white") +
+  facet_wrap(~ scale, scales = "free_x") +
+  labs(
+    title = "Raw And Log Days Post-Coma",
+    x = NULL,
+    y = "Number of assessments"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Transition To Module
+
+Open:
+
+`modules/04_continuous-data/03_quantiles-qq-plots-and-transformations.qmd`
+
+Watch for:
+
+- selected percentiles
+- QQ plots with `stat_qq()` and `stat_qq_line()`
+- raw versus log-transformed distributions
+- how transformations change interpretation
+
+## Practice 3: Diagnostics
+
+Open:
+
+`practice/03-continuous-data/03_quantiles-qq-transformations-practice.qmd`
+
+Goal:
+
+- create a QQ plot
+- try one variable change
+- compare raw and transformed displays
+- write a cautious interpretation
+
+# Wrap-Up
+
+## What You Should Be Able To Do
+
+After today, you should be able to:
+
+- describe center, spread, shape, and unusual values
+- explain why bin width changes a histogram
+- connect boxplots to quartiles and IQR
+- use quantiles to inspect a distribution
+- read QQ plots as practical diagnostic graphics
+- compare raw and transformed variables
+- explain why transformations change interpretation
+
+## Next Time
+
+We will move from one-variable displays to group comparisons, differences, and associations between variables.

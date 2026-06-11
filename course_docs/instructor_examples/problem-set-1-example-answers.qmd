@@ -12,24 +12,24 @@ format:
 #| warning: false
 library(dplyr)
 library(ggplot2)
-library(readr)
 
 
-prams <- read_csv("data/real/prams_2011_selected.csv")
-census_long <- read_csv("data/real/census_state_race_ethnicity_long.csv")
-state_ranks <- read_csv("data/real/state_population_ranks.csv")
-race_summary <- read_csv("data/real/state_race_population_summary.csv")
+prams <- readr::read_csv("data/real/prams_2011_selected.csv")
+census_long <- readr::read_csv("data/real/census_state_race_ethnicity_long.csv")
+state_ranks <- readr::read_csv("data/real/state_population_ranks.csv")
+race_summary <- readr::read_csv("data/real/state_race_population_summary.csv")
 ```
 
 # Task 1: Dataset Orientation
 
-For the Census race/ethnicity dataset, one row represents one race/ethnicity category within one state. The main variables used below are `state_name`, `race_ethnicity`, `race_ethnicity_population`, `total_population`, and `share`.
+For the Census race/ethnicity dataset, one row represents one race/ethnicity category within one state. The main variables used below are `state_name`, `race_ethnicity`, `race_ethnicity_population`, `total_population`, and `race_ethnicity_proportion`.
 
-A key caution is that the plotted shares are state-level summaries. They describe population composition by state, not individual people.
+A key caution is that the plotted proportions are state-level summaries. They describe population composition by state, not individual people.
 
 ```{r}
 census_long |>
-  select(state_name, race_ethnicity, race_ethnicity_population, total_population, share) |>
+  rename(race_ethnicity_proportion = share) |>
+  select(state_name, race_ethnicity, race_ethnicity_population, total_population, race_ethnicity_proportion) |>
   head(10)
 ```
 
@@ -94,30 +94,30 @@ Each plotted value is a PRAMS state/subgroup percentage, not a person-level obse
 
 # Task 4: Association Or Comparison Across Groups
 
-This plot uses `state_race_population_summary.csv` to examine whether larger states in this dataset tend to have different Hispanic/Latino population shares.
+This plot uses `state_race_population_summary.csv` to examine whether larger states in this dataset tend to have different Hispanic/Latino population proportions.
 
 ```{r}
 race_association <- race_summary |>
-  mutate(hispanic_or_latino_share_percent = share_hispanic_or_latino * 100)
+  mutate(hispanic_or_latino_proportion_percent = share_hispanic_or_latino * 100)
 
 p3 <- ggplot(
   race_association,
-  aes(x = total_population, y = hispanic_or_latino_share_percent)
+  aes(x = total_population, y = hispanic_or_latino_proportion_percent)
 ) +
   geom_point(alpha = 0.75, color = "darkorange3") +
   geom_smooth(method = "lm", se = FALSE, color = "gray30") +
   scale_x_log10() +
   labs(
-    title = "State Population Size And Hispanic/Latino Population Share",
+    title = "State Population Size And Hispanic/Latino Population Proportion",
     x = "Total population, log scale",
-    y = "Hispanic or Latino population share (%)"
+    y = "Hispanic or Latino population proportion (%)"
   ) +
   theme_minimal()
 
 p3
 ```
 
-This plot suggests whether population size and Hispanic/Latino population share move together in these state-level summaries. It should not be read as an individual-level relationship or a causal claim.
+This plot suggests whether population size and Hispanic/Latino population proportion move together in these state-level summaries. It should not be read as an individual-level relationship or a causal claim.
 
 # Task 5: Reflection
 

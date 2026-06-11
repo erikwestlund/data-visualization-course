@@ -1,0 +1,156 @@
+---
+title: "Practice: Quantiles, QQ Plots, And Transformations"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice creating quantile summaries, QQ plots, and transformed displays.
+
+# 1. Load Data
+
+```{r}
+recovery <- readr::read_csv("data/real/post_coma_recovery.csv")
+```
+
+# 2. Prepare A Right-Skewed Variable
+
+This keeps recovery assessments with positive, non-missing days post-coma.
+
+```{r}
+recovery_days <- recovery |>
+  filter(
+    !is.na(days_post_coma),
+    days_post_coma > 0
+  )
+
+recovery_days |>
+  select(patient_id, sex, age_at_injury_years, coma_duration_days, days_post_coma) |>
+  head()
+```
+
+Try adding `filter(coma_duration_days > 0)` to focus on patients with recorded coma duration.
+
+# 3. Selected Quantiles
+
+These summaries calculate several percentiles.
+
+```{r}
+recovery_days |>
+  summarize(
+    p10 = quantile(days_post_coma, 0.10),
+    p25 = quantile(days_post_coma, 0.25),
+    p50 = quantile(days_post_coma, 0.50),
+    p75 = quantile(days_post_coma, 0.75),
+    p90 = quantile(days_post_coma, 0.90)
+  )
+```
+
+Try adding another percentile, such as `p95 = quantile(days_post_coma, 0.95)`.
+
+# 4. Raw Histogram
+
+This histogram shows the raw days scale.
+
+```{r}
+ggplot(recovery_days, aes(x = days_post_coma)) +
+  geom_histogram(binwidth = 250, fill = "gray75", color = "white") +
+  labs(
+    title = "Days Post-Coma At Assessment",
+    x = "Days post-coma",
+    y = "Number of assessments"
+  ) +
+  theme_minimal()
+```
+
+Try changing binwidth. Try smaller and larger values. What works best?
+
+# 5. Raw QQ Plot
+
+This QQ plot compares the raw variable to a normal reference distribution.
+
+```{r}
+ggplot(recovery_days, aes(sample = days_post_coma)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Days Post-Coma",
+    x = "Theoretical normal quantiles",
+    y = "Observed days post-coma quantiles"
+  ) +
+  theme_minimal()
+```
+
+Write briefly: do the points stay near the line, curve away, or depart strongly in the tails?
+
+What does this tell us about the distribution?
+
+# 6. Log Transformation
+
+This creates a log-transformed version of the same variable.
+
+```{r}
+recovery_log <- recovery_days |>
+  mutate(
+    log_days_post_coma = log(days_post_coma)
+  )
+
+recovery_log |>
+  select(days_post_coma, log_days_post_coma) |>
+  head()
+```
+
+# 7. Log Histogram
+
+This histogram shows the transformed variable.
+
+```{r}
+ggplot(recovery_log, aes(x = log_days_post_coma)) +
+  geom_histogram(binwidth = 0.1, fill = "gray75", color = "white") +
+  labs(
+    title = "Log Days Post-Coma At Assessment",
+    x = "Log days post-coma",
+    y = "Number of assessments"
+  ) +
+  theme_minimal()
+```
+
+Try changing `binwidth = 0.1` to `binwidth = 0.2`.
+
+# 8. Log QQ Plot
+
+This QQ plot compares the transformed variable to a normal reference distribution.
+
+```{r}
+ggplot(recovery_log, aes(sample = log_days_post_coma)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Log Days Post-Coma",
+    x = "Theoretical normal quantiles",
+    y = "Observed log days post-coma quantiles"
+  ) +
+  theme_minimal()
+
+```
+
+Write briefly: did the log transformation make the QQ plot closer to the reference line?
+
+# On Your Own
+
+Choose one small task:
+
+- Create a QQ plot for `coma_duration_days`.
+- Repeat the quantile summary for `performance_iq`.
+- Try a log transformation for another positive variable and decide whether it helps.
+
+Write 2-3 sentences comparing the raw and transformed displays. Use cautious language: "seems," "suggests," or "appears" is better than a pass/fail claim.

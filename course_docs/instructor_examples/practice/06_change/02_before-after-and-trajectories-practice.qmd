@@ -11,13 +11,12 @@ format:
 knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 # Worked Reference
 
 ```{r}
-diary <- read_csv("data/real/migraine_headache_diary.csv", show_col_types = FALSE)
+diary <- readr::read_csv("data/real/migraine_headache_diary.csv")
 
 daily_summary <- diary |>
   filter(!is.na(day), !is.na(medication), !is.na(headache_reported)) |>

@@ -16,3 +16,4 @@ format:
     code-tools: false
     embed-resources: true
     highlight-style: github
+    css: styles.css

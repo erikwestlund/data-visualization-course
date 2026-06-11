@@ -1,0 +1,301 @@
+---
+title: "Color, Accessibility, And Highlighting"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how color can encode groups, highlight a comparison, or create clutter.
+
+# Analytic Questions
+
+- When should color encode data?
+- When should color highlight one category?
+- How can filtering or highlighting reduce legend work?
+
+# Load Data
+
+```{r}
+census <- readr::read_csv("data/real/census_state_race_ethnicity_long.csv")
+```
+
+# Prepare Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+selected_states <- census |>
+  filter(state %in% c("CA", "FL", "MA", "MD", "TX", "WA")) |>
+  mutate(proportion_percent = share * 100)
+```
+
+# Color Encodes Categories
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `fill` |
+| Geoms / stats | `geom_col()` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  selected_states,
+  aes(x = state_name, y = proportion_percent, fill = race_ethnicity)
+) +
+  geom_col()
+
+p2 <- p1 +
+  labs(
+    title = "Population Composition In Selected States",
+    x = NULL,
+    y = "Population share (%)",
+    fill = "Race/ethnicity"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+This uses color to encode several categories. It works, but the reader has to use the legend constantly.
+
+# Highlight One Category
+
+When the question is about one category, highlight that category and mute the rest.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()`; `if_else()` |
+| Count or summarize | `group_by()`; `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `scale_fill_manual()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+asian_share <- selected_states |>
+  mutate(
+    highlight = if_else(race_ethnicity == "Asian", "Asian", "Other categories")
+  ) |>
+  group_by(state_name, highlight) |>
+  summarize(
+    proportion_percent = sum(proportion_percent),
+    .groups = "drop"
+  )
+
+p1 <- ggplot(asian_share, aes(x = state_name, y = proportion_percent, fill = highlight)) +
+  geom_col(position = "stack")
+
+p2 <- p1 +
+  scale_fill_manual(values = c("Asian" = "steelblue", "Other categories" = "gray85")) +
+  labs(
+    title = "Highlighting One Category Changes The Reading Task",
+    subtitle = "Asian population share highlighted within selected states",
+    x = NULL,
+    y = "Population share (%)",
+    fill = NULL
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Direct Comparison Without Stacking
+
+If the task is comparing one category across states, plot only that category.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| `geom_col()` properties | `fill` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+asian_only <- selected_states |>
+  filter(race_ethnicity == "Asian") |>
+  mutate(state_name = reorder(state_name, proportion_percent))
+
+p1 <- ggplot(asian_only, aes(x = state_name, y = proportion_percent)) +
+  geom_col(fill = "steelblue")
+
+p2 <- p1 +
+  coord_flip() +
+  labs(
+    title = "Asian Population Share In Selected States",
+    x = NULL,
+    y = "Population share (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Match Palette To Data Type
+
+Different data types need different color jobs.
+
+- Qualitative palettes distinguish categories.
+- Sequential palettes show low-to-high values.
+- Diverging palettes show values around a meaningful middle point.
+
+# Sequential Color
+
+Sequential color works for ordered numeric values.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `fill` |
+| Geoms / stats | `geom_bar()` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_fill_viridis_c()`; `scale_y_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+state_population <- readr::read_csv("data/real/state_population_ranks.csv") |>
+  filter(rank <= 20) |>
+  mutate(state_name = reorder(state_name, population))
+
+ggplot(state_population, aes(x = state_name, y = population, fill = population)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_viridis_c(
+    option = "C",
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Sequential Color Shows Larger And Smaller Values",
+    x = NULL,
+    y = "Population",
+    fill = "Population"
+  ) +
+  theme_minimal()
+```
+
+Sequential palettes are useful when color supports a numeric scale. They are not a substitute for position; here, bar length still does most of the work.
+
+# Diverging Color
+
+Diverging color is useful when zero or another middle value matters.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+| Sort rows | `arrange()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color`; `xend`; `yend` |
+| Geoms / stats | `geom_hline()`; `geom_segment()`; `geom_point()` |
+| `geom_hline()` properties | `color` |
+| `geom_segment()` properties | `color` |
+| `geom_point()` properties | `size` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_color_gradient2()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+difference_example <- tibble::tibble(
+  clinic = c("Clinic A", "Clinic B", "Clinic C", "Clinic D", "Clinic E", "Clinic F"),
+  difference = c(-8, -3, 1, 4, 7, 11)
+) |>
+  arrange(difference) |>
+  mutate(clinic = factor(clinic, levels = clinic))
+
+ggplot(difference_example, aes(x = clinic, y = difference, color = difference)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_segment(aes(xend = clinic, y = 0, yend = difference), color = "gray75") +
+  geom_point(size = 3) +
+  coord_flip() +
+  scale_color_gradient2(
+    low = "firebrick",
+    mid = "gray60",
+    high = "steelblue",
+    midpoint = 0
+  ) +
+  labs(
+    title = "Diverging Color Supports A Difference Plot",
+    x = NULL,
+    y = "Percentage-point difference",
+    color = "Difference"
+  ) +
+  theme_minimal()
+```
+
+Use diverging color only when the middle point has a real interpretation.
+
+# Accessibility Checks
+
+Before calling a figure done, ask:
+
+- Does the plot still work in grayscale?
+- Are important differences also shown by position, labels, shape, or line type?
+- Is the contrast strong enough for projection or printing?
+- Is the legend doing too much work?
+- Would direct labels or highlighting be clearer?
+
+# Takeaways
+
+- Use color when it carries information or directs attention.
+- Too many colors can make the legend do too much work.
+- Highlighting is useful when one category is central.
+- Sequential, diverging, and qualitative palettes have different jobs.
+- Do not rely on color alone; use labels, ordering, contrast, or filtering so the figure still works without color.
+- Sometimes the clearest color choice is a single color plus careful filtering.

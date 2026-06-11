@@ -1,0 +1,220 @@
+---
+title: "dplyr And tidyr Dictionary And Cheatsheet"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+# Goal
+
+This notebook is a compact dictionary of the `dplyr` and `tidyr` functions used in this course.
+
+Use it as a reference when a module asks you to filter rows, select columns, create new variables, summarize data, join data frames, or reshape data.
+
+It is not a complete `dplyr` or `tidyr` reference. For the full references, use the official documentation:
+
+- [`dplyr` reference index](https://dplyr.tidyverse.org/reference/)
+- [`tidyr` reference index](https://tidyr.tidyverse.org/reference/)
+- [`dplyr` cheatsheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html)
+- [`tidyr` cheatsheet](https://rstudio.github.io/cheatsheets/html/tidyr.html)
+
+# Core Structure
+
+| Function or component | What it is for | Documentation |
+|---|---|---|
+| `|>` | Sends the result on the left into the next function. This is the base R pipe, not a `dplyr` function. | [Base R pipe](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pipeOp.html) |
+| `glimpse()` | Prints a compact view of column names, types, and example values. | [`glimpse()`](https://pillar.r-lib.org/reference/glimpse.html) |
+| `head()` | Shows the first rows of an object. This is a base R function, not a `dplyr` function. | [`head()`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/head.html) |
+
+# Keep Or Remove Rows
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `filter()` | Keeps rows that match one or more conditions. | [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) |
+| `distinct()` | Keeps unique rows or unique combinations of selected columns. | [`distinct()`](https://dplyr.tidyverse.org/reference/distinct.html) |
+| `slice_head()` | Keeps the first rows within the current data frame or group. | [`slice()` family](https://dplyr.tidyverse.org/reference/slice.html) |
+| `slice_max()` | Keeps rows with the largest values of a variable. | [`slice()` family](https://dplyr.tidyverse.org/reference/slice.html) |
+
+# Choose Or Rename Columns
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `select()` | Keeps, drops, or reorders columns. | [`select()`](https://dplyr.tidyverse.org/reference/select.html) |
+| `rename()` | Changes column names while keeping the data. | [`rename()`](https://dplyr.tidyverse.org/reference/rename.html) |
+| `everything()` | Selects all remaining columns, often after naming a few columns first. | [`everything()`](https://tidyselect.r-lib.org/reference/everything.html) |
+
+# Create Or Change Columns
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `mutate()` | Adds new columns or changes existing columns. | [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) |
+| `transmute()` | Creates new columns and keeps only those new columns. | [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html) |
+| `case_when()` | Creates values from multiple conditions. Useful for recoding into categories. | [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html) |
+| `if_else()` | Creates values from one true/false condition. | [`if_else()`](https://dplyr.tidyverse.org/reference/if_else.html) |
+
+# Count Or Summarize
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `count()` | Counts rows by one or more variables. | [`count()`](https://dplyr.tidyverse.org/reference/count.html) |
+| `group_by()` | Defines groups for later summaries or within-group operations. | [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) |
+| `summarize()` / `summarise()` | Reduces many rows into summary values. | [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html) |
+| `n()` | Counts rows inside `summarize()`, `mutate()`, or `filter()` contexts. | [`context()` helpers](https://dplyr.tidyverse.org/reference/context.html) |
+| `n_distinct()` | Counts unique values. | [`n_distinct()`](https://dplyr.tidyverse.org/reference/n_distinct.html) |
+| `ungroup()` | Removes grouping from a grouped data frame. | [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) |
+
+# Sort Rows
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `arrange()` | Sorts rows. | [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) |
+| `desc()` | Sorts a variable in descending order, usually inside `arrange()`. | [`desc()`](https://dplyr.tidyverse.org/reference/desc.html) |
+
+# Combine Data Frames
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `left_join()` | Adds columns from another data frame by matching key columns; keeps all rows from the left data frame. | [`mutate-joins`](https://dplyr.tidyverse.org/reference/mutate-joins.html) |
+| `inner_join()` | Keeps rows with matching keys in both data frames. | [`mutate-joins`](https://dplyr.tidyverse.org/reference/mutate-joins.html) |
+| `right_join()` | Adds columns by matching keys; keeps all rows from the right data frame. | [`mutate-joins`](https://dplyr.tidyverse.org/reference/mutate-joins.html) |
+| `full_join()` | Keeps all rows from both data frames. | [`mutate-joins`](https://dplyr.tidyverse.org/reference/mutate-joins.html) |
+| `bind_rows()` | Stacks data frames on top of each other. | [`bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html) |
+
+# Reshape Data
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `pivot_longer()` | Makes data longer by moving column names into a variable and column values into another variable. | [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html) |
+| `pivot_wider()` | Makes data wider by spreading values across columns. | [`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) |
+
+# Common Patterns From This Course
+
+## Inspect A Data Frame
+
+Use `glimpse()`:
+
+```r
+data |>
+  glimpse()
+```
+
+## Keep Relevant Columns
+
+Use `select()`:
+
+```r
+data |>
+  select(id, group, outcome)
+```
+
+## Keep Relevant Rows
+
+Use `filter()`:
+
+```r
+data |>
+  filter(!is.na(outcome))
+```
+
+## Create A New Variable
+
+Use `mutate()`:
+
+```r
+data |>
+  mutate(rate_percent = rate * 100)
+```
+
+## Recode Into Categories
+
+Use `mutate()` with `case_when()`:
+
+```r
+data |>
+  mutate(
+    group_label = case_when(
+      value < 10 ~ "Low",
+      value < 20 ~ "Middle",
+      TRUE ~ "High"
+    )
+  )
+```
+
+## Count Categories
+
+Use `count()`:
+
+```r
+data |>
+  count(group, sort = TRUE)
+```
+
+## Summarize By Group
+
+Use `group_by()` with `summarize()`:
+
+```r
+data |>
+  group_by(group) |>
+  summarize(
+    mean_value = mean(value),
+    n = n(),
+    .groups = "drop"
+  )
+```
+
+## Sort A Summary Table
+
+Use `arrange()` with `desc()`:
+
+```r
+summary_data |>
+  arrange(desc(mean_value))
+```
+
+## Join A Lookup Table
+
+Use `left_join()`:
+
+```r
+data |>
+  left_join(lookup_table, by = "id")
+```
+
+## Make Data Longer
+
+Use `pivot_longer()`:
+
+```r
+data |>
+  pivot_longer(
+    cols = c(measure_a, measure_b),
+    names_to = "measure",
+    values_to = "value"
+  )
+```
+
+## Make Data Wider
+
+Use `pivot_wider()`:
+
+```r
+data |>
+  pivot_wider(
+    names_from = group,
+    values_from = value
+  )
+```
+
+# What To Look Up Next
+
+When you need something not listed here, start with the official [`dplyr` reference index](https://dplyr.tidyverse.org/reference/) or [`tidyr` reference index](https://tidyr.tidyverse.org/reference/).
+
+Look up functions by the action you need:
+
+- row operations: `filter()`, `arrange()`, `slice_*()`, `distinct()`
+- column operations: `select()`, `rename()`, `mutate()`
+- summaries: `count()`, `group_by()`, `summarize()`
+- reshaping: `pivot_longer()`, `pivot_wider()`
+- combining data: joins and `bind_rows()`

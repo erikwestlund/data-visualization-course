@@ -1,0 +1,32 @@
+/* Shared styles for course teaching annotations. */
+
+.plot-anatomy,
+.data-prep-anatomy {
+  font-size: 0.9em;
+  line-height: 1.25;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+p + .plot-anatomy,
+p + .data-prep-anatomy {
+  margin-top: 1.25rem;
+}
+
+.plot-anatomy p,
+.data-prep-anatomy p {
+  margin-bottom: 0.15rem;
+}
+
+.plot-anatomy table,
+.data-prep-anatomy table {
+  margin-top: 0.15rem;
+  margin-bottom: 0.6rem;
+}
+
+.plot-anatomy table th,
+.plot-anatomy table td,
+.data-prep-anatomy table th,
+.data-prep-anatomy table td {
+  padding: 0.2rem 0.35rem;
+}

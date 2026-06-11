@@ -1,0 +1,684 @@
+---
+title: "Quantiles, QQ Plots, And Transformations"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows a practical diagnostic workflow for continuous variables.
+
+We focus on:
+
+- selected quantiles
+- QQ plots
+- raw versus transformed variables
+
+Our goal here is to learn graphics and summaries that help us understand the structure of a continuous variable.
+
+# Analytic Questions
+
+We will use the NHANES teaching file and a country-level income file to ask:
+
+- Where are common percentiles of a numeric variable?
+- Does a normal approximation seem reasonable?
+- Does a log transformation make a right-skewed variable easier to inspect?
+
+# Load Data
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+nhanes |>
+  glimpse()
+```
+
+Each row is one participant in the joined NHANES teaching file.
+
+NHANES is a complex survey. In this course, these are exploratory sample visualizations, not national estimates.
+
+# Prepare Data
+
+First, keep adults with a non-missing mean systolic blood pressure value.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(systolic_mean)
+  )
+
+adult_bp |>
+  select(respondent_id, age_years, gender, age_group, systolic_mean) |>
+  head()
+```
+
+# Quantiles
+
+Quantiles describe positions in a distribution.
+
+The median is the 0.50 quantile: 50% of values are at or below that point.
+
+Quantiles are useful because they do not require the distribution to be symmetric. They also connect directly to boxplots and QQ plots.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp |>
+  summarize(
+    p10 = quantile(systolic_mean, 0.10),
+    p25 = quantile(systolic_mean, 0.25),
+    p50 = quantile(systolic_mean, 0.50),
+    p75 = quantile(systolic_mean, 0.75),
+    p90 = quantile(systolic_mean, 0.90)
+  )
+```
+
+The 25th, 50th, and 75th percentiles are also called quartiles.
+
+The interquartile range is the distance between the 75th and 25th percentiles.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp |>
+  summarize(
+    q1 = quantile(systolic_mean, 0.25),
+    median = median(systolic_mean),
+    q3 = quantile(systolic_mean, 0.75),
+    iqr = IQR(systolic_mean)
+  )
+```
+
+# Compare Mean And Median
+
+The mean and median can tell different stories when a variable is skewed.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp |>
+  summarize(
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    difference = mean_systolic - median_systolic
+  )
+```
+
+For a roughly symmetric distribution, the mean and median are often close. When one tail stretches farther, the mean can be pulled toward that tail.
+
+This is one reason we emphasize looking at the data before trusting one-number summaries. A single center can be useful, but it can also hide skew, tails, or multiple groups.
+
+# QQ Plots
+
+A QQ plot compares the quantiles of the observed data to the quantiles of a reference distribution.
+
+Here, the reference is a normal distribution. The practical question is:
+
+Does a normal model seem like a reasonable approximation for this variable?
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `sample` |
+| Geoms / stats | `stat_qq()`; `stat_qq_line()` |
+| `stat_qq_line()` properties | `color`; `linewidth` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(adult_bp, aes(sample = systolic_mean)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Adult Mean Systolic Blood Pressure",
+    x = "Theoretical normal quantiles",
+    y = "Observed systolic blood pressure quantiles"
+  ) +
+  theme_minimal()
+```
+
+Read this as a diagnostic graphic, not a pass/fail test.
+
+- Points roughly along the line suggest the variable is closer to the reference distribution.
+- Curving away from the line suggests skew or tail differences.
+- Strong departures at the ends suggest unusual tails or extreme values.
+
+# Common QQ Plot Patterns
+
+Before using QQ plots with real data, it helps to see a few simple patterns.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `everything()` |
+| Create or change columns | `mutate()` |
+| Reshape data | `pivot_longer()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| `stat_qq()` properties | `alpha`; `size` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+set.seed(123)
+
+qq_examples <- data.frame(
+  roughly_normal = rnorm(500),
+  right_skewed = exp(rnorm(500)),
+  left_skewed = -exp(rnorm(500)),
+  heavy_tails = rt(500, df = 3)
+) |>
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = "pattern",
+    values_to = "value"
+  ) |>
+  mutate(
+    pattern = factor(
+      pattern,
+      levels = c("roughly_normal", "right_skewed", "left_skewed", "heavy_tails"),
+      labels = c("Roughly normal", "Right-skewed", "Left-skewed", "Heavy tails")
+    )
+  )
+
+ggplot(qq_examples, aes(sample = value)) +
+  stat_qq(alpha = 0.5, size = 0.8) +
+  stat_qq_line(color = "firebrick", linewidth = 0.8) +
+  facet_wrap(~ pattern, scales = "free") +
+  labs(
+    title = "Common QQ Plot Patterns",
+    x = "Theoretical normal quantiles",
+    y = "Observed quantiles"
+  ) +
+  theme_minimal()
+```
+
+These are simplified examples. Real data will usually be messier. These examples should help us build intuition for how qqplots work.
+# A Right-Skewed Variable
+
+Mean daily energy intake is more strongly right-skewed.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Count or summarize | `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+diet <- nhanes |>
+  filter(!is.na(mean_daily_energy_kcal))
+
+diet |>
+  summarize(
+    n = n(),
+    mean_energy = mean(mean_daily_energy_kcal),
+    median_energy = median(mean_daily_energy_kcal),
+    p10 = quantile(mean_daily_energy_kcal, 0.10),
+    p90 = quantile(mean_daily_energy_kcal, 0.90),
+    min_energy = min(mean_daily_energy_kcal),
+    max_energy = max(mean_daily_energy_kcal)
+  )
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+| Geoms / stats | `geom_histogram()` |
+| `geom_histogram()` properties | `fill`; `color` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(diet, aes(x = mean_daily_energy_kcal)) +
+  geom_histogram(binwidth = 250, fill = "gray75", color = "white") +
+  labs(
+    title = "Mean Daily Energy Intake",
+    x = "Mean daily energy intake, kcal",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+The right tail stretches farther than the left side of the distribution.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `sample` |
+| Geoms / stats | `stat_qq()`; `stat_qq_line()` |
+| `stat_qq_line()` properties | `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(diet, aes(sample = mean_daily_energy_kcal)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Mean Daily Energy Intake",
+    x = "Theoretical normal quantiles",
+    y = "Observed energy intake quantiles"
+  ) +
+  theme_minimal()
+```
+
+You can see here hwo the tail "lifts off" in the QQ-plot -- this tells us that the measure is not symmetric, but right skewed.
+
+# Try A Log Transformation
+
+For positive, right-skewed variables, a log transformation can sometimes make the structure easier to inspect.
+
+This does not automatically make the data "better." It changes the scale and the interpretation.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `select()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+diet_log <- diet |>
+  mutate(
+    log_energy = log(mean_daily_energy_kcal)
+  )
+
+diet_log |>
+  select(mean_daily_energy_kcal, log_energy) |>
+  head()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+| Geoms / stats | `geom_histogram()` |
+| `geom_histogram()` properties | `fill`; `color` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(diet_log, aes(x = log_energy)) +
+  geom_histogram(binwidth = 0.1, fill = "gray75", color = "white") +
+  labs(
+    title = "Log Mean Daily Energy Intake",
+    x = "Log mean daily energy intake",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `sample` |
+| Geoms / stats | `stat_qq()`; `stat_qq_line()` |
+| `stat_qq_line()` properties | `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(diet_log, aes(sample = log_energy)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Log Mean Daily Energy Intake",
+    x = "Theoretical normal quantiles",
+    y = "Observed log energy intake quantiles"
+  ) +
+  theme_minimal()
+```
+
+Compare the raw and log versions.
+
+Ask:
+
+- Did the histogram become more symmetric?
+- Did the QQ plot move closer to the reference line?
+- Did the transformation make the variable easier to summarize?
+- Is the transformed scale still meaningful for the question?
+
+Also note the warning that we removed 7 rows because they were non-fininte -- this is because we log-transformed 0 values:
+
+```{r}
+log(1)
+log(0)
+log(-1)
+```
+
+This is a thorny aspect of log transformations: you can't take a log of a negative number or 0 because they are undefined.
+
+# Show Both Scales Together
+
+Faceting can help compare the two versions.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `select()` |
+| Create or change columns | `mutate()` |
+| Reshape data | `pivot_longer()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+| Geoms / stats | `geom_histogram()` |
+| `geom_histogram()` properties | `fill`; `color` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+energy_long <- diet_log |>
+  select(mean_daily_energy_kcal, log_energy) |>
+  tidyr::pivot_longer(
+    cols = c(mean_daily_energy_kcal, log_energy),
+    names_to = "scale",
+    values_to = "value"
+  ) |>
+  mutate(
+    scale = factor(
+      scale,
+      levels = c("mean_daily_energy_kcal", "log_energy"),
+      labels = c("Raw kcal", "Log kcal")
+    )
+  )
+
+ggplot(energy_long, aes(x = value)) +
+  geom_histogram(bins = 30, fill = "gray75", color = "white") +
+  facet_wrap(~ scale, scales = "free_x") +
+  labs(
+    title = "Raw And Log Energy Intake",
+    x = NULL,
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+The x-axis changes across panels because the units changed. That is the point of the transformation, but it also means the two panels should not be read as if they are on the same scale.
+
+# Another Example: Income Quantiles
+
+Quantiles are especially useful for skewed variables like income, where a few high values can stretch the scale.
+
+This file has one row per country.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+country_income <- readr::read_csv("data/real/infant_mortality_countries.csv") |>
+  filter(!is.na(income_usd_per_capita))
+
+country_income |>
+  select(country_name, region, income_usd_per_capita) |>
+  head()
+```
+
+Selected quantiles give us landmarks across the distribution.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+country_income |>
+  summarize(
+    p10 = quantile(income_usd_per_capita, 0.10),
+    p25 = quantile(income_usd_per_capita, 0.25),
+    p50 = quantile(income_usd_per_capita, 0.50),
+    p75 = quantile(income_usd_per_capita, 0.75),
+    p90 = quantile(income_usd_per_capita, 0.90)
+  )
+```
+
+Read this as: 90% of countries are at or below the 90th percentile, and 10% are above it.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+country_income |>
+  summarize(
+    mean_income = mean(income_usd_per_capita),
+    median_income = median(income_usd_per_capita),
+    difference = mean_income - median_income
+  )
+```
+
+When the mean is much higher than the median, that is a clue that the upper tail is pulling the average upward.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(country_income, aes(x = income_usd_per_capita)) +
+  geom_histogram(
+    binwidth = 500,
+    boundary = 0,
+    fill = "gray75",
+    color = "white"
+  ) +
+  scale_x_continuous(labels = scales::label_dollar()) +
+  labs(
+    title = "Per-Capita Income Across Countries",
+    x = "Per-capita income, U.S. dollars",
+    y = "Number of countries"
+  ) +
+  theme_minimal()
+```
+
+The histogram shows the usual income pattern: many observations are in the lower and middle part of the scale, with a long right tail of higher-income countries.
+
+The QQ plot shows the same structure from another angle.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `sample` |
+| Geoms / stats | `stat_qq()`; `stat_qq_line()` |
+| `stat_qq_line()` properties | `color`; `linewidth` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(country_income, aes(sample = income_usd_per_capita)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Per-Capita Income",
+    x = "Theoretical normal quantiles",
+    y = "Observed income quantiles"
+  ) +
+  theme_minimal()
+```
+
+The high-income countries lift the right side of the QQ plot above the line. This is consistent with a right-skewed distribution and a long upper tail.
+
+For positive income variables, a log transformation is common. Income differences are often multiplicative: a country with twice the income is often more meaningful than a country with a fixed dollar amount more income.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+| Geoms / stats | `geom_histogram()` |
+| `geom_histogram()` properties | `fill`; `color` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+country_income_log <- country_income |>
+  filter(income_usd_per_capita > 0) |>
+  mutate(
+    log_income = log(income_usd_per_capita)
+  )
+
+ggplot(country_income_log, aes(x = log_income)) +
+  geom_histogram(binwidth = 0.25, fill = "gray75", color = "white") +
+  labs(
+    title = "Log Per-Capita Income Across Countries",
+    x = "Log per-capita income",
+    y = "Number of countries"
+  ) +
+  theme_minimal()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `sample` |
+| Geoms / stats | `stat_qq()`; `stat_qq_line()` |
+| `stat_qq_line()` properties | `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(country_income_log, aes(sample = log_income)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Log Per-Capita Income",
+    x = "Theoretical normal quantiles",
+    y = "Observed log income quantiles"
+  ) +
+  theme_minimal()
+```
+
+The log transformation may make the distribution easier to summarize and compare, but it also changes the interpretation. On the log scale, equal distances correspond to multiplicative differences on the original income scale.
+
+# Application: Regression Residuals
+
+QQ plots are also used after fitting regression models.
+
+For many regression tasks, the normality assumption is about the errors around the fitted line, not about whether the outcome variable itself is normally distributed. Residuals are the observed version of those errors.
+
+Here is a simple example predicting systolic blood pressure from age.
+
+```{r}
+bp_age_model <- lm(systolic_mean ~ age_years, data = adult_bp)
+
+summary(bp_age_model)
+```
+
+We can put the model residuals in a data frame and inspect them with a QQ plot.
+
+```{r}
+bp_residuals <- data.frame(
+  residual = resid(bp_age_model)
+)
+
+ggplot(bp_residuals, aes(sample = residual)) +
+  stat_qq() +
+  stat_qq_line(color = "firebrick", linewidth = 1) +
+  labs(
+    title = "QQ Plot Of Regression Residuals",
+    x = "Theoretical normal quantiles",
+    y = "Observed residual quantiles"
+  ) +
+  theme_minimal()
+```
+
+This is a diagnostic for the model, not a test of whether blood pressure itself is normal. If residuals are close to the line, it is more plausible that the errors are normally distributed. If the points bend away from the line, especially at the ends, we should be more cautious about using the model for confidence intervals and other tests that require this assumption.
+
+# Takeaways
+
+- Quantiles describe positions in a distribution.
+- The IQR is the distance between Q3 and Q1.
+- QQ plots are practical diagnostic graphics, not pass/fail tests.
+- Right-skewed positive variables are common candidates for log transformations.
+- A transformation changes interpretation, so compare raw and transformed displays before deciding what to use.
+- In regression, QQ plots are often used to inspect residuals.

@@ -1,0 +1,374 @@
+---
+title: "Model Output Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to visualize simple model output.
+
+# Analytic Questions
+
+- How is age associated with systolic blood pressure?
+- How can a fitted line be shown with the observed data?
+- How can predicted values help communicate a model result?
+- How can a plot make a model interaction easier to interpret?
+- How can we visualize an interaction between two continuous variables?
+
+# Load Data
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+```
+
+# Prepare Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Count or summarize | `count()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(age_years),
+    !is.na(systolic_mean),
+    !is.na(gender)
+  )
+
+adult_bp |>
+  count(gender)
+```
+
+# Data First
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = age_years, y = systolic_mean)) +
+  geom_point(alpha = 0.15)
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_smooth()` |
+| `geom_smooth()` properties | `method = "lm"`; `se`; `color` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_smooth(method = "lm", se = TRUE, color = "steelblue") +
+  labs(
+    title = "Age And Systolic Blood Pressure",
+    subtitle = "Points show observations; the line summarizes a linear fit",
+    x = "Age (years)",
+    y = "Mean systolic blood pressure"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+It is worth experimenting with the `alpha` value on scatterplots. Transparency is a powerful way to let users see where points are clustering, because the dots get "heavy."
+
+# Fit A Simple Model
+
+```{r}
+bp_model <- lm(systolic_mean ~ age_years + gender, data = adult_bp)
+
+summary(bp_model)
+```
+
+This model assumes the age slope is the same for each gender group. If we wanted different slopes by gender, we would need an interaction: `age_years * gender`.
+
+# Plot Predictions
+
+Predicted values are often more intuitive and informative when plotted than a coefficient table.
+
+`expand.grid` is a way to create a matrix of combinations of two values, which is useful for applications like this.
+
+```{r}
+prediction_grid <- expand.grid(
+  age_years = seq(20, 80, by = 5),
+  gender = sort(unique(adult_bp$gender))
+)
+
+prediction_grid
+
+predictions <- predict(
+  bp_model,
+  newdata = prediction_grid,
+  interval = "confidence"
+)
+
+prediction_data <- bind_cols(
+  prediction_grid,
+  as.data.frame(predictions)
+)
+
+head(prediction_data)
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color`; `fill`; `ymin`; `ymax` |
+| Geoms / stats | `geom_ribbon()`; `geom_line()` |
+| `geom_ribbon()` properties | `alpha`; `color` |
+| `geom_line()` properties | `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(prediction_data, aes(x = age_years, y = fit, color = gender, fill = gender)) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.15, color = NA) +
+  geom_line(linewidth = 1)
+
+p2 <- p1 +
+  labs(
+    title = "Predicted Systolic Blood Pressure By Age And Gender",
+    subtitle = "Predictions come from a simple linear model fit to adult NHANES observations",
+    x = "Age (years)",
+    y = "Predicted mean systolic blood pressure",
+    color = "Gender",
+    fill = "Gender"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Show Observed Data
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_point()`; `geom_line()` |
+| `geom_point()` properties | `alpha` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = age_years, y = systolic_mean)) +
+  geom_point(aes(color = gender), alpha = 0.08) +
+  geom_line(
+    data = prediction_data,
+    aes(x = age_years, y = fit, color = gender),
+    linewidth = 1
+  )
+
+p2 <- p1 +
+  labs(
+    title = "Model Summaries Should Stay Connected To The Data",
+    x = "Age (years)",
+    y = "Mean systolic blood pressure",
+    color = "Gender"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Plot An Interaction
+
+An interaction lets the age slope differ by gender. In formula notation, `age_years * gender` expands to `age_years + gender + age_years:gender`.
+
+The coefficient table can tell us that an interaction is in the model, but a prediction plot makes the pattern easier to inspect.
+
+```{r}
+bp_interaction_model <- lm(systolic_mean ~ age_years * gender, data = adult_bp)
+
+summary(bp_interaction_model)
+```
+
+Use the same prediction grid as before, but ask for predictions from the interaction model.
+
+```{r}
+interaction_predictions <- predict(
+  bp_interaction_model,
+  newdata = prediction_grid,
+  interval = "confidence"
+)
+
+interaction_prediction_data <- bind_cols(
+  prediction_grid,
+  as.data.frame(interaction_predictions)
+)
+
+head(interaction_prediction_data)
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `ymin`; `ymax`; `fill`; `y`; `color` |
+| Geoms / stats | `geom_ribbon()`; `geom_line()` |
+| `geom_ribbon()` properties | `alpha`; `color` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot() +
+  geom_ribbon(
+    data = interaction_prediction_data,
+    aes(x = age_years, ymin = lwr, ymax = upr, fill = gender),
+    alpha = 0.12,
+    color = NA,
+    inherit.aes = FALSE
+  ) +
+  geom_line(
+    data = interaction_prediction_data,
+    aes(x = age_years, y = fit, color = gender),
+    linewidth = 1
+  ) +
+  labs(
+    title = "Interaction Model: Age Slope Can Differ By Gender",
+    subtitle = "Predictions come from systolic_mean ~ age_years * gender",
+    x = "Age (years)",
+    y = "Mean systolic blood pressure",
+    color = "Gender",
+    fill = "Gender"
+  ) +
+  theme_minimal()
+```
+
+This is the same visualization strategy as before: plot raw data, create prediction data, and draw the model result. The difference is that the model now allows the fitted lines to have different slopes.
+
+# Plot A Continuous-By-Continuous Interaction
+
+The previous interaction used one continuous predictor, `age_years`, and one categorical predictor, `gender`. Interactions can also involve two continuous predictors.
+
+Here, the model asks whether the age slope differs across values of `family_income_to_poverty`.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp_income <- adult_bp |>
+  filter(!is.na(family_income_to_poverty))
+
+continuous_interaction_model <- lm(
+  systolic_mean ~ age_years * family_income_to_poverty,
+  data = adult_bp_income
+)
+
+summary(continuous_interaction_model)
+```
+
+For two continuous predictors, the coefficient table is especially hard to read directly. One of the best ways to understand the interaction is to plot predicted values across the range of one predictor while holding the other predictor at a few meaningful values.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+continuous_prediction_grid <- expand.grid(
+  age_years = seq(20, 80, by = 2),
+  family_income_to_poverty = c(1, 2.5, 5)
+) |>
+  mutate(
+    income_to_poverty_label = factor(
+      family_income_to_poverty,
+      levels = c(1, 2.5, 5),
+      labels = c(
+        "Income-to-poverty ratio 1.0",
+        "Income-to-poverty ratio 2.5",
+        "Income-to-poverty ratio 5.0"
+      )
+    )
+  )
+
+continuous_interaction_predictions <- predict(
+  continuous_interaction_model,
+  newdata = continuous_prediction_grid,
+  interval = "confidence"
+)
+
+continuous_interaction_prediction_data <- bind_cols(
+  continuous_prediction_grid,
+  as.data.frame(continuous_interaction_predictions)
+)
+
+head(continuous_interaction_prediction_data)
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_line()` |
+| Scales / coordinates / facets / labels | `coord_cartesian()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  continuous_interaction_prediction_data,
+  aes(x = age_years, y = fit, color = income_to_poverty_label)
+) +
+  geom_line(
+    linewidth = 1
+  ) +
+  coord_cartesian(ylim = c(105, 145)) +
+  labs(
+    title = "Continuous Interaction: Age And Income-To-Poverty Ratio",
+    subtitle = "Lines show predicted systolic blood pressure at three values of a continuous predictor",
+    x = "Age (years)",
+    y = "Mean systolic blood pressure",
+    color = "Prediction line"
+  ) +
+  theme_minimal()
+```
+
+This kind of plot is often one of the only practical ways to understand how a continuous-by-continuous interaction is working. The interaction changes the fitted slope across a range of values and this makes it very hard to process without plotting.
+
+# Takeaways
+
+- Plot the data before plotting the model.
+- Model plots are summaries of assumptions and fitted patterns.
+- Prediction plots can be easier to interpret than coefficient tables.
+- Keep model summaries connected to the data they summarize.
+- Interactions are usually easier to interpret as predicted values than as coefficient-table rows.
+- Continuous-by-continuous interactions often need plots to be interpreted.

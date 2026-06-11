@@ -19,5 +19,7 @@
 
 - Practice notebooks should be templates for students to complete, not worked solutions.
 - Prefer instructions, prompts, and empty code blocks over filled-in analysis code.
+- Scaffold practice with just enough structure to help students start: provide the data file when useful, name the function they should use, and include small comments or partial function shapes only when they prevent students from getting stuck.
+- Do not complete the main practice task for students. For example, a practice chunk may show `filter(...)`, `mutate(...)`, or `case_when(...)` with prompts/comments, but should leave the key conditions, variables, or mappings for students to finish.
 - It is acceptable in early workflow practice to provide the data-ingest code so students can focus on setup and first exploration.
 - After the earliest workflow practice, expect students to write their own data-ingest code using direct project-root paths.

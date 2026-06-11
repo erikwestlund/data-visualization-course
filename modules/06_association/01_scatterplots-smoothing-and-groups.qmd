@@ -1,0 +1,482 @@
+---
+title: "Scatterplots, Smoothing, And Groups"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to build an association plot step by step.
+
+We use the relationship between country income and infant mortality as an example in this notebook.
+
+# Analytic Questions
+
+- How are per-capita income and infant mortality associated across countries?
+- Why can a transformed scale make an association easier to see?
+- What does a smoother add, and what does it hide?
+- How can grouping by region help or overload the plot?
+
+# Load Data
+
+```{r}
+countries <- readr::read_csv("data/real/infant_mortality_countries.csv")
+```
+
+# Prepare Data
+
+Each row is one country.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+country_data <- countries |>
+  filter(
+    !is.na(income_usd_per_capita),
+    !is.na(infant_mortality_per_1000),
+    income_usd_per_capita > 0
+  )
+
+country_data |>
+  select(country_name, region, income_usd_per_capita, infant_mortality_per_1000) |>
+  head(10)
+```
+
+# Basic Scatterplot
+
+A scatterplot shows two numeric variables at once.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.7)
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  labs(
+    title = "Income And Infant Mortality Across Countries",
+    x = "Per-capita income, U.S. dollars",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+Countries with higher per-capita income tend to have lower infant mortality, but the raw income scale compresses many lower-income countries into the left side of the plot.
+
+# Use A Log Income Scale
+
+Income is positive and right-skewed. A log scale is typically appropriate for income and makes the associations easier to inspect. Note that this transforms the figure only and not the underlying data.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha` |
+| Scales / coordinates / facets / labels | `scale_x_log10()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.7) +
+  scale_x_log10(labels = scales::label_dollar())
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  labs(
+    title = "Income And Infant Mortality Across Countries",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+The data are the same. The scale changed. On the log scale, equal spacing means equal ratios rather than equal dollar differences.
+
+# Add A Smoother
+
+A smoother summarizes the pattern.
+
+`geom_smooth()` can use different methods. If we do not name the method, `ggplot2` chooses one for us. Here we name `method = "loess"` so students can see exactly what is being drawn.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()`; `geom_smooth()` |
+| `geom_point()` properties | `alpha` |
+| `geom_smooth()` properties | `se`; `color`; `linewidth` |
+| Scales / coordinates / facets / labels | `scale_x_log10()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.55) +
+  geom_smooth(se = FALSE, color = "steelblue", linewidth = 1) +
+  scale_x_log10(labels = scales::label_dollar())
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  labs(
+    title = "A Smoother Summarizes The Association",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+
+p2
+```
+The warning shows you that the smoother is defaulting to `loess`. The loess smoother follows local curvature.
+
+# Compare Smoother Types
+
+Different smoothers answer different visual questions.
+
+- `method = "loess"` draws a flexible local smoother.
+- `method = "gam"` draws a flexible model-based smoother. GAM stands for "generalized additive model".
+- `method = "lm"` draws one straight-line trend from a linear model.
+
+First, look at each smoother separately.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()`; `geom_smooth()` |
+| `geom_point()` properties | `alpha` |
+| `geom_smooth()` properties | `method = "loess"`; `se`; `color`; `linewidth` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.35) +
+  geom_smooth(
+    method = "loess",
+    se = FALSE,
+    color = "steelblue",
+    linewidth = 1
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "Loess Smoother",
+    subtitle = "Flexible local smoother",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| `geom_smooth()` properties | `method = "gam"`; `formula`; `se`; `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.35) +
+  geom_smooth(
+    method = "gam",
+    formula = y ~ s(x, bs = "cs"),
+    se = FALSE,
+    color = "darkorange",
+    linewidth = 1
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "GAM Smoother",
+    subtitle = "Flexible model-based smoother",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+```
+
+Generalized Additive Models are powerful, but complex and less commonly used. They perform very well but reporting them adds an explanatory burden, so beware.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| `geom_smooth()` properties | `method = "lm"`; `se`; `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.35) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = "firebrick",
+    linewidth = 1
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "Linear Model Smoother",
+    subtitle = "One straight-line trend",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+```
+
+Now compare them on the same plot.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| `geom_smooth()` properties (layer 1) | `method = "loess"`; `se`; `linewidth` |
+| `geom_smooth()` properties (layer 2) | `method = "gam"`; `formula`; `se`; `linewidth`; `linetype` |
+| `geom_smooth()` properties (layer 3) | `method = "lm"`; `se`; `linewidth`; `linetype` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `scale_color_manual()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.25) +
+  geom_smooth(
+    aes(color = "Loess"),
+    method = "loess",
+    se = FALSE,
+    linewidth = 1
+  ) +
+  geom_smooth(
+    aes(color = "GAM"),
+    method = "gam",
+    formula = y ~ s(x, bs = "cs"),
+    se = FALSE,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  geom_smooth(
+    aes(color = "Linear model"),
+    method = "lm",
+    se = FALSE,
+    linewidth = 1,
+    linetype = "dotted"
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  scale_color_manual(
+    values = c(
+      "Loess" = "steelblue",
+      "GAM" = "darkorange",
+      "Linear model" = "firebrick"
+    )
+  ) +
+  labs(
+    title = "Three Smoothers Show Different Summaries",
+    subtitle = "Loess and GAM can bend; a linear model shows one straight-line trend",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births",
+    color = "Smoother"
+  ) +
+  theme_minimal()
+```
+
+The loess and GAM lines can bend with the data. The linear model line is easier to summarize, but it can miss curvature.
+
+# Check Groups Before Coloring
+
+Before adding a grouping variable, check how many observations are in each group.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `count()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+country_data |>
+  count(region, sort = TRUE)
+```
+
+Small groups can make group-specific patterns look more stable than they are.
+
+# Add Region With Color
+
+Color can show whether regional clusters are present.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_point()` |
+| Scales / coordinates / facets / labels | `scale_x_log10()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  country_data,
+  aes(
+    x = income_usd_per_capita,
+    y = infant_mortality_per_1000,
+    color = region
+  )
+) +
+  geom_point(alpha = 0.75) +
+  scale_x_log10(labels = scales::label_dollar())
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  labs(
+    title = "Income And Infant Mortality By Region",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+Grouping helps us see regional clustering. It also adds visual complexity and can be hard to interpret, so be careful. If this is an important plot, you will likely want to make sure the colors are visually separable for people with vision impairments. We'll discuss this later.
+
+# Facet When Color Gets Busy
+
+Facets split one busy plot into repeated smaller plots.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha`; `color` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  country_data,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.7, color = "steelblue") +
+  scale_x_log10(labels = scales::label_dollar()) +
+  facet_wrap(~ region) +
+  labs(
+    title = "The Same Association Split By Region",
+    x = "Per-capita income, U.S. dollars, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+```
+
+Faceting makes within-region patterns easier to inspect, but it can make it harder to compare exact positions across all countries at once.
+
+# Takeaways
+
+- Scatterplots show association and spread at the same time.
+- Scale choices can make structure easier or harder to see.
+- Smoothers summarize patterns but should not replace the points.
+- Grouping can reveal structure, but it can also overload the plot.
+- Use association language unless the study design supports causal claims.

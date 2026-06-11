@@ -11,13 +11,12 @@ format:
 knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 # Worked Reference
 
 ```{r}
-prams <- read_csv("data/real/prams_2011_selected.csv", show_col_types = FALSE)
+prams <- readr::read_csv("data/real/prams_2011_selected.csv")
 
 state_overall <- prams |>
   filter(

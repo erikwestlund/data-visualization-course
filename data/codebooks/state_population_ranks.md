@@ -2,7 +2,7 @@
 
 File: `data/real/state_population_ranks.csv`
 
-Source: Census 2020 state population/rank data from previous course materials.
+Source: Census 2020 state population data from previous course materials, with corrected population values for states whose source rows were shifted.
 
 Rows: 51
 

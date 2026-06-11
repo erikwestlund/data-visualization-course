@@ -11,13 +11,12 @@ format:
 knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 # Worked Reference
 
 ```{r}
-nhanes <- read_csv("data/real/nhanes_2021_2023_analysis.csv", show_col_types = FALSE)
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
 
 attrition <- data.frame(
   stage = c(

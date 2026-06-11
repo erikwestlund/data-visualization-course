@@ -5,6 +5,16 @@ author: "Erik Westlund"
 format: revealjs
 ---
 
+```{r}
+#| include: false
+if (basename(getwd()) == "slides") {
+  knitr::opts_knit$set(root.dir = dirname(getwd()))
+}
+
+library(dplyr)
+library(ggplot2)
+```
+
 # Welcome
 
 ## Today's Goals
@@ -113,6 +123,71 @@ Tufte's examples are extraordinary, but most of our work is more routine.
 - **Space**: where do patterns occur?
 - **Flow**: how do entities, such as people or decisions, move through stages?
 :::
+
+## Example: Counts
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+count_example <- data.frame(
+  category = c("A", "B", "C", "D"),
+  n = c(42, 28, 55, 19)
+) |>
+  mutate(category = reorder(category, n))
+
+ggplot(count_example, aes(x = category, y = n)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "How Many Are In Each Category?",
+    x = NULL,
+    y = "Count"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Example: Distribution
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+set.seed(101)
+distribution_example <- data.frame(value = rlnorm(500, meanlog = 3, sdlog = 0.45))
+
+ggplot(distribution_example, aes(x = value)) +
+  geom_histogram(bins = 30, fill = "gray75", color = "white") +
+  labs(
+    title = "What Does This Variable Look Like?",
+    x = "Value",
+    y = "Count"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Example: Association
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+set.seed(102)
+association_example <- data.frame(
+  x = runif(250, 0, 10)
+) |>
+  mutate(y = 2 + 0.7 * x + rnorm(n(), sd = 1.2))
+
+ggplot(association_example, aes(x = x, y = y)) +
+  geom_point(alpha = 0.65) +
+  geom_smooth(se = FALSE, color = "steelblue") +
+  labs(
+    title = "How Do Two Variables Move Together?",
+    x = "Variable X",
+    y = "Variable Y"
+  ) +
+  theme_minimal(base_size = 18)
+```
 
 ## Data Visualization & Science
 
@@ -373,7 +448,6 @@ Chunks are where the notebook does work: loading data, transforming data, making
 ```r
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 If a package is used later, it should by convention be loaded here.
@@ -708,6 +782,7 @@ We will use three kinds of materials:
 - The [course website](https://erik-westlund.academic.page/courses/data-visualization) has key documents (these are also reproduced on CoursePlus)
 - This repository will be updated during the week.
 - We will use Git and GitHub to pull down new files, but you do not need to become a Git expert.
+- Windows users may need to install Git separately: <https://git-scm.com/install/windows>
 
 
 ## The Daily Update Command
@@ -752,6 +827,8 @@ These are complete instructor/reference examples, such as:
 - `modules/00_preclass-tech-check/02_setup-check.qmd`
 - `modules/01-workflow-and-basics/01_course-materials.qmd`
 - `modules/01-workflow-and-basics/02_first-visualization.qmd`
+- `modules/01-workflow-and-basics/03_ggplot2-dictionary-and-cheatsheet.qmd`
+- `modules/01-workflow-and-basics/04_dplyr-tidyr-dictionary-and-cheatsheet.qmd`
 
 Use module notebooks when you want to see a complete version of the idea.
 

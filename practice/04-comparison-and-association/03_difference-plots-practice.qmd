@@ -1,0 +1,131 @@
+---
+title: "Practice: Difference Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice calculating a difference and plotting the difference directly.
+
+Most of the code is complete. Study the output, then make one small change at a time.
+
+# 1. Load Data
+
+```{r}
+davis <- readr::read_csv("data/real/davis_height_weight.csv")
+```
+
+# 2. Calculate Reporting Error
+
+This keeps participants with measured and reported height, then calculates reported minus measured height.
+
+```{r}
+height_error <- davis |>
+  filter(!missing_reported_height) |>
+  filter(!likely_swapped_measured_values) |>
+  transmute(
+    participant_id,
+    sex,
+    measured_height = height_cm,
+    reported_height = reported_height_cm,
+    difference = reported_height - measured_height
+  )
+
+height_error |>
+  head()
+```
+
+Positive values mean the reported value is higher than the measured value. Negative values mean the reported value is lower.
+
+# 3. Inspect The Difference
+
+```{r}
+height_error |>
+  summarize(
+    n = n(),
+    mean_difference = mean(difference),
+    median_difference = median(difference),
+    min_difference = min(difference),
+    max_difference = max(difference)
+  )
+```
+
+Try adding `sd_difference = sd(difference)`.
+
+# 4. Plot Larger Differences
+
+This plot keeps participants with reporting differences of at least 5 cm in either direction.
+
+```{r}
+large_height_errors <- height_error |>
+  filter(abs(difference) >= 5) |>
+  arrange(difference) |>
+  mutate(
+    participant_id = factor(participant_id, levels = participant_id)
+  )
+
+ggplot(
+  large_height_errors,
+  aes(x = participant_id, y = difference)
+) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_point(size = 2, color = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Larger Height Reporting Differences",
+    x = "Participant",
+    y = "Reported minus measured height, cm"
+  ) +
+  theme_minimal()
+```
+
+Try changing `abs(difference) >= 5` to `abs(difference) >= 3` to `abs(difference) >= 0`.
+
+This is an individual-level check, because `participant_id` is on the axis. This is useful for exploration, but not for reporting.
+
+# 5. Group Differences By Sex
+
+For a grouped comparison, summarize the reporting difference by a meaningful category.
+
+```{r}
+sex_height_error <- height_error |>
+  group_by(sex) |>
+  summarize(
+    n = n(),
+    mean_difference = mean(difference),
+    se_difference = sd(difference) / sqrt(n),
+    lower = mean_difference - 1.96 * se_difference,
+    upper = mean_difference + 1.96 * se_difference,
+    .groups = "drop"
+  )
+
+sex_height_error
+```
+
+```{r}
+ggplot(sex_height_error, aes(x = sex, y = mean_difference)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15, color = "gray40") +
+  geom_point(size = 3, color = "steelblue") +
+  labs(
+    title = "Average Height Reporting Difference By Sex",
+    x = "Sex",
+    y = "Mean reported minus measured height, cm"
+  ) +
+  theme_minimal()
+```
+
+Try adding `median_difference = median(difference)` to the grouped summary. Does the median tell the same story as the mean?
+
+# Interpretation
+
+Write 1-2 sentences: what does zero mean, what does a positive value mean, and what does a negative value mean?

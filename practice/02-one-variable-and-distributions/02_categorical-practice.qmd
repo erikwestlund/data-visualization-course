@@ -1,0 +1,189 @@
+---
+title: "Practice: Categorical Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice categorical plotting by running working code and changing one small part.
+
+You will practice:
+
+- counting categories
+- ordering bars
+- plotting precomputed values
+- comparing raw counts and proportions
+- using facets for small multiples
+
+# 1. Load State Population Data
+
+```{r}
+states <- readr::read_csv("data/real/state_population_ranks.csv")
+
+states |>
+  head()
+```
+
+# 2. Ordered Bars
+
+This keeps the ten largest states and orders them by population.
+
+```{r}
+largest_states <- states |>
+  filter(rank <= 10) |>
+  mutate(
+    state_name = reorder(state_name, population)
+  )
+
+ggplot(
+  largest_states,
+  aes(x = state_name, y = population)
+) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(
+    title = "Ten Largest States By Population",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal()
+```
+
+Try changing `rank <= 10` to `rank <= 15`.
+
+# 3. Smallest States
+
+This uses the same pattern for the ten smallest states.
+
+```{r}
+smallest_states <- states |>
+  filter(rank >= 42) |>
+  mutate(
+    state_name = reorder(state_name, population)
+  )
+
+ggplot(
+  smallest_states,
+  aes(x = state_name, y = population)
+) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(
+    title = "Ten Smallest States By Population",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal()
+```
+
+Try changing the filter so the plot shows only the five smallest states.
+
+# 4. Count A Category
+
+Now switch to NHANES and count blood pressure categories.
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+bp_counts <- nhanes |>
+  filter(!is.na(adult_bp_category_simplified)) |>
+  count(adult_bp_category_simplified) |>
+  mutate(
+    adult_bp_category_simplified = reorder(adult_bp_category_simplified, n)
+  )
+
+bp_counts
+```
+
+Try counting `age_group` instead of `adult_bp_category_simplified`.
+
+# 5. Plot Counts
+
+This plots the precomputed counts from the previous step.
+
+```{r}
+ggplot(
+  bp_counts,
+  aes(x = adult_bp_category_simplified, y = n)
+) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(
+    title = "Adult Blood Pressure Categories",
+    x = NULL,
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+Try removing `coord_flip()`. Which version is easier to read?
+
+# 6. Composition And Proportion
+
+This calculates race/ethnicity proportions within selected states.
+
+```{r}
+race_state <- readr::read_csv("data/real/census_state_race_ethnicity_long.csv")
+
+selected_state_composition <- race_state |>
+  filter(state_name %in% c("California", "Texas", "Florida", "New York")) |>
+  mutate(
+    race_ethnicity_proportion = share
+  )
+
+ggplot(
+  selected_state_composition,
+  aes(x = state_name, y = race_ethnicity_proportion, fill = race_ethnicity)
+) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Race/Ethnicity Composition In Four States",
+    x = NULL,
+    y = "Proportion",
+    fill = NULL
+  ) +
+  theme_minimal()
+```
+
+Try replacing `"Florida"` with another state.
+
+# 7. Facets
+
+This uses small multiples instead of one stacked bar chart.
+
+```{r}
+ggplot(
+  selected_state_composition,
+  aes(x = race_ethnicity, y = race_ethnicity_proportion)
+) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  facet_wrap(~ state_name) +
+  labs(
+    title = "Race/Ethnicity Composition In Four States",
+    x = NULL,
+    y = "Proportion"
+  ) +
+  theme_minimal()
+```
+
+Try adding one more state to `selected_state_composition` and compare the faceted plot.
+
+# On Your Own
+
+Choose one small task:
+
+- Make an ordered bar chart for the 12 largest states.
+- Make an ordered bar chart for one race/ethnicity category across states.
+- Compare a stacked bar chart and a faceted chart using the same data.
+
+Write 1-2 sentences: what does one bar represent in your plot?

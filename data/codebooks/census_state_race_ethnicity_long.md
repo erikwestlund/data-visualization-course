@@ -2,7 +2,7 @@
 
 File: `data/real/census_state_race_ethnicity_long.csv`
 
-Source: Census 2020 state race/ethnicity counts from previous course materials, joined with state population ranks.
+Source: Census 2020 state race/ethnicity counts from previous course materials, joined with corrected Census 2020 state population ranks.
 
 Rows: 357
 

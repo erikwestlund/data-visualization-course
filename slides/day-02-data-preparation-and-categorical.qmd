@@ -1,0 +1,548 @@
+---
+title: "Data Visualization: Day 2"
+subtitle: "Data Preparation And Categorical Data"
+author: "Erik Westlund"
+format: revealjs
+---
+
+```{r}
+#| include: false
+if (basename(getwd()) == "slides") {
+  knitr::opts_knit$set(root.dir = dirname(getwd()))
+}
+
+library(dplyr)
+library(ggplot2)
+```
+
+## Day 2 Goals
+
+1. Use tidyverse functions to inspect, filter, summarize, and arrange data before plotting.
+2. Make basic bar plots, leveraging rank-order for clarity
+3. Make three-variable bar plots, using faceting by small multiples for clarity
+4. Explain why position on a common scale helps comparisons.
+5. Practice changing one part of a data-preparation or plotting pipeline at a time.
+
+## Where We Are
+
+Yesterday we worked through:
+
+- The basics of `ggplot2` and the grammar of graphics
+- Quarto notebooks
+- Git and the course project
+- basic visualization workflow
+
+Today, we'll slow down and look more carefully at the data before plotting.
+
+## Today's Structure
+
+We will work in two cycles:
+
+1. Data cleaning: concept, module, practice
+2. Categorical variables: concept, module, practice
+
+Continuous variables move to Day 3 so we can give the mechanics more time.
+
+## Day 1 Pattern
+
+We will keep using the same build-and-check workflow:
+
+```r
+p1 <- ggplot(data, aes(...))
+p1
+
+p2 <- p1 + geom_*()
+p2
+
+p3 <- p2 + labs(...)
+p3
+```
+
+This pattern helps us build plots step by step and see what each step changes.
+
+# Data Preparation
+
+## Visualization Depends On Data Preparation
+
+Before plotting, we need to know:
+
+- The unit of analysis: what does one row represent?
+- Are observations:
+
+  - raw records (e.g., patient-level data)?
+  - summaries (e.g., from a `summarize()` command)?
+  - percentages (e.g., from pre-aggregated data)?
+  - or estimates (e.g., from a regression model)?
+
+- Do we need to filter to the level that matches the question?
+- Do we need to summarize before plotting?
+
+## A Basic Data-Cleaning Pass
+
+Start with inspection, not editing.
+
+```r
+glimpse(data)
+head(data)
+names(data)
+```
+
+Ask:
+
+- What does one row represent?
+- Which variables answer the question?
+- Are the names, types, units, and missing values what we expect?
+
+## Then Clean One Issue At A Time
+
+Common first moves:
+
+- rename unclear variables
+- convert types that imported incorrectly
+- recode categories with inconsistent labels
+- filter to the population or time period for the question
+- check missing values before summarizing
+
+After each change, inspect again.
+
+```r
+clean_data <- raw_data |>
+  rename(...) |>
+  mutate(...) |>
+  filter(...)
+
+glimpse(clean_data)
+head(clean_data)
+```
+
+## Make Small, Named Tables
+
+It is fine to save intermediate data frames when they mark a real stage:
+
+- `raw_data`: the file as read from disk
+- `clean_data`: renamed, recoded, filtered, or type-corrected data
+- `plot_data`: a count or summary table made for one plot
+
+Avoid long chains of vague objects like `data2`, `data3`, and `final_final`.
+
+If a table is simple to recreate, save the code rather than saving another object.
+
+## The Pipe: `|>`
+
+The pipe sends the result of one step into the next step.
+
+```r
+data |>
+  filter(...) |>
+  count(...) |>
+  ggplot(aes(...)) +
+  geom_bar(stat = "identity")
+```
+
+Read it as: "start with this data, then do this, then do this."
+
+## `dplyr`
+
+- `dplyr` is the primary `tidyverse` package for data manipulation
+- It helps us make small, explicit changes to a data table before plotting.
+- Most `dplyr` work is about keeping rows, keeping columns, creating columns, sorting, counting, or summarizing.
+
+## Common `dplyr` Functions
+
+- `select()`: keep variables we need
+- `filter()`: keep observations that match a condition
+- `count()`: count observations by category
+- `group_by()` + `summarize()`: aggregate values by group
+- `mutate()`: create or recode variables
+- `arrange()`: sort a table before plotting
+
+## Common Summary Functions
+
+- `n()`: number of observations
+- `sum()`: total amount
+- `mean()`: average
+- `median()`: middle value
+- `min()` and `max()`: range endpoints
+- `IQR()` and `sd()`: spread
+
+## Data Cleaning Module
+
+Open:
+
+`modules/02_data-preparation/01_data-preparation.qmd`
+
+Watch for:
+
+- `glimpse()`, `head()`, and `names()` before editing
+- saving a few named data frames without making a new object after every line
+- using each common `dplyr` function before plotting
+
+## Practice 1: Data Cleaning
+
+Open:
+
+`practice/02-one-variable-and-distributions/01_data-cleaning-practice.qmd`
+
+Goal:
+
+- select and rename variables
+- create a new variable
+- filter rows
+- summarize by group
+- practice reordering and releveling
+
+
+# Categorical Data
+
+Categorical variables put observations into groups.
+
+Examples:
+
+- gender
+- state
+- race/ethnicity category
+- age group
+- blood pressure category
+
+## First Categorical Questions
+
+Before choosing a plot, ask what the category is being used for.
+
+Common questions:
+
+- How many observations are in each category?
+- What total or average belongs to each category?
+- Which categories are largest or smallest?
+- Does the category order have meaning?
+
+These questions require different data tables before plotting.
+
+# Categorical Counts And Summaries
+
+## Categorical Question 1
+
+How many observations are in each category?
+
+This is a count question.
+
+Common tools:
+
+- observation counts
+- `count()`
+- bar charts
+- dot plots
+
+## Count What?
+
+Counting observations is only meaningful if the observations mean what you think they mean.
+
+- Is one observation a person?
+- Is one observation a state?
+- Is one observation an already-summarized estimate?
+
+## Example: Count Bar Chart
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+titanic <- readr::read_csv("data/real/titanic_passengers.csv")
+
+titanic |>
+  filter(!is.na(passenger_class)) |>
+  count(passenger_class) |>
+  mutate(
+    passenger_class = reorder(passenger_class, n)
+  ) |>
+  ggplot(aes(x = passenger_class, y = n)) +
+  geom_bar(stat = "identity", fill = "gray70") +
+  coord_flip() +
+  labs(
+    title = "Titanic Passengers By Class",
+    x = NULL,
+    y = "Number of passengers"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Counts Versus Summaries
+
+Counts in `dplyr` are just fancy `table()` calls
+
+```r
+data |>
+  count(category)
+```
+
+Summaries apply a statistical/mathematical operation to the data.
+
+```r
+data |>
+  group_by(category) |>
+  summarize(total = sum(value))
+```
+
+The first counts records. The second aggregates a numeric variable.
+
+## Ordering Matters
+
+Alphabetical order is only sometimes the order you want in your visualization.
+
+Sometimes you want:
+
+- largest to smallest
+- smallest to largest
+- natural sequence
+- grouped by concept
+
+This requires judgment.
+
+## Example: Ordered Bar Chart
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+states <- readr::read_csv("data/simulated/state_enrollment_ranks.csv")
+
+states |>
+  filter(rank <= 10) |>
+  mutate(state_name = reorder(state_name, population)) |>
+  ggplot(aes(x = state_name, y = population)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Ten Largest Simulated State Enrollments",
+    x = NULL,
+    y = "Enrollment"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Rank Is Just Ordering
+
+A ranked plot is not a special chart type.
+
+It is a categorical plot where categories are ordered by a value:
+
+- count
+- total
+- average
+- percentage
+
+Ordering by rank helps comparison, but the plotted values still need to show magnitude.
+
+## Don't Mindlessly Rank
+
+- Not all data should be rank-ordered
+- Sometimes competing analytic needs require a different ordering, especially with three-variable visualizations
+
+## Transition To Module
+
+Open:
+
+`modules/03_categorical-data/01_counts-and-ordering.qmd`
+
+Watch for:
+
+- what one observation represents
+- when to count observations versus summarize values
+- how ordering changes readability
+
+# Relative Position On A Common Scale
+
+## Not Just A Design Principle, But Science!
+
+People generally compare positions on a shared, aligned scale more accurately than they compare:
+
+- angles
+- areas
+- volumes
+- colors
+- positions on different scales
+
+This is backed up by experimental research on graphical perception.
+
+Source: Cleveland and McGill's work on graphical perception (1984, 1987).
+
+## Common Scale Examples
+
+These all use position on a common scale:
+
+- ordered bars with a shared baseline
+- dot plots on one axis
+- histograms along one measurement scale
+- box plots aligned to one numeric scale
+- reference lines at meaningful values
+
+## Example: Lollipop Chart
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+states |>
+  filter(rank <= 10) |>
+  mutate(state_name = reorder(state_name, population)) |>
+  ggplot(aes(x = state_name, y = population)) +
+  geom_segment(aes(xend = state_name, y = 0, yend = population), color = "gray70") +
+  geom_point(size = 4, color = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Same Values, Less Ink Than Bars",
+    x = NULL,
+    y = "Enrollment"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## When Common Scales Break Down
+
+Comparisons get harder when:
+
+- facets use different axes
+- stacked bar segments do not share a baseline
+- too many colors carry numeric meaning
+- area or bubble size encodes magnitude
+- the axis is cropped or transformed without explanation
+
+These choices are not always wrong, but they need a reason.
+
+# Composition And Proportions
+
+## Composition Questions
+
+Composition asks what a whole is made of.
+
+Examples:
+
+- race/ethnicity groups within a state
+- budget categories within a total
+- causes within all reported cases
+- response categories within a survey item
+
+These are denominator questions: what is the whole, and what are its parts?
+
+## Why Stacked Bars Get Hard
+
+A stacked bar often puts three variables into one display:
+
+- the whole or group on one axis
+- the size or share on the other axis
+- the component category in color
+
+That can show overall composition, but most segments do not share a common baseline.
+
+## Example: Stacked Composition
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+race_state <- readr::read_csv("data/simulated/state_school_enrollment_groups_long.csv")
+
+selected_composition <- race_state |>
+  filter(state_name %in% c("Texas", "Minnesota", "Montana", "West Virginia")) |>
+  mutate(race_ethnicity_proportion = share)
+
+ggplot(
+  selected_composition,
+  aes(x = state_name, y = race_ethnicity_proportion, fill = race_ethnicity)
+) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Simulated Enrollment Composition In Four States",
+    x = NULL,
+    y = "Proportion",
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(legend.position = "bottom")
+```
+
+## Small Multiples As An Alternative
+
+Small multiples split the display into repeated panels.
+
+This can make comparisons easier when:
+
+- one stacked chart is doing too much
+- each category deserves its own scale position
+- the same comparison repeats across groups
+
+The tradeoff is space. A useful question to then ask is: do we need all the facets?
+
+## Example: Small Multiples
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+selected_composition |>
+  mutate(race_ethnicity = reorder(race_ethnicity, race_ethnicity_proportion)) |>
+  ggplot(aes(x = race_ethnicity, y = race_ethnicity_proportion)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  facet_wrap(~ state_name) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Same Composition Data As Small Multiples",
+    x = NULL,
+    y = "Proportion"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Transition To Module
+
+Open:
+
+`modules/03_categorical-data/02_composition-and-proportions.qmd`
+
+Watch for:
+
+- raw counts versus proportions
+- why stacked bars can be hard to read
+- how faceting creates small multiples for the same data
+
+## Practice 2: Categorical Plotting
+
+Open:
+
+`practice/02-one-variable-and-distributions/02_categorical-practice.qmd`
+
+Goal:
+
+- load a state-level dataset
+- reorder categories by a value
+- make a simple ordered bar chart
+- explain what one bar represents
+
+## If You Finish Early
+
+Revise one plot:
+
+- reorder categories
+- add clearer labels
+- check the codebook
+- write a more precise interpretation
+
+# Wrap-Up
+
+## What You Should Be Able To Do
+
+After today, you should be able to:
+
+- distinguish observation counts from summarized values
+- use common functions to prepare data for plotting
+- explain why common scales help comparisons
+- order categories by rank while keeping magnitude visible
+- explain why stacked bars can be hard to read
+- change one part of a working pipeline and explain what changed
+
+## Tomorrow
+
+We will spend the day on continuous variables: histograms, density plots, boxplots, violins, quantiles, QQ plots, unusual values, and transformations.

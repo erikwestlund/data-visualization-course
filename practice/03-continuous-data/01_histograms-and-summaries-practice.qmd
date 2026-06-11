@@ -1,0 +1,122 @@
+---
+title: "Practice: Histograms And Summaries"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Learning Tactic
+
+- For in-class practice, we are going to try an approach where we study working code and tweak it.
+- This will help provide hands-on experience working with data visualization code.
+
+# 1. Load Data
+
+```{r}
+davis <- readr::read_csv("data/real/davis_height_weight.csv")
+
+davis |>
+  glimpse()
+```
+
+# 2. Prepare One Variable
+
+This keeps participants with a non-missing measured height value.
+
+```{r}
+height_data <- davis |>
+  filter(!is.na(height_cm))
+
+height_data |>
+  select(participant_id, sex, height_cm, weight_kg, measured_bmi) |>
+  head()
+```
+
+Try adding `filter(sex == "female")` to focus on one group.
+
+# 3. Summarize Center And Spread
+
+These summaries describe center, spread, range, and sample size for measured height.
+
+```{r}
+height_data |>
+  summarize(
+    n = n(),
+    mean_height = mean(height_cm),
+    median_height = median(height_cm),
+    iqr_height = IQR(height_cm),
+    sd_height = sd(height_cm),
+    min_height = min(height_cm),
+    max_height = max(height_cm)
+  )
+```
+
+Try adding a quantile to this summary, such as `p90_height = quantile(height_cm, 0.90)`.
+
+# 4. First Histogram
+
+This histogram uses 5-centimeter bins.
+
+```{r}
+ggplot(height_data, aes(x = height_cm)) +
+  geom_histogram(binwidth = 5, fill = "gray75", color = "white") +
+  labs(
+    title = "Measured Height",
+    x = "Measured height, cm",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+Try changing `binwidth = 5` to `binwidth = 2`.
+
+# 5. Larger Bins
+
+This version uses the same data with larger bins.
+
+```{r}
+ggplot(height_data, aes(x = height_cm)) +
+  geom_histogram(binwidth = 10, fill = "gray75", color = "white") +
+  labs(
+    title = "Measured Height",
+    x = "Measured height, cm",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+Write briefly: what did the larger bin width make easier or harder to see?
+
+# 6. Density Plot
+
+This version uses a smoothed density curve instead of count bins.
+
+```{r}
+ggplot(height_data, aes(x = height_cm)) +
+  geom_density(fill = "steelblue", alpha = 0.3) +
+  labs(
+    title = "Density Of Measured Height",
+    x = "Measured height, cm",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+
+Try changing the fill color or the transparency value `alpha`.
+
+# On Your Own
+
+Choose one numeric variable from the Davis data:
+
+- `weight_kg`
+- `reported_weight_kg`
+- `measured_bmi`
+
+Create one summary table and one histogram. Write 1-2 sentences describing center, spread, shape, and unusual values.

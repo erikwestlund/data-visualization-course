@@ -50,6 +50,14 @@ mtcars |>
 
 This summary should run during rendering.
 
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
 ```{r}
 mtcars |>
   summarize(
@@ -64,6 +72,14 @@ mtcars |>
 
 This plot should run during rendering.
 
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+:::
+<!-- plot-anatomy-end -->
+
 ```{r}
 p1 <- ggplot(mtcars, aes(x = mpg))
 
@@ -74,6 +90,14 @@ The blank plot is expected. We have provided data and an x-axis mapping, but no 
 
 Add a histogram.
 
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_histogram()` |
+:::
+<!-- plot-anatomy-end -->
+
 ```{r}
 p2 <- p1 +
   geom_histogram(binwidth = 5)
@@ -82,6 +106,14 @@ p2
 ```
 
 Add labels.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()` |
+:::
+<!-- plot-anatomy-end -->
 
 ```{r}
 p3 <- p2 +
@@ -96,6 +128,14 @@ p3
 ```
 
 Add a theme.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
 
 ```{r}
 p4 <- p3 +

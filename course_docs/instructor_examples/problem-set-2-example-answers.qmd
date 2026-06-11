@@ -12,10 +12,9 @@ format:
 #| warning: false
 library(dplyr)
 library(ggplot2)
-library(readr)
 
 
-flu <- read_csv("data/real/flu_vaccination_age_time_clean.csv")
+flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
 ```
 
 # Task 1: Dataset Orientation

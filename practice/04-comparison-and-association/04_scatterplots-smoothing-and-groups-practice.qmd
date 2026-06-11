@@ -1,0 +1,125 @@
+---
+title: "Practice: Scatterplots, Smoothing, And Groups"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice visualizing association between two numeric variables.
+
+# 1. Load Data
+
+```{r}
+davis <- readr::read_csv("data/real/davis_height_weight.csv")
+```
+
+# 2. Prepare Data
+
+This keeps participants with measured and reported weight values.
+
+```{r}
+weight_data <- davis |>
+  filter(
+    !missing_reported_weight,
+    !is.na(weight_kg),
+    !is.na(reported_weight_kg),
+    !likely_swapped_measured_values
+  )
+
+weight_data |>
+  select(participant_id, sex, weight_kg, reported_weight_kg, weight_reporting_error_kg) |>
+  head()
+```
+
+# 3. Basic Scatterplot
+
+This plot compares measured weight with reported weight.
+
+```{r}
+ggplot(weight_data, aes(x = weight_kg, y = reported_weight_kg)) +
+  geom_point(alpha = 0.7) +
+  labs(
+    title = "Measured And Reported Weight",
+    x = "Measured weight (kg)",
+    y = "Reported weight (kg)"
+  ) +
+  theme_minimal()
+```
+
+Try adding `color = sex` inside `aes()`.
+
+# 4. Add A Reference Line
+
+The diagonal line shows perfect agreement between measured and reported weight.
+
+```{r}
+ggplot(weight_data, aes(x = weight_kg, y = reported_weight_kg)) +
+  geom_point(alpha = 0.7) +
+  geom_abline(slope = 1, intercept = 0, color = "gray50") +
+  labs(
+    title = "Measured And Reported Weight",
+    x = "Measured weight (kg)",
+    y = "Reported weight (kg)"
+  ) +
+  theme_minimal()
+```
+
+Try changing the point transparency to `alpha = 0.4`.
+
+# 5. Plot The Error Directly
+
+Sometimes a derived variable makes the question clearer.
+
+Here, reported minus measured weight puts the reporting error on the y-axis. Values below zero mean under-reporting.
+
+```{r}
+ggplot(weight_data, aes(x = weight_kg, y = weight_reporting_error_kg)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_point(alpha = 0.7) +
+  labs(
+    title = "Weight Reporting Error By Measured Weight",
+    x = "Measured weight (kg)",
+    y = "Reported minus measured weight (kg)"
+  ) +
+  theme_minimal()
+```
+
+Try adding `geom_smooth(se = FALSE)` after `geom_point()`.
+
+# 6. Add Groups
+
+This version compares the reporting-error pattern by sex.
+
+```{r}
+ggplot(
+  weight_data,
+  aes(x = weight_kg, y = weight_reporting_error_kg, color = sex)
+) +
+  geom_hline(yintercept = 0, color = "gray70") +
+  geom_point(alpha = 0.7) +
+  geom_smooth(se = FALSE) +
+  labs(
+    title = "Weight Reporting Error By Measured Weight And Sex",
+    x = "Measured weight (kg)",
+    y = "Reported minus measured weight (kg)",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```
+
+Try a different smoother type, such as `gam`.
+
+Then try replacing color with `facet_wrap(~ sex)`.
+
+# Interpretation
+
+Write 1-2 sentences describing direction, form, spread, and what zero means in the error plot.

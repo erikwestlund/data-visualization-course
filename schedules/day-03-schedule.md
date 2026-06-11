@@ -1,36 +1,35 @@
-# Day 3 Schedule: Group Comparison, Composition, And Association
+# Day 3 Schedule: Continuous Data And Diagnostic Graphics
 
 Assumed class block: 3 hours.
 
 ## Main Goal
 
-Students can extend one-variable EDA to grouped comparisons, define denominators for composition, plot differences directly, and describe association without causal overclaiming.
+Students can inspect a numeric variable using a repeatable workflow: summarize center and spread, plot shape, inspect unusual values, use quantiles and QQ plots, and compare raw versus transformed displays.
 
 ## Schedule
 
 | Time | Segment | Materials | Notes |
 |---:|---|---|---|
-| 0:00-0:10 | Warm-up and Day 2 recap | Verbal | Ask: count, proportion, distribution, or rank? |
-| 0:10-0:22 | Concept setup: comparison and association | `slides/day-03-comparison-and-association.qmd` | Keep this short. |
-| 0:22-0:45 | Grouped distributions | `modules/03_continuous-data/02_grouped-distributions.qmd` | Extend Day 2 distribution logic to groups. |
-| 0:45-1:10 | Grouped summaries | `modules/04_group-comparison/01_grouped-summaries.qmd` | Compare distributions before summaries. |
-| 1:10-1:30 | Composition and proportions | `modules/02_categorical-data/02_composition-and-proportions.qmd` | Define the denominator and shared baseline problem. |
-| 1:30-1:40 | Break |  | Buffer. |
-| 1:40-2:00 | Difference plots | `modules/04_group-comparison/02_difference-plots.qmd` | Emphasize what zero means. |
-| 2:00-2:25 | Scatterplots, smoothing, and groups | `modules/05_association/01_scatterplots-smoothing-and-groups.qmd` | Direction, form, strength, groups. |
-| 2:25-2:40 | Model-output plots | `modules/05_association/02_model-output-plots.qmd` | Keep this conceptual and light; optional if time runs short. |
-| 2:40-2:55 | Student practice | `practice/03_continuous-data/02_grouped-distributions-practice.qmd`, `practice/04_group-comparison/`, `practice/05_association/` | Require one plot and one cautious interpretation. |
-| 2:55-3:00 | Wrap | Verbal | Preview change, space, flow. |
+| 0:00-0:10 | Warm-up and Day 2 recap | Verbal | Ask: What does one row represent? What changes when we group or summarize? |
+| 0:10-0:25 | Continuous concepts | `slides/day-03-continuous-data.qmd` | Center, spread, shape, unusual values, and the repeatable numeric-variable checklist. |
+| 0:25-0:55 | Histograms and density module | `modules/04_continuous-data/01_histograms-and-density.qmd` | Bin width, density, center/spread summaries, and shape. |
+| 0:55-1:15 | Histograms and summaries practice | `practice/03-continuous-data/01_histograms-and-summaries-practice.qmd` | Students run working code, change one variable or bin width, and interpret. |
+| 1:15-1:25 | Break |  | Buffer. |
+| 1:25-1:55 | Boxplots, violins, and outliers module | `modules/04_continuous-data/02_boxplots-violin-plots-and-outliers.qmd` | Quartiles, IQR fences, grouped displays, jittered points, and flagged rows. |
+| 1:55-2:15 | Boxplots and outliers practice | `practice/03-continuous-data/02_boxplots-and-outliers-practice.qmd` | Students change a grouping variable or boxplot rule and inspect flagged values. |
+| 2:15-2:40 | Quantiles, QQ plots, and transformations module | `modules/04_continuous-data/03_quantiles-qq-plots-and-transformations.qmd` | Practical diagnostics, not formal normality testing. |
+| 2:40-2:55 | Diagnostics practice | `practice/03-continuous-data/03_quantiles-qq-transformations-practice.qmd` | Students compare raw and transformed displays. |
+| 2:55-3:00 | Wrap | Verbal | Preview group comparison and association. |
 
 ## If Time Runs Short
 
-Treat model-output plots as a short preview. Do not cut grouped distributions, composition, scatterplots, or direct group comparison.
+Keep histograms, boxplots, and quantiles. Treat QQ plots and transformations as a shorter preview if needed, but do not cut practice entirely.
 
 ## Instructor Priorities
 
-- Students do not default to bar charts for every group comparison.
-- Students inspect grouped distributions before reducing groups to one statistic.
-- Students define the denominator for composition and proportion plots.
-- Students label differences clearly.
-- Students use association language, not causal language.
-- Students see model plots as summaries with assumptions.
+- Students describe center, spread, shape, and unusual values in plain language.
+- Students understand that bin width changes what a histogram reveals.
+- Students connect boxplots to quartiles and IQR.
+- Students inspect unusual values before treating them as errors.
+- Students use QQ plots as diagnostic graphics, not pass/fail tests.
+- Students compare raw and transformed variables and explain what changed.

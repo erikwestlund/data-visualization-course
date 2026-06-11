@@ -10,7 +10,6 @@ format:
 #| include: false
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 The worked example today showed how to:
@@ -37,15 +36,13 @@ Course data summary and codebooks: [rendered Course Data page](../../data/data.h
 # Load And Inspect
 
 ```{r}
-# dataset_path <- "data/real/prams_2011_selected.csv"
-# dataset_path <- "data/real/census_state_race_ethnicity_long.csv"
-# dataset_path <- "data/real/flu_vaccination_age_time_clean.csv"
-# dataset_path <- "data/real/nhanes_2021_2023_analysis.csv"
-# dataset_path <- "data/real/places_county_core_measures_long.csv"
+# Other course datasets you could load here:
+# "data/real/census_state_race_ethnicity_long.csv"
+# "data/real/flu_vaccination_age_time_clean.csv"
+# "data/real/nhanes_2021_2023_analysis.csv"
+# "data/real/places_county_core_measures_long.csv"
 
-dataset_path <- "data/real/prams_2011_selected.csv"
-
-dat <- read_csv(dataset_path, show_col_types = FALSE)
+dat <- readr::read_csv("data/real/prams_2011_selected.csv")
 
 dat |>
   glimpse()

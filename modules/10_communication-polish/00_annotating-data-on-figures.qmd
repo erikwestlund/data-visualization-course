@@ -1,0 +1,174 @@
+---
+title: "Annotating Data On Figures"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to add data labels and short annotations to a figure.
+
+Annotation is one of the most important ways to move from an exploratory plot to a communication plot. It tells the reader what to notice.
+
+# Analytic Questions
+
+- What value or comparison should the reader notice first?
+- Which labels help, and which labels add clutter?
+- How can text on the figure reduce legend work?
+
+# Load Data
+
+```{r}
+flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
+```
+
+# Prepare Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+us_may <- flu |>
+  filter(
+    geography == "United States",
+    month == 5,
+    age_group %in% c("18-49 Years", "50-64 Years", ">=65 Years"),
+    !is.na(estimate)
+  )
+```
+
+# Start With The Plot
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_line()`; `geom_point()` |
+| `geom_line()` properties | `linewidth` |
+| `geom_point()` properties | `size` |
+| Scales / coordinates / facets / labels | `coord_cartesian()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  coord_cartesian(ylim = c(25, 80)) +
+  labs(
+    title = "Flu Vaccination Estimates By Age Group",
+    subtitle = "United States, May (month 5)",
+    x = "Season start year",
+    y = "Vaccination estimate (%)",
+    color = "Age group"
+  ) +
+  theme_minimal()
+
+p1
+```
+
+# Label The Last Values
+
+Direct labels can reduce legend work. A common strategy is to label the end of each line instead of labeling every point.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+latest_may <- us_may |>
+  filter(season_start_year == max(season_start_year)) |>
+  mutate(label = paste0(age_group, ": ", round(estimate), "%"))
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `label` |
+| Geoms / stats | `geom_text()` |
+| Scales / coordinates / facets / labels | `coord_cartesian()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_text(
+    data = latest_may,
+    aes(label = label),
+    hjust = 0,
+    nudge_x = 0.15,
+    show.legend = FALSE
+  ) +
+  coord_cartesian(xlim = c(2010, 2025.5), ylim = c(25, 80)) +
+  theme(legend.position = "none")
+
+p2
+```
+
+# Add A Short Note
+
+Use annotation text sparingly. A good annotation names the point of the plot, not every fact in the plot.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `annotate()` |
+| `annotate()` properties | `geom = "label"`; `x`; `y`; `label`; `hjust`; `size`; `fill`; `color` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p3 <- p2 +
+  annotate(
+    geom = "label",
+    x = 2011,
+    y = 74,
+    label = "Older adults have the\nhighest estimates across seasons",
+    hjust = 0,
+    size = 3.5,
+    fill = "white",
+    color = "gray20"
+  )
+
+p3
+```
+
+# What To Annotate
+
+Good annotations often mark:
+
+- a key value
+- a visible change
+- a benchmark or reference line
+- a group the reader should compare
+- a limitation or missing context
+
+Avoid annotating everything. If every point is labeled, the reader has to read the plot instead of seeing the pattern.
+
+# Takeaways
+
+- Annotation should direct attention, not decorate the plot.
+- Direct labels can reduce legend work.
+- Put text close to the data it explains.
+- Use fewer labels than you think you need.

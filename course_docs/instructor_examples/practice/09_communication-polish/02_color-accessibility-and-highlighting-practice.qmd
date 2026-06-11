@@ -11,30 +11,30 @@ format:
 knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 # Worked Reference
 
 ```{r}
-census <- read_csv("data/real/census_state_race_ethnicity_long.csv", show_col_types = FALSE)
+census <- readr::read_csv("data/real/census_state_race_ethnicity_long.csv")
 
-asian_share <- census |>
+asian_proportion <- census |>
+  rename(race_ethnicity_proportion = share) |>
   filter(race_ethnicity == "Asian") |>
   mutate(
     highlight = if_else(state %in% c("CA", "NY", "WA"), "Highlighted", "Other"),
-    state_name = reorder(state_name, share)
+    state_name = reorder(state_name, race_ethnicity_proportion)
   )
 
-ggplot(asian_share, aes(x = state_name, y = share, fill = highlight)) +
+ggplot(asian_proportion, aes(x = state_name, y = race_ethnicity_proportion, fill = highlight)) +
   geom_col() +
   coord_flip() +
   scale_y_continuous(labels = function(x) paste0(round(x * 100), "%")) +
   scale_fill_manual(values = c("Highlighted" = "#0072B2", "Other" = "gray80")) +
   labs(
-    title = "Asian Share Of Included Race/Ethnicity Population",
+    title = "Asian Proportion Of Included Race/Ethnicity Population",
     x = NULL,
-    y = "Share",
+    y = "Proportion",
     fill = NULL
   ) +
   theme_minimal()

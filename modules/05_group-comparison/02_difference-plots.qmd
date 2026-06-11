@@ -1,0 +1,259 @@
+---
+title: "Difference Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook compares paired estimates, then plots the calculated gap directly.
+
+The main figure we will use is the Cleveland-style dot plot: categories on one axis, values on a shared quantitative scale, and dots rather than bars.
+
+# Analytic Questions
+
+- How do PRAMS anxiety estimates differ from depression estimates?
+- Which states have larger anxiety-minus-depression gaps?
+- Why can a dot plot be clearer than paired bars?
+- When should we plot the difference directly?
+
+# Load Data
+
+```{r}
+prams <- readr::read_csv("data/real/prams_2011_selected.csv")
+```
+
+# Prepare Data
+
+PRAMS values are already aggregated percentages for state/subgroup rows.
+
+In this dataset, `subgroup_cat == "None"` marks the overall state row.
+
+Only some states have both depression and anxiety estimates in this teaching file, so we keep the rows where both are available.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `transmute()` |
+| Sort rows | `arrange()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+state_mental_health <- prams |>
+  filter(
+    subgroup_cat == "None",
+    !is.na(depression_within_3_months_birth),
+    !is.na(anxiety_within_3_months_birth)
+  ) |>
+  transmute(
+    location,
+    depression = depression_within_3_months_birth,
+    anxiety = anxiety_within_3_months_birth,
+    difference = anxiety - depression
+  ) |>
+  arrange(difference)
+
+state_mental_health
+```
+
+The difference is measured in percentage points.
+
+- Positive: anxiety estimate is higher than depression estimate.
+- Negative: anxiety estimate is lower than depression estimate.
+- Zero: the two estimates are equal.
+
+# Paired Estimates As Dots
+
+First, compare the two estimates directly.
+
+A Cleveland dot plot uses position on a common scale. This is usually easier to compare than paired bars.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `select()` |
+| Create or change columns | `mutate()` |
+| Reshape data | `pivot_longer()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `size` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+paired_estimates <- state_mental_health |>
+  select(location, depression, anxiety) |>
+  tidyr::pivot_longer(
+    cols = c(depression, anxiety),
+    names_to = "measure",
+    values_to = "estimate"
+  ) |>
+  mutate(
+    measure = recode(
+      measure,
+      depression = "Depression",
+      anxiety = "Anxiety"
+    ),
+    location = factor(location, levels = state_mental_health$location)
+  )
+
+ggplot(
+  paired_estimates,
+  aes(x = estimate, y = location, color = measure)
+) +
+  geom_point(size = 3) +
+  labs(
+    title = "PRAMS Mental Health Estimates By State",
+    x = "Estimate (%)",
+    y = NULL,
+    color = NULL
+  ) +
+  theme_minimal()
+```
+
+This plot shows both estimates, but the gap still has to be judged by eye.
+
+# Connected Dot Plot
+
+A connected dot plot makes the paired structure more visible.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `y`; `x`; `xend`; `yend`; `color` |
+| Geoms / stats | `geom_segment()`; `geom_point()` |
+| `geom_segment()` properties | `color`; `linewidth` |
+| `geom_point()` properties (layer 1) | `size` |
+| `geom_point()` properties (layer 2) | `size` |
+| Scales / coordinates / facets / labels | `scale_color_manual()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+paired_wide <- state_mental_health |>
+  mutate(location = factor(location, levels = state_mental_health$location))
+
+ggplot(paired_wide, aes(y = location)) +
+  geom_segment(
+    aes(x = depression, xend = anxiety, yend = location),
+    color = "gray70",
+    linewidth = 1
+  ) +
+  geom_point(aes(x = depression, color = "Depression"), size = 3) +
+  geom_point(aes(x = anxiety, color = "Anxiety"), size = 3) +
+  scale_color_manual(
+    values = c("Depression" = "gray35", "Anxiety" = "steelblue"),
+    name = NULL
+  ) +
+  labs(
+    title = "Anxiety And Depression Estimates Are Paired Within State",
+    x = "Estimate (%)",
+    y = NULL
+  ) +
+  theme_minimal()
+```
+
+This is useful when the reader needs to see both original values and the paired comparison.
+
+Not here how we specified colors with the named vector `c("Depression" = "gray35")` and directly referenced the color in `geom_point`. This is a nice expressive technique.
+
+# Plot The Difference Directly
+
+If the question is about the gap, calculate and plot the gap.
+
+Below we'll use `reorder()` to make reorder the factor categories by location and the size of the difference.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `xend`; `yend` |
+| Geoms / stats | `geom_vline()`; `geom_segment()`; `geom_point()` |
+| `geom_vline()` properties | `color` |
+| `geom_segment()` properties | `color` |
+| `geom_point()` properties | `size`; `color` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+difference_data <- state_mental_health |>
+  mutate(location = reorder(location, difference))
+
+ggplot(difference_data, aes(x = difference, y = location)) +
+  geom_vline(xintercept = 0, color = "gray60") +
+  geom_segment(
+    aes(x = 0, xend = difference, yend = location),
+    color = "gray70"
+  ) +
+  geom_point(size = 3, color = "steelblue") +
+  labs(
+    title = "Gap Between Anxiety And Depression Estimates",
+    x = "Anxiety minus depression, percentage points",
+    y = NULL
+  ) +
+  theme_minimal()
+```
+
+Most states shown have anxiety estimates slightly higher than depression estimates. Wyoming and Utah are below zero, meaning the depression estimate is higher than the anxiety estimate in those state overall rows.
+
+# Difference Calculations 
+
+The plotted value is not one of the original columns. We derive it ourselves with `dplyr`.
+
+```{r}
+state_mental_health |>
+  select(location, anxiety, depression, difference)
+```
+
+That derived quantity should have clear units and direction.
+
+Here:
+
+- Unit: percentage points.
+- Direction: anxiety estimate minus depression estimate.
+- Zero: no gap between the two estimates.
+
+# Takeaways
+
+- Cleveland-style dot plots use position on a common scale and avoid unnecessary bar area.
+- Connected dot plots are useful when paired original values still matter.
+- If the question is about a difference, plot the difference directly.
+- Always label whether differences are percentage points, raw units, ratios, or percent changes.

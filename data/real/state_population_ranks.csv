@@ -1,52 +1,52 @@
 state,state_name,population,rank
-MA,Massachusetts,6892503,1
-HI,Hawaii,1415872,2
-NH,New Hampshire,1377528,3
-RI,Rhode Island,1097379,4
-VT,Vermont,643503,5
-CT,Connecticut,3552824,6
-ME,Maine,1362359,7
-WA,Washington,7797095,8
-MD,Maryland,6177224,9
-NY,New York,20215751,10
-MN,Minnesota,5706494,11
-OR,Oregon,4237256,12
-CO,Colorado,5773714,13
-CA,California,39538223,14
-PA,Pennsylvania,12801989,15
-WI,Wisconsin,5893718,16
-DE,Delaware,989948,17
-NJ,New Jersey,9288994,18
-MI,Michigan,9986857,19
-IA,Iowa,3190369,20
-VA,Virginia,8631393,21
-NC,North Carolina,10439388,22
-IL,Illinois,12812508,23
-NE,Nebraska,1961504,24
-SD,South Dakota,886667,25
-MT,Montana,1084225,26
-OH,Ohio,11799448,27
-UT,Utah,3271616,28
-ND,North Dakota,779094,29
-KY,Kentucky,4505836,30
-MO,Missouri,6154913,31
-FL,Florida,21538187,32
-IN,Indiana,6785528,33
-TN,Tennessee,6910840,34
-GA,Georgia,10711908,35
-AZ,Arizona,7151502,36
-NV,Nevada,3104614,37
-SC,South Carolina,5118425,38
-AL,Alabama,5024279,39
-KS,Kansas,29145505,40
-TX,Texas,3011524,41
-AR,Arkansas,4657757,42
-LA,Louisiana,1839106,43
-ID,Idaho,576851,44
-WY,Wyoming,2117522,45
-NM,New Mexico,3959353,46
-OK,Oklahoma,1793716,47
-WV,West Virginia,2961279,48
-MS,Mississippi,733391,49
-AK,Alaska,733391,50
-DC,District of Columbia,689545,51
+CA,California,39538223,1
+TX,Texas,29145505,2
+FL,Florida,21538187,3
+NY,New York,20215751,4
+IL,Illinois,12812508,5
+PA,Pennsylvania,12801989,6
+OH,Ohio,11799448,7
+GA,Georgia,10711908,8
+NC,North Carolina,10439388,9
+MI,Michigan,9986857,10
+NJ,New Jersey,9288994,11
+VA,Virginia,8631393,12
+WA,Washington,7797095,13
+AZ,Arizona,7151502,14
+TN,Tennessee,6910840,15
+MA,Massachusetts,6892503,16
+IN,Indiana,6785528,17
+MD,Maryland,6177224,18
+MO,Missouri,6154913,19
+WI,Wisconsin,5893718,20
+CO,Colorado,5773714,21
+MN,Minnesota,5706494,22
+SC,South Carolina,5118425,23
+AL,Alabama,5024279,24
+LA,Louisiana,4657757,25
+KY,Kentucky,4505836,26
+OR,Oregon,4237256,27
+OK,Oklahoma,3959353,28
+CT,Connecticut,3552824,29
+UT,Utah,3271616,30
+IA,Iowa,3190369,31
+NV,Nevada,3104614,32
+AR,Arkansas,3011524,33
+MS,Mississippi,2961279,34
+KS,Kansas,2937880,35
+NM,New Mexico,2117522,36
+NE,Nebraska,1961504,37
+ID,Idaho,1839106,38
+WV,West Virginia,1793716,39
+HI,Hawaii,1415872,40
+NH,New Hampshire,1377528,41
+ME,Maine,1362359,42
+RI,Rhode Island,1097379,43
+MT,Montana,1084225,44
+DE,Delaware,989948,45
+SD,South Dakota,886667,46
+ND,North Dakota,779094,47
+AK,Alaska,733391,48
+DC,District of Columbia,689545,49
+VT,Vermont,643503,50
+WY,Wyoming,576851,51

@@ -1,0 +1,254 @@
+---
+title: "ggplot2 Dictionary And Cheatsheet"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+# Goal
+
+This notebook is a compact dictionary of the `ggplot2` functions and plot components used in this course.
+
+Use it as a reference while working through modules and practice notebooks. It summarizes the course vocabulary; it does not try to replace the full `ggplot2` documentation.
+
+It is not a complete `ggplot2` reference. For the full reference, use the official `ggplot2` documentation:
+
+- [`ggplot2` reference index](https://ggplot2.tidyverse.org/reference/)
+- [`ggplot2` book](https://ggplot2-book.org/)
+- [`ggplot2` cheatsheet](https://rstudio.github.io/cheatsheets/html/data-visualization.html)
+
+# Core Plot Structure
+
+| Function or component | What it is for | Documentation |
+|---|---|---|
+| `ggplot()` | Starts a plot and names the data frame. | [`ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html) |
+| `aes()` | Maps data variables to visual roles such as `x`, `y`, `color`, `fill`, `size`, `label`, `group`, `ymin`, `ymax`, `xmin`, `xmax`, or `sample`. | [`aes()`](https://ggplot2.tidyverse.org/reference/aes.html) |
+| `+` | Adds plot layers and settings. In `ggplot2`, plots are built by adding pieces together. | [`ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html) |
+
+# Common Aesthetic Mappings
+
+| Mapping | What it controls |
+|---|---|
+| `x` | Horizontal position. |
+| `y` | Vertical position. |
+| `color` | Outline color or point/line color. Usually maps groups to different colors. |
+| `fill` | Interior color for bars, boxes, violins, ribbons, and other filled shapes. |
+| `group` | Tells `ggplot2` which rows belong together for lines, paths, or grouped summaries. |
+| `label` | Text shown by text or label geoms. |
+| `sample` | Variable checked against a theoretical distribution in QQ plots. |
+| `ymin`, `ymax` | Lower and upper vertical endpoints for intervals or ribbons. |
+| `xmin`, `xmax` | Lower and upper horizontal endpoints for intervals. |
+| `xend`, `yend` | Ending position for segments. |
+
+# Aesthetic Properties
+
+Use aesthetic mappings inside `aes()` when the visual feature should come from the data.
+
+Use aesthetic properties outside `aes()` when the visual feature should be fixed for the whole layer.
+
+| Property | What it controls |
+|---|---|
+| `color` | Fixed outline, point, or line color. |
+| `fill` | Fixed interior color. |
+| `alpha` | Transparency. Smaller values are more transparent. |
+| `size` | Point or text size. |
+| `linewidth` | Line thickness. |
+| `linetype` | Line pattern, such as solid or dashed. |
+| `shape` | Point shape. |
+| `width` | Width of bars, error-bar caps, jittering, or other horizontal adjustments, depending on the geom. |
+| `height` | Height of horizontal error-bar caps or vertical adjustments, depending on the geom. |
+| `outlier.alpha` | Transparency of boxplot outlier points. |
+| `outlier.shape` | Shape of boxplot outlier points. |
+
+# Geoms For One Variable
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `geom_bar()` | Counts rows in categories by default; can also draw precomputed bars with `stat = "identity"`. | [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) |
+| `geom_col()` | Draws bars from already-computed heights. Similar to `geom_bar(stat = "identity")`. | [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) |
+| `geom_histogram()` | Shows the distribution of one continuous variable by binning values. | [`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) |
+| `geom_density()` | Shows a smoothed distribution of one continuous variable. | [`geom_density()`](https://ggplot2.tidyverse.org/reference/geom_density.html) |
+
+# Geoms For Distributions By Group
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `geom_boxplot()` | Summarizes a distribution with median, quartiles, whiskers, and outlier points. | [`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html) |
+| `geom_violin()` | Shows the shape of a distribution by group using a mirrored density plot. | [`geom_violin()`](https://ggplot2.tidyverse.org/reference/geom_violin.html) |
+| `geom_jitter()` | Shows individual points with small random movement to reduce overplotting. | [`geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html) |
+
+# Geoms For Comparisons And Relationships
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `geom_point()` | Draws points for scatterplots, dot plots, and summary estimates. | [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html) |
+| `geom_line()` | Connects observations in order, often for time trends or fitted values. | [`geom_path()` and `geom_line()`](https://ggplot2.tidyverse.org/reference/geom_path.html) |
+| `geom_segment()` | Draws line segments from a start point to an end point. Useful for difference plots and lollipop-style displays. | [`geom_segment()`](https://ggplot2.tidyverse.org/reference/geom_segment.html) |
+| `geom_errorbar()` | Draws vertical intervals, usually for uncertainty around estimates. | [`geom_errorbar()`](https://ggplot2.tidyverse.org/reference/geom_linerange.html) |
+| `geom_errorbarh()` | Draws horizontal intervals, often for coefficient plots. | [`geom_errorbarh()`](https://ggplot2.tidyverse.org/reference/geom_errorbarh.html) |
+| `geom_smooth()` | Adds a smoothed trend or fitted line to a scatterplot. | [`geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html) |
+| `geom_ribbon()` | Draws a filled band between `ymin` and `ymax`, often for uncertainty bands over time. | [`geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html) |
+| `geom_blank()` | Adds no visible marks, but can help set plot limits or reserve space. | [`geom_blank()`](https://ggplot2.tidyverse.org/reference/geom_blank.html) |
+
+# Reference Lines And Text
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `geom_hline()` | Adds a horizontal reference line. | [`geom_abline()` family](https://ggplot2.tidyverse.org/reference/geom_abline.html) |
+| `geom_vline()` | Adds a vertical reference line. | [`geom_abline()` family](https://ggplot2.tidyverse.org/reference/geom_abline.html) |
+| `geom_abline()` | Adds a diagonal reference line with a slope and intercept. | [`geom_abline()` family](https://ggplot2.tidyverse.org/reference/geom_abline.html) |
+| `geom_text()` | Adds text labels. | [`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html) |
+| `geom_label()` | Adds text labels inside rectangles. | [`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html) |
+
+# Quantile And QQ Plot Layers
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `stat_qq()` | Draws sample quantiles against theoretical quantiles. | [`stat_qq()`](https://ggplot2.tidyverse.org/reference/geom_qq.html) |
+| `stat_qq_line()` | Adds the reference line for a QQ plot. | [`stat_qq()`](https://ggplot2.tidyverse.org/reference/geom_qq.html) |
+
+# Scales
+
+Scales control how mapped data values become visual values.
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `scale_x_continuous()` | Controls a continuous x-axis, including labels, breaks, and limits. | [`scale_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html) |
+| `scale_y_continuous()` | Controls a continuous y-axis, including labels, breaks, and limits. | [`scale_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html) |
+| `scale_x_log10()` | Uses a base-10 log scale on the x-axis. | [`scale_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html) |
+| `scale_color_manual()` | Manually assigns colors to groups mapped to `color`. | [`scale_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html) |
+| `scale_fill_manual()` | Manually assigns colors to groups mapped to `fill`. | [`scale_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html) |
+| `scale_color_gradient2()` | Uses a diverging color scale for continuous values with a meaningful midpoint. | [`scale_gradient()`](https://ggplot2.tidyverse.org/reference/scale_gradient.html) |
+| `scale_fill_viridis_c()` | Uses a perceptually uniform continuous Viridis fill scale. | [`scale_viridis()`](https://ggplot2.tidyverse.org/reference/scale_viridis.html) |
+
+# Coordinates And Facets
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `coord_flip()` | Swaps the x- and y-axes. Helpful for long category labels or horizontal dot plots. | [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html) |
+| `coord_cartesian()` | Zooms the visible plotting area without dropping data before statistical calculations. | [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html) |
+| `facet_wrap()` | Creates small multiples by splitting the data into panels. | [`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) |
+
+# Labels, Guides, And Themes
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `labs()` | Adds or changes the plot title, subtitle, caption, axis labels, and legend labels. | [`labs()`](https://ggplot2.tidyverse.org/reference/labs.html) |
+| `guides()` | Controls legends and other guides. Used when a legend needs to be changed or removed. | [`guides()`](https://ggplot2.tidyverse.org/reference/guides.html) |
+| `theme_minimal()` | Applies a clean built-in theme with minimal background decoration. | [`theme_minimal()`](https://ggplot2.tidyverse.org/reference/ggtheme.html) |
+| `theme_void()` | Removes most plot background, axes, and grid elements. Useful for diagrams or maps. | [`theme_void()`](https://ggplot2.tidyverse.org/reference/ggtheme.html) |
+| `theme()` | Fine-tunes theme elements such as text size, legend position, or grid lines. | [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html) |
+| `theme_course_plot()` | Course-created helper for reusable plot styling. This is not part of `ggplot2`. | See `modules/11_extra-topics/01_reusable-plot-styling.qmd`. |
+
+# Saving Plots
+
+| Function | What it is for | Documentation |
+|---|---|---|
+| `ggsave()` | Saves the last plot, or a named plot object, to a file. | [`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) |
+
+# Common Patterns From This Course
+
+## Scatterplot
+
+Use `geom_point()`:
+
+```r
+ggplot(data, aes(x = x_variable, y = y_variable)) +
+  geom_point() +
+  labs(
+    title = "Plot title",
+    x = "X-axis label",
+    y = "Y-axis label"
+  ) +
+  theme_minimal()
+```
+
+## Bar Chart With Precomputed Heights
+
+Use `geom_bar(stat = "identity")`:
+
+```r
+ggplot(summary_data, aes(x = category, y = value)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Plot title",
+    x = "Category",
+    y = "Value"
+  ) +
+  theme_minimal()
+```
+
+## Dot Plot With Intervals
+
+Use `geom_errorbar()` with `geom_point()`:
+
+```r
+ggplot(summary_data, aes(x = group, y = estimate)) +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15) +
+  geom_point() +
+  coord_flip() +
+  labs(
+    title = "Plot title",
+    x = "Group",
+    y = "Estimate"
+  ) +
+  theme_minimal()
+```
+
+## Histogram
+
+Use `geom_histogram()`:
+
+```r
+ggplot(data, aes(x = continuous_variable)) +
+  geom_histogram() +
+  labs(
+    title = "Plot title",
+    x = "Variable",
+    y = "Number of observations"
+  ) +
+  theme_minimal()
+```
+
+## Boxplot With Raw Points
+
+Use `geom_boxplot()` with `geom_jitter()`:
+
+```r
+ggplot(data, aes(x = group, y = continuous_variable)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.12, alpha = 0.2) +
+  labs(
+    title = "Plot title",
+    x = "Group",
+    y = "Variable"
+  ) +
+  theme_minimal()
+```
+
+## Small Multiples
+
+Use `facet_wrap()`:
+
+```r
+ggplot(data, aes(x = x_variable, y = y_variable)) +
+  geom_point() +
+  facet_wrap(~ group_variable) +
+  labs(
+    title = "Plot title",
+    x = "X-axis label",
+    y = "Y-axis label"
+  ) +
+  theme_minimal()
+```
+
+# References
+
+When you cannot figure something out or understand how something works, start with the official [`ggplot2` reference index](https://ggplot2.tidyverse.org/reference/). Search by the kind of plot component you need:
+
+- `geom_*()` for marks drawn on the plot.
+- `scale_*()` for axes, colors, fills, and legends.
+- `coord_*()` for coordinate systems and zooming.
+- `facet_*()` for small multiples.
+- `theme()` and `theme_*()` for visual styling.

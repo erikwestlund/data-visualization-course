@@ -1,0 +1,94 @@
+---
+title: "Extra: DAG Structures With Mermaid"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+# Goal
+
+This optional notebook shows basic directed acyclic graph structures using Mermaid diagrams.
+
+A DAG is a drawing of causal assumptions. It does not prove causality. It helps make assumptions explicit before modeling or interpreting an association.
+
+# Simple DAG
+
+The simplest causal diagram has one arrow.
+
+```{mermaid}
+flowchart LR
+  X[Exposure] --> Y[Outcome]
+```
+
+The arrow says we are assuming the exposure affects the outcome.
+
+# Fork: Common Cause
+
+A fork happens when one variable affects both the exposure and the outcome.
+
+```{mermaid}
+flowchart LR
+  Z[Common cause] --> X[Exposure]
+  Z --> Y[Outcome]
+  X --> Y
+```
+
+Here, the common cause can create or distort the association between exposure and outcome. This is the structure people usually mean when they say confounding.
+
+# Chain: Mediator
+
+A chain happens when the exposure affects a mediator, and the mediator affects the outcome.
+
+```{mermaid}
+flowchart LR
+  X[Exposure] --> M[Mediator]
+  M --> Y[Outcome]
+```
+
+Whether to adjust for the mediator depends on the question. If the question is about the total effect of the exposure, adjusting for the mediator can remove part of the effect you are trying to describe.
+
+# Collider
+
+A collider happens when two variables both affect a third variable.
+
+```{mermaid}
+flowchart LR
+  X[Exposure] --> C[Collider]
+  Y[Outcome] --> C
+```
+
+Conditioning on a collider can create an association that was not present before. This is one reason sample restrictions and adjustment choices need to be explained.
+
+# A More Realistic Sketch
+
+This diagram is still simplified, but it shows how a health question can involve several connected assumptions.
+
+```{mermaid}
+flowchart LR
+  Age[Age] --> BP[Blood pressure]
+  Income[Income] --> Diet[Diet quality]
+  Income --> Care[Access to care]
+  Diet --> BP
+  Care --> BP
+  BP --> Outcome[Health outcome]
+```
+
+# DAGs And Data Visualizations
+
+DAGs are not replacements for data plots.
+
+They answer different questions:
+
+- a scatterplot shows the observed association
+- a model plot shows fitted or adjusted results
+- a DAG shows assumptions about relationships among variables
+
+Use a DAG when the reader needs to understand why variables were included, excluded, adjusted for, or treated as part of the pathway.
+
+# Takeaways
+
+- DAGs make causal assumptions visible.
+- Forks, chains, and colliders are common building blocks.
+- Mermaid is enough for simple teaching and reporting diagrams.
+- Use specialized DAG tools when the goal is formal causal identification.

@@ -11,13 +11,12 @@ format:
 knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 # Worked Reference
 
 ```{r}
-flu <- read_csv("data/real/flu_vaccination_age_time_clean.csv", show_col_types = FALSE)
+flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
 
 latest_flu <- flu |>
   filter(

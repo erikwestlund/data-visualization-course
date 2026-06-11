@@ -1,0 +1,181 @@
+---
+title: "Practice: Boxplots And Unusual Values"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice using boxplots and simple IQR fences to inspect spread and unusual values.
+
+# 1. Load Data
+
+```{r}
+davis <- readr::read_csv("data/real/davis_height_weight.csv")
+```
+
+# 2. Prepare Weight Data
+
+This keeps participants with non-missing measured weight.
+
+```{r}
+weight_data <- davis |>
+  filter(!is.na(weight_kg))
+
+weight_data |>
+  select(participant_id, sex, weight_kg, height_cm, measured_bmi) |>
+  head()
+```
+
+Try adding `filter(sex == "male")` to focus on one group.
+
+# 3. Calculate IQR Fences
+
+These cutoffs use the same basic rule as a default boxplot.
+
+```{r}
+weight_cutoffs <- weight_data |>
+  summarize(
+    q1 = quantile(weight_kg, 0.25),
+    q3 = quantile(weight_kg, 0.75),
+    iqr = IQR(weight_kg),
+    lower_cutoff = q1 - 1.5 * iqr,
+    upper_cutoff = q3 + 1.5 * iqr
+  )
+
+weight_cutoffs
+```
+
+Try changing both `1.5` values to `3` and compare the cutoffs.
+
+# 4. Flag High Values
+
+This flags values above the upper cutoff.
+
+```{r}
+weight_flagged <- weight_data |>
+  mutate(
+    high_weight_flag = weight_kg > weight_cutoffs$upper_cutoff
+  )
+
+weight_flagged |>
+  count(high_weight_flag)
+```
+
+Try changing `>` to `>=`. Does the count change?
+
+# 5. Inspect Flagged Rows
+
+This shows the highest flagged values.
+
+```{r}
+weight_flagged |>
+  filter(high_weight_flag) |>
+  select(participant_id, sex, height_cm, weight_kg, measured_bmi) |>
+  arrange(desc(weight_kg)) |>
+  head(10)
+```
+
+The table shows the rows. This histogram shows where the flagged values sit in the full distribution.
+
+```{r}
+ggplot(
+  weight_flagged,
+  aes(x = weight_kg, fill = high_weight_flag)
+) +
+  geom_histogram(binwidth = 5, color = "white") +
+  scale_fill_manual(
+    values = c("FALSE" = "gray75", "TRUE" = "firebrick"),
+    labels = c("FALSE" = "Not flagged", "TRUE" = "Flagged"),
+    name = NULL
+  ) +
+  labs(
+    title = "Measured Weight",
+    x = "Measured weight, kg",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+Write briefly: do the flagged values look isolated, or do they look like part of a long right tail?
+
+# 6. One-Variable Boxplot
+
+This shows the distribution as one boxplot.
+
+```{r}
+ggplot(weight_data, aes(y = weight_kg)) +
+  geom_boxplot() +
+  geom_hline(
+    yintercept = weight_cutoffs$upper_cutoff,
+    color = "firebrick",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Measured Weight With IQR Upper Fence",
+    x = NULL,
+    y = "Measured weight, kg"
+  ) +
+  theme_minimal()
+```
+
+Try removing `geom_hline()`. What did the line help show?
+
+# 7. Grouped Boxplot
+
+This compares measured weight by sex.
+
+```{r}
+ggplot(
+  weight_data,
+  aes(x = sex, y = weight_kg)
+) +
+  geom_boxplot() +
+  labs(
+    title = "Measured Weight By Sex",
+    x = "Sex",
+    y = "Measured weight, kg"
+  ) +
+  theme_minimal()
+```
+
+Try changing `weight_kg` to `measured_bmi`.
+
+# 8. Add Jittered Values
+
+This adds the individual values behind the boxplots.
+
+```{r}
+ggplot(
+  weight_flagged,
+  aes(x = sex, y = weight_kg)
+) +
+  geom_boxplot(outlier.shape = NA, fill = "white") +
+  geom_jitter(width = 0.15, alpha = 0.25, size = 0.7) +
+  labs(
+    title = "Measured Weight By Sex",
+    x = "Sex",
+    y = "Measured weight, kg"
+  ) +
+  theme_minimal()
+```
+
+Try changing `alpha = 0.25` to `alpha = 0.6`.
+
+# On Your Own
+
+Choose one small task:
+
+- Make a grouped boxplot for `height_cm` by `sex`.
+- Make a grouped boxplot for `reported_weight_kg` by `sex`.
+- Calculate IQR fences for a different numeric variable.
+
+Write 1-2 sentences describing center, spread, and unusual values.

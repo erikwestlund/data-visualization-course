@@ -11,13 +11,12 @@ format:
 knitr::opts_knit$set(root.dir = normalizePath("../../../.."))
 library(dplyr)
 library(ggplot2)
-library(readr)
 ```
 
 # Worked Reference
 
 ```{r}
-census <- read_csv("data/real/census_state_race_ethnicity_long.csv", show_col_types = FALSE)
+census <- readr::read_csv("data/real/census_state_race_ethnicity_long.csv")
 
 category_population <- census |>
   group_by(race_ethnicity) |>

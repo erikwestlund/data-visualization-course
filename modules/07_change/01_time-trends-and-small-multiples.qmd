@@ -1,0 +1,190 @@
+---
+title: "Time Trends And Small Multiples"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to visualize change over time and compare time patterns across groups.
+
+# Analytic Questions
+
+- How do flu vaccination estimates change across seasons?
+- How do time patterns differ by age group?
+- When are small multiples clearer than many colored lines?
+
+# Load Data
+
+```{r}
+flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
+```
+
+# Prepare Data
+
+Use national estimates from May (`month == 5`) so each season is compared at the same point in the vaccination cycle.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Count or summarize | `count()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+us_may <- flu |>
+  filter(
+    geography == "United States",
+    month == 5,
+    !is.na(estimate)
+  )
+
+us_may |>
+  count(age_group)
+```
+
+# One Group Over Time
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_line()`; `geom_point()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+older_adults <- us_may |>
+  filter(age_group == ">=65 Years")
+
+p1 <- ggplot(older_adults, aes(x = season_start_year, y = estimate)) +
+  geom_line() +
+  geom_point()
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  labs(
+    title = "Flu Vaccination Estimates Over Time",
+    subtitle = "United States, May (month 5), ages 65 and older",
+    x = "Season start year",
+    y = "Vaccination estimate (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Several Groups With Color
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_line()`; `geom_point()` |
+| `geom_line()` properties | `linewidth` |
+| `geom_point()` properties | `size` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+selected_age_groups <- us_may |>
+  filter(age_group %in% c("6 Months - 4 Years", "18-49 Years", "50-64 Years", ">=65 Years"))
+
+p1 <- ggplot(
+  selected_age_groups,
+  aes(x = season_start_year, y = estimate, color = age_group)
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2)
+
+p2 <- p1 +
+  labs(
+    title = "Flu Vaccination Time Trends Differ By Age Group",
+    subtitle = "United States, May (month 5)",
+    x = "Season start year",
+    y = "Vaccination estimate (%)",
+    color = "Age group"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Small Multiples
+
+When many groups compete for attention, facets can make the patterns easier to scan.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| `geom_line()` properties | `color`; `linewidth` |
+| `geom_point()` properties | `color`; `size` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(selected_age_groups, aes(x = season_start_year, y = estimate)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 1.8) +
+  facet_wrap(vars(age_group))
+
+p2 <- p1 +
+  labs(
+    title = "Small Multiples Separate The Age-Group Patterns",
+    subtitle = "United States, May (month 5)",
+    x = "Season start year",
+    y = "Vaccination estimate (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Takeaways
+
+- Line plots work well when the x-axis has a meaningful order.
+- Use the same month or comparable time point when comparing seasons.
+- Color works for a few groups; facets often work better for many groups.
+- These plots show point estimates only; when intervals are available, check whether apparent changes are large relative to uncertainty.

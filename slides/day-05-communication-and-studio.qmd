@@ -5,15 +5,27 @@ author: "Erik Westlund"
 format: revealjs
 ---
 
+```{r}
+#| include: false
+if (basename(getwd()) == "slides") {
+  knitr::opts_knit$set(root.dir = dirname(getwd()))
+}
+
+library(dplyr)
+library(ggplot2)
+```
+
 # Welcome Back
 
 ## Today's Goals
 
-1. Turn exploratory plots into clearer communication figures.
-2. Make honest scale choices.
-3. Use color and highlighting intentionally.
-4. Save figures at useful sizes and formats.
-5. Make progress on final project visualizations.
+1. Add useful annotations directly to figures.
+2. Show one time-series example.
+3. Preview DAGs and Mermaid charts.
+4. Use color and highlighting intentionally.
+5. Check accessibility before calling a figure finished.
+6. Save figures at useful sizes and formats.
+7. Make progress on final project visualizations.
 
 ## Where We Are
 
@@ -24,94 +36,142 @@ This week moved from setup to visual reasoning:
 - continuous data
 - group comparison
 - association
-- change
-- space
-- flow
 
-Today asks: how do we communicate what we found?
+Today has two jobs:
 
-# Exploration Versus Communication
+- practice annotating figures for communication
+- quickly preview a few other visual forms
+- finish with practical polish: accessibility, color, and saving
 
-## Exploratory Figures
+# Annotating Figures
 
-Exploratory figures help you think.
+## Annotation Directs Attention
 
-They can be rough:
+Annotation is not decoration.
 
-- quick labels
-- extra variables
-- multiple attempts
-- imperfect formatting
-- code-first workflow
+It tells the reader what to notice.
 
-They are for learning from the data.
+Useful annotation can mark:
 
-## Communication Figures
+- an important value
+- a benchmark
+- a visible change
+- a group to compare
+- a limitation or caution
 
-Communication figures help someone else understand.
+## Example: Direct Labels
 
-They need:
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
 
-- clear question
-- readable labels
-- appropriate scale
-- intentional color
-- caption or interpretation
-- honest limitations
+us_may <- flu |>
+  filter(
+    geography == "United States",
+    month == 5,
+    age_group %in% c("18-49 Years", "50-64 Years", ">=65 Years"),
+    !is.na(estimate)
+  )
 
-They are for readers.
+latest_may <- us_may |>
+  filter(season_start_year == max(season_start_year)) |>
+  mutate(label = paste0(age_group, ": ", round(estimate), "%"))
 
-## The Same Plot Can Move Stages
+ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2.5) +
+  geom_text(
+    data = latest_may,
+    aes(label = label),
+    hjust = 0,
+    nudge_x = 0.15,
+    show.legend = FALSE
+  ) +
+  annotate(
+    geom = "label",
+    x = 2011,
+    y = 74,
+    label = "Text should point\nto the reading task",
+    hjust = 0,
+    size = 4,
+    fill = "white",
+    color = "gray20"
+  ) +
+  coord_cartesian(xlim = c(2010, 2025.5), ylim = c(25, 80)) +
+  labs(
+    title = "Put Text Near The Data It Explains",
+    x = "Season start year",
+    y = "Vaccination estimate (%)"
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(legend.position = "none")
+```
 
-A plot can start exploratory and become communicative.
-
-Revision questions:
-
-- What should the reader notice first?
-- What comparison matters?
-- What can be removed?
-- What context is missing?
-- What limitation should be visible?
-
-# Scales
-
-## Scales Shape The Argument
-
-Axis choices affect what readers see.
-
-Scales can clarify.
-
-Scales can also exaggerate or hide differences.
-
-## Honest Scale Questions
-
-Ask:
-
-- Should zero be included?
-- Are values percentages, counts, rates, or estimates?
-- Are axes comparable across panels?
-- Are breaks readable?
-- Does the scale match the claim?
-
-## Zero Is Not Always Required
-
-Bars should usually start at zero because bar length encodes amount.
-
-For line plots and point plots, a nonzero axis can be acceptable.
-
-If you use a nonzero axis, label it clearly and do not use it to exaggerate small differences.
-
-## Transition To Module
+## Transition To Module And Practice
 
 Open:
 
-`modules/09_communication-polish/01_effective-and-honest-scales.qmd`
+`modules/10_communication-polish/00_annotating-data-on-figures.qmd`
 
-Watch for:
+Then practice:
 
-- full versus narrowed scales
-- percentage axes
-- scale choices as interpretation choices
+`practice/05-communication-and-studio/00_annotating-data-on-figures-practice.qmd`
+
+# Quick Explanation Demos
+
+## One Time-Series Plot
+
+Time belongs on the x-axis when order is part of the question.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2.5) +
+  geom_text(
+    data = latest_may,
+    aes(label = age_group),
+    hjust = 0,
+    nudge_x = 0.15,
+    show.legend = FALSE
+  ) +
+  coord_cartesian(xlim = c(2010, 2025.5), ylim = c(25, 80)) +
+  labs(
+    title = "A Time Series Shows Change Over Ordered Time",
+    subtitle = "United States flu vaccination estimates, May (month 5)",
+    x = "Season start year",
+    y = "Vaccination estimate (%)"
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(legend.position = "none")
+```
+
+This is a preview only. We are not doing a time-series practice block today.
+
+## DAG-Style Diagrams And Mermaid
+
+Not every visual is a data plot.
+
+Sometimes the goal is to show:
+
+- workflow
+- process
+- conceptual relationships
+- assumptions behind a comparison
+
+Open:
+
+`modules/11_extra-topics/04_dag_structures_with_mermaid.qmd`
+
+Also useful for process charts:
+
+`modules/09_flow/02_process-diagrams.qmd`
+
+Today these are quick demos, not practice sections.
 
 # Color And Highlighting
 
@@ -161,11 +221,38 @@ The goal is not to make everything colorful.
 
 The goal is to guide attention.
 
+## Example: Highlighting
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+states <- readr::read_csv("data/real/state_population_ranks.csv")
+
+states |>
+  filter(rank <= 15) |>
+  mutate(
+    state_name = reorder(state_name, population),
+    focus = state_name == "Texas"
+  ) |>
+  ggplot(aes(x = state_name, y = population, fill = focus)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(values = c("TRUE" = "firebrick", "FALSE" = "gray75"), guide = "none") +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Use Color To Direct Attention",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
 ## Transition To Module
 
 Open:
 
-`modules/09_communication-polish/02_color-accessibility-and-highlighting.qmd`
+`modules/10_communication-polish/02_color-accessibility-and-highlighting.qmd`
 
 Watch for:
 
@@ -213,7 +300,7 @@ Then save it intentionally.
 
 Open:
 
-`modules/09_communication-polish/03_saving-visualizations.qmd`
+`modules/10_communication-polish/03_saving-visualizations.qmd`
 
 Watch for:
 
@@ -279,11 +366,23 @@ When looking at a classmate's plot, ask:
 
 # Practice
 
+## Extra Topic Modules
+
+These are available for later review or project-specific needs:
+
+- `modules/11_extra-topics/01_reusable-plot-styling.qmd`
+- `modules/11_extra-topics/02_iterative-refinement-aggregation-and-faceting.qmd`
+- `modules/11_extra-topics/03_correlation-patterns-and-coefficient-plots.qmd`
+- `modules/11_extra-topics/04_dag_structures_with_mermaid.qmd`
+- `modules/11_extra-topics/05_cleveland_style_diagnostic_plots.qmd`
+
+They are optional. Today, prioritize communication polish, accessibility, saving, and project progress.
+
 ## Today's Practice Options
 
 Use one or more practice notebooks from:
 
-- `practice/09_communication-polish/`
+- `practice/05-communication-and-studio/`
 
 Or work directly on your final project.
 

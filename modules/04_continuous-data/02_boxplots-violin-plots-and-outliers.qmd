@@ -1,0 +1,652 @@
+---
+title: "Boxplots, Violin Plots, And Outliers"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+if (!requireNamespace("DT", quietly = TRUE)) {
+  install.packages("DT")
+}
+
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to use summaries, boxplots, violin plots, and tables to understand spread and unusual values. We'll continue with the NHANES teaching file.
+
+# Analytic Questions
+
+- How much spread is there?
+- How do boxplots connect to IQR fences?
+- What do violin plots show that boxplots hide?
+- Which values might deserve follow-up by a simple IQR rule?
+
+# Load Data
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+nhanes |>
+  glimpse()
+```
+
+# Prepare Dietary Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+diet <- nhanes |>
+  filter(!is.na(mean_daily_energy_kcal))
+
+diet |>
+  select(respondent_id, age_years, gender, age_group, mean_daily_energy_kcal) |>
+  head()
+```
+
+The dietary summaries are simple averages over available recall days. They are for exploratory teaching examples, not formal usual-intake estimation.
+
+# Summarize Spread
+
+Summaries can describe spread in a few numbers.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+energy_summary <- diet |>
+  summarize(
+    n = n(),
+    mean_energy = mean(mean_daily_energy_kcal),
+    median_energy = median(mean_daily_energy_kcal),
+    min_energy = min(mean_daily_energy_kcal),
+    max_energy = max(mean_daily_energy_kcal),
+    iqr_energy = IQR(mean_daily_energy_kcal),
+    sd_energy = sd(mean_daily_energy_kcal)
+  )
+
+energy_summary
+```
+
+The range shows the full span. The IQR describes the middle 50% of values. The standard deviation describes spread around the mean.
+
+These summaries are useful, but they do not show the shape of the tails. That is why we plot too.
+
+# Screen For Unusual Values
+
+Here, we'll calculate quartiles and IQR fences ourself. `ggplot2` will do this for us, but it's always useful to remember how these work.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+energy_cutoffs <- diet |>
+  summarize(
+    q1 = quantile(mean_daily_energy_kcal, 0.25),
+    q3 = quantile(mean_daily_energy_kcal, 0.75),
+    iqr = IQR(mean_daily_energy_kcal),
+    lower_cutoff = q1 - 1.5 * iqr,
+    upper_cutoff = q3 + 1.5 * iqr
+  )
+
+energy_cutoffs
+```
+
+We calculate two fences/cutoffs. For this question, we'll focus on the high end of values, so we flag only values above the upper cutoff.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+| Count or summarize | `count()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+diet_flagged <- diet |>
+  mutate(
+    high_energy_outlier = mean_daily_energy_kcal > energy_cutoffs$upper_cutoff
+  )
+
+diet_flagged |>
+  count(high_energy_outlier)
+```
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+diet_not_flagged <- diet_flagged |>
+  filter(!high_energy_outlier)
+
+diet_high_flagged <- diet_flagged |>
+  filter(high_energy_outlier)
+```
+
+These are the same basic fences that `ggplot2` uses by default when it draws a boxplot. The default boxplot rule is:
+
+- lower fence: Q1 - 1.5 x IQR
+- upper fence: Q3 + 1.5 x IQR
+
+Points beyond those fences are drawn as outlier points.
+
+# Inspect Flagged Rows
+
+Flagged values are not automatically errors. Often they're perfectly natural results of the natural/social world.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+| Sort rows | `arrange()`; `desc()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+diet_flagged |>
+  filter(high_energy_outlier) |>
+  select(respondent_id, age_years, gender, age_group, dietary_days, mean_daily_energy_kcal) |>
+  arrange(desc(mean_daily_energy_kcal)) |>
+  head(10)
+```
+
+## Compare Groups With A Box Plot
+
+`ggplot2` makes it very easy to create boxplots.
+
+The box shows the middle 50% of the data. The line inside the box is the median. The points beyond the whiskers use the same 1.5 IQR idea we calculated above.
+
+Start with a one-variable boxplot. There is no grouping variable here, so every participant is part of the same distribution.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `y` |
+| Geoms / stats | `geom_boxplot()` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(y = mean_daily_energy_kcal)
+) +
+  geom_boxplot() +
+  labs(
+    title = "Mean Daily Energy Intake",
+    x = NULL,
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+Now draw the 1.5 IQR upper fence that we calculated earlier. Everything above the red line is beyond the 1.5 IQR upper fence.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_boxplot()`; `geom_hline()` |
+| `geom_hline()` properties | `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(y = mean_daily_energy_kcal)
+) +
+  geom_boxplot() +
+  geom_hline(
+    yintercept = energy_cutoffs$upper_cutoff,
+    color = "firebrick",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake With 1.5 IQR Upper Fence",
+    x = NULL,
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+The line makes the math visible: `geom_boxplot()` is using the same kind of fence we calculated by hand.
+
+We can also make grouped boxplots.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_boxplot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  diet,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_boxplot()
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+## Change The Boxplot Rule
+
+The default `coef` is `1.5`, which means the whiskers extend to values within 1.5 IQRs of the box.
+
+We can change that. A larger `coef` makes fewer points appear as outliers because the whiskers can extend farther.
+
+First, calculate the 3.0 IQR fences from the same quartiles and IQR.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+energy_cutoffs_3 <- diet |>
+  summarize(
+    q1 = quantile(mean_daily_energy_kcal, 0.25),
+    q3 = quantile(mean_daily_energy_kcal, 0.75),
+    iqr = IQR(mean_daily_energy_kcal),
+    lower_cutoff = q1 - 3 * iqr,
+    upper_cutoff = q3 + 3 * iqr
+  )
+
+energy_cutoffs_3
+```
+
+Now set `coef = 3` in the one-variable boxplot and draw the 3.0 IQR upper fence.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `y` |
+| Geoms / stats | `geom_boxplot()`; `geom_hline()` |
+| `geom_hline()` properties | `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(y = mean_daily_energy_kcal)
+) +
+  geom_boxplot(coef = 3) +
+  geom_hline(
+    yintercept = energy_cutoffs_3$upper_cutoff,
+    color = "firebrick",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake With 3.0 IQR Upper Fence",
+    x = NULL,
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_boxplot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_boxplot(coef = 3) +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+## Change The Outlier Points
+
+We can also keep the default rule but change how the outlier points look.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| `geom_boxplot()` properties | `outlier.shape` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_boxplot(
+    outlier.color = "firebrick",
+    outlier.shape = 16,
+    outlier.size = 2
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+## Plot The Values
+
+We can hide the outlier points drawn by the boxplot and then add all the individual values, using jitter to spread them out.
+
+This helps us see how the full distribution looks instead of only seeing the points flagged by the boxplot rule.
+
+In `ggplot2`, layer order matters. Layers added later are drawn on top of earlier layers.
+
+First, draw the boxplot and put the jittered points on top.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_boxplot()`; `geom_jitter()` |
+| `geom_boxplot()` properties | `outlier.shape`; `fill`; `alpha` |
+| `geom_jitter()` properties (layer 1) | `color`; `width`; `alpha`; `size` |
+| `geom_jitter()` properties (layer 2) | `width`; `alpha`; `size` |
+| Scales / coordinates / facets / labels | `scale_color_manual()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet_flagged,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_boxplot(outlier.shape = NA, fill = "white", alpha = 0.8) +
+  geom_jitter(
+    data = diet_not_flagged,
+    color = "gray60",
+    width = 0.15,
+    alpha = 0.35,
+    size = 0.8
+  ) +
+  geom_jitter(
+    data = diet_high_flagged,
+    aes(color = "Flagged"),
+    width = 0.15,
+    alpha = 0.8,
+    size = 0.8
+  ) +
+  scale_color_manual(
+    values = c("Flagged" = "firebrick"),
+    name = NULL
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+Now reverse the order: draw the jittered points first and put the boxplot on top.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_jitter()`; `geom_boxplot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet_flagged,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_jitter(
+    data = diet_not_flagged,
+    color = "gray60",
+    width = 0.15,
+    alpha = 0.35,
+    size = 0.8
+  ) +
+  geom_jitter(
+    data = diet_high_flagged,
+    aes(color = "Flagged"),
+    width = 0.15,
+    alpha = 0.8,
+    size = 0.8
+  ) +
+  geom_boxplot(outlier.shape = NA, fill = "white", alpha = 0.8) +
+  scale_color_manual(
+    values = c("Flagged" = "firebrick"),
+    name = NULL
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+The data are the same in both plots. The layer order changes which part of the display visually sits on top.
+
+Adding points can help add useful context about the plot, such as how many points are in each category.
+
+# Show The Flagged Rows In A Table
+
+When appropriate, we can show collaborators the rows behind the flagged values.
+
+Here we use the wider 3.0 IQR rule and arrange the table by the energy value.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+| Sort rows | `arrange()`; `desc()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+energy_3_iqr_flagged <- diet |>
+  filter(mean_daily_energy_kcal > energy_cutoffs_3$upper_cutoff) |>
+  arrange(desc(mean_daily_energy_kcal)) |>
+  select(
+    respondent_id,
+    age_years,
+    gender,
+    age_group,
+    dietary_days,
+    mean_daily_energy_kcal
+  )
+
+DT::datatable(
+  energy_3_iqr_flagged,
+  rownames = FALSE,
+  options = list(pageLength = 10)
+)
+```
+
+Interactive tables can be useful for review, but use them carefully. Do not share sensitive row-level data unless it is appropriate for the setting and audience.
+
+# Violin Plots
+
+Violin plots use smoothing to show the shape of a distribution within each group. They let you see the distribution of a measure through the density, and get a better sense of the range/outliers through the boxplot.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_violin()` |
+| `geom_violin()` properties | `fill`; `color` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_violin(fill = "gray85", color = "gray40") +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+The violin plot makes the width of each distribution visible, but it hides the median and the middle 50% of values unless we add another layer.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_violin()`; `geom_boxplot()` |
+| `geom_boxplot()` properties | `width`; `outlier.shape`; `fill`; `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_violin(fill = "gray85", color = "gray40") +
+  geom_boxplot(
+    width = 0.12,
+    outlier.shape = NA,
+    fill = "white",
+    color = "black",
+    linewidth = 0.7
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+The boxplot layer adds the median and middle spread back onto the smoothed shape.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_violin()`; `geom_jitter()` |
+| `geom_jitter()` properties (layer 1) | `color`; `width`; `alpha`; `size` |
+| `geom_jitter()` properties (layer 2) | `width`; `alpha`; `size` |
+| Scales / coordinates / facets / labels | `scale_color_manual()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  diet_flagged,
+  aes(x = age_group, y = mean_daily_energy_kcal)
+) +
+  geom_violin(fill = "gray90", color = "gray50") +
+  geom_jitter(
+    data = diet_not_flagged,
+    color = "gray60",
+    width = 0.15,
+    alpha = 0.25,
+    size = 0.7
+  ) +
+  geom_jitter(
+    data = diet_high_flagged,
+    aes(color = "Flagged"),
+    width = 0.15,
+    alpha = 0.8,
+    size = 0.8
+  ) +
+  scale_color_manual(
+    values = c("Flagged" = "firebrick"),
+    name = NULL
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake By Age Group",
+    x = "Age group",
+    y = "Mean daily energy intake, kcal"
+  ) +
+  theme_minimal()
+```
+
+# Takeaways
+
+- Unusual values can be errors, true rare values, or signs that the variable needs context.
+- The default boxplot rule of 1.5 IQR is a screening tool, not a final judgment. Use your scientific judgment to inform what you would consider an outlier.
+- Visualization helps show whether unusual values are isolated or part of a tail.
+- Try out different methods to see what is the most useful for you.

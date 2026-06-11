@@ -1,0 +1,101 @@
+---
+title: "Practice: Grouped Summaries"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice calculating one statistic per group and plotting the grouped summary.
+
+# 1. Load Data
+
+```{r}
+places <- readr::read_csv("data/real/places_county_core_measures_long.csv")
+
+places |>
+  glimpse()
+```
+
+# 2. Prepare One Measure
+
+This keeps county obesity estimates for Maryland, Virginia, and the District of Columbia.
+
+```{r}
+obesity_counties <- places |>
+  filter(measure_key == "obesity") |>
+  filter(state %in% c("MD", "VA", "DC")) |>
+  filter(!is.na(estimate))
+
+obesity_counties |>
+  select(state_name, county_name, measure, estimate, ci_lower, ci_upper) |>
+  head()
+```
+
+Try changing `measure_key == "obesity"` to `measure_key == "high_blood_pressure"`.
+
+# 3. Check Group Sizes
+
+Here, each row is a county estimate. Count counties before comparing state summaries.
+
+```{r}
+obesity_counties |>
+  count(state_name)
+```
+
+# 4. Summarize By State
+
+These summaries reduce many county estimates to one row per state.
+
+```{r}
+state_obesity <- obesity_counties |>
+  group_by(state_name) |>
+  summarize(
+    n_counties = n(),
+    mean_estimate = mean(estimate),
+    median_estimate = median(estimate),
+    min_estimate = min(estimate),
+    max_estimate = max(estimate),
+    .groups = "drop"
+  ) |>
+  mutate(
+    state_name = reorder(state_name, mean_estimate)
+  )
+
+state_obesity
+```
+
+Try adding `sd_estimate = sd(estimate)`.
+
+# 5. Plot The Summary
+
+This dot plot shows one summary value per state.
+
+```{r}
+ggplot(
+  state_obesity,
+  aes(x = state_name, y = mean_estimate)
+) +
+  geom_point(size = 3, color = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Mean County Obesity Estimate By State",
+    x = NULL,
+    y = "Mean county estimate (%)"
+  ) +
+  theme_minimal()
+```
+
+Try changing `mean_estimate` to `median_estimate` in the plot.
+
+# Interpretation
+
+Write 1-2 sentences: what does one point represent, and what information was lost when counties were summarized to states? What should we do in a situation where we have very few data points, like DC? o

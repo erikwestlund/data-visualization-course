@@ -1,0 +1,223 @@
+---
+title: "Extra: Reusable Plot Styling"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This optional notebook shows how to avoid repeating the same plot styling code over and over.
+
+The point is not to build a full design system. The point is to notice when repeated code can become a small reusable object or function.
+
+# Load Data
+
+```{r}
+states <- readr::read_csv("data/real/state_population_ranks.csv")
+```
+
+# A Plain Plot
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_bar()` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `labs()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+top_states <- states |>
+  filter(rank <= 15) |>
+  mutate(state_name = reorder(state_name, population))
+
+p1 <- ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(
+    title = "Largest States By Population",
+    x = NULL,
+    y = "Population"
+  )
+
+p1
+```
+
+# Add Styling Once
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `scale_y_continuous()`; `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 8))
+  )
+
+p2
+```
+
+This is fine for one plot. It becomes annoying when the same styling appears in many plots.
+
+# Save Reusable Pieces
+
+Start small. A reusable color value is often enough.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_bar()` |
+| `geom_bar()` properties | `fill` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_y_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+course_blue <- "steelblue"
+course_gray <- "gray75"
+
+ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_bar(stat = "identity", fill = course_blue) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Largest States By Population",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal()
+```
+
+# Write A Small Theme Function
+
+A theme function is useful when the same formatting appears in several figures.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+theme_course_plot <- function() {
+  theme_minimal() +
+    theme(
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(face = "bold"),
+      axis.title.x = element_text(margin = margin(t = 8))
+    )
+}
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_bar()` |
+| `geom_bar()` properties | `fill` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_y_continuous()`; `labs()`; `theme_course_plot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_bar(stat = "identity", fill = course_blue) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Largest States By Population",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_course_plot()
+```
+
+# Highlight With Reusable Choices
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `fill` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_fill_manual()`; `scale_y_continuous()`; `labs()`; `theme_course_plot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+top_states |>
+  mutate(focus = state_name == "Texas") |>
+  ggplot(aes(x = state_name, y = population, fill = focus)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("TRUE" = "firebrick", "FALSE" = course_gray),
+    guide = "none"
+  ) +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Highlight One State, Keep Context",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_course_plot()
+```
+
+# When Not To Reuse
+
+Reusable styling can help, but it can also hide choices that should be made figure by figure.
+
+Be careful with reusable code when:
+
+- the figure needs a different scale
+- the audience changes
+- the color should encode data differently
+- the plot type has different readability needs
+
+# Takeaways
+
+- Reusable colors and theme functions can reduce repeated code.
+- Keep reusable styling small enough to understand.
+- Do not let a theme function make design decisions that should depend on the specific figure.

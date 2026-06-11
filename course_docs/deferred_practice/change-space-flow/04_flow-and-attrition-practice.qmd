@@ -1,0 +1,48 @@
+---
+title: "Practice: Flow And Attrition"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# What We Practiced
+
+The module showed how to:
+
+- define cumulative stages
+- count observations retained at each step
+- calculate stage-to-stage loss or percent retained
+- plot attrition through a workflow
+
+# Task
+
+Pick one dataset and create:
+
+1. a stage-count table
+2. one attrition or retention plot
+3. a short interpretation of where observations are lost
+
+Suggested datasets:
+
+- `data/real/nhanes_2021_2023_analysis.csv`
+- `data/real/titanic_passengers.csv`
+- `data/simulated/neighborhood_health_survey_analysis.csv`
+
+Helpful module reference: `modules/09_flow/01_flow-and-attrition.qmd`.
+
+# Work
+
+```{r}
+# Load data, create a stage-count table, and build one attrition plot.
+```
+
+# Interpretation
+
+Write briefly: which restriction removes the most observations and what the final analytic sample represents.

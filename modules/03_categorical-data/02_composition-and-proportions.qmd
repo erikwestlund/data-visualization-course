@@ -1,0 +1,562 @@
+---
+title: "Composition And Proportions"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook demonstrates how to visualize composition.
+
+# Data
+
+We will continue with the census race/ethnicity data.
+
+# Analytic Questions
+
+- What is the race/ethnicity composition of selected states?
+- How do proportions differ from raw counts?
+- Why are stacked bars hard to read when they combine several variables?
+- How can small multiples make category comparisons easier?
+
+# Load Data
+
+```{r}
+census <- readr::read_csv("data/real/census_state_race_ethnicity_long.csv")
+
+census |>
+  glimpse()
+```
+
+Each row is one race/ethnicity category within one state.
+
+# Prepare The Data
+
+We will pick a smaller number of states so the composition plot is readable.
+
+The original data column is named `share`. We will use the `rename` function to change the name of `share` to `race_ethnicity_proportion`, which is more explicit.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()`; `rename()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+selected_states <- census |>
+  filter(state %in% c("CA", "FL", "MD", "MA", "TX", "WA")) |>
+  rename(race_ethnicity_proportion = share) |>
+  mutate(
+    state_name = factor(
+      state_name,
+      levels = c(
+        "California",
+        "Texas",
+        "Florida",
+        "Washington",
+        "Maryland",
+        "Massachusetts"
+      )
+    )
+  )
+
+selected_states |>
+  select(state_name, race_ethnicity, race_ethnicity_population, race_ethnicity_proportion) |>
+  head()
+```
+
+# Raw Counts
+
+We will start with counts.  We will also assign race_ethnicity to the `fill` argument in the aesthetic mapping function.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `fill` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  selected_states,
+  aes(
+    x = state_name,
+    y = race_ethnicity_population,
+    fill = race_ethnicity
+  )
+)
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_bar()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_bar(stat = "identity")
+
+p2
+```
+
+Because we have fill, this is a three variable visualization. This is very hard to understand for a number of reasons:
+
+- The fill colors have insufficient contrast.
+- Only the bottom pink category (`white`) has a common scale; every other category is offset by it.
+
+We can nevertheless add labels and a theme.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `scale_y_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p3 <- p2 +
+  scale_y_continuous(
+    breaks = seq(0, 40000000, by = 10000000),
+    labels = function(x) ifelse(x == 0, "0", paste0(x / 1000000, "M"))
+  ) +
+  labs(
+    title = "Race/Ethnicity Counts In Selected States",
+    x = NULL,
+    y = "Population count",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+California and Texas have larger bars because they have larger populations.
+
+This makes raw counts a poor choice if the question is composition.
+
+# Proportions
+
+The variable gives each category's proportion within the included race/ethnicity categories for that state.
+
+In this file, the denominator is the sum of the race/ethnicity categories included in the teaching dataset for that state.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `fill` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  selected_states,
+  aes(
+    x = state_name,
+    y = race_ethnicity_proportion,
+    fill = race_ethnicity
+  )
+)
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_bar()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_bar(stat = "identity")
+
+p2
+```
+
+Format the y-axis as percentages.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `scale_y_continuous()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p3 <- p2 +
+  scale_y_continuous(
+    labels = function(x) paste0(round(x * 100), "%")
+  )
+
+p3
+```
+
+Add labels and a theme.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p4 <- p3 +
+  labs(
+    title = "Race/Ethnicity Composition In Selected States",
+    x = NULL,
+    y = "Proportion of included race/ethnicity population",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+p4
+```
+
+This plot is trying to show three things at once:
+
+- state
+- proportion of population
+- race/ethnicity category
+
+It shows the overall composition of each state, but -- as above -- it is hard to compare most individual categories across states because only the bottom segment has a shared baseline.
+
+# Small Multiples
+
+Another option is to give each state its own panel.
+
+This uses more space, but it matches the denominator better: within each state, the race/ethnicity proportions add to 100%.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_bar()` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `scale_x_continuous()`; `labs()`; `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  selected_states,
+  aes(x = race_ethnicity_proportion, y = race_ethnicity)
+) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ state_name, ncol = 2) +
+  scale_x_continuous(
+    labels = function(x) paste0(round(x * 100), "%")
+  ) +
+  labs(
+    title = "Race/Ethnicity Composition Within Selected States",
+    x = "Proportion of included race/ethnicity population",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(strip.text = element_text(face = "bold"))
+```
+
+Small multiples are often a good compromise when a single stacked bar chart is doing too much. Here, each panel keeps one state together instead of scattering one state's parts across many panels. It's easier to comprehend.
+
+However, we notice that our race/ethnicity labels are now ordered in reverse alphabetical order, which is confusing. If we relevel by the overall proportion, it is easier to grasp -- especially when a state breaks the trend.
+
+We can also order the state panels by total population. Adding the population to the panel title gives useful context without overloading the chart itself.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `distinct()` |
+| Create or change columns | `mutate()` |
+| Count or summarize | `group_by()`; `summarize()` |
+| Sort rows | `arrange()`; `desc()` |
+| Combine data frames | `left_join()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+race_ethnicity_order <- selected_states |>
+  group_by(race_ethnicity) |>
+  summarize(
+    overall_population = sum(race_ethnicity_population),
+    .groups = "drop"
+  ) |>
+  arrange(overall_population) |>
+  pull(race_ethnicity)
+
+state_labels <- selected_states |>
+  distinct(state_name, total_population) |>
+  arrange(desc(total_population)) |>
+  mutate(
+    state_label = paste0(state_name, " (", round(total_population / 1000000, 1), "M people)")
+  )
+
+selected_states_ordered <- selected_states |>
+  left_join(state_labels, by = c("state_name", "total_population")) |>
+  mutate(
+    race_ethnicity = factor(race_ethnicity, levels = race_ethnicity_order),
+    state_label = factor(state_label, levels = state_labels$state_label)
+  )
+
+ggplot(
+  selected_states_ordered,
+  aes(x = race_ethnicity_proportion, y = race_ethnicity)
+) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ state_label, ncol = 2) +
+  scale_x_continuous(
+    labels = function(x) paste0(round(x * 100), "%")
+  ) +
+  labs(
+    title = "Race/Ethnicity Composition Within Selected States",
+    x = "Proportion of included race/ethnicity population",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(strip.text = element_text(face = "bold"))
+```
+
+In the version above, the race/ethnicity labels only appear in the left column. That is not wrong, but it may be easier to read if each panel has its own y-axis labels.
+
+```{r}
+ggplot(
+  selected_states_ordered,
+  aes(x = race_ethnicity_proportion, y = race_ethnicity)
+) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ state_label, ncol = 2, axes = "all_y") +
+  scale_x_continuous(
+    labels = function(x) paste0(round(x * 100), "%")
+  ) +
+  labs(
+    title = "Race/Ethnicity Composition Within Selected States",
+    x = "Proportion of included race/ethnicity population",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(strip.text = element_text(face = "bold"))
+```
+
+Nope -- duplicating labels is worse.
+
+# Make One Comparison Easier
+
+Stacked bars show overall composition, but they make it hard to compare categories that do not share a common baseline.
+
+If the question is about one category, filter to that category.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()`; `rename()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+hispanic_proportion <- census |>
+  rename(race_ethnicity_proportion = share) |>
+  filter(race_ethnicity == "Hispanic or Latino") |>
+  mutate(state_name = reorder(state_name, race_ethnicity_proportion))
+
+hispanic_proportion |>
+  select(state_name, race_ethnicity_proportion) |>
+  head()
+```
+
+```{r}
+p1 <- ggplot(
+  hispanic_proportion,
+  aes(x = state_name, y = race_ethnicity_proportion)
+)
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_bar()` |
+| `geom_bar()` properties | `fill` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_bar(stat = "identity", fill = "steelblue")
+
+p2
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_y_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p3 <- p2 +
+  coord_flip() +
+  scale_y_continuous(
+    labels = function(x) paste0(round(x * 100), "%")
+  ) +
+  labs(
+    title = "Hispanic Or Latino Proportion By State",
+    x = NULL,
+    y = "Proportion"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+One option is to keep the axis labels and add direct labels to the bars. This is a matter of taste, but with many states, the direct labels can make the chart easier to scan.
+
+Question: do the annotations help?
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `label` |
+| Geoms / stats | `geom_text()` |
+| `geom_text()` properties | `size` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p4 <- p2 +
+  geom_text(
+    aes(label = paste0(round(race_ethnicity_proportion * 100), "%")),
+    hjust = -0.2,
+    size = 3
+  ) +
+  coord_flip() +
+  scale_y_continuous(
+    labels = function(x) paste0(round(x * 100), "%"),
+    limits = c(0, 0.55)
+  ) +
+  labs(
+    title = "Hispanic Or Latino Proportion By State",
+    x = NULL,
+    y = "Proportion"
+  ) +
+  theme_minimal()
+
+p4
+```
+
+The state names are still crowded. Often the fix is not more code inside the plot. It is simply giving the figure more vertical space.
+
+```{r}
+#| fig-height: 10
+p4
+```
+
+We can also convert the bars to a lollipop plot. This keeps the ranking and values, but reduces the visual weight of the bars.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `xend`; `yend`; `label` |
+| Geoms / stats | `geom_segment()`; `geom_point()`; `geom_text()` |
+| `geom_segment()` properties | `color`; `linewidth` |
+| `geom_point()` properties | `color`; `size` |
+| Scales / coordinates / facets / labels | `scale_x_continuous()`; `labs()`; `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 10
+p5 <- ggplot(
+  hispanic_proportion,
+  aes(x = race_ethnicity_proportion, y = state_name)
+) +
+  geom_segment(
+    aes(x = 0, xend = race_ethnicity_proportion, yend = state_name),
+    color = "gray70",
+    linewidth = 0.8
+  ) +
+  geom_point(color = "steelblue", size = 2.5) +
+  geom_text(
+    aes(label = paste0(round(race_ethnicity_proportion * 100), "%")),
+    nudge_x = 0.015,
+    hjust = 0,
+    size = 3
+  ) +
+  scale_x_continuous(
+    labels = function(x) paste0(round(x * 100), "%"),
+    limits = c(0, 0.55)
+  ) +
+  labs(
+    title = "Hispanic Or Latino Proportion By State",
+    x = "Proportion",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
+  )
+
+p5
+```
+
+One more scale choice: should the x-axis run all the way to 100%? That uses the full possible range for a proportion, but it also compresses the differences among states.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `scale_x_continuous()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 10
+p5 +
+  scale_x_continuous(
+    labels = function(x) paste0(round(x * 100), "%"),
+    limits = c(0, 1),
+    breaks = seq(0, 1, by = 0.25)
+  )
+```
+
+Filtering to one category makes the cross-state comparison easier than reading that category out of every stacked bar.  This is indicative of a more general principle: less is more.
+
+# Takeaways
+
+- Raw counts and proportions answer different questions.
+- Stacked bars are useful for showing a whole, but weak for comparing many individual segments.
+- Small multiples can make those individual category comparisons easier.
+- When your research question focused on one category, plot that category directly.  Less is often more.

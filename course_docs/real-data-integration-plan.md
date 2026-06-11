@@ -332,14 +332,14 @@ Use real public datasets for student assignments when the task is interpretive, 
 | Module | Lesson Dataset | Student Assignment Dataset | Rationale |
 |---|---|---|---|
 | `01-workflow-and-basics` | small simulated or `mtcars` initially; then small maternal-health sample | small cleaned real PRAMS or flu subset | avoid Day 1 friction, but show real data quickly |
-| `02_categorical-data` | simulated clinic/outreach log | real Census race/state long file or flu categorical subset | real data works well for counts, composition, rank |
-| `03_continuous-data` | simulated BP/symptom measurements | PRAMS selected percentages or flu estimates/sample sizes | real public data is mostly aggregated, so supplement with simulation for true continuous distributions |
-| `04_group-comparison` | simulated maternal/person-level data | PRAMS subgroup/state data | PRAMS is ideal for grouped bars, faceting, missingness, and interpretation |
-| `05_association` | simulated maternal/DAG data | flu or PRAMS derived summaries; optional real county indicators later | real association data may need careful construction; simulation helps teach relationships cleanly |
-| `06_change` | simulated surveillance weekly | CDC flu vaccination time series | flu data is excellent real homework for change over time |
-| `07_space` | simulated state/county indicators with real state support data | Census/state data or derived flu geography subset | use real state composition/rank; add shapes/coordinates later |
-| `08_flow` | simulated cascade/process data | likely simulated unless we find a suitable public real cascade | flow usually needs custom-shaped data |
-| `09_communication-polish` | any previous lesson data | real PRAMS or flu assignment output | best final polish work should use real data |
+| `03_categorical-data` | simulated clinic/outreach log | real Census race/state long file or flu categorical subset | real data works well for counts, composition, rank |
+| `04_continuous-data` | simulated BP/symptom measurements | PRAMS selected percentages or flu estimates/sample sizes | real public data is mostly aggregated, so supplement with simulation for true continuous distributions |
+| `05_group-comparison` | simulated maternal/person-level data | PRAMS subgroup/state data | PRAMS is ideal for grouped bars, faceting, missingness, and interpretation |
+| `06_association` | simulated maternal/DAG data | flu or PRAMS derived summaries; optional real county indicators later | real association data may need careful construction; simulation helps teach relationships cleanly |
+| `07_change` | simulated surveillance weekly | CDC flu vaccination time series | flu data is excellent real homework for change over time |
+| `08_space` | simulated state/county indicators with real state support data | Census/state data or derived flu geography subset | use real state composition/rank; add shapes/coordinates later |
+| `09_flow` | simulated cascade/process data | likely simulated unless we find a suitable public real cascade | flow usually needs custom-shaped data |
+| `10_communication-polish` | any previous lesson data | real PRAMS or flu assignment output | best final polish work should use real data |
 
 ## Assignment Dataset Recommendations
 

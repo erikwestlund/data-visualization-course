@@ -1,0 +1,612 @@
+---
+title: "Data Visualization: Day 4"
+subtitle: "Group Comparison And Association"
+author: "Erik Westlund"
+format: revealjs
+---
+
+```{r}
+#| include: false
+if (basename(getwd()) == "slides") {
+  knitr::opts_knit$set(root.dir = dirname(getwd()))
+}
+
+library(dplyr)
+library(ggplot2)
+```
+
+# Welcome Back
+
+## Where We Are
+
+- Day 1: workflow and first plots
+- Day 2: data preparation and categorical data
+- Day 3: continuous distributions and diagnostics
+
+## Today's Goals
+
+1. Compare groups using visualization.
+2. Decide when the question is about a distribution, a summary, or a difference.
+3. Plot differences directly when the gap between two values is the quantity of interest.
+4. Visualize association between two numeric variables.
+5. Add smoothing, grouping, or model outputs.
+
+## Core Questions
+
+- How do groups differ?
+- Are we comparing raw values, summaries, or differences?
+- How do two numeric variables move together?
+- Does that association differ across groups?
+
+# Group Comparison
+
+## Two Varaibles
+
+Yesterday we studied single continuous variables. Today we'll focus on how to visualize these quantities when grouping is of interest.
+
+We continue to be concerned with:
+
+- center
+- spread
+- shape
+- unusual values
+- sample size
+
+## Grouped Distributions
+
+Grouped distribution plots can show whether groups differ in:
+
+- typical values
+- variability
+- tails
+- overlap
+- unusual values
+
+## Example: Grouped Distribution
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+places <- readr::read_csv("data/real/places_county_core_measures_long.csv")
+
+county_smoking <- places |>
+  filter(measure_key == "current_smoking") |>
+  filter(state %in% c("MD", "VA", "DC")) |>
+  filter(!is.na(estimate))
+
+ggplot(county_smoking, aes(x = state_name, y = estimate)) +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.35) +
+  geom_jitter(width = 0.12, alpha = 0.25, size = 1.2) +
+  labs(
+    title = "County Smoking Estimates By State",
+    x = NULL,
+    y = "Current smoking estimate (%)"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Visualize Early
+
+Inspect grouped distributions before alongside group summary statistics.
+
+1. Check group sizes.
+2. Plot grouped distributions.
+3. Calculate summaries.
+
+## Example: Grouped Summary
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+places <- readr::read_csv("data/real/places_county_core_measures_long.csv")
+
+state_obesity <- places |>
+  filter(measure_key == "obesity") |>
+  filter(state %in% c("MD", "VA", "DC")) |>
+  filter(!is.na(estimate)) |>
+  group_by(state_name) |>
+  summarize(
+    mean_estimate = mean(estimate),
+    .groups = "drop"
+  ) |>
+  mutate(state_name = reorder(state_name, mean_estimate))
+
+ggplot(state_obesity, aes(x = state_name, y = mean_estimate)) +
+  geom_point(size = 4, color = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Mean County Obesity Estimate By State",
+    x = NULL,
+    y = "Mean county estimate (%)"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Bar Charts For Means Are Often Misguided
+
+Bars can show group means or other measures of central tendency, but they visually imply an amount starting at zero.
+
+For group summaries focused on means or medians, dot plots are cleaner:
+
+- less "ink"
+- easier ordering
+- easier to show intervals
+
+## Uncertainty And Sample Size
+
+When comparing groups, ask:
+
+- How many observations are in each group?
+- Are group sizes similar?
+- Are intervals available or appropriate?
+- Are differences large enough to matter relative to uncertainty and sample size?
+
+The plot should not make small, unstable differences look definitive.
+
+## Optional Practice: Grouped Distributions
+
+If you want more practice with grouped distributions, you can later work with:
+
+`practice/04-comparison-and-association/01_grouped-distributions-practice.qmd`
+
+This will help you:
+
+- compare full distributions before summaries
+- check group sizes
+- describe center, spread, and unusual values
+
+## Transition To Module
+
+Open:
+
+`modules/05_group-comparison/01_grouped-summaries.qmd`
+
+Watch for:
+
+- deciding what one plotted row represents
+- calculating summaries before plotting
+- comparing bars with dot-and-interval plots
+- checking summary plots against the underlying distributions
+
+## Practice 1: Grouped Summaries
+
+Open:
+
+`practice/04-comparison-and-association/02_grouped-summaries-practice.qmd`
+
+Goal:
+
+- create a grouped-summary plot
+- change the measure or states being compared
+- explain what each point represents
+
+# Difference Plots
+
+## Comparing Differences
+
+If the question is about a difference, we can lot the difference.
+
+- measured minus reported value
+- treatment minus comparison
+- before minus after
+- percentage-point gap
+- observed minus expected
+
+## Example: Difference Plot
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+difference_example <- data.frame(
+  group = c("Clinic A", "Clinic B", "Clinic C", "Clinic D", "Clinic E", "Clinic F"),
+  difference = c(-8, -3, 1, 4, 7, 11)
+) |>
+  arrange(difference) |>
+  mutate(group = factor(group, levels = group))
+
+ggplot(difference_example, aes(x = group, y = difference)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_segment(aes(xend = group, y = 0, yend = difference), color = "gray70") +
+  geom_point(size = 4, color = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Change In Follow-Up Rate By Clinic",
+    x = NULL,
+    y = "Percentage-point change"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Zero Values
+
+- Difference plots need a clear zero.
+- Zero means no difference.
+- "Good" and "bad" values should be clear to the viewer.
+
+## Difference Plot Checklist
+
+Before plotting a difference:
+
+- Are the two values comparable?
+- Are units the same?
+- Is subtraction meaningful?
+- Does positive have a clear interpretation?
+- Is there a clear zero reference line?
+
+## Transition To Module
+
+Open:
+
+`modules/05_group-comparison/02_difference-plots.qmd`
+
+Watch for:
+
+- Cleveland-style dot plots
+- connected dots for paired estimates
+- percentage-point differences
+- ordering by the difference
+- labeling direction clearly
+
+## Practice 2: Difference Plots
+
+Open:
+
+`practice/04-comparison-and-association/03_difference-plots-practice.qmd`
+
+Goal:
+
+- calculate one difference
+- plot the difference directly
+- explain what positive, negative, and zero mean
+
+# Association
+
+## Association Questions
+
+Association asks how variables move together.
+
+Common questions:
+
+- Do higher values of one variable tend to go with higher values of another?
+- Is the pattern linear or curved?
+- How much spread is there around the pattern?
+- Are there unusual points?
+- Does the pattern differ by group?
+
+## Scatterplots
+
+Scatterplots show two numeric variables at once.
+
+Look for:
+
+- direction
+- form
+- strength
+- spread
+- unusual points
+- clusters or groups
+
+## Example: Scatterplot
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+countries <- readr::read_csv("data/real/infant_mortality_countries.csv") |>
+  filter(!is.na(income_usd_per_capita), !is.na(infant_mortality_per_1000))
+
+ggplot(countries, aes(x = income_usd_per_capita, y = infant_mortality_per_1000)) +
+  geom_point(alpha = 0.75) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "Income And Infant Mortality Across Countries",
+    x = "Per-capita income, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Overplotting
+
+When many points overlap, the plot can hide density.
+
+Common fixes:
+
+- use transparency with `alpha`
+- use smaller points
+- add jitter when values are integers
+- facet by group
+- use summaries only after checking the raw points
+
+## Smoothers
+
+A smoother is a visual summary of the pattern. They can help show:
+
+- general direction
+- curvature
+- group differences
+- outliers/high-leverage points
+
+There are several smoother options, such as loess, GAM-based smoothers, or linear model smoothers.
+
+## Example: Loess Smoother
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(countries, aes(x = income_usd_per_capita, y = infant_mortality_per_1000)) +
+  geom_point(alpha = 0.55) +
+  geom_smooth(
+    method = "loess",
+    se = FALSE,
+    color = "steelblue",
+    linewidth = 1.1
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "Loess Smoother",
+    subtitle = "Flexible local smoother",
+    x = "Per-capita income, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Example: GAM Smoother
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(countries, aes(x = income_usd_per_capita, y = infant_mortality_per_1000)) +
+  geom_point(alpha = 0.55) +
+  geom_smooth(
+    method = "gam",
+    formula = y ~ s(x, bs = "cs"),
+    se = FALSE,
+    color = "steelblue",
+    linewidth = 1.1
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "GAM Smoother",
+    subtitle = "Flexible model-based smoother",
+    x = "Per-capita income, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Example: Linear Model Smoother
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(countries, aes(x = income_usd_per_capita, y = infant_mortality_per_1000)) +
+  geom_point(alpha = 0.55) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = "firebrick",
+    linewidth = 1.1,
+    linetype = "dotted"
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  labs(
+    title = "Linear Model Smoother",
+    subtitle = "One straight-line trend",
+    x = "Per-capita income, log scale",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Example: Smoothers Together
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+ggplot(countries, aes(x = income_usd_per_capita, y = infant_mortality_per_1000)) +
+  geom_point(alpha = 0.25) +
+  geom_smooth(
+    aes(color = "Loess"),
+    method = "loess",
+    se = FALSE,
+    linewidth = 1.1
+  ) +
+  geom_smooth(
+    aes(color = "GAM"),
+    method = "gam",
+    formula = y ~ s(x, bs = "cs"),
+    se = FALSE,
+    linewidth = 1.1,
+    linetype = "dashed"
+  ) +
+  geom_smooth(
+    aes(color = "Linear model"),
+    method = "lm",
+    se = FALSE,
+    linewidth = 1.1,
+    linetype = "dotted"
+  ) +
+  scale_x_log10(labels = scales::label_dollar()) +
+  scale_color_manual(
+    values = c(
+      "Loess" = "steelblue",
+      "GAM" = "darkorange",
+      "Linear model" = "firebrick"
+    )
+  ) +
+  labs(
+    title = "Three Smoothers, Same Data",
+    x = "Per-capita income, log scale",
+    y = "Infant mortality per 1,000 live births",
+    color = "Smoother"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Grouping In Association Plots
+
+Grouping can clarify patterns, but it can also overload the plot. Ask:
+
+- Is there enough data in each group?
+- Are the groups visually separable?
+- Would facets be clearer than color?
+- Does the grouped pattern change the interpretation?
+
+## Module 3: Association
+
+Open:
+
+`modules/06_association/01_scatterplots-smoothing-and-groups.qmd`
+
+Watch for:
+
+- transparency
+- log scales for skewed numeric variables
+- smoothers
+- grouping and faceting
+- grouping without causal overclaiming
+
+## After The Module: Practice 3
+
+Open:
+
+`practice/04-comparison-and-association/04_scatterplots-smoothing-and-groups-practice.qmd`
+
+Goal:
+
+- build a scatterplot
+- add one clarifying layer
+- describe association without making a causal claim
+
+# Plotting A Model Result
+
+## From Model To Plot
+
+- A fitted model gives predicted values.
+- We can plot those predicted values as lines.
+- The points are the raw data.
+- The lines are the fitted model result.
+
+## What The Lines Mean
+
+A line can mean different things depending on the model.
+
+- With `y ~ x`, it is the fitted two-variable relationship.
+- With `y ~ x + group`, it can be shown as one fitted line per group.
+- With `y ~ x * group`, the fitted slope for `x` can differ by group.
+- With more variables, we have to choose what values the other variables are held at.
+
+Plots of models need a clear explanation of how the plotted values were generated.
+
+## Example: Prediction Lines
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+davis <- readr::read_csv("data/real/davis_height_weight.csv")
+
+body_size <- davis |>
+  filter(!is.na(height_cm), !is.na(weight_kg), !is.na(sex), !likely_swapped_measured_values)
+
+weight_model <- lm(weight_kg ~ height_cm + sex, data = body_size)
+
+prediction_grid <- expand.grid(
+  height_cm = seq(145, 195, by = 5),
+  sex = sort(unique(body_size$sex))
+)
+
+prediction_data <- bind_cols(
+  prediction_grid,
+  as.data.frame(predict(weight_model, newdata = prediction_grid, interval = "confidence"))
+)
+
+ggplot(body_size, aes(x = height_cm, y = weight_kg)) +
+  geom_point(aes(color = sex), alpha = 0.25) +
+  geom_line(
+    data = prediction_data,
+    aes(x = height_cm, y = fit, color = sex),
+    linewidth = 1.1
+  ) +
+  labs(
+    title = "Fitted Weight Lines By Height And Sex",
+    x = "Measured height, cm",
+    y = "Measured weight, kg",
+    color = "Sex"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Example: Interaction Lines
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+interaction_model <- lm(weight_kg ~ height_cm * sex, data = body_size)
+
+interaction_prediction_data <- bind_cols(
+  prediction_grid,
+  as.data.frame(predict(interaction_model, newdata = prediction_grid, interval = "confidence"))
+)
+
+ggplot(body_size, aes(x = height_cm, y = weight_kg)) +
+  geom_point(aes(color = sex), alpha = 0.2) +
+  geom_line(
+    data = interaction_prediction_data,
+    aes(x = height_cm, y = fit, color = sex),
+    linewidth = 1.1
+  ) +
+  labs(
+    title = "Interaction Model: Slope Can Differ By Group",
+    subtitle = "Predictions come from weight_kg ~ height_cm * sex",
+    x = "Measured height, cm",
+    y = "Measured weight, kg",
+    color = "Sex"
+  ) +
+  theme_minimal(base_size = 18)
+```
+
+## Optional Transition To Module
+
+If time allows, open:
+
+`modules/06_association/02_model-output-plots.qmd`
+
+Watch for:
+
+- plotting raw data first
+- fitting a simple model
+- creating prediction data
+- knowing what values the predictions hold fixed
+- visualizing model interactions as predicted lines
+- plotting fitted model results with raw-data context
+
+Optional practice:
+
+`practice/04-comparison-and-association/05_model-output-plots-practice.qmd`
+
+# Wrap-Up
+
+## Summary
+
+After today, you should be able to:
+
+- distinguish grouped distributions from grouped summaries
+- choose a summary statistic that matches the question
+- plot differences directly when the gap is the quantity of interest
+- describe association using direction, form, strength, and spread
+- use smoothers and grouping carefully
+
+## Next Time
+
+We will cover annotating figures, visualizing change/flow, colors & accessibility, and saving figures.

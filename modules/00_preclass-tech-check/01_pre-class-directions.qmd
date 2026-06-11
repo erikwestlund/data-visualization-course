@@ -21,7 +21,6 @@ You also need:
 - the R packages listed below, installed from [CRAN](https://cran.r-project.org/)
 - [Quarto](https://quarto.org/docs/get-started/) (RStudio & Positron come bundled with Quarto; you'll only need to look here if Quarto is not already working through RStudio or Positron)
 
-
 If you are not sure which IDE to choose, use RStudio. We will use RStudio for the course walkthroughs, and it has the most R tutorials, answers, and classroom examples available.
 
 Positron is a newer editor from Posit. It is a good option if you already prefer VS Code-style editors or are comfortable choosing your own development environment.
@@ -43,6 +42,16 @@ Choose the installer for your operating system.
 - Linux: choose your Linux distribution and follow the CRAN instructions.
 
 After installing R, restart RStudio or Positron if either one is already open.
+
+# Install Git On Windows
+
+Windows users may need to install Git separately so the course updater can download new course files.
+
+Download Git for Windows here:
+
+<https://git-scm.com/install/windows>
+
+macOS and Linux users usually already have Git available or can install it through the operating system's developer tools or package manager.
 
 # Install an Editor
 

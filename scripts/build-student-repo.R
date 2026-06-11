@@ -60,23 +60,23 @@ day_definitions <- list(
     slide_files = c("day-01-intro-and-workflow.qmd")
   ),
   `day-02` = list(
-    module_dirs = c("02_categorical-data", "03_continuous-data"),
-    practice_dirs = c("02_categorical-data", "03_continuous-data"),
-    slide_files = c("day-02-categorical-and-continuous.qmd")
+    module_dirs = c("02_data-preparation", "03_categorical-data"),
+    practice_dirs = c("02-one-variable-and-distributions"),
+    slide_files = c("day-02-data-preparation-and-categorical.qmd")
   ),
   `day-03` = list(
-    module_dirs = c("04_group-comparison", "05_association"),
-    practice_dirs = c("04_group-comparison", "05_association"),
-    slide_files = c("day-03-comparison-and-association.qmd")
+    module_dirs = c("04_continuous-data"),
+    practice_dirs = c("03-continuous-data"),
+    slide_files = c("day-03-continuous-data.qmd")
   ),
   `day-04` = list(
-    module_dirs = c("06_change", "07_space", "08_flow"),
-    practice_dirs = c("06_change", "07_space", "08_flow"),
-    slide_files = c("day-04-change-space-flow.qmd")
+    module_dirs = c("05_group-comparison", "06_association"),
+    practice_dirs = c("04-comparison-and-association"),
+    slide_files = c("day-04-comparison-and-association.qmd")
   ),
   `day-05` = list(
-    module_dirs = c("09_communication-polish"),
-    practice_dirs = c("09_communication-polish"),
+    module_dirs = c("07_change", "09_flow", "10_communication-polish", "11_extra-topics"),
+    practice_dirs = c("05-communication-and-studio"),
     slide_files = c("day-05-communication-and-studio.qmd")
   )
 )
@@ -122,6 +122,10 @@ if (is.null(target_arg) || !nzchar(target_arg)) {
 }
 
 target_root <- normalizePath(path.expand(target_arg), winslash = "/", mustWork = FALSE)
+hash_manifest_path <- p(target_root, ".student-export-hashes.tsv")
+old_hashes <- character()
+new_hashes <- character()
+rendered_this_run <- new.env(parent = emptyenv())
 
 dir_create <- function(path) {
   if (!dir.exists(path)) {
@@ -150,16 +154,102 @@ clean_generated_docs <- function() {
 
 write_lines <- function(path, lines) {
   dir_create(dirname(path))
+
+  if (is_file(path) && identical(readLines(path, warn = FALSE), lines)) {
+    return(invisible(FALSE))
+  }
+
   writeLines(lines, path)
+
+  invisible(TRUE)
+}
+
+read_hashes <- function(path) {
+  if (!is_file(path)) {
+    return(character())
+  }
+
+  hashes <- read.delim(
+    path,
+    header = FALSE,
+    stringsAsFactors = FALSE,
+    col.names = c("key", "hash"),
+    quote = "",
+    comment.char = ""
+  )
+
+  if (nrow(hashes) == 0) {
+    return(character())
+  }
+
+  hashes <- hashes[nzchar(hashes$key) & nzchar(hashes$hash), ]
+
+  out <- hashes$hash
+  names(out) <- hashes$key
+  out
+}
+
+write_hashes <- function(path, hashes) {
+  dir_create(dirname(path))
+  keys <- sort(names(hashes))
+  lines <- paste(keys, hashes[keys], sep = "\t")
+  writeLines(lines, path)
+}
+
+file_hash <- function(path) {
+  unname(tools::md5sum(path))
+}
+
+outputs_are_current <- function(source, outputs) {
+  length(outputs) > 0 &&
+    all(file.exists(outputs)) &&
+    all(file.mtime(outputs) >= file.mtime(source))
+}
+
+rendered_html_path <- function(path) {
+  relative_path <- relative_to(path, source_root)
+  p(source_root, "docs", sub("[.][^.]+$", ".html", relative_path))
+}
+
+hash_key <- function(kind, path, root = source_root) {
+  paste(kind, relative_to(path, root), sep = "|")
+}
+
+target_hash_key <- function(kind, path) {
+  paste(kind, relative_to(path, target_root), sep = "|")
+}
+
+stored_hash <- function(key) {
+  value <- unname(old_hashes[key])
+
+  if (length(value) == 0 || is.na(value)) {
+    return(NA_character_)
+  }
+
+  value
 }
 
 copy_file <- function(from, to) {
   dir_create(dirname(to))
+
+  key <- target_hash_key("copy", to)
+  hash <- file_hash(from)
+
+  if (is_file(to) && identical(stored_hash(key), hash)) {
+    new_hashes[[key]] <<- hash
+    message("Skipping unchanged copy: ", relative_to(to, target_root))
+    return(invisible(FALSE))
+  }
+
   ok <- file.copy(from, to, overwrite = TRUE, copy.date = TRUE)
 
   if (!ok) {
     stop("Failed to copy ", from, " to ", to, call. = FALSE)
   }
+
+  new_hashes[[key]] <<- hash
+
+  invisible(TRUE)
 }
 
 is_inside <- function(path, parent) {
@@ -242,25 +332,6 @@ if (identical(target_root, source_root) || is_inside(target_root, source_root)) 
   stop("Choose a target outside the source repository.", call. = FALSE)
 }
 
-managed_paths <- c(
-  "assignments",
-  "data",
-  "docs",
-  "modules",
-  "practice",
-  "rendered",
-  "scripts",
-  "slides",
-  "syllabus.html",
-  "README.md",
-  "install-packages.R",
-  "updater.R",
-  ".gitignore",
-  "_quarto.yml",
-  "data-visualization-course.Rproj",
-  "data-visualization-course.code-workspace"
-)
-
 skip_names <- c(
   ".DS_Store",
   ".quarto",
@@ -326,17 +397,13 @@ rewrite_practice_here_paths <- function(directory, practice_root = "practice/tem
       lines,
       perl = TRUE
     )
-    writeLines(lines, qmd_file)
+    write_lines(qmd_file, lines)
   }
 }
 
 copy_rendered_html_for_sources <- function(source_dir, rendered_dir, target_dir, source_pattern = "[.]qmd$", source_files = NULL) {
   if (!dir.exists(source_dir)) {
     stop("Missing source directory: ", source_dir, call. = FALSE)
-  }
-
-  if (!dir.exists(rendered_dir)) {
-    stop("Missing rendered directory: ", rendered_dir, call. = FALSE)
   }
 
   dir_create(target_dir)
@@ -347,10 +414,22 @@ copy_rendered_html_for_sources <- function(source_dir, rendered_dir, target_dir,
     basename(source_files)
   }
 
+  source_paths <- if (is.null(source_files)) {
+    p(source_dir, sources)
+  } else {
+    source_files
+  }
+
   html_files <- sub("[.][^.]+$", ".html", sources)
 
-  for (html_file in html_files) {
+  for (i in seq_along(html_files)) {
+    html_file <- html_files[[i]]
     rendered_file <- p(rendered_dir, html_file)
+    target_file <- p(target_dir, html_file)
+
+    if (!was_rendered_this_run(source_paths[[i]]) && is_file(target_file)) {
+      next
+    }
 
     if (!is_file(rendered_file)) {
       stop(
@@ -360,11 +439,15 @@ copy_rendered_html_for_sources <- function(source_dir, rendered_dir, target_dir,
       )
     }
 
-    copy_file(rendered_file, p(target_dir, html_file))
+    copy_file(rendered_file, target_file)
   }
 }
 
-copy_rendered_html_file <- function(rendered_file, target_file) {
+copy_rendered_html_file <- function(rendered_file, target_file, source_file = NULL) {
+  if (!is.null(source_file) && !was_rendered_this_run(source_file) && is_file(target_file)) {
+    return(invisible(FALSE))
+  }
+
   if (!is_file(rendered_file)) {
     stop("Missing rendered file: ", rendered_file, call. = FALSE)
   }
@@ -372,23 +455,61 @@ copy_rendered_html_file <- function(rendered_file, target_file) {
   copy_file(rendered_file, target_file)
 }
 
-render_file <- function(path) {
+render_file <- function(path, target_outputs = character(), rendered_outputs = NULL) {
+  full_path <- normalizePath(path, winslash = "/", mustWork = TRUE)
+  rendered_outputs <- if (is.null(rendered_outputs)) {
+    rendered_html_path(full_path)
+  } else {
+    rendered_outputs
+  }
+  key <- hash_key("render", full_path)
+  hash <- file_hash(full_path)
+  known_unchanged <- identical(stored_hash(key), hash)
+  seeded_unchanged <- is.na(stored_hash(key)) && (
+    outputs_are_current(full_path, rendered_outputs) ||
+      outputs_are_current(full_path, target_outputs)
+  )
+  outputs_available <- (length(rendered_outputs) > 0 && all(file.exists(rendered_outputs))) ||
+    (length(target_outputs) > 0 && all(file.exists(target_outputs)))
+
+  if (outputs_available && (known_unchanged || seeded_unchanged)) {
+    new_hashes[[key]] <<- hash
+    rendered_this_run[[key]] <- FALSE
+    message("Skipping unchanged render: ", relative_to(full_path, source_root))
+    return(invisible(FALSE))
+  }
+
   message("Rendering ", path)
 
-  output <- system2("quarto", c("render", path), stdout = TRUE, stderr = TRUE)
+  output <- system2("quarto", c("render", path, "--execute-dir", "."), stdout = TRUE, stderr = TRUE)
   status <- attr(output, "status")
 
   if (!is.null(status) && !identical(status, 0L)) {
     cat(output, sep = "\n")
     stop("Quarto render failed for ", path, call. = FALSE)
   }
+  new_hashes[[key]] <<- hash
+  rendered_this_run[[key]] <- TRUE
+
+  invisible(TRUE)
 }
 
-render_qmds_in <- function(directory) {
+was_rendered_this_run <- function(path) {
+  full_path <- normalizePath(path, winslash = "/", mustWork = TRUE)
+  isTRUE(rendered_this_run[[hash_key("render", full_path)]])
+}
+
+render_qmds_in <- function(directory, target_dir = NULL) {
   qmd_files <- list.files(directory, pattern = "[.]qmd$", full.names = TRUE)
 
   for (qmd_file in qmd_files) {
-    render_file(qmd_file)
+    target_outputs <- if (is.null(target_dir)) {
+      character()
+    } else {
+      p(target_dir, sub("[.]qmd$", ".html", basename(qmd_file)))
+    }
+
+    render_file(qmd_file, target_outputs = target_outputs)
   }
 }
 
@@ -400,7 +521,8 @@ slide_qmd_files <- function() {
 
 render_slide_qmds <- function() {
   for (qmd_file in slide_qmd_files()) {
-    render_file(qmd_file)
+    target_file <- p(target_root, "slides", sub("[.]qmd$", ".html", basename(qmd_file)))
+    render_file(qmd_file, target_outputs = target_file)
   }
 }
 
@@ -419,15 +541,24 @@ module_qmd_files <- function() {
 
 render_module_qmds <- function() {
   for (qmd_file in module_qmd_files()) {
-    render_file(qmd_file)
+    relative_qmd <- substring(qmd_file, nchar(p(source_root, "modules")) + 2)
+    relative_html <- sub("[.]qmd$", ".html", relative_qmd)
+    target_file <- p(target_root, "modules", "rendered", relative_html)
+    render_file(qmd_file, target_outputs = target_file)
   }
 }
 
-render_markdowns_in <- function(directory) {
+render_markdowns_in <- function(directory, target_dir = NULL) {
   markdown_files <- list.files(directory, pattern = "[.]md$", full.names = TRUE)
 
   for (markdown_file in markdown_files) {
-    render_file(markdown_file)
+    target_outputs <- if (is.null(target_dir)) {
+      character()
+    } else {
+      p(target_dir, sub("[.]md$", ".html", basename(markdown_file)))
+    }
+
+    render_file(markdown_file, target_outputs = target_outputs)
   }
 }
 
@@ -446,6 +577,10 @@ copy_rendered_module_html <- function() {
     relative_html <- sub("[.]qmd$", ".html", relative_qmd)
     rendered_file <- p(source_root, "docs", "modules", relative_html)
     target_file <- p(target_root, "modules", "rendered", relative_html)
+
+    if (!was_rendered_this_run(qmd_file) && is_file(target_file)) {
+      next
+    }
 
     if (!is_file(rendered_file)) {
       stop(
@@ -566,7 +701,7 @@ source_notice <- function(codebook_id) {
     "titanic_passengers",
     "infant_mortality_countries",
     "ginzberg_depression",
-    "exercise_eating_disorders",
+    "blackmore_davis_exercise_eating_disorders",
     "post_coma_recovery"
   )
 
@@ -625,10 +760,97 @@ annotate_codebook_html <- function(path) {
 }
 
 annotate_rendered_codebooks <- function(directory) {
+  if (!dir.exists(directory)) {
+    return(invisible(NULL))
+  }
+
   html_files <- list.files(directory, pattern = "[.]html$", full.names = TRUE)
 
   for (html_file in html_files) {
     annotate_codebook_html(html_file)
+  }
+}
+
+prune_unpublished_outputs <- function() {
+  all_module_dirs <- unique(unlist(lapply(day_definitions, `[[`, "module_dirs"), use.names = FALSE))
+  all_practice_dirs <- unique(unlist(lapply(day_definitions, `[[`, "practice_dirs"), use.names = FALSE))
+  all_slide_files <- unique(unlist(lapply(day_definitions, `[[`, "slide_files"), use.names = FALSE))
+
+  unpublished_module_dirs <- setdiff(all_module_dirs, published_module_dirs)
+  unpublished_practice_dirs <- setdiff(all_practice_dirs, published_practice_dirs)
+  unpublished_slide_html <- sub("[.]qmd$", ".html", setdiff(all_slide_files, published_slide_files))
+  obsolete_slide_html <- c(
+    "day-02-categorical-and-continuous.html",
+    "day-03-comparison-and-association.html",
+    "day-04-change-space-flow.html"
+  )
+  obsolete_module_dirs <- c(
+    "02_categorical-data",
+    "03_continuous-data",
+    "04_group-comparison",
+    "05_association",
+    "06_change",
+    "07_space",
+    "08_flow",
+    "09_communication-polish"
+  )
+  obsolete_practice_dirs <- c(
+    obsolete_module_dirs,
+    "03_categorical-data",
+    "04_continuous-data",
+    "05_group-comparison",
+    "06_association",
+    "07_change",
+    "08_space",
+    "09_flow",
+    "10_communication-polish",
+    "04-change-space-flow",
+    "05-change-space-flow",
+    "06-communication-and-studio",
+    "day-02"
+  )
+  obsolete_data_files <- c(
+    "real/exercise_eating_disorders.csv",
+    "codebooks/exercise_eating_disorders.html"
+  )
+
+  for (dir_name in c(unpublished_module_dirs, obsolete_module_dirs)) {
+    unlink(p(target_root, "modules", dir_name), recursive = TRUE, force = TRUE)
+    unlink(p(target_root, "modules", "rendered", dir_name), recursive = TRUE, force = TRUE)
+  }
+
+  for (dir_name in c(unpublished_practice_dirs, obsolete_practice_dirs)) {
+    unlink(p(target_root, "practice", "templates", dir_name), recursive = TRUE, force = TRUE)
+  }
+
+  for (html_file in c(unpublished_slide_html, obsolete_slide_html)) {
+    unlink(p(target_root, "slides", html_file), recursive = TRUE, force = TRUE)
+  }
+
+  for (data_file in obsolete_data_files) {
+    unlink(p(target_root, "data", data_file), recursive = TRUE, force = TRUE)
+  }
+}
+
+prune_stale_files <- function(source_dir, target_dir, extra_skip = function(path) FALSE, preserve_target = function(relative_path) FALSE) {
+  if (!dir.exists(source_dir) || !dir.exists(target_dir)) {
+    return(invisible(NULL))
+  }
+
+  source_files <- list.files(source_dir, recursive = TRUE, full.names = TRUE, all.files = TRUE, no.. = TRUE)
+  source_files <- source_files[!dir.exists(source_files)]
+  source_files <- source_files[!vapply(source_files, function(path) should_skip(path) || extra_skip(path), logical(1))]
+  source_relative <- substring(source_files, nchar(source_dir) + 2)
+
+  target_files <- list.files(target_dir, recursive = TRUE, full.names = TRUE, all.files = TRUE, no.. = TRUE)
+  target_files <- target_files[!dir.exists(target_files)]
+
+  for (target_file in target_files) {
+    relative_path <- substring(target_file, nchar(target_dir) + 2)
+
+    if (!relative_path %in% source_relative && !preserve_target(relative_path)) {
+      unlink(target_file, force = TRUE)
+    }
   }
 }
 
@@ -771,7 +993,7 @@ write_data_index_markdown <- function() {
     "- [NHANES dietary data](real/nhanes_2021_2023_dietary_foods.csv) are long food-record data, while [NHANES dietary person summaries](real/nhanes_2021_2023_dietary_person_summary.csv) are derived summaries. Original source/context: [CDC/NCHS NHANES](https://www.cdc.gov/nchs/nhanes/index.html). See the [dietary foods codebook](codebooks/nhanes_2021_2023_dietary_foods.html) and [dietary person summary codebook](codebooks/nhanes_2021_2023_dietary_person_summary.html).",
     "- [PLACES county data](real/places_county_core_measures_long.csv) and [PLACES tract data](real/places_tract_dc_md_va_core_measures_long.csv) are area-level estimates, not person-level observations. See the [PLACES county codebook](codebooks/places_county_core_measures_long.html) and [PLACES tract codebook](codebooks/places_tract_dc_md_va_core_measures_long.html).",
     "- [EPA air quality data](real/epa_air_quality_county_2025_long.csv) summarize monitored county pollutant information. Original source/context: [EPA Air Quality in Cities and Counties](https://www.epa.gov/air-trends/air-quality-cities-and-counties). Missing numeric values can reflect no data or insufficient data; see the [EPA air quality codebook](codebooks/epa_air_quality_county_2025_long.html).",
-    "- John Fox teaching datasets, including Titanic, migraine, depression, eating-disorder exercise, and recovery examples, are useful small teaching datasets. Original source/context: [John Fox Applied Regression data archive](https://www.john-fox.ca/AppliedRegression/datasets/index.html). Some topics are sensitive; use respectful language and check the linked codebooks before plotting.",
+    "- John Fox teaching datasets, including Titanic, migraine, depression, Blackmore and Davis eating-disorder exercise, and recovery examples, are useful small teaching datasets. Original source/context: [John Fox Applied Regression data archive](https://www.john-fox.ca/AppliedRegression/datasets/index.html). Some topics are sensitive; use respectful language and check the linked codebooks before plotting.",
     "- Real and simulated paired datasets have matching column names. Use the [dataset manifest](manifest.csv) or [simulated dataset crosswalk](simulated/simulated_dataset_crosswalk.csv) to find pairs."
   )
 
@@ -781,29 +1003,42 @@ write_data_index_markdown <- function() {
 rewrite_student_manifest_codebooks <- function(path) {
   manifest_lines <- readLines(path, warn = FALSE)
   manifest_lines <- gsub("data/codebooks/([^,]+)[.]md", "data/codebooks/\\1.html", manifest_lines)
-  writeLines(manifest_lines, path)
+  write_lines(path, manifest_lines)
 }
-
-clean_generated_docs()
-
-render_file(p("course_docs", "syllabus.qmd"))
-render_qmds_in("assignments")
-render_slide_qmds()
-render_module_qmds()
-render_markdowns_in(p("data", "codebooks"))
-annotate_rendered_codebooks(p(source_root, "docs", "data", "codebooks"))
-write_data_index_markdown()
-render_file(p("data", "data.md"))
 
 dir_create(target_root)
+old_hashes <- read_hashes(hash_manifest_path)
+new_hashes <- old_hashes
 
-for (managed_path in managed_paths) {
-  destination <- p(target_root, managed_path)
+clean_generated_docs()
+prune_unpublished_outputs()
 
-  if (file.exists(destination)) {
-    unlink(destination, recursive = TRUE, force = TRUE)
+render_file(p("course_docs", "syllabus.qmd"), target_outputs = p(target_root, "syllabus.html"))
+render_qmds_in("assignments", target_dir = p(target_root, "assignments"))
+render_slide_qmds()
+render_module_qmds()
+render_markdowns_in(p("data", "codebooks"), target_dir = p(target_root, "data", "codebooks"))
+annotate_rendered_codebooks(p(source_root, "docs", "data", "codebooks"))
+write_data_index_markdown()
+render_file(p("data", "data.md"), target_outputs = p(target_root, "data", "data.html"))
+
+prune_stale_files(
+  p(source_root, "modules"),
+  p(target_root, "modules"),
+  extra_skip = function(path) {
+    !is_in_published_dir(path, p(source_root, "modules"), published_module_dirs)
+  },
+  preserve_target = function(relative_path) {
+    startsWith(relative_path, "rendered/")
   }
-}
+)
+prune_stale_files(
+  p(source_root, "practice"),
+  p(target_root, "practice", "templates"),
+  extra_skip = function(path) {
+    !is_in_published_dir(path, p(source_root, "practice"), published_practice_dirs)
+  }
+)
 
 copy_clean_dir(
   p(source_root, "data"),
@@ -846,21 +1081,27 @@ copy_rendered_html_for_sources(
 )
 copy_rendered_html_file(
   p(source_root, "docs", "data", "data.html"),
-  p(target_root, "data", "data.html")
+  p(target_root, "data", "data.html"),
+  source_file = p(source_root, "data", "data.md")
 )
 
 rewrite_student_manifest_codebooks(p(target_root, "data", "manifest.csv"))
 
 syllabus_html <- p(source_root, "docs", "course_docs", "syllabus.html")
+target_syllabus_html <- p(target_root, "syllabus.html")
 
-if (!is_file(syllabus_html)) {
+if ((was_rendered_this_run(p(source_root, "course_docs", "syllabus.qmd")) || !is_file(target_syllabus_html)) && !is_file(syllabus_html)) {
   stop(
     "Missing rendered syllabus: docs/course_docs/syllabus.html. Render course_docs/syllabus.qmd first.",
     call. = FALSE
   )
 }
 
-copy_file(syllabus_html, p(target_root, "syllabus.html"))
+copy_rendered_html_file(
+  syllabus_html,
+  target_syllabus_html,
+  source_file = p(source_root, "course_docs", "syllabus.qmd")
+)
 
 write_lines(
   p(target_root, "_quarto.yml"),
@@ -876,9 +1117,12 @@ write_lines(
     "    toc: true",
     "    toc-depth: 3",
     "    embed-resources: true",
-    "    highlight-style: github"
+    "    highlight-style: github",
+    "    css: styles.css"
   )
 )
+
+copy_file(p(source_root, "styles.css"), p(target_root, "styles.css"))
 
 write_lines(
   p(target_root, ".gitignore"),
@@ -890,6 +1134,8 @@ write_lines(
     ".Rproj.user/",
     ".quarto/",
     "docs/",
+    "protected-local-changes/",
+    ".student-export-hashes.tsv",
     "_freeze/",
     "*_cache/",
     "*_files/",
@@ -957,6 +1203,8 @@ copy_file(student_updater, p(target_root, "updater.R"))
 
 validate_manifest_paths(export_manifest$must_exist_after_export, should_exist = TRUE)
 validate_manifest_paths(export_manifest$must_not_exist_after_export, should_exist = FALSE)
+
+write_hashes(hash_manifest_path, new_hashes)
 
 clean_generated_docs()
 

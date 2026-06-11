@@ -1,0 +1,188 @@
+---
+title: "Before/After And Trajectories"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to visualize change around a reference event or time point.
+
+# Analytic Questions
+
+- How does headache reporting change across diary days?
+- How can we mark a reference day?
+- How do group-level trajectories differ by medication group?
+
+# Load Data
+
+```{r}
+diary <- readr::read_csv("data/real/migraine_headache_diary.csv")
+```
+
+# Prepare Data
+
+The source data use day 0 as a study reference day. Negative days are before that reference day; positive days are after it.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Count or summarize | `group_by()`; `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+daily_summary <- diary |>
+  filter(!is.na(day), !is.na(medication), !is.na(headache_reported)) |>
+  group_by(day, medication) |>
+  summarize(
+    n = n(),
+    headache_percent = mean(headache_reported) * 100,
+    .groups = "drop"
+  )
+
+daily_summary |>
+  head(10)
+```
+
+Check `n` before interpreting bumps or dips; small daily counts can make a percent look noisy.
+
+# Overall Trajectory
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Count or summarize | `group_by()`; `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_line()`; `geom_point()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+overall_daily <- diary |>
+  filter(!is.na(day), !is.na(headache_reported)) |>
+  group_by(day) |>
+  summarize(
+    n = n(),
+    headache_percent = mean(headache_reported) * 100,
+    .groups = "drop"
+  )
+
+p1 <- ggplot(overall_daily, aes(x = day, y = headache_percent)) +
+  geom_line() +
+  geom_point()
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_vline()` |
+| `geom_vline()` properties | `color`; `linetype` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_vline(xintercept = 0, color = "gray50", linetype = "dashed") +
+  labs(
+    title = "Headache Reporting Across Diary Days",
+    subtitle = "Dashed line marks the study reference day, day 0",
+    x = "Diary day",
+    y = "Headache reported (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Compare Medication Groups
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_vline()`; `geom_line()`; `geom_point()` |
+| `geom_line()` properties | `linewidth` |
+| `geom_point()` properties | `size` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(daily_summary, aes(x = day, y = headache_percent, color = medication)) +
+  geom_vline(xintercept = 0, color = "gray70", linetype = "dashed") +
+  geom_line(linewidth = 1) +
+  geom_point(size = 1.3)
+
+p2 <- p1 +
+  labs(
+    title = "Group-Level Headache Reporting By Medication Group",
+    x = "Diary day",
+    y = "Headache reported (%)",
+    color = "Medication group"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Small Multiples For Trajectories
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| `geom_line()` properties | `color`; `linewidth` |
+| `geom_point()` properties | `color`; `size` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(daily_summary, aes(x = day, y = headache_percent)) +
+  geom_vline(xintercept = 0, color = "gray75", linetype = "dashed") +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 1.3) +
+  facet_wrap(vars(medication))
+
+p2 <- p1 +
+  labs(
+    title = "Facets Make Group-Level Patterns Easier To Compare",
+    x = "Diary day",
+    y = "Headache reported (%)"
+  ) +
+  theme_minimal()
+
+p2
+```
+
+# Takeaways
+
+- Mark reference points directly on time plots.
+- Compare groups on the same time scale when the time variable has shared meaning.
+- Facets can make trajectory comparisons easier than many overlapping lines.
+- Here, "trajectory" means a group-level time pattern, not one person's path across all days.

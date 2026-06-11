@@ -1,0 +1,402 @@
+---
+title: "Histograms And Density Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook shows how to visualize the distribution of one continuous variable.
+
+We focus on center, spread, shape, and unusual values/outliers.
+
+A distribution is the collection of observed positions along a measurement scale. The summaries and plots in this notebook are different ways to visualize the distribution.
+
+# Analytic Questions
+
+We will use a simplified NHANES teaching file to ask:
+
+- What does the distribution of adult systolic blood pressure look like?
+- Which summaries describe center and spread?
+- How does the bin width change a histogram?
+- What does a density plot emphasize differently from a histogram?
+
+# Load Data
+
+```{r}
+nhanes <- readr::read_csv("data/real/nhanes_2021_2023_analysis.csv")
+
+nhanes |>
+  glimpse()
+```
+
+Each row is one participant in the joined NHANES teaching file.
+
+NHANES is a complex survey. In this course, these are exploratory sample visualizations, not national estimates.
+
+# Prepare Adult Blood Pressure Data
+
+Use `filter()` to keep the observations that match the question: adults with a non-missing blood pressure value.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Choose or rename columns | `select()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp <- nhanes |>
+  filter(
+    age_years >= 18,
+    !is.na(systolic_mean)
+  )
+
+adult_bp |>
+  select(respondent_id, age_years, gender, age_group, systolic_mean) |>
+  head()
+```
+
+# Summarize Before Plotting
+
+Summary statistics are aggregations. They reduce many participant values to a few numbers.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Count or summarize | `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adult_bp_summary <- adult_bp |>
+  summarize(
+    n = n(),
+    mean_systolic = mean(systolic_mean),
+    median_systolic = median(systolic_mean),
+    min_systolic = min(systolic_mean),
+    max_systolic = max(systolic_mean),
+    iqr_systolic = IQR(systolic_mean),
+    sd_systolic = sd(systolic_mean)
+  )
+
+adult_bp_summary
+```
+
+The mean and median describe center. The range, IQR, and standard deviation describe spread. The plot will show shape and unusual values that these summaries compress.
+
+This is a good EDA habit: summarize to get oriented, then plot to see what the summaries don't show you.
+
+# First Histogram
+
+Start with the data and x-axis mapping.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  adult_bp,
+  aes(x = systolic_mean)
+)
+
+p1
+```
+
+Add a histogram.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_histogram()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_histogram(binwidth = 5)
+
+p2
+```
+
+Add labels and a theme.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Distribution Of Adult Mean Systolic Blood Pressure",
+    subtitle = "NHANES 2021-2023 teaching file, adults with BP readings",
+    x = "Mean systolic blood pressure",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+The distribution is centered a little above 120 mmHg and has a right tail with some higher readings.
+
+# Use Fill To Highlight A Threshold
+
+We can also use color or fill to highlight a practical threshold.
+
+For example, below, we fill only the part of the distribution for people with mean daily energy intake over 4,000 calories.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `fill` |
+| Geoms / stats | `geom_histogram()` |
+| Scales / coordinates / facets / labels | `scale_fill_manual()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+diet_4000 <- nhanes |>
+  filter(!is.na(mean_daily_energy_kcal)) |>
+  mutate(
+    energy_over_4000 = mean_daily_energy_kcal > 4000
+  )
+
+ggplot(
+  diet_4000,
+  aes(x = mean_daily_energy_kcal, fill = energy_over_4000)
+) +
+  geom_histogram(binwidth = 250) +
+  scale_fill_manual(
+    values = c("TRUE" = "firebrick", "FALSE" = "gray75"),
+    labels = c("FALSE" = "4,000 kcal or less", "TRUE" = "Over 4,000 kcal"),
+    name = NULL
+  ) +
+  labs(
+    title = "Mean Daily Energy Intake",
+    x = "Mean daily energy intake, kcal",
+    y = "Number of participants"
+  ) +
+  theme_minimal()
+```
+
+This does not make 4,000 calories an official outlier rule. It is just a threshold we chose to inspect.
+
+# Bin Width
+
+Bin width changes the level of detail in the histogram.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = systolic_mean)) +
+  geom_histogram(binwidth = 2)
+
+p1
+```
+
+```{r}
+p2 <- ggplot(adult_bp, aes(x = systolic_mean)) +
+  geom_histogram(binwidth = 10)
+
+p2
+```
+
+The smaller bin width shows more detail. The larger bin width smooths over more of the small variation.
+
+# Density Plot
+
+A density plot shows a smoothed distribution.
+
+The y-axis is density, not number of participants. The total area under the curve is scaled to 1.
+
+Because density plots are smoothed, they can suggest more certainty or structure than the raw data support. Use them as a way to inspect shape, not as proof that every bump is meaningful.
+
+```{r}
+p1 <- ggplot(adult_bp, aes(x = systolic_mean))
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_density()` |
+| `geom_density()` properties | `fill`; `alpha` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_density(fill = "steelblue", alpha = 0.3)
+
+p2
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p3 <- p2 +
+  labs(
+    title = "Density Of Adult Mean Systolic Blood Pressure",
+    x = "Mean systolic blood pressure",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+p3
+```
+
+# Histogram And Density Together
+
+You can stack layers in `ggplot2`. The same plot can include a histogram and a density curve.
+
+To put them on the same y-axis, tell the histogram to use density instead of counts.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_histogram()`; `geom_density()` |
+| `geom_histogram()` properties | `fill`; `color` |
+| `geom_density()` properties | `color`; `linewidth` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(adult_bp, aes(x = systolic_mean)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    binwidth = 5,
+    fill = "gray85",
+    color = "white"
+  ) +
+  geom_density(color = "steelblue", linewidth = 1) +
+  labs(
+    title = "Adult Mean Systolic Blood Pressure",
+    x = "Mean systolic blood pressure",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+
+The bars show the binned data. The line shows a smoothed version of the same distribution.
+
+# Bimodal Distributions
+
+Sometimes a distribution has two peaks. This can happen when the data combine two groups with different typical values.
+
+Here is a small simulated example with two groups.
+
+```{r}
+set.seed(123)
+
+simulated_people <- data.frame(
+  sex = rep(c("Female", "Male"), each = 400),
+  measurement = c(
+    rnorm(400, mean = 64, sd = 3),
+    rnorm(400, mean = 70, sd = 3)
+  )
+)
+```
+
+If we plot everyone together, we can spot the bimodal shape.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x` |
+| Geoms / stats | `geom_histogram()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(simulated_people, aes(x = measurement)) +
+  geom_histogram(binwidth = 1, fill = "gray75", color = "white") +
+  labs(
+    title = "A Simulated Bimodal Distribution",
+    x = "Measurement",
+    y = "Number of people"
+  ) +
+  theme_minimal()
+```
+
+Faceting by sex shows why the combined distribution has two peaks.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(simulated_people, aes(x = measurement)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", color = "white") +
+  facet_wrap(~ sex) +
+  labs(
+    title = "The Two Peaks Come From Two Groups",
+    x = "Measurement",
+    y = "Number of people"
+  ) +
+  theme_minimal()
+```
+
+When doing EDA, we will sometimes see patterns like this, which then inform us about the structure of the data and the underlying phenomenon of inquiry.
+
+# Takeaways
+
+- `filter()` and `select()` prepare the data for the question.
+- `summarize()` aggregates many values into summary statistics.
+- Histograms help us visualize the distribution of a continuous variable.
+- Bin width affects what patterns are visible.  Too small or too big each can make things harder to see.
+- Density plots emphasize smoothed shape rather than counts; use with care.
+- Smoothed density can mislead with small samples, bounded variables, or overly detailed interpretations.
+- EDA can help us uncover important features of our data and topic of study.
