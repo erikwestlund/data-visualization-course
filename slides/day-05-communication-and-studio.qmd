@@ -36,8 +36,8 @@ This week moved from setup to visual reasoning:
 
 Today has two parts:
 
-- first: practical skills you will need immediately
-- last hour: lightning round of visualization examples
+- first two hours: annotation, color, and saving images
+- last hour: lightning round of visualization examples and wrap-up
 
 # Annotating Figures
 
@@ -119,7 +119,7 @@ Then practice:
 
 # Color And Highlighting
 
-## Color Has A Job
+## Color Needs Purpose
 
 Color should do something:
 
@@ -129,7 +129,7 @@ Color should do something:
 - encode magnitude
 - support accessibility
 
-If color has no job, use less of it.
+If color has no job, do not use it.
 
 ## Too Many Colors
 
@@ -188,12 +188,6 @@ Open:
 Then practice:
 
 `practice/05-communication-and-studio/02_color-accessibility-and-highlighting-practice.qmd`
-
-Watch for:
-
-- default colors versus purposeful color
-- highlighting one comparison
-- reducing visual noise
 
 # Saving Figures
 

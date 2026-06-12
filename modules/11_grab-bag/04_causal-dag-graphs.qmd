@@ -149,7 +149,7 @@ Now `plot()` uses the coordinates we set above.
 plot(bp_dag)
 ```
 
-# Get Adjustment Sets
+# Causal Adjustment Sets
 
 Once the DAG is defined, R can calculate adjustment sets. For a total effect, the adjustment set blocks backdoor paths without blocking the causal path from exposure to outcome. This is very useful because figuring this out in complex DAGs can be very challenging.
 

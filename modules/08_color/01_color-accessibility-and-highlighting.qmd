@@ -210,7 +210,7 @@ ggplot(contrast_examples, aes(x = population, y = state_name, color = display_co
 
 # Too Many Colors
 
-Colors need a purpose. They are not free; they bring a cognitive burden. Use color to thoughtfully convey a meaningful grouping in a way the reader can understand.
+Colors are not free; they bring a cognitive burden. Use color to thoughtfully convey a meaningful grouping in a way the reader can understand.
 
 When the reader is asked to cross-reference a dozen colors, you may as well present a table. It is easier to read across a table than to scan and memorize colors.
 

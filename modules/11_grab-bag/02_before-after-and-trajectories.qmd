@@ -24,7 +24,7 @@ diary <- readr::read_csv("data/real/migraine_headache_diary.csv")
 
 # Prepare Data
 
-Day 0 is the reference day. Keep days through 50 so the noisy tail does not dominate the plot.
+Day 0 is the reference day. We remove data after day 50 for illustration purposes only.
 
 <!-- data-prep-anatomy-start -->
 ::: {.data-prep-anatomy}
@@ -47,6 +47,15 @@ daily_summary <- diary |>
     .groups = "drop"
   )
 
+period_means <- daily_summary |>
+  group_by(period) |>
+  summarize(
+    mean_headache_percent = mean(headache_percent),
+    x_start = min(day),
+    x_end = max(day),
+    .groups = "drop"
+  )
+
 daily_summary |>
   head(10)
 ```
@@ -66,7 +75,7 @@ Check `n`; small counts make percentages noisy.
 
 ```{r}
 p1 <- ggplot(daily_summary, aes(x = day, y = headache_percent, color = period)) +
-  geom_line(linewidth = 1) +
+  geom_line(linewidth = 0.6) +
   geom_point(size = 2)
 
 p1
@@ -78,16 +87,40 @@ p1
 |---|---|
 | Geoms / stats | `geom_vline()` |
 | `geom_vline()` properties | `color`; `linetype` |
-| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()`; `theme()` |
+| Scales / coordinates / facets / labels | `geom_segment()`; `annotate()`; `scale_color_manual()`; `labs()`; `theme_minimal()`; `theme()` |
 :::
 <!-- plot-anatomy-end -->
 
 ```{r}
 p2 <- p1 +
+  geom_segment(
+    data = period_means,
+    aes(
+      x = x_start,
+      xend = x_end,
+      y = mean_headache_percent,
+      yend = mean_headache_percent,
+      color = period
+    ),
+    linewidth = 0.8,
+    inherit.aes = FALSE
+  ) +
   geom_vline(xintercept = 0, color = "gray50", linetype = "dashed") +
+  annotate(
+    geom = "label",
+    x = 0,
+    y = 88,
+    label = "Day 0",
+    fill = "white",
+    color = "gray20",
+    size = 3
+  ) +
+  scale_color_manual(
+    values = c("Before day 0" = "gray70", "Day 0 and after" = "#D55E00")
+  ) +
   labs(
     title = "Headache Reporting Before And After Day 0",
-    subtitle = "Days after 50 removed",
+    subtitle = "Horizontal lines are means before and after Day 0",
     x = "Diary day",
     y = "Headache reported (%)",
     color = NULL

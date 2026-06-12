@@ -16,7 +16,7 @@ library(ggplot2)
 
 This notebook shows how to add labels and short annotations to a figure.
 
-Annotation can be an extremely effective way to highlight key findings in a figure, but it can also clutter a visualization with chartjunk
+Annotation can be an effective way to highlight key findings in a figure, but it can also clutter a visualization with chartjunk.
 
 # Load Data
 
@@ -69,7 +69,7 @@ p1 <- ggplot(
   ) +
   labs(
     title = "Income And Infant Mortality Across Countries",
-    x = "Income per person",
+    x = "Income per person (log-transformed)",
     y = "Infant mortality per 1,000 live births",
     color = "Region"
   ) +
@@ -83,6 +83,8 @@ p1
 Use `geom_text()` or `ggrepel::geom_text_repel()` when labels are attached to data points. The trick is to give the label layer a smaller dataset than the point layer.
 
 Here, the first labeling rule is simple: label countries with infant mortality above 250 per 1,000 live births.
+
+`ggrepel` uses random draws. You can use the seed property to make label placement predictable.
 
 <!-- data-prep-anatomy-start -->
 ::: {.data-prep-anatomy}
@@ -230,7 +232,9 @@ p2 +
   )
 ```
 
-# Do Not Lavel Everything
+Note how you have to set an x and y value. Getting these just right is a matter of trial and error.
+
+# Do Not Label Everything
 
 It is possible to label every point. However, unless the figure has few points, this usually makes the figure unreadable.
 

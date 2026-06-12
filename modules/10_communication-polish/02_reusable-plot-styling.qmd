@@ -58,20 +58,26 @@ Start with the plot. Do not worry about styling yet.
 | Plot component | Code in this chunk |
 |---|---|
 | Aesthetic mappings | `x`; `y` |
-| Geoms / stats | `geom_bar()` |
-| Scales / coordinates / facets / labels | `coord_flip()`; `scale_y_continuous()`; `labs()` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha`; `size` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `labs()` |
 :::
 <!-- plot-anatomy-end -->
 
 ```{r}
-p1 <- ggplot(top_states, aes(x = state_name, y = population)) +
-  geom_bar(stat = "identity") +
-  coord_flip() +
-  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+p1 <- ggplot(
+  infant_mortality,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.75, size = 2.5) +
+  scale_x_log10(
+    breaks = c(70, 100, 300, 1000, 3000, 6000),
+    labels = c("$70", "$100", "$300", "$1,000", "$3,000", "$6,000")
+  ) +
   labs(
-    title = "Largest States By Population",
-    x = "State name",
-    y = "Population"
+    title = "Income And Infant Mortality Across Countries",
+    x = "Income per person",
+    y = "Infant mortality per 1,000 live births"
   )
 
 p1
@@ -137,8 +143,8 @@ theme_jhu <- function() {
         margin = margin(t = 15),
         face = "bold"
       ),
-      axis.line.x = element_line(color = "#E5E2E0", linewidth = 0.5),
-      axis.line.y = element_line(color = "#E5E2E0", linewidth = 0.5),
+      axis.line.x = element_blank(),
+      axis.line.y = element_blank(),
       panel.grid.major.x = element_line(
         color = "#E5E2E0",
         linewidth = 0.5,
@@ -172,38 +178,37 @@ Now you have a fully styled plot without an overwhelming amount of code.
 
 # Apply The Same Theme To Another Plot
 
-The value comes in consistent styling without repeating yourself.
+The value comes in consistent styling without repeating yourself. You can still override pieces for a specific plot.
 
 <!-- plot-anatomy-start -->
 ::: {.plot-anatomy}
 | Plot component | Code in this chunk |
 |---|---|
 | Aesthetic mappings | `x`; `y` |
-| Geoms / stats | `geom_point()` |
-| `geom_point()` properties | `alpha`; `size` |
-| Scales / coordinates / facets / labels | `scale_x_log10()`; `labs()`; `theme_jhu()` |
+| Geoms / stats | `geom_bar()` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_y_continuous()`; `labs()`; `theme_jhu()`; `theme()` |
 :::
 <!-- plot-anatomy-end -->
 
 ```{r}
-p2 <- ggplot(
-  infant_mortality,
-  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
-) +
-  geom_point(alpha = 0.75, size = 2.5) +
-  scale_x_log10(
-    breaks = c(70, 100, 300, 1000, 3000, 6000),
-    labels = c("$70", "$100", "$300", "$1,000", "$3,000", "$6,000")
-  ) +
+p2 <- ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
   labs(
-    title = "Income And Infant Mortality Across Countries",
-    x = "Income per person",
-    y = "Infant mortality per 1,000 live births"
+    title = "Largest States By Population",
+    x = "State name",
+    y = "Population"
   )
 
 p2 +
-  theme_jhu()
+  theme_jhu() +
+  theme(
+    panel.grid.major.y = element_blank()
+  )
 ```
+
+The last `theme()` call removes the population-axis gridlines for this plot only. It does not change `theme_jhu()`.
 
 # When to Extract
 

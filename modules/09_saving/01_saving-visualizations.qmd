@@ -23,7 +23,7 @@ File-writing code is disabled here, so the module renders without creating extra
 When you export a plot, you are deciding:
 
 - file format
-- width and height
+- width and height, which combine to make an aspect ratio
 - resolution
 - background
 - whether the output is for a notebook, slides, a paper, or the web
@@ -110,7 +110,7 @@ ggsave("practice/work/top-states.pdf", p1, width = 7, height = 5)
 ggsave("practice/work/top-states.svg", p1, width = 7, height = 5)
 ```
 
-Use `bg = "white"` for PNG files when the plot might be placed on a slide or webpage with an unknown background. 
+Use `bg = "white"` for PNG files when the plot might be placed on a slide or webpage with an unknown background.  Without a background, the objects in the figure may clash or have difficult being seen on a dark background.
 
 DPI controls pixel density; it matters for png files. Higher DPIs have more pixel density but will be larger.
 
