@@ -36,7 +36,7 @@ Suggested datasets:
 - `data/real/migraine_headache_diary.csv`
 - `data/simulated/respiratory_booster_coverage.csv`
 
-Helpful module reference: `modules/07_change/01_time-trends-and-small-multiples.qmd`.
+Helpful module reference: `modules/11_grab-bag/01_time-trends-and-small-multiples.qmd`.
 
 # Work
 

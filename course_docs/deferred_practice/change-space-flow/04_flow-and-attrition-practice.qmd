@@ -35,8 +35,6 @@ Suggested datasets:
 - `data/real/titanic_passengers.csv`
 - `data/simulated/neighborhood_health_survey_analysis.csv`
 
-Helpful module reference: `modules/09_flow/01_flow-and-attrition.qmd`.
-
 # Work
 
 ```{r}

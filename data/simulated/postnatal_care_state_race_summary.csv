@@ -1,0 +1,358 @@
+state,state_name,race_ethnicity,group,n,proportion
+AK,Alaska,aian,American Indian/Alaska Native,21,0.19047619047619047
+AL,Alabama,aian,American Indian/Alaska Native,6,0.16666666666666669
+AR,Arkansas,aian,American Indian/Alaska Native,2,0.5
+AZ,Arizona,aian,American Indian/Alaska Native,54,0.16666666666666669
+CA,California,aian,American Indian/Alaska Native,33,0.24242424242424243
+CO,Colorado,aian,American Indian/Alaska Native,4,0.25
+DC,NA,aian,American Indian/Alaska Native,1,0
+FL,Florida,aian,American Indian/Alaska Native,6,0.16666666666666669
+GA,Georgia,aian,American Indian/Alaska Native,2,0
+ID,Idaho,aian,American Indian/Alaska Native,2,0.5
+IL,Illinois,aian,American Indian/Alaska Native,3,0.6666666666666666
+IN,Indiana,aian,American Indian/Alaska Native,2,0
+KS,Kansas,aian,American Indian/Alaska Native,37,0.2702702702702703
+KY,Kentucky,aian,American Indian/Alaska Native,1,0
+LA,Louisiana,aian,American Indian/Alaska Native,2,0.5
+MA,Massachusetts,aian,American Indian/Alaska Native,4,0.75
+MD,Maryland,aian,American Indian/Alaska Native,1,0
+ME,Maine,aian,American Indian/Alaska Native,1,0
+MI,Michigan,aian,American Indian/Alaska Native,7,0.5714285714285714
+MN,Minnesota,aian,American Indian/Alaska Native,7,0.5714285714285714
+MO,Missouri,aian,American Indian/Alaska Native,5,0.2
+MS,Mississippi,aian,American Indian/Alaska Native,1,0
+MT,Montana,aian,American Indian/Alaska Native,16,0.125
+NC,North Carolina,aian,American Indian/Alaska Native,29,0.13793103448275862
+ND,North Dakota,aian,American Indian/Alaska Native,9,0
+NE,Nebraska,aian,American Indian/Alaska Native,2,1
+NH,New Hampshire,aian,American Indian/Alaska Native,1,0
+NJ,New Jersey,aian,American Indian/Alaska Native,2,0.5
+NM,New Mexico,aian,American Indian/Alaska Native,52,0.21153846153846154
+NV,Nevada,aian,American Indian/Alaska Native,4,0
+NY,New York,aian,American Indian/Alaska Native,10,0.5
+OH,Ohio,aian,American Indian/Alaska Native,3,0
+OK,Oklahoma,aian,American Indian/Alaska Native,12,0.33333333333333337
+OR,Oregon,aian,American Indian/Alaska Native,4,0.5
+PA,Pennsylvania,aian,American Indian/Alaska Native,3,0
+RI,Rhode Island,aian,American Indian/Alaska Native,1,0
+SC,South Carolina,aian,American Indian/Alaska Native,1,0
+SD,South Dakota,aian,American Indian/Alaska Native,12,0.25
+TN,Tennessee,aian,American Indian/Alaska Native,3,0.6666666666666666
+UT,Utah,aian,American Indian/Alaska Native,3,0.6666666666666666
+VA,Virginia,aian,American Indian/Alaska Native,2,1
+WA,Washington,aian,American Indian/Alaska Native,24,0.3333333333333333
+WI,Wisconsin,aian,American Indian/Alaska Native,7,0.42857142857142855
+WY,Wyoming,aian,American Indian/Alaska Native,7,0.42857142857142855
+AK,Alaska,asian,Asian,11,0.1818181818181818
+AL,Alabama,asian,Asian,6,0.5
+AR,Arkansas,asian,Asian,10,0.4
+AZ,Arizona,asian,Asian,39,0.23076923076923073
+CA,California,asian,Asian,928,0.3599137931034482
+CO,Colorado,asian,Asian,34,0.38235294117647056
+CT,Connecticut,asian,Asian,21,0.28571428571428575
+DC,NA,asian,Asian,8,0.25
+DE,Delaware,asian,Asian,6,0.16666666666666669
+FL,Florida,asian,Asian,94,0.34042553191489355
+GA,Georgia,asian,Asian,77,0.35064935064935066
+HI,Hawaii,asian,Asian,116,0.37068965517241387
+IA,Iowa,asian,Asian,15,0.33333333333333337
+IL,Illinois,asian,Asian,115,0.408695652173913
+IN,Indiana,asian,Asian,34,0.2941176470588235
+KS,Kansas,asian,Asian,131,0.2671755725190839
+KY,Kentucky,asian,Asian,15,0.39999999999999997
+LA,Louisiana,asian,Asian,6,0.6666666666666666
+MA,Massachusetts,asian,Asian,59,0.4067796610169492
+MD,Maryland,asian,Asian,75,0.37333333333333335
+ME,Maine,asian,Asian,2,0
+MI,Michigan,asian,Asian,50,0.38
+MN,Minnesota,asian,Asian,56,0.5535714285714286
+MO,Missouri,asian,Asian,19,0.26315789473684215
+MS,Mississippi,asian,Asian,1,0
+MT,Montana,asian,Asian,2,0
+NC,North Carolina,asian,Asian,48,0.3125
+ND,North Dakota,asian,Asian,2,0.5
+NE,Nebraska,asian,Asian,7,0.42857142857142855
+NH,New Hampshire,asian,Asian,6,0.16666666666666669
+NJ,New Jersey,asian,Asian,141,0.3333333333333334
+NM,New Mexico,asian,Asian,11,0.1818181818181818
+NV,Nevada,asian,Asian,36,0.27777777777777785
+NY,New York,asian,Asian,293,0.44027303754266217
+OH,Ohio,asian,Asian,55,0.2363636363636364
+OK,Oklahoma,asian,Asian,7,0
+OR,Oregon,asian,Asian,33,0.36363636363636365
+PA,Pennsylvania,asian,Asian,67,0.26865671641791045
+RI,Rhode Island,asian,Asian,6,0.33333333333333337
+SC,South Carolina,asian,Asian,19,0.4736842105263158
+TN,Tennessee,asian,Asian,23,0.391304347826087
+TX,Texas,asian,Asian,21,0.2857142857142857
+UT,Utah,asian,Asian,9,0.33333333333333337
+VA,Virginia,asian,Asian,93,0.4086021505376344
+VT,Vermont,asian,Asian,2,0
+WA,Washington,asian,Asian,114,0.4035087719298246
+WI,Wisconsin,asian,Asian,26,0.34615384615384615
+WV,West Virginia,asian,Asian,2,1
+WY,Wyoming,asian,Asian,1,0
+AK,Alaska,black,Black,3,0
+AL,Alabama,black,Black,190,0.30000000000000004
+AR,Arkansas,black,Black,109,0.21100917431192662
+AZ,Arizona,black,Black,56,0.3214285714285714
+CA,California,black,Black,332,0.33132530120481934
+CO,Colorado,black,Black,32,0.34375
+CT,Connecticut,black,Black,55,0.4
+DC,NA,black,Black,38,0.18421052631578952
+DE,Delaware,black,Black,36,0.2777777777777778
+FL,Florida,black,Black,489,0.22494887525562357
+GA,Georgia,black,Black,544,0.24632352941176486
+HI,Hawaii,black,Black,2,0
+IA,Iowa,black,Black,22,0.40909090909090906
+ID,Idaho,black,Black,1,1
+IL,Illinois,black,Black,291,0.3264604810996564
+IN,Indiana,black,Black,97,0.31958762886597936
+KS,Kansas,black,Black,255,0.1999999999999999
+KY,Kentucky,black,Black,51,0.3137254901960784
+LA,Louisiana,black,Black,79,0.34177215189873417
+MA,Massachusetts,black,Black,66,0.40909090909090906
+MD,Maryland,black,Black,298,0.3389261744966442
+ME,Maine,black,Black,4,0.25
+MI,Michigan,black,Black,199,0.3819095477386935
+MN,Minnesota,black,Black,74,0.4054054054054054
+MO,Missouri,black,Black,121,0.2644628099173554
+MS,Mississippi,black,Black,30,0.16666666666666666
+NC,North Carolina,black,Black,330,0.18484848484848496
+ND,North Dakota,black,Black,4,0.5
+NE,Nebraska,black,Black,10,0.3
+NH,New Hampshire,black,Black,8,0.25
+NJ,New Jersey,black,Black,213,0.3098591549295775
+NM,New Mexico,black,Black,7,0.2857142857142857
+NV,Nevada,black,Black,38,0.21052631578947367
+NY,New York,black,Black,440,0.3068181818181819
+OH,Ohio,black,Black,227,0.24229074889867847
+OK,Oklahoma,black,Black,20,0.35
+OR,Oregon,black,Black,12,0.5
+PA,Pennsylvania,black,Black,187,0.27272727272727276
+RI,Rhode Island,black,Black,13,0.3076923076923077
+SC,South Carolina,black,Black,206,0.22330097087378645
+SD,South Dakota,black,Black,3,0.33333333333333337
+TN,Tennessee,black,Black,161,0.3291925465838509
+TX,Texas,black,Black,54,0.24074074074074073
+UT,Utah,black,Black,5,0.2
+VA,Virginia,black,Black,240,0.35
+VT,Vermont,black,Black,1,1
+WA,Washington,black,Black,49,0.3673469387755103
+WI,Wisconsin,black,Black,40,0.375
+WV,West Virginia,black,Black,15,0.2666666666666667
+WY,Wyoming,black,Black,2,0
+AK,Alaska,hispanic,Hispanic,8,0.25
+AL,Alabama,hispanic,Hispanic,34,0.26470588235294124
+AR,Arkansas,hispanic,Hispanic,73,0.273972602739726
+AZ,Arizona,hispanic,Hispanic,359,0.31197771587743733
+CA,California,hispanic,Hispanic,2532,0.344391785150079
+CO,Colorado,hispanic,Hispanic,201,0.36815920398009955
+CT,Connecticut,hispanic,Hispanic,89,0.3146067415730338
+DC,NA,hispanic,Hispanic,17,0.2941176470588235
+DE,Delaware,hispanic,Hispanic,15,0.39999999999999997
+FL,Florida,hispanic,Hispanic,918,0.25816993464052285
+GA,Georgia,hispanic,Hispanic,177,0.26553672316384186
+HI,Hawaii,hispanic,Hispanic,24,0.25
+IA,Iowa,hispanic,Hispanic,29,0.3793103448275862
+ID,Idaho,hispanic,Hispanic,15,0.33333333333333337
+IL,Illinois,hispanic,Hispanic,395,0.3113924050632912
+IN,Indiana,hispanic,Hispanic,80,0.2750000000000001
+KS,Kansas,hispanic,Hispanic,587,0.26746166950596245
+KY,Kentucky,hispanic,Hispanic,37,0.24324324324324326
+LA,Louisiana,hispanic,Hispanic,13,0.23076923076923075
+MA,Massachusetts,hispanic,Hispanic,144,0.43055555555555564
+MD,Maryland,hispanic,Hispanic,123,0.4065040650406505
+ME,Maine,hispanic,Hispanic,7,0.28571428571428575
+MI,Michigan,hispanic,Hispanic,90,0.3555555555555555
+MN,Minnesota,hispanic,Hispanic,72,0.3611111111111111
+MO,Missouri,hispanic,Hispanic,52,0.19230769230769232
+MS,Mississippi,hispanic,Hispanic,4,0.25
+MT,Montana,hispanic,Hispanic,7,0.14285714285714288
+NC,North Carolina,hispanic,Hispanic,197,0.23350253807106597
+ND,North Dakota,hispanic,Hispanic,6,0.16666666666666666
+NE,Nebraska,hispanic,Hispanic,36,0.3055555555555556
+NH,New Hampshire,hispanic,Hispanic,4,0.25
+NJ,New Jersey,hispanic,Hispanic,305,0.3672131147540984
+NM,New Mexico,hispanic,Hispanic,299,0.28093645484949836
+NV,Nevada,hispanic,Hispanic,153,0.32026143790849676
+NY,New York,hispanic,Hispanic,625,0.3439999999999999
+OH,Ohio,hispanic,Hispanic,88,0.28409090909090906
+OK,Oklahoma,hispanic,Hispanic,39,0.3589743589743589
+OR,Oregon,hispanic,Hispanic,86,0.23255813953488375
+PA,Pennsylvania,hispanic,Hispanic,162,0.30864197530864196
+RI,Rhode Island,hispanic,Hispanic,34,0.2941176470588235
+SC,South Carolina,hispanic,Hispanic,69,0.3768115942028986
+SD,South Dakota,hispanic,Hispanic,7,0.42857142857142855
+TN,Tennessee,hispanic,Hispanic,73,0.4246575342465754
+TX,Texas,hispanic,Hispanic,184,0.23913043478260873
+UT,Utah,hispanic,Hispanic,64,0.421875
+VA,Virginia,hispanic,Hispanic,150,0.4066666666666666
+VT,Vermont,hispanic,Hispanic,2,0.5
+WA,Washington,hispanic,Hispanic,193,0.2953367875647668
+WI,Wisconsin,hispanic,Hispanic,70,0.5
+WV,West Virginia,hispanic,Hispanic,8,0.25
+WY,Wyoming,hispanic,Hispanic,34,0.2352941176470588
+AK,Alaska,nhpi,Native Hawaiian/Pacific Islander,1,0
+AR,Arkansas,nhpi,Native Hawaiian/Pacific Islander,6,0.16666666666666669
+CA,California,nhpi,Native Hawaiian/Pacific Islander,17,0.3529411764705882
+CO,Colorado,nhpi,Native Hawaiian/Pacific Islander,2,0.5
+CT,Connecticut,nhpi,Native Hawaiian/Pacific Islander,1,1
+FL,Florida,nhpi,Native Hawaiian/Pacific Islander,1,1
+HI,Hawaii,nhpi,Native Hawaiian/Pacific Islander,32,0.3125
+IL,Illinois,nhpi,Native Hawaiian/Pacific Islander,1,1
+IN,Indiana,nhpi,Native Hawaiian/Pacific Islander,1,0
+KS,Kansas,nhpi,Native Hawaiian/Pacific Islander,7,0.14285714285714288
+MO,Missouri,nhpi,Native Hawaiian/Pacific Islander,2,0.5
+MT,Montana,nhpi,Native Hawaiian/Pacific Islander,1,1
+NV,Nevada,nhpi,Native Hawaiian/Pacific Islander,6,0.16666666666666669
+NY,New York,nhpi,Native Hawaiian/Pacific Islander,1,0
+OH,Ohio,nhpi,Native Hawaiian/Pacific Islander,5,0.2
+OR,Oregon,nhpi,Native Hawaiian/Pacific Islander,3,0.33333333333333337
+PA,Pennsylvania,nhpi,Native Hawaiian/Pacific Islander,1,1
+TN,Tennessee,nhpi,Native Hawaiian/Pacific Islander,1,0
+TX,Texas,nhpi,Native Hawaiian/Pacific Islander,1,0
+UT,Utah,nhpi,Native Hawaiian/Pacific Islander,2,0.5
+VA,Virginia,nhpi,Native Hawaiian/Pacific Islander,1,0
+WA,Washington,nhpi,Native Hawaiian/Pacific Islander,11,0.0909090909090909
+WI,Wisconsin,nhpi,Native Hawaiian/Pacific Islander,1,0
+AL,Alabama,other,Other,2,0
+AZ,Arizona,other,Other,6,0.16666666666666669
+CA,California,other,Other,46,0.30434782608695654
+CO,Colorado,other,Other,4,0.5
+CT,Connecticut,other,Other,5,0.4
+DC,NA,other,Other,1,0
+DE,Delaware,other,Other,2,1
+FL,Florida,other,Other,14,0.3571428571428571
+GA,Georgia,other,Other,7,0.2857142857142857
+HI,Hawaii,other,Other,1,1
+IA,Iowa,other,Other,1,1
+IL,Illinois,other,Other,12,0.25
+IN,Indiana,other,Other,5,0.4
+KS,Kansas,other,Other,17,0.2941176470588235
+KY,Kentucky,other,Other,1,0
+LA,Louisiana,other,Other,1,0
+MA,Massachusetts,other,Other,13,0.23076923076923073
+MD,Maryland,other,Other,5,0.4
+MI,Michigan,other,Other,8,0.625
+MN,Minnesota,other,Other,9,0.5555555555555556
+MO,Missouri,other,Other,7,0.42857142857142855
+MS,Mississippi,other,Other,1,0
+NC,North Carolina,other,Other,4,0.25
+ND,North Dakota,other,Other,1,1
+NE,Nebraska,other,Other,1,1
+NH,New Hampshire,other,Other,2,0
+NJ,New Jersey,other,Other,11,0.45454545454545453
+NV,Nevada,other,Other,3,0.33333333333333337
+NY,New York,other,Other,41,0.2682926829268293
+OH,Ohio,other,Other,7,0.14285714285714288
+OR,Oregon,other,Other,6,0
+PA,Pennsylvania,other,Other,6,0.16666666666666669
+RI,Rhode Island,other,Other,1,0
+TN,Tennessee,other,Other,3,0
+TX,Texas,other,Other,2,0
+UT,Utah,other,Other,3,0
+VA,Virginia,other,Other,6,0.8333333333333334
+WA,Washington,other,Other,6,0.5
+AK,Alaska,overall,Overall,119,0.29411764705882354
+AL,Alabama,overall,Overall,769,0.30299089726918066
+AR,Arkansas,overall,Overall,686,0.27696793002915443
+AZ,Arizona,overall,Overall,1082,0.3391866913123844
+CA,California,overall,Overall,6079,0.3517025826616221
+CO,Colorado,overall,Overall,882,0.36394557823129253
+CT,Connecticut,overall,Overall,514,0.3988326848249027
+DC,NA,overall,Overall,101,0.22772277227722765
+DE,Delaware,overall,Overall,156,0.3269230769230769
+FL,Florida,overall,Overall,3216,0.28047263681592033
+GA,Georgia,overall,Overall,1642,0.2807551766138855
+HI,Hawaii,overall,Overall,241,0.3278008298755187
+IA,Iowa,overall,Overall,494,0.368421052631579
+ID,Idaho,overall,Overall,85,0.3294117647058824
+IL,Illinois,overall,Overall,2037,0.3760432007854686
+IN,Indiana,overall,Overall,1002,0.31037924151696605
+KS,Kansas,overall,Overall,4435,0.3021420518602028
+KY,Kentucky,overall,Overall,656,0.31707317073170727
+LA,Louisiana,overall,Overall,262,0.3587786259541984
+MA,Massachusetts,overall,Overall,1075,0.41674418604651176
+MD,Maryland,overall,Overall,945,0.38835978835978857
+ME,Maine,overall,Overall,205,0.3853658536585366
+MI,Michigan,overall,Overall,1484,0.4238544474393528
+MN,Minnesota,overall,Overall,914,0.4310722100656456
+MO,Missouri,overall,Overall,977,0.28454452405322406
+MS,Mississippi,overall,Overall,100,0.2799999999999999
+MT,Montana,overall,Overall,167,0.25149700598802394
+NC,North Carolina,overall,Overall,1597,0.2598622417031938
+ND,North Dakota,overall,Overall,109,0.3119266055045872
+NE,Nebraska,overall,Overall,277,0.3718411552346571
+NH,New Hampshire,overall,Overall,210,0.34761904761904755
+NJ,New Jersey,overall,Overall,1430,0.3615384615384615
+NM,New Mexico,overall,Overall,599,0.2888146911519198
+NV,Nevada,overall,Overall,490,0.3020408163265306
+NY,New York,overall,Overall,3175,0.36472440944881906
+OH,Ohio,overall,Overall,1754,0.30843785632839205
+OK,Oklahoma,overall,Overall,269,0.24163568773234212
+OR,Oregon,overall,Overall,635,0.3244094488188976
+PA,Pennsylvania,overall,Overall,1794,0.3662207357859531
+RI,Rhode Island,overall,Overall,165,0.3272727272727273
+SC,South Carolina,overall,Overall,830,0.327710843373494
+SD,South Dakota,overall,Overall,127,0.3149606299212599
+TN,Tennessee,overall,Overall,1038,0.3323699421965318
+TX,Texas,overall,Overall,458,0.2860262008733626
+UT,Utah,overall,Overall,464,0.40948275862068967
+VA,Virginia,overall,Overall,1346,0.42050520059435365
+VT,Vermont,overall,Overall,82,0.5121951219512195
+WA,Washington,overall,Overall,1225,0.36
+WI,Wisconsin,overall,Overall,860,0.4
+WV,West Virginia,overall,Overall,425,0.26823529411764707
+WY,Wyoming,overall,Overall,316,0.2658227848101266
+AK,Alaska,white,White,75,0.36
+AL,Alabama,white,White,531,0.30696798493408667
+AR,Arkansas,white,White,486,0.2901234567901235
+AZ,Arizona,white,White,568,0.3838028169014086
+CA,California,white,White,2191,0.362391602008215
+CO,Colorado,white,White,605,0.3619834710743802
+CT,Connecticut,white,White,343,0.4256559766763848
+DC,NA,white,White,36,0.25
+DE,Delaware,white,White,97,0.3298969072164949
+FL,Florida,white,White,1694,0.3046044864226681
+GA,Georgia,white,White,835,0.3005988023952095
+HI,Hawaii,white,White,66,0.2878787878787879
+IA,Iowa,white,White,427,0.36533957845433257
+ID,Idaho,white,White,67,0.31343283582089554
+IL,Illinois,white,White,1220,0.4057377049180325
+IN,Indiana,white,White,783,0.31417624521072796
+KS,Kansas,white,White,3401,0.31784769185533684
+KY,Kentucky,white,White,551,0.3212341197822142
+LA,Louisiana,white,White,161,0.36645962732919257
+MA,Massachusetts,white,White,789,0.4169835234474021
+MD,Maryland,white,White,443,0.4198645598194131
+ME,Maine,white,White,191,0.3979057591623037
+MI,Michigan,white,White,1130,0.43628318584070813
+MN,Minnesota,white,White,696,0.42816091954022995
+MO,Missouri,white,White,771,0.2931258106355383
+MS,Mississippi,white,White,63,0.34920634920634913
+MT,Montana,white,White,141,0.2695035460992908
+NC,North Carolina,white,White,989,0.2912032355915065
+ND,North Dakota,white,White,87,0.3333333333333333
+NE,Nebraska,white,White,221,0.3755656108597285
+NH,New Hampshire,white,White,189,0.365079365079365
+NJ,New Jersey,white,White,758,0.37730870712401055
+NM,New Mexico,white,White,230,0.32173913043478264
+NV,Nevada,white,White,250,0.31600000000000006
+NY,New York,white,White,1765,0.3756373937677053
+OH,Ohio,white,White,1369,0.3257852447041637
+OK,Oklahoma,white,White,191,0.2094240837696336
+OR,Oregon,white,White,491,0.33604887983706727
+PA,Pennsylvania,white,White,1368,0.39181286549707606
+RI,Rhode Island,white,White,110,0.34545454545454546
+SC,South Carolina,white,White,535,0.3570093457943924
+SD,South Dakota,white,White,105,0.3142857142857143
+TN,Tennessee,white,White,774,0.32299741602067183
+TX,Texas,white,White,196,0.346938775510204
+UT,Utah,white,White,378,0.4126984126984127
+VA,Virginia,white,White,854,0.44028103044496497
+VT,Vermont,white,White,77,0.5194805194805194
+WA,Washington,white,White,828,0.3719806763285024
+WI,Wisconsin,white,White,716,0.393854748603352
+WV,West Virginia,white,White,400,0.26499999999999996
+WY,Wyoming,white,White,272,0.26838235294117646

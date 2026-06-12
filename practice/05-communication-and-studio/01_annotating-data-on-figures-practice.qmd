@@ -1,0 +1,114 @@
+---
+title: "Practice: Annotating Data On Figures"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Practice editing annotation text and placement.
+
+# Load Data
+
+```{r}
+states <- readr::read_csv("data/real/state_population_ranks.csv")
+```
+
+# Prepare Data
+
+```{r}
+top_states <- states |>
+  slice_min(rank, n = 12) |>
+  mutate(
+    state_name = reorder(state_name, population),
+    population_millions = population / 1000000
+  )
+```
+
+# Start With A Plot
+
+```{r}
+p1 <- ggplot(top_states, aes(x = state_name, y = population_millions)) +
+  geom_col(fill = "gray75") +
+  coord_flip(ylim = c(0, 45)) +
+  labs(
+    title = "Largest States By Population",
+    x = NULL,
+    y = "Population (millions)"
+  ) +
+  theme_minimal()
+
+p1
+```
+
+# Add An Annotation
+
+```{r}
+annotation_x <- "Texas"
+annotation_y <- 34
+annotation_text <- "Second largest state\nin this dataset"
+
+p1 +
+  annotate(
+    geom = "label",
+    x = annotation_x,
+    y = annotation_y,
+    label = annotation_text,
+    hjust = 0,
+    size = 3.5,
+    fill = "white",
+    color = "gray20"
+  )
+```
+
+# Move The Annotation
+
+Tweak the `annotation_x` and `annotation_y` values below until the annotation is slightly better placed.
+
+```{r}
+annotation_x <- "Texas"
+annotation_y <- 28
+annotation_text <- "Move this label\nto a better spot"
+
+p1 +
+  annotate(
+    geom = "label",
+    x = annotation_x,
+    y = annotation_y,
+    label = annotation_text,
+    hjust = 0,
+    size = 3.5,
+    fill = "white",
+    color = "gray20"
+  )
+```
+
+# Change The Annotated State
+
+Change the `annotation_text` to match the plot.
+
+```{r}
+annotation_x <- "Florida"
+annotation_y <- 26
+annotation_text <- "Edit this text"
+
+p1 +
+  annotate(
+    geom = "label",
+    x = annotation_x,
+    y = annotation_y,
+    label = annotation_text,
+    hjust = 0,
+    size = 3.5,
+    fill = "white",
+    color = "gray20"
+  )
+```

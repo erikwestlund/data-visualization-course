@@ -75,7 +75,7 @@ day_definitions <- list(
     slide_files = c("day-04-comparison-and-association.qmd")
   ),
   `day-05` = list(
-    module_dirs = c("07_change", "09_flow", "10_communication-polish", "11_extra-topics"),
+    module_dirs = c("07_annotation", "08_color", "09_saving", "10_communication-polish", "11_grab-bag"),
     practice_dirs = c("05-communication-and-studio"),
     slide_files = c("day-05-communication-and-studio.qmd")
   )

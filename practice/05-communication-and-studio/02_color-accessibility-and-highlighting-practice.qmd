@@ -12,37 +12,82 @@ library(dplyr)
 library(ggplot2)
 ```
 
-# What We Practiced
+# Goal
 
-The module showed how to:
+Practice using color to highlight one thing instead of coloring everything.
 
-- use color to encode groups or guide attention
-- reduce legend burden
-- highlight one category while muting context
-- avoid relying on color alone
-
-# Task
-
-Pick one dataset and create:
-
-1. a first plot with default or many colors
-2. a revised plot that filters, highlights, or simplifies color
-3. a short interpretation of what the reader should notice first
-
-Suggested datasets:
-
-- `data/real/census_state_race_ethnicity_long.csv`
-- `data/real/places_county_core_measures_long.csv`
-- `data/simulated/state_school_enrollment_groups_long.csv`
-
-Helpful module reference: `modules/10_communication-polish/02_color-accessibility-and-highlighting.qmd`.
-
-# Work
+# 1. Load Data
 
 ```{r}
-# Load data, build a first plot, then build a revised highlighted or simplified version.
+flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
 ```
 
-# Interpretation
+# 2. Prepare A Focused Dataset
 
-Write briefly: what the reader should notice first and whether the plot still works without relying only on color.
+Use one geography and one age group so the practice is about color, not data wrangling.
+
+```{r}
+flu_us <- flu |>
+  filter(
+    geography == "United States",
+    age_group == "18-49 Years",
+    season_start_year >= 2018,
+    !is.na(estimate)
+  )
+```
+
+# 3. Too Many Colors
+
+This plot gives every flu season its own color. The colors are doing too much work.
+
+```{r}
+ggplot(
+  flu_us,
+  aes(x = month, y = estimate, color = season, group = season)
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = c(1, 3, 5, 7, 9, 11)) +
+  labs(
+    title = "Flu Vaccination Estimates By Season",
+    subtitle = "United States, adults 18-49 years",
+    x = "Month",
+    y = "Vaccination estimate (%)",
+    color = "Season"
+  ) +
+  theme_minimal()
+```
+
+# 4. Highlight One Season
+
+Now color helps the reader focus on one season and keep the other seasons as context.
+
+```{r}
+focus_season <- max(flu_us$season_start_year)
+
+flu_highlighted <- flu_us |>
+  mutate(
+    focus = if_else(season_start_year == focus_season, "Focus season", "Other seasons")
+  )
+
+ggplot(
+  flu_highlighted,
+  aes(x = month, y = estimate, group = season, color = focus)
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c("Focus season" = "steelblue", "Other seasons" = "gray80")) +
+  scale_x_continuous(breaks = c(1, 3, 5, 7, 9, 11)) +
+  labs(
+    title = "Highlight One Season And Mute The Rest",
+    subtitle = "United States, adults 18-49 years",
+    x = "Month",
+    y = "Vaccination estimate (%)",
+    color = NULL
+  ) +
+  theme_minimal()
+```
+
+- Change `focus_season` to a specific year, such as `2020`.
+- Change the focus color from `"steelblue"` to another high-contrast color.
+- Change the age group in the filter and rerun the notebook.

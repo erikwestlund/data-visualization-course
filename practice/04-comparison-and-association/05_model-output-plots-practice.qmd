@@ -16,8 +16,6 @@ library(ggplot2)
 
 Practice plotting simple model output while keeping the raw data visible.
 
-This is optional extension practice if there is time.
-
 # 1. Load Data
 
 ```{r}

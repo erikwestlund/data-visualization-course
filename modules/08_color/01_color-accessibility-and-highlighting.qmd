@@ -1,0 +1,346 @@
+---
+title: "Color, Accessibility, And Highlighting"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+This notebook focuses on the effective use of color.
+
+# Questions
+
+- Is there enough contrast between the important part and the background?
+- Is the legend doing too much work?
+- Would a smaller number of colors make the figure easier to read?
+
+# Load Data
+
+```{r}
+state_population_raw <- readr::read_csv("data/real/state_population_ranks.csv")
+```
+
+# Prepare Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()`; `case_when()`; `if_else()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+state_population <- state_population_raw |>
+  filter(rank <= 20) |>
+  mutate(
+    state_name = reorder(state_name, population),
+    us_region = state.region[match(state, state.abb)],
+    highlight_group = if_else(rank <= 5, "Largest five", "Other top 20"),
+    contrast_group = case_when(
+      rank <= 5 ~ "Largest five",
+      rank <= 10 ~ "Next five",
+      TRUE ~ "Other top 20"
+    )
+  )
+```
+
+# Match Palette To Data Type
+
+Different data types need different color jobs.
+
+- Qualitative palettes distinguish categories.
+
+# Helpful Color Packages
+
+These packages will help you choose attractive, accessible colors.
+
+- `RColorBrewer`: named palettes for data visualization. Brewer palettes are useful for qualitative color scales.
+- `viridis`: perceptually uniform palettes that are designed to remain readable for many color-vision differences and in grayscale. `ggplot2` includes viridis scale functions, so you can often use them directly.
+
+Start with the scale functions built into `ggplot2`; add specialized packages when a figure needs them.
+
+In `ggplot2`, you will usually use these through scale functions:
+
+- `scale_fill_brewer()` or `scale_color_brewer()` for discrete Brewer palettes.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `fill` |
+| Geoms / stats | `geom_tile()` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `scale_fill_identity()`; `labs()`; `theme_void()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+palette_swatches <- tibble::tibble(
+  palette = rep(
+    c("RColorBrewer: Set2", "RColorBrewer: Dark2", "RColorBrewer: Blues", "ggplot2: viridis C"),
+    each = 8
+  ),
+  step = rep(1:8, times = 4),
+  color = c(
+    RColorBrewer::brewer.pal(8, "Set2"),
+    RColorBrewer::brewer.pal(8, "Dark2"),
+    RColorBrewer::brewer.pal(8, "Blues"),
+    grDevices::hcl.colors(8, "viridis")
+  )
+) |>
+  mutate(palette = factor(palette, levels = unique(palette)))
+
+ggplot(palette_swatches, aes(x = step, y = 1, fill = color)) +
+  geom_tile() +
+  facet_wrap(vars(palette), ncol = 1) +
+  scale_fill_identity() +
+  labs(
+    title = "Color Packages Provide Tested Palettes",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_void() +
+  theme(
+    strip.text = element_text(size = 11, hjust = 0),
+    plot.title = element_text(size = 14, face = "bold")
+  )
+```
+
+These palettes have different jobs. `Set2` and `Dark2` distinguish categories. `Dark2` has stronger contrast, so it is useful when categories need to stand apart.
+
+# Choose Contrasting Colors From A Palette
+
+Small differences in color may look fine on your screen and disappear on a projector, in print, or for readers with color blindness or other vision impairments.
+
+When you need two focus colors, choose colors that differ in hue and lightness. Here, the weak example uses two soft colors from `Pastel2`. The better example uses two stronger colors from `Dark2`. The gray context group stays quiet.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()`; `case_when()` |
+| Combine data frames | `bind_rows()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+weak_contrast_palette <- c(
+  "Largest five" = RColorBrewer::brewer.pal(8, "Pastel2")[2],
+  "Next five" = RColorBrewer::brewer.pal(8, "Pastel2")[3],
+  "Other top 20" = "#D9D9D9"
+)
+
+better_contrast_palette <- c(
+  "Largest five" = RColorBrewer::brewer.pal(8, "Dark2")[2],
+  "Next five" = RColorBrewer::brewer.pal(8, "Dark2")[3],
+  "Other top 20" = "#E6E6E6"
+)
+
+contrast_examples <- dplyr::bind_rows(
+  state_population |>
+    mutate(
+      contrast_example = "Weak contrast",
+      display_color = case_when(
+        contrast_group == "Largest five" ~ weak_contrast_palette[["Largest five"]],
+        contrast_group == "Next five" ~ weak_contrast_palette[["Next five"]],
+        TRUE ~ weak_contrast_palette[["Other top 20"]]
+      )
+    ),
+  state_population |>
+    mutate(
+      contrast_example = "Better contrast",
+      display_color = case_when(
+        contrast_group == "Largest five" ~ better_contrast_palette[["Largest five"]],
+        contrast_group == "Next five" ~ better_contrast_palette[["Next five"]],
+        TRUE ~ better_contrast_palette[["Other top 20"]]
+      )
+    )
+  ) |>
+  mutate(contrast_example = factor(contrast_example, levels = c("Weak contrast", "Better contrast")))
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color`; `xend`; `yend` |
+| Geoms / stats | `geom_segment()`; `geom_point()` |
+| `geom_segment()` properties | `linewidth` |
+| `geom_point()` properties | `size` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `scale_color_identity()`; `scale_x_continuous()`; `labs()`; `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 9
+#| fig-width: 10
+
+ggplot(contrast_examples, aes(x = population, y = state_name, color = display_color)) +
+  geom_segment(aes(x = 0, xend = population, yend = state_name), linewidth = 0.6) +
+  geom_point(size = 3) +
+  facet_wrap(vars(contrast_example), ncol = 1) +
+  scale_color_identity() +
+  scale_x_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Accessible Contrast Is A Design Choice",
+    subtitle = "The Dark2 version separates the focus groups from each other and from the background.",
+    x = "Population",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 8))
+```
+
+# Too Many Colors
+
+Colors need a purpose. They are not free; they bring a cognitive burden. Use color to thoughtfully convey a meaningful grouping in a way the reader can understand.
+
+When the reader is asked to cross-reference a dozen colors, you may as well present a table. It is easier to read across a table than to scan and memorize colors.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_point()` |
+| Scales / coordinates / facets / labels | `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 8
+#| fig-width: 10
+
+ggplot(state_population, aes(x = population, y = state_name, color = state_name)) +
+  geom_point(size = 3) +
+  scale_x_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Too Many Colors Make The Legend Do The Work",
+    x = "Population",
+    y = NULL,
+    color = "State"
+  ) +
+  theme_minimal()
+```
+
+This plot has accurate data, but the color system does not achieve anything.
+
+# Group Colors Into Regions
+
+One improvement is to use color for a meaningful grouping. Here, region is more useful than state because it reduces the legend from twenty colors to four.
+
+```{r}
+ggplot(state_population, aes(x = population, y = state_name, color = us_region)) +
+  geom_point(size = 3) +
+  scale_x_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Use Color For Meaningful Groups",
+    x = "Population",
+    y = NULL,
+    color = "Region in the U.S."
+  ) +
+  theme_minimal()
+```
+
+Reducing colors is good in principle here, but the reader still has to bounce between the plot and the legend to even make sense of the color. It is actually easier for them to just think "California is in the west" then match up the color. This is an example where color just isn't the right tool.
+
+# Small Multiples Instead of Color
+
+Often, faceting by small multiples is clearer than using color to indicate group membersihp. Faceting puts the regional groups into the structure of the plot, so the reader does not have to decode the colors.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| `geom_point()` properties | `color`; `size` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(state_population, aes(x = population, y = state_name)) +
+  geom_point(color = "#005EA8", size = 3) +
+  facet_wrap(vars(us_region), scales = "free_y") +
+  scale_x_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Faceting Can Be Clearer Than Color",
+    x = "Population",
+    y = NULL
+  ) +
+  theme_minimal()
+```
+
+Here, we get the added benefit of being able to see easily how many units belong to a group as well the variation across groups. Be willing to abandon ideas for something better.
+
+# Use Contrast To Highlight
+
+Below, we use color to highlight a certain group. This effectively draws the readers eye to a specific place in the figure.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color`; `xend`; `yend` |
+| Geoms / stats | `geom_segment()`; `geom_point()` |
+| `geom_segment()` properties | `linewidth` |
+| `geom_point()` properties | `size` |
+| Scales / coordinates / facets / labels | `scale_color_manual()`; `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(state_population, aes(x = population, y = state_name, color = highlight_group)) +
+  geom_segment(aes(x = 0, xend = population, yend = state_name), linewidth = 0.6) +
+  geom_point(size = 3) +
+  scale_color_manual(
+    values = c(
+      "Largest five" = better_contrast_palette[["Largest five"]],
+      "Other top 20" = better_contrast_palette[["Other top 20"]]
+    )
+  ) +
+  scale_x_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "High Contrast Directs Attention",
+    subtitle = "The largest five states stand out because the other states are muted.",
+    x = "Population",
+    y = NULL,
+    color = NULL
+  ) +
+  theme_minimal()
+```
+
+This is still a simple plot, but the color choices now match the reading task.
+
+# Accessibility Checks
+
+- Does the plot still work in grayscale?
+- Are important differences also shown by position, labels, shape, or line type?
+- Is the contrast strong enough for projection or printing?
+- Is the legend doing too much work?
+- Would direct labels or highlighting be clearer?
+
+# Takeaways
+
+- Use color when it carries information or directs attention.
+- Too many colors can make the legend do too much work.
+- Contrast matters: the focus color should separate from the background.
+- Do not rely on color alone; use labels, ordering, contrast, or filtering so the figure still works without color.
+- Often the best color choice is a single focus color plus a quiet background color.

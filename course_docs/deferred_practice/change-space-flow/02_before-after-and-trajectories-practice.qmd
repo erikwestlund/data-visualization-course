@@ -35,7 +35,7 @@ Suggested datasets:
 - `data/real/post_coma_recovery.csv`
 - `data/simulated/toothache_diary.csv`
 
-Helpful module reference: `modules/07_change/02_before-after-and-trajectories.qmd`.
+Helpful module reference: `modules/11_grab-bag/02_before-after-and-trajectories.qmd`.
 
 # Work
 

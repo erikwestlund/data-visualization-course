@@ -40,7 +40,7 @@ library(ggplot2)
 
 # Group Comparison
 
-## Two Varaibles
+## Two Variables
 
 Yesterday we studied single continuous variables. Today we'll focus on how to visualize these quantities when grouping is of interest.
 

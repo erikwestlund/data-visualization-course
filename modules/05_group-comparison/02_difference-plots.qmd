@@ -184,7 +184,63 @@ ggplot(paired_wide, aes(y = location)) +
 
 This is useful when the reader needs to see both original values and the paired comparison.
 
-Not here how we specified colors with the named vector `c("Depression" = "gray35")` and directly referenced the color in `geom_point`. This is a nice expressive technique.
+Note here how we specified colors with the named vector `c("Depression" = "gray35")` and directly referenced the color in `geom_point`. This is a nice expressive technique.
+
+# Connected Dot Plot With Difference Labels
+
+The same plot can also label the magnitude of the gap. Here the label shows the absolute difference between anxiety and depression in percentage points.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `y`; `x`; `xend`; `yend`; `color`; `label` |
+| Geoms / stats | `geom_segment()`; `geom_point()`; `geom_label()` |
+| `geom_label()` properties | `fill`; `size` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+paired_wide_labeled <- paired_wide |>
+  mutate(
+    label_x = (depression + anxiety) / 2,
+    difference_label = paste0(round(abs(difference), 1), "%")
+  )
+
+ggplot(paired_wide_labeled, aes(y = location)) +
+  geom_segment(
+    aes(x = depression, xend = anxiety, yend = location),
+    color = "gray70",
+    linewidth = 1
+  ) +
+  geom_point(aes(x = depression, color = "Depression"), size = 3) +
+  geom_point(aes(x = anxiety, color = "Anxiety"), size = 3) +
+  geom_label(
+    aes(x = label_x, label = difference_label),
+    fill = "white",
+    label.size = 0,
+    size = 3
+  ) +
+  scale_color_manual(
+    values = c("Depression" = "gray35", "Anxiety" = "steelblue"),
+    name = NULL
+  ) +
+  labs(
+    title = "Anxiety And Depression Gaps Within State",
+    subtitle = "Labels show the absolute gap in percentage points",
+    x = "Estimate (%)",
+    y = NULL
+  ) +
+  theme_minimal()
+```
 
 # Plot The Difference Directly
 

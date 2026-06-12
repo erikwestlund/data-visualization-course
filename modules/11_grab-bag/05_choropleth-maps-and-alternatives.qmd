@@ -1,0 +1,244 @@
+---
+title: "Choropleth Maps And Alternatives"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(maps)
+```
+
+# Packages
+
+This notebook uses one extra mapping package:
+
+- `maps` supplies the state boundary coordinates used by `map_data("state")`.
+- `ggplot2` draws the polygons, facets, and tile plot.
+- `dplyr` filters, mutates, joins, and orders the data.
+- `scales::label_percent()` formats proportions as percentages without loading the full `scales` package.
+
+If `maps` is missing, run `source("install-packages.R")` from the project root.
+
+# Goal
+
+Show the same state-level data three ways:
+
+- one map
+- faceted maps
+- a non-map alternative
+
+# Load Data
+
+```{r}
+postnatal_care <- readr::read_csv("data/simulated/postnatal_care_state_race_summary.csv")
+```
+
+This is simulated teaching data. The outcome here is the proportion of people receiving comprehensive postnatal care in a national data set.
+
+# Prepare Map Data
+
+To plot maps you need shape file data.
+
+`map_data("state")` gives the shape data for states. Join the data by state name.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `select()` |
+| Create or change columns | `mutate()` |
+| Combine data frames | `left_join()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+state_map <- map_data("state") |>
+  tibble::as_tibble() |>
+  rename(polygon_group = group)
+
+overall_state <- postnatal_care |>
+  filter(group == "Overall", !is.na(state_name)) |>
+  mutate(region = tolower(state_name))
+
+overall_map <- state_map |>
+  left_join(overall_state, by = "region")
+```
+
+# One Map
+
+Choropleths shade regions of a map based upon some aggregated quantity.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `long`; `lat`; `group`; `fill` |
+| Geoms / stats | `geom_polygon()` |
+| Scales / coordinates / facets / labels | `coord_quickmap()`; `scale_fill_continuous()`; `labs()`; `theme_void()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+ggplot(overall_map, aes(x = long, y = lat, group = polygon_group, fill = proportion)) +
+  geom_polygon(color = "white", linewidth = 0.15) +
+  coord_quickmap() +
+  scale_fill_continuous(
+    labels = scales::label_percent(),
+    low = "#deebf7",
+    high = "#08519c",
+    na.value = "gray90"
+  ) +
+  labs(
+    title = "Postnatal Care Receipt Varies Across States",
+    fill = "Proportion"
+  ) +
+  theme_void()
+```
+
+# Faceted Maps
+
+Faceting by small multiple is often effective for maps, as it is with other data.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+| Combine data frames | `left_join()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+race_state <- postnatal_care |>
+  filter(group %in% c("White", "Black", "Hispanic", "Asian"), !is.na(state_name)) |>
+  mutate(region = tolower(state_name))
+
+race_map <- state_map |>
+  left_join(race_state, by = "region")
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `long`; `lat`; `group`; `fill` |
+| Geoms / stats | `geom_polygon()` |
+| Scales / coordinates / facets / labels | `coord_quickmap()`; `facet_wrap()`; `scale_fill_continuous()`; `labs()`; `theme_void()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6
+ggplot(race_map, aes(x = long, y = lat, group = polygon_group, fill = proportion)) +
+  geom_polygon(color = "white", linewidth = 0.1) +
+  coord_quickmap() +
+  facet_wrap(vars(group), ncol = 2) +
+  scale_fill_continuous(
+    labels = scales::label_percent(),
+    low = "#deebf7",
+    high = "#08519c",
+    na.value = "gray90"
+  ) +
+  labs(
+    title = "State Patterns Differ Across Race And Ethnicity Groups",
+    fill = "Proportion"
+  ) +
+  theme_void()
+```
+
+# Choropleths Often Mislead
+
+Choropleths are often misleading and hard to interpret accurately. Humans are bad at using shades of colors to differentiate magnitudes. Moreover, the size of shaded regions can mislead viewers when that region represents more or fewer people when this is not reflected in the aggregated quantity.
+
+Here, a dot plot can be used to more easily visualize the trend. This leverages relative position on a common scale to make it easier for the viewer to compare the quantities.
+
+```{r}
+ranked_states <- overall_state |>
+  mutate(census_region = state.region[match(state_name, state.name)]) |>
+  filter(!is.na(census_region)) |>
+  arrange(proportion) |>
+  mutate(
+    state_name = factor(state_name, levels = state_name),
+    median_group = if_else(
+      proportion >= median(proportion, na.rm = TRUE),
+      "At or above median",
+      "Below median"
+    )
+  )
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()` |
+| Scales / coordinates / facets / labels | `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 8
+#| fig-height: 10
+ggplot(ranked_states, aes(x = proportion, y = state_name)) +
+  geom_point(color = "#08519c", size = 2) +
+  scale_x_continuous(
+    labels = scales::label_percent(),
+    limits = c(0, NA)
+  ) +
+  labs(
+    title = "Ranked States Make The Overall Comparison Easier",
+    x = "Proportion receiving comprehensive postnatal care",
+    y = NULL
+  ) +
+  theme_minimal()
+```
+
+Faceting by region keeps some geographic context.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_point()` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `scale_color_manual()`; `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 8
+#| fig-height: 8
+ggplot(ranked_states, aes(x = proportion, y = state_name, color = median_group)) +
+  geom_point(size = 2) +
+  facet_wrap(vars(census_region), scales = "free_y", ncol = 2) +
+  scale_color_manual(
+    values = c("At or above median" = "#D55E00", "Below median" = "gray80")
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(),
+    limits = c(0, NA)
+  ) +
+  labs(
+    title = "Regional Dot Plots Keep Some Geographic Context",
+    x = "Proportion receiving comprehensive postnatal care",
+    y = NULL,
+    color = NULL
+  ) +
+  theme_minimal()
+```
+
+# Takeaways
+
+- R can draw maps.
+- Be careful drawing choropleths, as they are often misleading.
+- Consider non-geographic data displays.

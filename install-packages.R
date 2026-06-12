@@ -1,8 +1,12 @@
 course_packages <- c(
   "DT",
+  "RColorBrewer",
+  "dagitty",
   "dplyr",
   "ggplot2",
+  "ggrepel",
   "knitr",
+  "maps",
   "mgcv",
   "readr",
   "rmarkdown",

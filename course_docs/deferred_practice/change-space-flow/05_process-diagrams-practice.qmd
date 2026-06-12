@@ -30,7 +30,7 @@ Create one simple process diagram showing one of these:
 - how variables might relate conceptually
 - how a reader should move through a report
 
-Helpful module reference: `modules/09_flow/02_process-diagrams.qmd`.
+Helpful module reference: `modules/11_grab-bag/03_process-diagrams.qmd`.
 
 # Work
 

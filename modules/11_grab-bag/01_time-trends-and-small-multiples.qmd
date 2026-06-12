@@ -14,13 +14,7 @@ library(ggplot2)
 
 # Goal
 
-This notebook shows how to visualize change over time and compare time patterns across groups.
-
-# Analytic Questions
-
-- How do flu vaccination estimates change across seasons?
-- How do time patterns differ by age group?
-- When are small multiples clearer than many colored lines?
+Show change over time for one group and several groups.
 
 # Load Data
 
@@ -30,7 +24,7 @@ flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
 
 # Prepare Data
 
-Use national estimates from May (`month == 5`) so each season is compared at the same point in the vaccination cycle.
+Use the same month for every season.
 
 <!-- data-prep-anatomy-start -->
 ::: {.data-prep-anatomy}
@@ -151,7 +145,7 @@ p2
 
 # Small Multiples
 
-When many groups compete for attention, facets can make the patterns easier to scan.
+Facets separate groups into repeated panels.
 
 <!-- plot-anatomy-start -->
 ::: {.plot-anatomy}
@@ -187,4 +181,4 @@ p2
 - Line plots work well when the x-axis has a meaningful order.
 - Use the same month or comparable time point when comparing seasons.
 - Color works for a few groups; facets often work better for many groups.
-- These plots show point estimates only; when intervals are available, check whether apparent changes are large relative to uncertainty.
+

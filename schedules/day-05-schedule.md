@@ -4,41 +4,44 @@ Assumed class block: 3 hours.
 
 ## Main Goal
 
-Students learn to annotate figures, preview one time-series plot plus DAG/Mermaid diagrams, revise figures for accessibility and color, save images intentionally, and leave with concrete final project progress.
+Students practice three practical communication skills: annotation, color/accessibility, and saving figures. The last hour is a lightning round on time series, Mermaid/process charts, DAGs, and maps versus other geographic comparisons.
 
 ## Schedule
 
 | Time | Segment | Materials | Notes |
 |---:|---|---|---|
-| 0:00-0:10 | Warm-up and project check-in | Verbal | Ask each student to name dataset/question status. |
-| 0:10-0:30 | Annotating data on a figure | `modules/10_communication-polish/00_annotating-data-on-figures.qmd` | Emphasize directing attention, not decoration. |
-| 0:30-0:50 | Annotation practice | `practice/05-communication-and-studio/00_annotating-data-on-figures-practice.qmd` | Students add labels and a short annotation. |
-| 0:50-1:05 | Quick demos: one time-series plot, DAGs, and Mermaid charts | `slides/day-05-communication-and-studio.qmd`; `modules/11_extra-topics/04_dag_structures_with_mermaid.qmd`; `modules/09_flow/02_process-diagrams.qmd` | Explanation only; no practice. |
-| 1:05-1:30 | Color, accessibility, and highlighting | `modules/10_communication-polish/02_color-accessibility-and-highlighting.qmd` | Highlighting over rainbow defaults. |
-| 1:30-1:45 | Saving visualizations | `modules/10_communication-polish/03_saving-visualizations.qmd` | Practical export workflow. |
-| 1:45-1:55 | Break |  | Transition to studio. |
-| 1:55-2:40 | Final project studio | Student project notebooks and `practice/05-communication-and-studio/` | Instructor circulates for support. |
-| 2:40-2:55 | Pair feedback | Student plots/questions | One plot, one question, one next step. |
-| 2:55-3:00 | Final wrap | Verbal | Clarify deliverables and deadlines. |
+| 0:00-0:05 | Setup and priorities | `slides/day-05-communication-and-studio.qmd` | Name the three practical skills and the lightning-round plan. |
+| 0:05-0:25 | Skill 1: annotate data on a figure | `modules/07_annotation/01_annotating-data-on-figures.qmd` | Text should direct attention, not decorate. |
+| 0:25-0:40 | Annotation practice | `practice/05-communication-and-studio/01_annotating-data-on-figures-practice.qmd` | Students add labels and one short annotation. |
+| 0:40-1:00 | Skill 2: color, accessibility, and highlighting | `modules/08_color/01_color-accessibility-and-highlighting.qmd` | Highlighting over rainbow defaults; do not rely only on color. |
+| 1:00-1:15 | Color/accessibility practice | `practice/05-communication-and-studio/02_color-accessibility-and-highlighting-practice.qmd` | Students simplify or highlight one figure. |
+| 1:15-1:30 | Skill 3: saving visualizations | `modules/09_saving/01_saving-visualizations.qmd` | Plot object, file type, dimensions, and readability. |
+| 1:30-1:40 | Saving practice | `practice/05-communication-and-studio/03_saving-visualizations-practice.qmd` | Students create `final_plot` and review save settings. |
+| 1:40-1:50 | Break |  | Transition to lightning round. |
+| 1:50-2:05 | Lightning 1: time series | `modules/11_grab-bag/01_time-trends-and-small-multiples.qmd` | One key idea: x-axis order carries meaning. |
+| 2:05-2:20 | Lightning 2: Mermaid/process charts | `modules/11_grab-bag/03_process-diagrams.qmd` | Diagrams explain workflow or structure. No practice. |
+| 2:20-2:35 | Lightning 3: DAGs | `modules/11_grab-bag/04_dagitty-adjustment-sets.qmd` | DAGs show assumptions, not results. No practice. |
+| 2:35-2:50 | Lightning 4: maps versus alternatives | `modules/11_grab-bag/05_choropleth-maps-and-alternatives.qmd` | Maps show where; ranked plots show how much. No practice. |
+| 2:50-3:00 | Wrap | Verbal | Point students to resource modules and final deliverables. |
 
 ## If Time Runs Short
 
-Show the time-series slide, cut the DAG/Mermaid demo to 5 minutes, and go straight to color/accessibility. Do not cut annotation practice unless students already have a polished annotated figure.
+Protect annotation, color/accessibility, and saving. If time runs short, make each lightning topic one example plus one takeaway.
 
 ## Optional Extra Modules
 
 These are available for later review or project-specific needs, not as required Day 5 practice:
 
-- `modules/11_extra-topics/01_reusable-plot-styling.qmd`
-- `modules/11_extra-topics/02_iterative-refinement-aggregation-and-faceting.qmd`
-- `modules/11_extra-topics/03_correlation-patterns-and-coefficient-plots.qmd`
-- `modules/11_extra-topics/05_cleveland_style_diagnostic_plots.qmd`
+- `modules/10_communication-polish/02_reusable-plot-styling.qmd`
+- `modules/11_grab-bag/06_iterative-refinement-aggregation-and-faceting.qmd`
+- `modules/11_grab-bag/07_correlation-patterns-and-coefficient-plots.qmd`
+- `modules/11_grab-bag/08_cleveland_style_diagnostic_plots.qmd`
 - `modules/10_communication-polish/01_effective-and-honest-scales.qmd`
 
 ## Instructor Priorities
 
-- Students identify a final project question.
 - Students annotate at least one figure for communication.
-- Students write interpretation plus limitation.
-- Students leave knowing their next concrete step.
-- The time-series plot, DAGs, and Mermaid charts are quick previews, not full practice blocks.
+- Students revise color or highlighting so the reader knows what to notice.
+- Students understand how to save a plot intentionally.
+- Students know where to find the lightning-round resource modules.
+- Time series, Mermaid/process charts, DAGs, and maps/geographic alternatives are quick previews, not practice blocks.

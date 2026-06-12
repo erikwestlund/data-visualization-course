@@ -1,0 +1,216 @@
+---
+title: "Applying A Reusable Plot Theme"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Reusable code is useful when you would otherwise copy and paste the same styling across many figures.
+
+This notebook shows the basic reusable-theme move:
+
+1. Make a basic graph.
+2. Define one theme function.
+3. Apply the function: `+ theme_name()`
+
+# Load Data
+
+```{r}
+states <- readr::read_csv("data/real/state_population_ranks.csv")
+countries <- readr::read_csv("data/real/infant_mortality_countries.csv")
+```
+
+# Prepare Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+top_states <- states |>
+  filter(rank <= 15) |>
+  mutate(state_name = reorder(state_name, population))
+
+infant_mortality <- countries |>
+  filter(!is.na(infant_mortality_per_1000))
+```
+
+# Basic Graph
+
+Start with the plot. Do not worry about styling yet.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_bar()` |
+| Scales / coordinates / facets / labels | `coord_flip()`; `scale_y_continuous()`; `labs()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Largest States By Population",
+    x = "State name",
+    y = "Population"
+  )
+
+p1
+```
+
+# One Reusable Theme
+
+Now put the repeated styling into one function. 
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+theme_jhu <- function() {
+  update_geom_defaults("bar", list(fill = "#002D72"))
+  update_geom_defaults("point", list(color = "#002D72"))
+
+  theme_minimal(base_family = "Tahoma") +
+    theme(
+      plot.title = element_text(
+        family = "Georgia",
+        size = 18,
+        hjust = 0.5,
+        face = "bold",
+        margin = margin(b = 10)
+      ),
+      plot.subtitle = element_text(
+        hjust = 0.5,
+        family = "Tahoma",
+        size = 12,
+        margin = margin(t = 5, b = 15)
+      ),
+      plot.caption = element_text(
+        family = "Tahoma",
+        size = 10,
+        color = "#7E7E7C",
+        margin = margin(t = 15)
+      ),
+      axis.text.y = element_text(
+        family = "Tahoma",
+        size = 9,
+        color = "#2C2C33"
+      ),
+      axis.text.x = element_text(
+        family = "Tahoma",
+        size = 9,
+        color = "#2C2C33"
+      ),
+      axis.title.y = element_text(
+        family = "Tahoma",
+        size = 11,
+        margin = margin(r = 15),
+        face = "bold"
+      ),
+      axis.title.x = element_text(
+        family = "Tahoma",
+        size = 11,
+        margin = margin(t = 15),
+        face = "bold"
+      ),
+      axis.line.x = element_line(color = "#E5E2E0", linewidth = 0.5),
+      axis.line.y = element_line(color = "#E5E2E0", linewidth = 0.5),
+      panel.grid.major.x = element_line(
+        color = "#E5E2E0",
+        linewidth = 0.5,
+        linetype = "solid"
+      ),
+      panel.grid.minor = element_blank()
+    )
+}
+```
+
+It's often useful to save this function in a file you load at the top of every script/notebook or in a `bootstrap()` function.
+
+# Apply The Theme
+
+Add the theme to the plot.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Scales / coordinates / facets / labels | `theme_jhu()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 +
+  theme_jhu()
+```
+
+Now you have a fully styled plot without an overwhelming amount of code.
+
+# Apply The Same Theme To Another Plot
+
+The value comes in consistent styling without repeating yourself.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha`; `size` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `labs()`; `theme_jhu()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- ggplot(
+  infant_mortality,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(alpha = 0.75, size = 2.5) +
+  scale_x_log10(
+    breaks = c(70, 100, 300, 1000, 3000, 6000),
+    labels = c("$70", "$100", "$300", "$1,000", "$3,000", "$6,000")
+  ) +
+  labs(
+    title = "Income And Infant Mortality Across Countries",
+    x = "Income per person",
+    y = "Infant mortality per 1,000 live births"
+  )
+
+p2 +
+  theme_jhu()
+```
+
+# When to Extract
+
+A good rule of thumb: extract a function the third time you repeat the same code.
+
+# Takeaways
+
+- A theme is just a function that includes a lot of styling boilerplate.
+- Add it to a plot like you would any other ggplot2 feature. Here, we use `+ theme_jhu()`.
+- Keep data choices in the plot code, not the theme function.

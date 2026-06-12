@@ -1,0 +1,195 @@
+---
+title: "Drawing DAGs In R"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dagitty)
+library(dplyr)
+```
+
+# Goal
+
+Draw a directed acyclic graph (DAG) in R.
+
+# Background
+
+In R, the `dagitty` package can be used both to draw DAGs and to calculate adjustment sets for causal inference. An advantage of using R for this task is you can just write out each path in your DAG as `Cause -> Effect`.
+
+Formally, DAGs can be used to describe the causal structure of a topic you are studying. The causal structure encoded in the DAG can then be studied to see whether a statistical model under those assumptions is sufficient to make a causal inference.
+
+Informally, it can be useful to write out DAGs to brainstorm about an idea.
+
+# Build A DAG
+
+Example question: what is the total effect of exercise on blood pressure?
+
+# Start Simple
+
+Write out a few paths. You need to use `plot(dag_object)` to render the plot. The object itself will enumerate all the nodes and paths implied by the DAG provided.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change objects | `dagitty()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+
+```{r}
+bp_dag <- dagitty("dag {
+  Age -> BloodPressure
+  Diet -> BloodPressure
+  Exercise -> BloodPressure
+}")
+
+bp_dag
+
+plot(bp_dag)
+```
+
+## Add Complexity
+
+
+```{r}
+bp_dag <- dagitty("dag {
+  Age -> Exercise
+  Age -> BloodPressure
+  Income -> Exercise
+  Income -> BloodPressure
+  Diet -> Exercise
+  Diet -> BloodPressure
+  Exercise -> Weight
+  Weight -> BloodPressure
+  Exercise -> ClinicVisit
+  BloodPressure -> ClinicVisit
+  Exercise -> BloodPressure
+}")
+
+bp_dag
+```
+
+# Plot The DAG
+
+You can plot the DAG without setting coordinates.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `plot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+plot(bp_dag)
+```
+
+Without adding coordinates, DAGs with more than a few nodes/edges will be harder to understand.
+
+# Add Coordinates
+
+Coordinates give you control over the layout.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change objects | `coordinates()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+coordinates(bp_dag) <- list(
+  x = c(
+    Age = 0,
+    Income = 0,
+    Diet = 0,
+    Exercise = 1.4,
+    Weight = 2.8,
+    ClinicVisit = 2.8,
+    BloodPressure = 4.2
+  ),
+  y = c(
+    Age = 2,
+    Income = 1,
+    Diet = 0,
+    Exercise = 1.2,
+    Weight = 1.7,
+    ClinicVisit = 0.3,
+    BloodPressure = 1
+  )
+)
+
+bp_dag
+```
+
+# Plot The Nicer Layout
+
+Now `plot()` uses the coordinates we set above.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `plot()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+plot(bp_dag)
+```
+
+# Get Adjustment Sets
+
+Once the DAG is defined, R can calculate adjustment sets. For a total effect, the adjustment set blocks backdoor paths without blocking the causal path from exposure to outcome. This is very useful because figuring this out in complex DAGs can be very challenging.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose adjustment variables | `adjustmentSets()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+adjustmentSets(
+  bp_dag,
+  exposure = "Exercise",
+  outcome = "BloodPressure",
+  effect = "total"
+)
+```
+
+Here, `dagitty` says the minimal adjustment set is `Age`, `Diet`, and `Income`.
+
+# Why Not Adjust For Everything?
+
+The DAG also helps explain what not to adjust for.
+
+`Weight` is a mediator. Adjusting for it blocks part of the total effect of exercise.
+
+`ClinicVisit` is a collider. Adjusting for it can induces spurious correlation between exercise and blood pressure.
+
+```{r}
+tibble::tibble(
+  variable = c("Age", "Diet", "Income", "Weight", "ClinicVisit"),
+  role = c("common cause", "common cause", "common cause", "mediator", "collider"),
+  use_for_total_effect = c("adjust", "adjust", "adjust", "do not adjust", "do not adjust")
+)
+```
+
+# Takeaways
+
+- Draw the DAG by listing arrows.
+- Use coordinates to control the plot layout.
+- Use `adjustmentSets()` to get causal adjustment sets.

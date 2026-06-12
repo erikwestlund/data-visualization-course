@@ -1,0 +1,346 @@
+---
+title: "Cleveland-Style Diagnostic Plots"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+# Goal
+
+Use Cleveland-style exploratory data analysis plots to study location, spread, and residual structure. See Chapter 2 of Cleveland's *Visualizing Data* for a detailed explanation of the mechanics of these charts.
+
+# Simulate Example Data
+
+Four hospitals have different recovery-time patterns.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Combine data frames | `data.frame()` |
+| Count or summarize | `group_by()`; `summarize()` |
+| Create or change columns | `mutate()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+set.seed(1234)
+
+hospital_a <- rnorm(200, mean = 14, sd = 3)
+hospital_b <- rnorm(200, mean = 18, sd = 3)
+hospital_c <- c(rnorm(180, mean = 14, sd = 2.5), runif(20, min = 25, max = 40))
+hospital_d <- c(rnorm(100, mean = 10, sd = 2), rnorm(100, mean = 20, sd = 2))
+
+recovery_data <- data.frame(
+  hospital = rep(c("Hospital A", "Hospital B", "Hospital C", "Hospital D"), each = 200),
+  recovery_days = c(hospital_a, hospital_b, hospital_c, hospital_d)
+)
+
+location_summary <- recovery_data |>
+  group_by(hospital) |>
+  summarize(
+    mean = mean(recovery_days),
+    median = median(recovery_days),
+    q25 = quantile(recovery_days, 0.25),
+    q75 = quantile(recovery_days, 0.75),
+    n = n(),
+    .groups = "drop"
+  ) |>
+  mutate(
+    iqr = q75 - q25,
+    y_num = as.numeric(factor(hospital)),
+    ymin = y_num - 0.4,
+    ymax = y_num + 0.4
+  )
+
+location_summary |>
+  mutate(across(where(is.numeric), ~ round(.x, 1)))
+```
+
+# Mean And Median
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `xend`; `yend` |
+| Geoms / stats | `geom_boxplot()`; `geom_segment()` |
+| `geom_segment()` properties | `color`; `linetype`; `linewidth` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 5
+ggplot(recovery_data, aes(x = recovery_days, y = hospital)) +
+  geom_boxplot(outlier.alpha = 0.3, fill = "lightblue") +
+  geom_segment(
+    data = location_summary,
+    aes(x = mean, xend = mean, y = ymin, yend = ymax),
+    color = "red",
+    linetype = "dashed",
+    linewidth = 0.8
+  ) +
+  geom_segment(
+    data = location_summary,
+    aes(x = median, xend = median, y = ymin, yend = ymax),
+    color = "darkblue",
+    linewidth = 0.8
+  ) +
+  labs(
+    title = "Mean And Median Tell Different Stories",
+    subtitle = "Solid blue = median; dashed red = mean",
+    x = "Recovery days",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank())
+```
+
+Hospital C has long recoveries that pull the mean to the right. Hospital D has two clusters, so one center is not enough.
+
+# Spread-Location Plot
+
+A spread-location plot asks whether variability changes as the typical value changes.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Create or change columns | `mutate()` |
+| Count or summarize | `group_by()`; `ungroup()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+spread_location_data <- recovery_data |>
+  group_by(hospital) |>
+  mutate(
+    group_median = median(recovery_days),
+    spread = sqrt(abs(recovery_days - group_median))
+  ) |>
+  ungroup()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_jitter()`; `stat_summary()` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 5
+ggplot(spread_location_data, aes(x = group_median, y = spread, color = hospital)) +
+  geom_jitter(width = 0.3, alpha = 0.35, size = 1.8) +
+  stat_summary(fun = median, geom = "line", color = "red", linewidth = 1.1, aes(group = 1)) +
+  stat_summary(fun = median, geom = "point", color = "red", size = 2.5) +
+  labs(
+    title = "Spread Changes Across Hospital Medians",
+    subtitle = "Red line connects median spread at each hospital median",
+    x = "Location: hospital median recovery days",
+    y = "Spread: sqrt(abs(value - hospital median))",
+    color = NULL
+  ) +
+  theme_minimal()
+```
+
+Hospital C shows larger spread because of long recoveries. If the red line rises, variability is not constant across locations.
+
+# Mean-Difference Plot
+
+Mean-difference plots compare the difference between two groups against their average.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+| Combine data frames | `bind_rows()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+set.seed(789)
+
+hospital_b_pairs <- recovery_data |>
+  filter(hospital == "Hospital B") |>
+  slice_sample(n = 150) |>
+  mutate(
+    hospital_a_value = sample(recovery_data$recovery_days[recovery_data$hospital == "Hospital A"], size = 150, replace = TRUE),
+    mean_value = (recovery_days + hospital_a_value) / 2,
+    difference = recovery_days - hospital_a_value,
+    comparison = "Hospital B vs A"
+  )
+
+hospital_c_pairs <- recovery_data |>
+  filter(hospital == "Hospital C") |>
+  slice_sample(n = 150) |>
+  mutate(
+    hospital_a_value = sample(recovery_data$recovery_days[recovery_data$hospital == "Hospital A"], size = 150, replace = TRUE),
+    mean_value = (recovery_days + hospital_a_value) / 2,
+    difference = recovery_days - hospital_a_value,
+    comparison = "Hospital C vs A"
+  )
+
+comparison_pairs <- bind_rows(hospital_b_pairs, hospital_c_pairs)
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_point()`; `geom_hline()`; `geom_smooth()` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 5
+ggplot(comparison_pairs, aes(x = mean_value, y = difference)) +
+  geom_point(alpha = 0.35, color = "steelblue") +
+  geom_hline(yintercept = 0, color = "gray40") +
+  geom_smooth(method = "loess", se = TRUE, color = "red", linewidth = 1) +
+  facet_wrap(vars(comparison), ncol = 2) +
+  labs(
+    title = "Mean-Difference Plots Compare Hospitals To Hospital A",
+    x = "Average of paired values",
+    y = "Difference from Hospital A"
+  ) +
+  theme_minimal()
+```
+
+Hospital B mostly looks like a location shift from Hospital A. Hospital C shows larger positive differences at higher averages because of long recoveries.
+
+# Residuals From Group Means
+
+A residual is the observed value minus a fitted value. Here, the fitted value is the hospital mean.
+
+```{r}
+residual_data <- recovery_data |>
+  group_by(hospital) |>
+  mutate(
+    group_mean = mean(recovery_days),
+    residual = recovery_days - group_mean
+  ) |>
+  ungroup()
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y` |
+| Geoms / stats | `geom_boxplot()`; `geom_hline()` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-height: 5
+ggplot(residual_data, aes(x = hospital, y = residual)) +
+  geom_boxplot(fill = "gray90", outlier.alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", linewidth = 0.8) +
+  labs(
+    title = "Residuals Show What Hospital Means Miss",
+    x = NULL,
+    y = "Residual: observed minus hospital mean"
+  ) +
+  theme_minimal()
+```
+
+Hospitals A and B are fairly symmetric around zero. Hospital C has large positive residuals, and Hospital D remains wide because its data are bimodal.
+
+# R-F Spread Plot
+
+An R-F spread plot separates between-group variation from within-group residual variation.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Choose or rename columns | `select()` |
+| Create or change columns | `mutate()` |
+| Combine data frames | `bind_rows()` |
+| Reshape data | `arrange()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+rf_data <- residual_data |>
+  mutate(
+    fitted = group_mean,
+    grand_mean = mean(recovery_days),
+    fit_minus_mean = fitted - grand_mean
+  )
+
+fitted_panel <- rf_data |>
+  arrange(fitted, recovery_days) |>
+  mutate(percentile_rank = (row_number() - 1) / (n() - 1)) |>
+  transmute(
+    panel = "Between-group variation",
+    percentile_rank,
+    value = fit_minus_mean,
+    hospital
+  )
+
+residual_panel <- rf_data |>
+  arrange(residual) |>
+  mutate(percentile_rank = (row_number() - 1) / (n() - 1)) |>
+  transmute(
+    panel = "Within-group residual variation",
+    percentile_rank,
+    value = residual,
+    hospital = "Residuals"
+  )
+
+rf_plot_data <- bind_rows(fitted_panel, residual_panel)
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_point()`; `geom_hline()` |
+| Scales / coordinates / facets / labels | `facet_wrap()`; `scale_x_continuous()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+ggplot(rf_plot_data, aes(x = percentile_rank, y = value, color = hospital)) +
+  geom_point(alpha = 0.45, size = 1.6) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40", linewidth = 0.8) +
+  facet_wrap(vars(panel), scales = "free_y", ncol = 2) +
+  scale_x_continuous(labels = scales::label_percent()) +
+  labs(
+    title = "R-F Spread Plot Separates Group Differences From Residual Spread",
+    x = "Percentile rank",
+    y = "Days from reference value",
+    color = NULL
+  ) +
+  theme_minimal()
+```
+
+The left panel shows how much hospital means differ from the overall mean. The right panel shows how much variation remains after subtracting hospital means.
+
+# Takeaways
+
+- Spread-location plots show whether variability changes with level.
+- Mean-difference plots reveal whether differences depend on magnitude.
+- Studying residuals and their dispersion is an effective way to understand group differences.

@@ -1,0 +1,106 @@
+---
+title: "Before/After"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Goal
+
+Show change around a reference day.
+
+# Load Data
+
+```{r}
+diary <- readr::read_csv("data/real/migraine_headache_diary.csv")
+```
+
+# Prepare Data
+
+Day 0 is the reference day. Keep days through 50 so the noisy tail does not dominate the plot.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()` |
+| Count or summarize | `group_by()`; `summarize()`; `n()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+daily_summary <- diary |>
+  filter(!is.na(day), day <= 50, !is.na(headache_reported)) |>
+  mutate(period = if_else(day < 0, "Before day 0", "Day 0 and after")) |>
+  group_by(day, period) |>
+  summarize(
+    n = n(),
+    headache_percent = mean(headache_reported) * 100,
+    .groups = "drop"
+  )
+
+daily_summary |>
+  head(10)
+```
+
+Check `n`; small counts make percentages noisy.
+
+# Before And After Day 0
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_line()`; `geom_point()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(daily_summary, aes(x = day, y = headache_percent, color = period)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2)
+
+p1
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_vline()` |
+| `geom_vline()` properties | `color`; `linetype` |
+| Scales / coordinates / facets / labels | `labs()`; `theme_minimal()`; `theme()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  geom_vline(xintercept = 0, color = "gray50", linetype = "dashed") +
+  labs(
+    title = "Headache Reporting Before And After Day 0",
+    subtitle = "Days after 50 removed",
+    x = "Diary day",
+    y = "Headache reported (%)",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+p2
+```
+
+This could represent a null finding: headache reporting looks similar before and after day 0.
+
+# Takeaways
+
+- Mark reference points directly on time plots.
+- A before/after plot can show little or no change.

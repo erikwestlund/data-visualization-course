@@ -1,0 +1,287 @@
+---
+title: "Annotating Data On Figures"
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+```{r}
+#| include: false
+library(dplyr)
+library(ggplot2)
+```
+
+# Purpose
+
+This notebook shows how to add labels and short annotations to a figure.
+
+Annotation can be an extremely effective way to highlight key findings in a figure, but it can also clutter a visualization with chartjunk
+
+# Load Data
+
+```{r}
+countries <- readr::read_csv("data/real/infant_mortality_countries.csv")
+```
+
+# Prepare Data
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+| Create or change columns | `mutate()`; `if_else()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+infant_mortality <- countries |>
+  filter(!is.na(infant_mortality_per_1000)) |>
+  mutate(
+    country_label = stringr::str_replace_all(country_name, "\\.", " "),
+    country_label = if_else(country_label == "Afganistan", "Afghanistan", country_label)
+  )
+```
+
+# Start With The Plot
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `color` |
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `alpha`; `size` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p1 <- ggplot(
+  infant_mortality,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(aes(color = region), alpha = 0.75, size = 2.6) +
+  scale_x_log10(
+    breaks = c(70, 100, 300, 1000, 3000, 6000),
+    labels = c("$70", "$100", "$300", "$1,000", "$3,000", "$6,000")
+  ) +
+  labs(
+    title = "Income And Infant Mortality Across Countries",
+    x = "Income per person",
+    y = "Infant mortality per 1,000 live births",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+p1
+```
+
+# Label Outliers
+
+Use `geom_text()` or `ggrepel::geom_text_repel()` when labels are attached to data points. The trick is to give the label layer a smaller dataset than the point layer.
+
+Here, the first labeling rule is simple: label countries with infant mortality above 250 per 1,000 live births.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+high_mortality_labels <- infant_mortality |>
+  filter(infant_mortality_per_1000 > 250)
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `label` |
+| Geoms / stats | `geom_text_repel()` |
+| `geom_text_repel()` properties | `color`; `size` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 <- p1 +
+  ggrepel::geom_text_repel(
+    data = high_mortality_labels,
+    aes(label = country_label),
+    color = "gray15",
+    segment.color = NA,
+    seed = 123,
+    size = 3.5,
+    min.segment.length = 0
+  )
+
+p2
+```
+
+This labels a few important points without asking the reader to read every country name.
+
+# Call Out One Value
+
+Sometimes we want to call out one specific point. Here, we want the reader to notice the United States, so we add one label and draw one line to the point.
+
+We use a line here, since there are too many points to just smack a label on the figure.
+
+First make a one-row dataset for the point.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+united_states <- infant_mortality |>
+  filter(country_label == "United States")
+```
+
+```{r}
+p3 <- p2 +
+  annotate(
+    geom = "segment",
+    x = 3800,
+    xend = united_states$income_usd_per_capita,
+    y = 80,
+    yend = united_states$infant_mortality_per_1000,
+    color = "gray20",
+    linewidth = 0.4
+  ) +
+  annotate(
+    geom = "text",
+    x = 3700,
+    y = 82,
+    label = "United States",
+    hjust = 1,
+    color = "gray15",
+    size = 3.3,
+    fontface = "plain"
+  )
+
+p3
+```
+
+# Add A One-Off Callout
+
+Use `annotate()` to add brief commentary to a single point.
+
+<!-- data-prep-anatomy-start -->
+::: {.data-prep-anatomy}
+| Data preparation step | Functions in this chunk |
+|---|---|
+| Keep or remove rows | `filter()` |
+:::
+<!-- data-prep-anatomy-end -->
+
+```{r}
+papua_new_guinea <- infant_mortality |>
+  filter(country_label == "Papua New Guinea")
+```
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Geoms / stats | `geom_point()` |
+| `geom_point()` properties | `color`; `size` |
+| Scales / coordinates / facets / labels | `labs()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+p2 +
+  geom_point(
+    data = papua_new_guinea,
+    color = "firebrick",
+    size = 3.5
+  ) +
+  annotate(
+    geom = "curve",
+    x = 1200,
+    xend = papua_new_guinea$income_usd_per_capita,
+    y = 95,
+    yend = papua_new_guinea$infant_mortality_per_1000,
+    curvature = 0.25,
+    arrow = arrow(length = grid::unit(0.02, "npc")),
+    color = "firebrick"
+  ) +
+  annotate(
+    geom = "label",
+    x = 1250,
+    y = 105,
+    label = "A country that is\ninteresting for\nsome reason.",
+    hjust = 0,
+    size = 3.4,
+    fill = "white",
+    color = "gray15"
+  ) +
+  labs(
+    title = "Labels And Callouts Can Do Different Jobs",
+    subtitle = "Labels identify selected outliers; the callout explains one point worth checking."
+  )
+```
+
+# Do Not Lavel Everything
+
+It is possible to label every point. However, unless the figure has few points, this usually makes the figure unreadable.
+
+<!-- plot-anatomy-start -->
+::: {.plot-anatomy}
+| Plot component | Code in this chunk |
+|---|---|
+| Aesthetic mappings | `x`; `y`; `label` |
+| Geoms / stats | `geom_point()`; `geom_text_repel()` |
+| `geom_text_repel()` properties | `size` |
+| Scales / coordinates / facets / labels | `scale_x_log10()`; `labs()`; `theme_minimal()` |
+:::
+<!-- plot-anatomy-end -->
+
+```{r}
+ggplot(
+  infant_mortality,
+  aes(x = income_usd_per_capita, y = infant_mortality_per_1000)
+) +
+  geom_point(color = "gray70", size = 2) +
+  ggrepel::geom_text_repel(
+    aes(label = country_label),
+    seed = 123,
+    size = 2.6,
+    max.overlaps = Inf
+  ) +
+  scale_x_log10(
+    breaks = c(70, 100, 300, 1000, 3000, 6000),
+    labels = c("$70", "$100", "$300", "$1,000", "$3,000", "$6,000")
+  ) +
+  labs(
+    title = "Too Many Labels Compete With The Pattern",
+    x = "Income per person",
+    y = "Infant mortality per 1,000 live births"
+  ) +
+  theme_minimal()
+```
+
+# What To Annotate
+
+Good annotations often mark:
+
+- a key value
+- a visible change
+- a benchmark or reference line
+- a group the reader should compare
+- a limitation or missing context
+
+# Takeaways
+
+- Annotation should direct attention, not clutter the plot.
+- Give label layers their own smaller datasets.
+- Use `geom_text()`, `geom_label()`, or `ggrepel::geom_text_repel()` for labels attached to data points.
+- Use `annotate()` for one-off callouts that are not rows in the data.

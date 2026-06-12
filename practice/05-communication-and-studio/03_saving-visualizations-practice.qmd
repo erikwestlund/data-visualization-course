@@ -12,42 +12,81 @@ library(dplyr)
 library(ggplot2)
 ```
 
-# What We Practiced
+# Goal
 
-The module showed how to:
+Practice creating a named plot object and choosing save settings.
 
-- save a plot object
-- choose file type, width, height, and resolution
-- check whether labels remain readable at the final size
-- use `ggsave()` intentionally
+The saving chunks are evaluated when the notebook renders. They write image files into `saved_images/` in this module's directory.
 
-# Task
-
-Pick one dataset and create:
-
-1. one polished plot object named `final_plot`
-2. one saved PNG, PDF, or SVG file in a personal work folder
-3. a short explanation of the file type and size choices
-
-Suggested datasets:
-
-- `data/real/state_population_ranks.csv`
-- `data/real/flu_vaccination_age_time_clean.csv`
-- `data/simulated/state_enrollment_ranks.csv`
-
-Helpful module reference: `modules/10_communication-polish/03_saving-visualizations.qmd`.
-
-# Work
+# 1. Load Data
 
 ```{r}
-# Load data and build final_plot.
+states <- readr::read_csv("data/real/state_population_ranks.csv")
 ```
+
+# 2. Build A Plot Object
+
+Name the plot object `final_plot`. This makes it easier to save exactly the plot you want.
 
 ```{r}
-#| eval: false
-# Save final_plot with ggsave().
+top_states <- states |>
+  slice_min(rank, n = 12) |>
+  mutate(state_name = reorder(state_name, population))
+
+final_plot <- ggplot(top_states, aes(x = state_name, y = population)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+  labs(
+    title = "Largest States In The Population Rank Dataset",
+    x = NULL,
+    y = "Population"
+  ) +
+  theme_minimal()
+
+final_plot
 ```
 
-# Interpretation
+# 3. Save A PNG
 
-Write briefly: why the file type and size were chosen and whether the saved version remains readable.
+PNG is a good default for slides, websites, and most course submissions.
+
+```{r}
+ggsave(
+  filename = "practice/05-communication-and-studio/saved_images/top-states.png",
+  plot = final_plot,
+  width = 7,
+  height = 5,
+  dpi = 300,
+  bg = "white"
+)
+```
+
+# 4. Save A Wider Version
+
+Sometimes the same plot needs a different shape. Change the saved dimensions intentionally instead of dragging the plot pane.
+
+```{r}
+ggsave(
+  filename = "practice/05-communication-and-studio/saved_images/top-states-wide.png",
+  plot = final_plot,
+  width = 9,
+  height = 4.5,
+  dpi = 300,
+  bg = "white"
+)
+```
+
+# 5. Save A Vector Version
+
+PDF is useful when the figure needs to stay sharp in print or in a document workflow.
+
+```{r}
+ggsave(
+  filename = "practice/05-communication-and-studio/saved_images/top-states.pdf",
+  plot = final_plot,
+  width = 7,
+  height = 5
+)
+```
+

@@ -139,7 +139,7 @@ Scales control how mapped data values become visual values.
 | `theme_minimal()` | Applies a clean built-in theme with minimal background decoration. | [`theme_minimal()`](https://ggplot2.tidyverse.org/reference/ggtheme.html) |
 | `theme_void()` | Removes most plot background, axes, and grid elements. Useful for diagrams or maps. | [`theme_void()`](https://ggplot2.tidyverse.org/reference/ggtheme.html) |
 | `theme()` | Fine-tunes theme elements such as text size, legend position, or grid lines. | [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html) |
-| `theme_course_plot()` | Course-created helper for reusable plot styling. This is not part of `ggplot2`. | See `modules/11_extra-topics/01_reusable-plot-styling.qmd`. |
+| `theme_course_plot()` | Course-created helper for reusable plot styling. This is not part of `ggplot2`. | See `modules/10_communication-polish/02_reusable-plot-styling.qmd`. |
 
 # Saving Plots
 

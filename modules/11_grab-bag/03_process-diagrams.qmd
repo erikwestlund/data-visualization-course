@@ -14,22 +14,11 @@ library(ggplot2)
 
 # Goal
 
-This notebook shows how diagrams can clarify analytic structure before plotting data.
-
-# Why Diagrams?
-
-Some visualization work is about explaining a process, not plotting a measured variable.
-
-Diagrams can help show:
-
-- how data become an analysis file
-- how participants move through stages
-- how variables are conceptually related
-- which comparison a final figure is meant to support
+Show simple process diagrams. R and `ggplot2` can be an effective way to declaratively create figures without point-and-click frustration.
 
 # Mermaid Flow Diagram
 
-Mermaid is a text-based syntax for drawing diagrams. Quarto can render Mermaid diagrams directly.
+Quarto can render Mermaid diagrams directly.
 
 ```{mermaid}
 flowchart LR
@@ -42,8 +31,6 @@ flowchart LR
 
 # Simple Causal Structure
 
-This is not a formal causal analysis. The arrows show assumptions we would need to defend; they do not prove that one variable causes another.
-
 ```{mermaid}
 flowchart LR
   Age[Age] --> BP[Blood pressure]
@@ -55,9 +42,7 @@ flowchart LR
 
 # Build A Static Process Plot
 
-When a diagram needs custom labels or counts, `ggplot2` can draw boxes and arrows.
-
-Do not memorize the coordinate numbers here; the main idea is that boxes and arrows can be stored as small data frames and adjusted by previewing.
+Use `ggplot2` when you want custom labels, counts, or styling.
 
 <!-- data-prep-anatomy-start -->
 ::: {.data-prep-anatomy}
@@ -75,15 +60,18 @@ Do not memorize the coordinate numbers here; the main idea is that boxes and arr
 | Aesthetic mappings | `x`; `y`; `xend`; `yend`; `label` |
 | Geoms / stats | `geom_segment()`; `geom_label()` |
 | `geom_segment()` properties | `color` |
-| `geom_label()` properties | `fill`; `size` |
+| `geom_label()` properties | `fill`; `linewidth`; `size` |
 | Scales / coordinates / facets / labels | `coord_cartesian()`; `labs()`; `theme_void()`; `theme()` |
 :::
 <!-- plot-anatomy-end -->
 
 ```{r}
+#| fig-width: 12
+#| fig-height: 2
+#| out-width: "100%"
 process_steps <- tibble::tibble(
   step = c("Load", "Clean", "Explore", "Focus", "Communicate"),
-  x = 1:5,
+  x = c(1, 3, 5, 7, 9),
   y = 1,
   label = c(
     "Load data",
@@ -101,7 +89,7 @@ arrows <- process_steps |>
 p1 <- ggplot() +
   geom_segment(
     data = arrows,
-    aes(x = x + 0.28, y = y, xend = xend - 0.28, yend = yend),
+    aes(x = x + 0.65, y = y, xend = xend - 0.65, yend = yend),
     arrow = grid::arrow(length = grid::unit(0.15, "inches")),
     color = "gray40"
   ) +
@@ -109,12 +97,12 @@ p1 <- ggplot() +
     data = process_steps,
     aes(x = x, y = y, label = label),
     fill = "gray95",
-    label.size = 0.3,
+    linewidth = 0.3,
     size = 3.5
   )
 
 p2 <- p1 +
-  coord_cartesian(xlim = c(0.5, 5.5), ylim = c(0.7, 1.3), clip = "off") +
+  coord_cartesian(xlim = c(0.2, 9.8), ylim = c(0.85, 1.15), clip = "off") +
   labs(title = "A Visualization Workflow Diagram") +
   theme_void() +
   theme(plot.title = element_text(face = "bold"))
@@ -122,9 +110,31 @@ p2 <- p1 +
 p2
 ```
 
-# Takeaways
+This is compressed to fit in the notebook; typically you'd want it bigger.
 
-- Diagrams are useful when the structure is the message.
-- Keep diagrams simple enough to explain verbally.
-- Use formal DAG tools only when the goal is causal reasoning.
-- For many classroom and report needs, Mermaid or simple `ggplot2` diagrams are enough.
+# A Vertical Data Process Diagram
+
+Use this when each step updates the analysis dataset.
+
+The main path shows the updated dataset. Side boxes show records removed at each step.
+
+```{mermaid}
+flowchart TB
+  X0["X0: All records<br/>n = 11933"] --> F1{"Keep adults age 18+"}
+  F1 --> X1["X1: Adults<br/>n = 8153"]
+  F1 --> R1["Removed: age < 18<br/>n = 3780"]
+
+  X1 --> F2{"Require systolic BP"}
+  F2 --> X2["X2: Has systolic BP<br/>n = 6123"]
+  F2 --> R2["Removed: missing BP<br/>n = 2030"]
+
+  X2 --> F3{"Require diet summary"}
+  F3 --> X3["X3: Has diet summary<br/>n = 4868"]
+  F3 --> R3["Removed: missing diet<br/>n = 1255"]
+
+  X3 --> F4{"Require income-to-poverty"}
+  F4 --> X4["X4: Final analysis dataset<br/>n = 4303"]
+  F4 --> R4["Removed: missing income-to-poverty<br/>n = 565"]
+```
+
+

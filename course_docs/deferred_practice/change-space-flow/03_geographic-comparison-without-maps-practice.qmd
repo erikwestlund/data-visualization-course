@@ -35,7 +35,7 @@ Suggested datasets:
 - `data/real/epa_air_quality_county_2025_long.csv`
 - `data/simulated/county_wellness_indicators_long.csv`
 
-Helpful module reference: `modules/08_space/01_geographic-comparison-without-maps.qmd`.
+Helpful module reference: `modules/11_grab-bag/05_choropleth-maps-and-alternatives.qmd`.
 
 # Work
 

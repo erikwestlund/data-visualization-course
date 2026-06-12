@@ -123,7 +123,6 @@ must_not_exist_after_export:
   - practice/templates/04_continuous-data/01_histograms-and-density-practice.qmd
   - practice/templates/04-change-space-flow/01_time-trends-and-small-multiples-practice.qmd
   - practice/templates/05-change-space-flow/01_time-trends-and-small-multiples-practice.qmd
-  - practice/templates/06-communication-and-studio/01_effective-and-honest-scales-practice.qmd
   - data/real/exercise_eating_disorders.csv
   - data/codebooks/exercise_eating_disorders.html
   - data/codebooks/prams_2011_selected.md

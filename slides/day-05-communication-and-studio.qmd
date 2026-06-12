@@ -20,12 +20,9 @@ library(ggplot2)
 ## Today's Goals
 
 1. Add useful annotations directly to figures.
-2. Show one time-series example.
-3. Preview DAGs and Mermaid charts.
-4. Use color and highlighting intentionally.
-5. Check accessibility before calling a figure finished.
-6. Save figures at useful sizes and formats.
-7. Make progress on final project visualizations.
+2. Use color, highlighting, and accessibility checks intentionally.
+3. Save figures at useful sizes and formats.
+4. Preview six resource topics in a lightning round.
 
 ## Where We Are
 
@@ -37,19 +34,16 @@ This week moved from setup to visual reasoning:
 - group comparison
 - association
 
-Today has two jobs:
+Today has two parts:
 
-- practice annotating figures for communication
-- quickly preview a few other visual forms
-- finish with practical polish: accessibility, color, and saving
+- first: practical skills you will need immediately
+- last hour: lightning round of visualization examples
 
 # Annotating Figures
 
 ## Annotation Directs Attention
 
-Annotation is not decoration.
-
-It tells the reader what to notice.
+Annotation of a figure is one of the most powerful ways to add impact to a visualization.
 
 Useful annotation can mark:
 
@@ -59,12 +53,13 @@ Useful annotation can mark:
 - a group to compare
 - a limitation or caution
 
-## Example: Direct Labels
+## Example: Annotation
 
 ```{r}
 #| echo: false
 #| message: false
 #| warning: false
+#| fig-height: 4.8
 flu <- readr::read_csv("data/real/flu_vaccination_age_time_clean.csv")
 
 us_may <- flu |>
@@ -77,101 +72,50 @@ us_may <- flu |>
 
 latest_may <- us_may |>
   filter(season_start_year == max(season_start_year)) |>
-  mutate(label = paste0(age_group, ": ", round(estimate), "%"))
+  mutate(
+    short_age_group = recode(
+      age_group,
+      "18-49 Years" = "18-49",
+      "50-64 Years" = "50-64",
+      ">=65 Years" = "65+"
+    ),
+    label = paste0(short_age_group, ": ", round(estimate), "%")
+  )
 
 ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)) +
-  geom_line(linewidth = 1.1) +
-  geom_point(size = 2.5) +
-  geom_text(
-    data = latest_may,
-    aes(label = label),
-    hjust = 0,
-    nudge_x = 0.15,
-    show.legend = FALSE
-  ) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 2016.5, linetype = "dashed", color = "gray35") +
   annotate(
     geom = "label",
-    x = 2011,
-    y = 74,
-    label = "Text should point\nto the reading task",
+    x = 2016.65,
+    y = 77,
+    label = "Something\nhappened here",
     hjust = 0,
-    size = 4,
+    size = 3.2,
     fill = "white",
     color = "gray20"
   ) +
-  coord_cartesian(xlim = c(2010, 2025.5), ylim = c(25, 80)) +
+  coord_cartesian(xlim = c(2010, 2023.5), ylim = c(25, 80)) +
   labs(
     title = "Put Text Near The Data It Explains",
     x = "Season start year",
-    y = "Vaccination estimate (%)"
+    y = "Vaccination estimate (%)",
+    color = "Age group"
   ) +
-  theme_minimal(base_size = 18) +
-  theme(legend.position = "none")
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "right")
 ```
 
 ## Transition To Module And Practice
 
 Open:
 
-`modules/10_communication-polish/00_annotating-data-on-figures.qmd`
+`modules/07_annotation/01_annotating-data-on-figures.qmd`
 
 Then practice:
 
-`practice/05-communication-and-studio/00_annotating-data-on-figures-practice.qmd`
-
-# Quick Explanation Demos
-
-## One Time-Series Plot
-
-Time belongs on the x-axis when order is part of the question.
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-ggplot(us_may, aes(x = season_start_year, y = estimate, color = age_group)) +
-  geom_line(linewidth = 1.1) +
-  geom_point(size = 2.5) +
-  geom_text(
-    data = latest_may,
-    aes(label = age_group),
-    hjust = 0,
-    nudge_x = 0.15,
-    show.legend = FALSE
-  ) +
-  coord_cartesian(xlim = c(2010, 2025.5), ylim = c(25, 80)) +
-  labs(
-    title = "A Time Series Shows Change Over Ordered Time",
-    subtitle = "United States flu vaccination estimates, May (month 5)",
-    x = "Season start year",
-    y = "Vaccination estimate (%)"
-  ) +
-  theme_minimal(base_size = 18) +
-  theme(legend.position = "none")
-```
-
-This is a preview only. We are not doing a time-series practice block today.
-
-## DAG-Style Diagrams And Mermaid
-
-Not every visual is a data plot.
-
-Sometimes the goal is to show:
-
-- workflow
-- process
-- conceptual relationships
-- assumptions behind a comparison
-
-Open:
-
-`modules/11_extra-topics/04_dag_structures_with_mermaid.qmd`
-
-Also useful for process charts:
-
-`modules/09_flow/02_process-diagrams.qmd`
-
-Today these are quick demos, not practice sections.
+`practice/05-communication-and-studio/01_annotating-data-on-figures-practice.qmd`
 
 # Color And Highlighting
 
@@ -201,25 +145,12 @@ Consider:
 
 ## Accessibility
 
-Do not rely only on color.
-
-Also use:
-
-- labels
-- position
-- shape or line type when needed
-- readable contrast
-- colorblind-safe palettes
-- direct labels when a legend is hard to track
-- ordering that supports the comparison
+- Be conscious of people with vision impairments.
+- When using color to differentiate groups or represent a change in magnitude, ensure you use colors that can be distinguished from each other.
 
 ## Highlighting
 
-Highlighting is useful when there is a focus.
-
-The goal is not to make everything colorful.
-
-The goal is to guide attention.
+Highlighting a single or small group of standout entities in a figure can be an effective way to draw attention to a key finding.
 
 ## Example: Highlighting
 
@@ -252,7 +183,11 @@ states |>
 
 Open:
 
-`modules/10_communication-polish/02_color-accessibility-and-highlighting.qmd`
+`modules/08_color/01_color-accessibility-and-highlighting.qmd`
+
+Then practice:
+
+`practice/05-communication-and-studio/02_color-accessibility-and-highlighting-practice.qmd`
 
 Watch for:
 
@@ -262,7 +197,7 @@ Watch for:
 
 # Saving Figures
 
-## Export Is Part Of Design
+## Exporting Your Visualizations
 
 A figure that works in the RStudio plot pane may fail in:
 
@@ -285,135 +220,84 @@ final_plot <- ggplot(...) +
 ggsave("practice/work/figure.png", final_plot, width = 7, height = 5, dpi = 300)
 ```
 
-Build the object.
-
-Then save it intentionally.
+- Build the object and then save it with ggsave.
+- Pay attention to width, height, and DPI.
 
 ## Common Formats
 
 - PNG: slides, websites, most course submissions
 - PDF: vector output, print, manuscripts
 - SVG: scalable web graphics
-- JPEG: usually not ideal for statistical graphics
+- JPEG: almost never appropriate for data visualization
 
 ## Transition To Module
 
 Open:
 
-`modules/10_communication-polish/03_saving-visualizations.qmd`
+`modules/09_saving/01_saving-visualizations.qmd`
 
-Watch for:
+Then practice:
 
-- plot size
-- file format
-- saving from a named plot object
+`practice/05-communication-and-studio/03_saving-visualizations-practice.qmd`
 
-# Critique
 
-## Critique Questions
+# Lightning Round
 
-When reviewing a figure, ask:
+## Lightning 1: Time Series
 
-- What is the question?
-- What should I compare?
-- What is one row or unit?
-- Are scales honest?
-- Are labels enough?
-- What uncertainty or limitation is missing?
+Question: how does a value change over ordered time?
 
-## Common Fixes
+Resource: `modules/11_grab-bag/01_time-trends-and-small-multiples.qmd`
 
-- clearer title
-- better axis labels
-- fewer colors
-- reordered categories
-- direct highlighting
-- appropriate scale
-- caption with interpretation and caution
+## Lightning 2: Before/After
 
-# Final Project Studio
+Question: did something change around a reference point?
 
-## Final Project Logic
+Resource: `modules/11_grab-bag/02_before-after-and-trajectories.qmd`
 
-The final project has two phases:
+## Lightning 3: Process Diagrams
 
-1. exploratory visualization
-2. focused final visualizations
+Use R to make it easier to draw diagrams with arrows and boxes.
 
-The final figures should grow out of the exploration.
+Resource: `modules/11_grab-bag/03_process-diagrams.qmd`
 
-They should answer questions that emerged from your exploration, not be added only because they look polished.
+## Lightning 4: Causal DAGs
 
-## Studio Goals
+Use R to draw directed acylic graphs (DAGs) and assess covariate adjustment sets for causal inference.
 
-During project time, aim to identify:
+Resource: `modules/11_grab-bag/04_causal-dag-graphs.qmd`
 
-- dataset
-- rough question
-- 2-4 exploratory plots
-- one promising final direction
-- what you need help with
+## Lightning 5: Maps And Alternatives
 
-## Peer Feedback Prompts
+Use R to draw maps; consider alternatives to choropleths, which are often misleading.
 
-When looking at a classmate's plot, ask:
+Resource: `modules/11_grab-bag/05_choropleth-maps-and-alternatives.qmd`
 
-- What do you think the plot is trying to show?
-- What is clear?
-- What is confusing?
-- What comparison did your eye make first?
-- What would you revise next?
+## Lightning 6: Cleveland-Style Diagnostics
 
-# Practice
+Advanced exploratory data analysis following Cleveland.
 
-## Extra Topic Modules
-
-These are available for later review or project-specific needs:
-
-- `modules/11_extra-topics/01_reusable-plot-styling.qmd`
-- `modules/11_extra-topics/02_iterative-refinement-aggregation-and-faceting.qmd`
-- `modules/11_extra-topics/03_correlation-patterns-and-coefficient-plots.qmd`
-- `modules/11_extra-topics/04_dag_structures_with_mermaid.qmd`
-- `modules/11_extra-topics/05_cleveland_style_diagnostic_plots.qmd`
-
-They are optional. Today, prioritize communication polish, accessibility, saving, and project progress.
-
-## Today's Practice Options
-
-Use one or more practice notebooks from:
-
-- `practice/05-communication-and-studio/`
-
-Or work directly on your final project.
-
-For today's studio work, use:
-
-`practice/work/`
-
-## Minimum Practice Goal
-
-By the end of class, aim to have:
-
-1. one revised/polished figure
-2. one written interpretation
-3. one limitation or caution
-4. one concrete next step for the final project
+Resource: `modules/11_grab-bag/06_cleveland_style_diagnostic_plots.qmd`
 
 # Wrap-Up
 
-## What You Should Be Able To Do
+## Data Visualization Checklist
 
-After today, you should be able to:
+Before you call a figure finished, check:
 
-- revise plots for communication
-- justify scale choices
-- use color intentionally
-- save figures deliberately
-- critique a figure constructively
-- connect exploratory plots to final figures
+- **Question**: does the title or caption make the point clear?
+- **Data**: is the unit of observation clear?
+- **Variables**: are labels and units readable?
+- **Scale**: does the axis support the claim honestly?
 
-## Final Reminder
+## Data Visualization Checklist (cont.)
 
-A good visualization is not just a pretty chart.
+- **Color**: does color have a job? Is it used effectively? 
+- **Accessibility**: is the plot readable for all people in all mediums?
+- **Annotation**: does text guide attention without clutter?
+- **Export**: is the saved file readable at its final size?
+- **Destination**: does the file format match where it is going?
 
-It is a visual answer to a clear question, built from appropriate data, with honest interpretation.
+## Thank You
+
+Please feel free to reach out with any questions: ewestlund@jhu.edu
