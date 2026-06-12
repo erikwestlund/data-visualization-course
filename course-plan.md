@@ -104,7 +104,7 @@ Working planning document for the one-week, two-credit data visualization course
 - End state: students can choose visualization forms for temporal, spatial, and process questions.
 - Homework/practice: short visualization choice exercise with a written justification.
 
-### Day 5: Communication, Critique, Polish, And Project Studio
+### Day 5: Communication, Critique, Polish, And Grab Bag
 
 - Big question: how do we turn analysis into an honest, useful visual explanation?
 - Statistical/visual focus: synthesis, critique, redesign, and communication.
@@ -115,7 +115,7 @@ Working planning document for the one-week, two-credit data visualization course
   - Annotation, labels, legends, color, scales, captions, and export choices.
   - Responsible LLM use for visualization workflows: privacy, prompts, verification, and code review.
   - Optional dashboard/Shiny demo if time allows.
-  - Final project studio and peer feedback.
+  - Grab bag previews and final project discussion.
 - End state: students have a project direction, at least one revised visualization, and a framework for justifying design choices.
 - Homework/final: rendered final project notebook/report with polished visualizations and written justifications.
 
@@ -240,12 +240,12 @@ Working planning document for the one-week, two-credit data visualization course
 - Small multiples and alternatives to maps.
 - Lab: students choose from a menu of visualization tasks and justify their choices.
 
-### Day 5: Communication, Dashboards, And Project Studio
+### Day 5: Communication, Dashboards, And Grab Bag
 
 - Communicating findings in notebooks, slides, reports, and dashboards.
 - Optional Shiny/demo dashboard as a stretch topic, not a core requirement.
 - Responsible LLM use for visualization workflows: prompts, code review, privacy, verification.
-- Final project studio and peer review.
+- Grab bag previews and peer discussion.
 - Wrap-up: reproducible handoff, exporting figures, and next steps.
 
 ## Assignment Sketch
@@ -291,7 +291,7 @@ Working planning document for the one-week, two-credit data visualization course
 - Day 2 data prep and grammar of graphics.
 - Day 3 design, accessibility, and iteration.
 - Day 4 plot choice by question type.
-- Day 5 communication, dashboards, and project studio.
+- Day 5 communication, dashboards, and grab bag.
 
 ### Examples
 
@@ -422,6 +422,6 @@ Working planning document for the one-week, two-credit data visualization course
 - Create a one-page `ggplot2` grammar cheat sheet tailored to this course.
 - Create a visual checklist students can use before submitting figures.
 - Add a recurring "what changed and why" slide to every redesign example.
-- Add peer review forms for final project studio.
+- Add peer review forms for final project discussion.
 - Consider a small final presentation instead of only a written submission.
 - Consider using more health equity examples if aligned with student interests.

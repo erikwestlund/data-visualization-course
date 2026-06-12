@@ -25,3 +25,13 @@ Possible replacement characteristics:
 - a numeric outcome with visible differences across groups
 - enough skew or unusual values to support diagnostic discussion
 - a low-stakes context such as exercise minutes, sleep, transportation, environmental exposure, appointments, or simulated clinical operations
+
+## Add Plot Combinations
+
+Add a short example showing how to combine multiple plots with `patchwork`.
+
+Possible places:
+
+- communication/polish module
+- grab-bag preview
+- reusable styling module

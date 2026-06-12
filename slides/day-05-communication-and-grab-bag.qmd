@@ -1,6 +1,6 @@
 ---
 title: "Data Visualization: Day 5"
-subtitle: "Communication, Polish, And Lightning Round"
+subtitle: "Communication, Polish, And Grab Bag"
 author: "Erik Westlund"
 format: revealjs
 ---
@@ -115,7 +115,7 @@ Open:
 
 Then practice:
 
-`practice/05-communication-and-studio/01_annotating-data-on-figures-practice.qmd`
+`practice/05-communication-and-grab-bag/01_annotating-data-on-figures-practice.qmd`
 
 # Color And Highlighting
 
@@ -187,7 +187,7 @@ Open:
 
 Then practice:
 
-`practice/05-communication-and-studio/02_color-accessibility-and-highlighting-practice.qmd`
+`practice/05-communication-and-grab-bag/02_color-accessibility-and-highlighting-practice.qmd`
 
 # Saving Figures
 
@@ -232,7 +232,7 @@ Open:
 
 Then practice:
 
-`practice/05-communication-and-studio/03_saving-visualizations-practice.qmd`
+`practice/05-communication-and-grab-bag/03_saving-visualizations-practice.qmd`
 
 
 # Lightning Round

@@ -76,8 +76,8 @@ day_definitions <- list(
   ),
   `day-05` = list(
     module_dirs = c("07_annotation", "08_color", "09_saving", "10_communication-polish", "11_grab-bag"),
-    practice_dirs = c("05-communication-and-studio"),
-    slide_files = c("day-05-communication-and-studio.qmd")
+    practice_dirs = c("05-communication-and-grab-bag"),
+    slide_files = c("day-05-communication-and-grab-bag.qmd")
   )
 )
 
@@ -782,7 +782,8 @@ prune_unpublished_outputs <- function() {
   obsolete_slide_html <- c(
     "day-02-categorical-and-continuous.html",
     "day-03-comparison-and-association.html",
-    "day-04-change-space-flow.html"
+    "day-04-change-space-flow.html",
+    "day-05-communication-and-studio.html"
   )
   obsolete_module_dirs <- c(
     "02_categorical-data",
@@ -807,6 +808,7 @@ prune_unpublished_outputs <- function() {
     "04-change-space-flow",
     "05-change-space-flow",
     "06-communication-and-studio",
+    "05-communication-and-studio",
     "day-02"
   )
   obsolete_data_files <- c(

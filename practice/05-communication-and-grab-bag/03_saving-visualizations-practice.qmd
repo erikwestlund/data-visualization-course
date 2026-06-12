@@ -53,7 +53,7 @@ PNG is a good default for slides, websites, and most course submissions.
 
 ```{r}
 ggsave(
-  filename = "practice/05-communication-and-studio/saved_images/top-states.png",
+  filename = "practice/05-communication-and-grab-bag/saved_images/top-states.png",
   plot = final_plot,
   width = 7,
   height = 5,
@@ -68,7 +68,7 @@ Sometimes the same plot needs a different shape. Change the saved dimensions int
 
 ```{r}
 ggsave(
-  filename = "practice/05-communication-and-studio/saved_images/top-states-wide.png",
+  filename = "practice/05-communication-and-grab-bag/saved_images/top-states-wide.png",
   plot = final_plot,
   width = 9,
   height = 4.5,
@@ -83,10 +83,9 @@ PDF is useful when the figure needs to stay sharp in print or in a document work
 
 ```{r}
 ggsave(
-  filename = "practice/05-communication-and-studio/saved_images/top-states.pdf",
+  filename = "practice/05-communication-and-grab-bag/saved_images/top-states.pdf",
   plot = final_plot,
   width = 7,
   height = 5
 )
 ```
-

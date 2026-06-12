@@ -255,7 +255,7 @@ What type of real-world scientific questions/topics might these visualizations h
 ::: {.incremental}
 - communication and critique
 - polish, annotation, and accessibility
-- interpretation and final project studio
+- interpretation and communication grab bag
 :::
 
 
