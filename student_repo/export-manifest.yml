@@ -20,6 +20,7 @@ published_days:
   - day-02
   - day-03
   - day-04
+  - day-05
 
 # Editable/source materials students may open and run.
 # Day-controlled source folders are filtered by `published_days` during export.
@@ -109,7 +110,6 @@ must_not_exist_after_export:
   - slides/day-02-categorical-and-continuous.html
   - slides/day-03-comparison-and-association.html
   - slides/day-04-change-space-flow.html
-  - slides/day-05-communication-and-studio.html
   - modules/02_categorical-data/01_counts-and-ordering.qmd
   - modules/03_continuous-data/01_histograms-and-density.qmd
   - modules/rendered/02_categorical-data/01_counts-and-ordering.html

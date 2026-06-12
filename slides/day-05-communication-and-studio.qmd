@@ -1,6 +1,6 @@
 ---
 title: "Data Visualization: Day 5"
-subtitle: "Communication, Polish, And Project Studio"
+subtitle: "Communication, Polish, And Lightning Round"
 author: "Erik Westlund"
 format: revealjs
 ---
