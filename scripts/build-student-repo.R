@@ -513,6 +513,36 @@ render_qmds_in <- function(directory, target_dir = NULL) {
   }
 }
 
+published_docs <- list(
+  list(
+    source = p("course_docs", "rstudio-setup.qmd"),
+    rendered = p(source_root, "docs", "course_docs", "rstudio-setup.html"),
+    target = p(target_root, "docs", "course_docs", "rstudio-setup.html")
+  ),
+  list(
+    source = p("course_docs", "positron-setup.qmd"),
+    rendered = p(source_root, "docs", "course_docs", "positron-setup.html"),
+    target = p(target_root, "docs", "course_docs", "positron-setup.html")
+  ),
+  list(
+    source = p("modules", "00_preclass-tech-check", "01_pre-class-directions.qmd"),
+    rendered = p(source_root, "docs", "modules", "00_preclass-tech-check", "01_pre-class-directions.html"),
+    target = p(target_root, "docs", "modules", "00_preclass-tech-check", "01_pre-class-directions.html")
+  )
+)
+
+render_published_docs <- function() {
+  for (doc in published_docs) {
+    render_file(doc$source, target_outputs = doc$target)
+  }
+}
+
+copy_published_docs <- function() {
+  for (doc in published_docs) {
+    copy_rendered_html_file(doc$rendered, doc$target, source_file = p(source_root, doc$source))
+  }
+}
+
 slide_qmd_files <- function() {
   files <- list.files(p(source_root, "slides"), pattern = "[.]qmd$", full.names = TRUE)
   files <- files[basename(files) %in% published_slide_files]
@@ -1016,6 +1046,7 @@ clean_generated_docs()
 prune_unpublished_outputs()
 
 render_file(p("course_docs", "syllabus.qmd"), target_outputs = p(target_root, "syllabus.html"))
+render_published_docs()
 render_qmds_in("assignments", target_dir = p(target_root, "assignments"))
 render_slide_qmds()
 render_module_qmds()
@@ -1086,6 +1117,7 @@ copy_rendered_html_file(
   p(target_root, "data", "data.html"),
   source_file = p(source_root, "data", "data.md")
 )
+copy_published_docs()
 
 rewrite_student_manifest_codebooks(p(target_root, "data", "manifest.csv"))
 
@@ -1135,7 +1167,12 @@ write_lines(
     ".Ruserdata",
     ".Rproj.user/",
     ".quarto/",
-    "docs/",
+    "docs/*",
+    "!docs/course_docs/",
+    "!docs/course_docs/*.html",
+    "!docs/modules/",
+    "!docs/modules/00_preclass-tech-check/",
+    "!docs/modules/00_preclass-tech-check/*.html",
     "protected-local-changes/",
     ".student-export-hashes.tsv",
     "_freeze/",

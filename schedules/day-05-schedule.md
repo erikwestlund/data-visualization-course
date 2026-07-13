@@ -1,6 +1,6 @@
 # Day 5 Schedule: Communication, Polish, And Grab Bag
 
-Assumed class block: 3 hours.
+Class block: 1:30-5:00 pm (3.5 hours).
 
 ## Main Goal
 
@@ -10,19 +10,20 @@ Students practice three practical communication skills: annotation, color/access
 
 | Time | Segment | Materials | Notes |
 |---:|---|---|---|
-| 0:00-0:05 | Setup and priorities | `slides/day-05-communication-and-grab-bag.qmd` | Name the three practical skills and the lightning-round plan. |
-| 0:05-0:25 | Skill 1: annotate data on a figure | `modules/07_annotation/01_annotating-data-on-figures.qmd` | Text should direct attention, not decorate. |
-| 0:25-0:40 | Annotation practice | `practice/05-communication-and-grab-bag/01_annotating-data-on-figures-practice.qmd` | Students add labels and one short annotation. |
-| 0:40-1:00 | Skill 2: color, accessibility, and highlighting | `modules/08_color/01_color-accessibility-and-highlighting.qmd` | Highlighting over rainbow defaults; do not rely only on color. |
-| 1:00-1:15 | Color/accessibility practice | `practice/05-communication-and-grab-bag/02_color-accessibility-and-highlighting-practice.qmd` | Students simplify or highlight one figure. |
-| 1:15-1:30 | Skill 3: saving visualizations | `modules/09_saving/01_saving-visualizations.qmd` | Plot object, file type, dimensions, and readability. |
-| 1:30-1:40 | Saving practice | `practice/05-communication-and-grab-bag/03_saving-visualizations-practice.qmd` | Students create `final_plot` and review save settings. |
-| 1:40-1:50 | Break |  | Transition to lightning round. |
-| 1:50-2:05 | Lightning 1: time series | `modules/11_grab-bag/01_time-trends-and-small-multiples.qmd` | One key idea: x-axis order carries meaning. |
-| 2:05-2:20 | Lightning 2: Mermaid/process charts | `modules/11_grab-bag/03_process-diagrams.qmd` | Diagrams explain workflow or structure. No practice. |
-| 2:20-2:35 | Lightning 3: DAGs | `modules/11_grab-bag/04_causal-dag-graphs.qmd` | DAGs show assumptions, not results. No practice. |
-| 2:35-2:50 | Lightning 4: maps versus alternatives | `modules/11_grab-bag/05_choropleth-maps-and-alternatives.qmd` | Maps show where; ranked plots show how much. No practice. |
-| 2:50-3:00 | Wrap | Verbal | Point students to resource modules and final deliverables. |
+| 1:30-1:35 | Setup and priorities | `slides/day-05-communication-and-grab-bag.qmd` | Name the three practical skills and the lightning-round plan. |
+| 1:35-1:55 | Skill 1: annotate data on a figure | `modules/07_annotation/01_annotating-data-on-figures.qmd` | Text should direct attention, not decorate. |
+| 1:55-2:10 | Annotation practice | `practice/05-communication-and-grab-bag/01_annotating-data-on-figures-practice.qmd` | Students add labels and one short annotation. |
+| 2:10-2:30 | Skill 2: color, accessibility, and highlighting | `modules/08_color/01_color-accessibility-and-highlighting.qmd` | Highlighting over rainbow defaults; do not rely only on color. |
+| 2:30-2:45 | Color/accessibility practice | `practice/05-communication-and-grab-bag/02_color-accessibility-and-highlighting-practice.qmd` | Students simplify or highlight one figure. |
+| 2:45-3:00 | Skill 3: saving visualizations | `modules/09_saving/01_saving-visualizations.qmd` | Plot object, file type, dimensions, and readability. |
+| 3:00-3:10 | Saving practice | `practice/05-communication-and-grab-bag/03_saving-visualizations-practice.qmd` | Students create `final_plot` and review save settings. |
+| 3:10-3:20 | Break |  | Transition to lightning round. |
+| 3:20-3:35 | Lightning 1: time series | `modules/11_grab-bag/01_time-trends-and-small-multiples.qmd` | One key idea: x-axis order carries meaning. |
+| 3:35-3:50 | Lightning 2: Mermaid/process charts | `modules/11_grab-bag/03_process-diagrams.qmd` | Diagrams explain workflow or structure. No practice. |
+| 3:50-4:05 | Lightning 3: DAGs | `modules/11_grab-bag/04_causal-dag-graphs.qmd` | DAGs show assumptions, not results. No practice. |
+| 4:05-4:20 | Lightning 4: maps versus alternatives | `modules/11_grab-bag/05_choropleth-maps-and-alternatives.qmd` | Maps show where; ranked plots show how much. No practice. |
+| 4:20-4:30 | Wrap | Verbal | Point students to resource modules and final deliverables. |
+| 4:30-5:00 | Open practice and support | Problem Set 2 and final project planning | Use the extra time for project scoping and individual questions. |
 
 ## If Time Runs Short
 

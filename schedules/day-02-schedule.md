@@ -1,6 +1,6 @@
 # Day 2 Schedule: Data Preparation And Categorical Data
 
-Assumed class block: 3 hours.
+Class block: 1:30-5:00 pm (3.5 hours).
 
 ## Main Goal
 
@@ -10,15 +10,16 @@ Students can inspect a dataset, use common data-preparation functions one at a t
 
 | Time | Segment | Materials | Notes |
 |---:|---|---|---|
-| 0:00-0:10 | Day 1 debrief and technical fixes | Verbal, `source("updater.R")` if needed | Resolve blockers before content. |
-| 0:10-0:20 | Data cleaning concepts | `slides/day-02-data-preparation-and-categorical.qmd` | Observation, `glimpse()`, `head()`, object naming, and common `dplyr` functions. |
-| 0:20-0:50 | Data cleaning module | `modules/02_data-preparation/01_data-preparation.qmd` | Load NHANES data and use each common data-preparation function before plotting. |
-| 0:50-1:20 | Data cleaning practice | `practice/02-one-variable-and-distributions/01_data-cleaning-practice.qmd` | Students run working chunks, change one part, and explain the output. |
-| 1:20-1:30 | Break |  | Buffer for questions. |
-| 1:30-1:45 | Categorical concepts | `slides/day-02-data-preparation-and-categorical.qmd` | Counts versus summaries, ordering, rank, composition, and common scales. |
-| 1:45-2:20 | Categorical modules | `modules/03_categorical-data/01_counts-and-ordering.qmd`, `modules/03_categorical-data/02_composition-and-proportions.qmd` | Ordered bars, raw counts versus proportions, stacked bars, and small multiples. |
-| 2:20-2:50 | Categorical practice | `practice/02-one-variable-and-distributions/02_categorical-practice.qmd` | Students run working plot code, change one dial, and interpret what one bar or facet represents. |
-| 2:50-3:00 | Wrap | Verbal | Preview continuous variables for Day 3. |
+| 1:30-1:40 | Day 1 debrief and technical fixes | Verbal, `source("updater.R")` if needed | Resolve blockers before content. |
+| 1:40-1:50 | Data cleaning concepts | `slides/day-02-data-preparation-and-categorical.qmd` | Observation, `glimpse()`, `head()`, object naming, and common `dplyr` functions. |
+| 1:50-2:20 | Data cleaning module | `modules/02_data-preparation/01_data-preparation.qmd` | Load NHANES data and use each common data-preparation function before plotting. |
+| 2:20-2:50 | Data cleaning practice | `practice/02-one-variable-and-distributions/01_data-cleaning-practice.qmd` | Students run working chunks, change one part, and explain the output. |
+| 2:50-3:00 | Break |  | Buffer for questions. |
+| 3:00-3:15 | Categorical concepts | `slides/day-02-data-preparation-and-categorical.qmd` | Counts versus summaries, ordering, rank, composition, and common scales. |
+| 3:15-3:50 | Categorical modules | `modules/03_categorical-data/01_counts-and-ordering.qmd`, `modules/03_categorical-data/02_composition-and-proportions.qmd` | Ordered bars, raw counts versus proportions, stacked bars, and small multiples. |
+| 3:50-4:20 | Categorical practice | `practice/02-one-variable-and-distributions/02_categorical-practice.qmd` | Students run working plot code, change one dial, and interpret what one bar or facet represents. |
+| 4:20-4:30 | Wrap | Verbal | Preview continuous variables for Day 3. |
+| 4:30-5:00 | Open practice and support | Practice work, assignment questions | Use the extra time for one-on-one help and reinforcing data-preparation mechanics. |
 
 ## If Time Runs Short
 

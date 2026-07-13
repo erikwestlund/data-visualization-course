@@ -134,7 +134,7 @@ If the setup-check file renders, your basic setup is ready for class.
 
 # If Something Fails
 
-If something does not work, do not panic. Bring the error message to class or email me beforehand [ewestlund@jhu.edu](mailto:ewestlund@jhu.edu) and I can help you out.
+If something does not work, do not panic. Bring the error message to class or contact me beforehand and I can help you out.
 
 The most useful information is:
 

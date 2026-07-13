@@ -8,7 +8,7 @@ format:
 
 # Due Date
 
-Due Friday, July 3, 2026, at 11:59 pm.
+Due Wednesday, July 29, 2026, at 11:59 pm.
 
 # Overview
 
@@ -72,7 +72,7 @@ High-quality visualizations should be:
 
 # Submission
 
-Submit a rendered HTML notebook or report on CoursePlus or through email to ewestlund@jhu.edu.
+Submit a rendered HTML notebook or report according to the instructions posted on the course site.
 
 Your submission should include all code needed to reproduce the work. If you are working in a Quarto-only workflow, the rendered notebook should include everything you need. You do not need to include the data sets. If you use your own data sets, describe how the data were prepared.
 

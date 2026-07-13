@@ -4,7 +4,7 @@
 # also reads `target_root_default`, `must_exist_after_export`, and
 # `must_not_exist_after_export` from this file.
 
-target_root_default: ~/Code/Courses/data-visualization-2026
+target_root_default: ~/Code/Courses/data-visualization-um-2026
 
 # Day-level publishing gate for the public/student repo.
 # This controls copied module folders, rendered module HTML, practice templates,
@@ -33,6 +33,9 @@ source_exports:
 
 # Rendered instructor-owned artifacts.
 rendered_exports:
+  - docs/course_docs/rstudio-setup.html
+  - docs/course_docs/positron-setup.html
+  - docs/modules/00_preclass-tech-check/01_pre-class-directions.html
   - modules/rendered/index.html
   - modules/rendered/**/*.html
   - syllabus.html
@@ -44,7 +47,6 @@ rendered_exports:
 # Student-owned files are ignored by Git and should not be overwritten.
 student_work:
   - practice/work/
-  - docs/
 
 # Explicit checks for exceptions/default breaks.
 must_exist_after_export:
@@ -61,6 +63,9 @@ must_exist_after_export:
   - data-visualization-course.Rproj
   - data-visualization-course.code-workspace
   - data/data.html
+  - docs/course_docs/rstudio-setup.html
+  - docs/course_docs/positron-setup.html
+  - docs/modules/00_preclass-tech-check/01_pre-class-directions.html
   - modules/rendered/index.html
   - modules/rendered/01-workflow-and-basics/01_course-materials.html
   - modules/rendered/01-workflow-and-basics/02_first-visualization.html
@@ -98,7 +103,6 @@ must_exist_after_export:
   - practice/templates/04-comparison-and-association/05_model-output-plots-practice.qmd
 
 must_not_exist_after_export:
-  - docs/modules/00_preclass-tech-check/01_pre-class-directions.html
   - docs/modules/00_preclass-tech-check/02_setup-check.html
   - modules/00_preclass-tech-check/01_pre-class-directions.html
   - modules/00_preclass-tech-check/02_setup-check.html

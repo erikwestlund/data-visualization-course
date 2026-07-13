@@ -3,8 +3,8 @@ default:
   project_type: course
   author:
     name: Erik Westlund
-    email: ewestludn@jhu.edu
-    affiliation: Johns Hopkins Bloomberg School of Public Health
+    email: ''
+    affiliation: ''
   directories:
     data: data
     slides: slides

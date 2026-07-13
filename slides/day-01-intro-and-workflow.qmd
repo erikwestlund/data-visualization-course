@@ -779,7 +779,7 @@ We will use three kinds of materials:
 
 ## Course Information
 
-- The [course website](https://erik-westlund.academic.page/courses/data-visualization) has key documents (these are also reproduced on CoursePlus)
+- The course site has key documents, links, and announcements
 - This repository will be updated during the week.
 - We will use Git and GitHub to pull down new files, but you do not need to become a Git expert.
 - Windows users may need to install Git separately: <https://git-scm.com/install/windows>

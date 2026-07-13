@@ -21,6 +21,7 @@ Please note that this repository will likely be updated daily.
 
 - `data/`: course datasets, rendered codebooks, and `data/data.html` index.
 - `slides/`: rendered course slides as HTML files.
+- `docs/`: rendered setup and reference documents.
 - `modules/`: course-owned lesson notebooks and setup checks as Quarto `.qmd` files.
 - `modules/rendered/`: rendered HTML versions of lesson notebooks, starting at `modules/rendered/index.html`.
 - `assignments/`: rendered problem set and project instructions as HTML files.
